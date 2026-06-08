@@ -1,0 +1,16 @@
+# Virtual environment
+.venv/
+
+# API response caches (large, regenerable)
+data/raw/kegg_cache/
+data/raw/reactome_cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# OS
+.DS_Store
+Thumbs.db

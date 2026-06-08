@@ -1,0 +1,7 @@
+requests>=2.31.0
+tqdm>=4.66.0
+spacy>=3.7.0
+transformers>=4.40.0
+datasets>=2.19.0
+torch>=2.2.0
+ollama>=0.2.0
