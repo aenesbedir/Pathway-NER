@@ -23,6 +23,7 @@ Cache  : data/raw/pubmed_cache/
 import json
 import logging
 import os
+import re
 import time
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -220,15 +221,44 @@ def parse_pmc_xml(xml_text: str) -> str:
     return "\n\n".join(paragraphs)
 
 
+PMC_HTML_BASE = "https://pmc.ncbi.nlm.nih.gov/articles"
+
+
+def _parse_pmc_html(html: str) -> str:
+    """Extract body paragraphs from PMC article HTML page."""
+    # Locate <section class="body main-article-body"> … </section>
+    match = re.search(
+        r'<section[^>]*class="[^"]*body main-article-body[^"]*"[^>]*>(.*?)</section>',
+        html,
+        re.DOTALL,
+    )
+    if not match:
+        return ""
+    body_html = match.group(1)
+    # Strip all tags, collapse whitespace, split on double-newlines
+    text = re.sub(r"<[^>]+>", " ", body_html)
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    return text
+
+
 def fetch_pmc_fulltext(
     session: requests.Session,
     pmc_id: str,
 ) -> str:
-    """Fetch and parse PMC full-text for a given PMCID (e.g. 'PMC1234567')."""
+    """Fetch and parse PMC full-text for a given PMCID (e.g. 'PMC1234567').
+
+    Strategy:
+      1. Try XML via NCBI efetch (works for Open Access articles).
+      2. If XML contains no body (publisher blocks XML), fall back to fetching
+         the HTML page from pmc.ncbi.nlm.nih.gov and parsing the body section.
+    """
     numeric_id = pmc_id.lstrip("PMCpmc")
-    cache_path = CACHE_DIR / f"pmc_{pmc_id}.xml"
-    if cache_path.exists():
-        xml_text = cache_path.read_text(encoding="utf-8")
+
+    # -- XML path ---------------------------------------------------------------
+    xml_cache = CACHE_DIR / f"pmc_{pmc_id}.xml"
+    if xml_cache.exists():
+        xml_text = xml_cache.read_text(encoding="utf-8")
     else:
         try:
             resp = get(
@@ -242,11 +272,35 @@ def fetch_pmc_fulltext(
                 },
             )
             xml_text = resp.text
-            cache_path.write_text(xml_text, encoding="utf-8")
+            xml_cache.write_text(xml_text, encoding="utf-8")
         except requests.HTTPError as exc:
-            log.debug("PMC fetch failed for %s: %s", pmc_id, exc)
+            log.debug("PMC XML fetch failed for %s: %s", pmc_id, exc)
+            xml_text = ""
+
+    text = parse_pmc_xml(xml_text)
+    if text:
+        return text
+
+    # -- HTML fallback (publisher blocked XML download) -------------------------
+    html_cache = CACHE_DIR / f"pmc_{pmc_id}.html"
+    if html_cache.exists():
+        html = html_cache.read_text(encoding="utf-8")
+    else:
+        try:
+            resp = session.get(
+                f"{PMC_HTML_BASE}/{pmc_id}/",
+                headers={"User-Agent": "NER-pipeline/1.0 (research)"},
+                timeout=30,
+            )
+            resp.raise_for_status()
+            html = resp.text
+            html_cache.write_text(html, encoding="utf-8")
+            time.sleep(REQUEST_DELAY)
+        except requests.HTTPError as exc:
+            log.debug("PMC HTML fetch failed for %s: %s", pmc_id, exc)
             return ""
-    return parse_pmc_xml(xml_text)
+
+    return _parse_pmc_html(html)
 
 
 # ---------------------------------------------------------------------------
