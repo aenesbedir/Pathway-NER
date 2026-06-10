@@ -53,13 +53,14 @@ Recon    ───┘                                              │
 
 ## Planned
 
-### Step 1c — PubMed / PMC Abstract + Full-Text Fetch (`fetch_pubmed.py`)
-- Deduplicate all PMIDs across KEGG + Reactome outputs
-- Batch-fetch abstracts and full-text (where available via PMC Open Access) using NCBI E-utilities
-- **Note:** Register a free NCBI API key before running — increases rate limit from 3 → 10 req/s
-  - Register at: https://www.ncbi.nlm.nih.gov/account/ → Account Settings → API Key Management
-  - Pass as environment variable: `NCBI_API_KEY=...`
+### ✅ Step 1c — PubMed / PMC Abstract + Full-Text Fetch (`fetch_pubmed.py`)
+- Deduplicated 1,192 unique PMIDs across KEGG + Reactome outputs
+- Batch-fetched PubMed abstracts (200/request) using NCBI E-utilities with API key
+- Extracted PMC IDs from PubMed XML `<ArticleIdList>` (no elink call needed)
+- Fetched PMC Open Access full-text (JATS XML) for articles with PMC IDs; extracted body paragraphs
+- Resumable via `data/raw/pubmed_cache/` (batch XMLs + per-article PMC XMLs)
 - **Output:** `data/raw/abstracts.jsonl`
+- **Results:** 1,112 records · 1,109 with abstract · 154 with full-text · 80 skipped (no text)
 
 ### Step 1d — Mapping & Merge (`build_mapping.py`)
 - Join KEGG + Reactome records on shared pathway names and KEGG cross-references
