@@ -51,18 +51,21 @@ Recon    ───┘                                              │
 
 ---
 
-## Planned
-
 ### ✅ Step 1c — PubMed / PMC Abstract + Full-Text Fetch (`fetch_pubmed.py`)
 - Deduplicated 1,192 unique PMIDs across KEGG + Reactome outputs
 - Batch-fetched PubMed abstracts (200/request) using NCBI E-utilities with API key
 - Extracted PMC IDs from PubMed XML `<ArticleIdList>` (no elink call needed)
 - Fetched PMC Open Access full-text (JATS XML) for articles with PMC IDs; extracted body paragraphs
-- Resumable via `data/raw/pubmed_cache/` (batch XMLs + per-article PMC XMLs)
+- Resumable via `data/raw/pubmed_cache/` (1,191 abs + 386 pmc JSON files)
+- Added HTML fallback for publisher-blocked PMC articles
 - **Output:** `data/raw/abstracts.jsonl`
-- **Results:** 1,112 records · 1,109 with abstract · 154 with full-text · 80 skipped (no text)
+- **Results:** 1,122 records · 1,109 with abstract · 360 with full-text · 69 skipped (no text)
+- All cache files are JSON (no XML/HTML persisted)
+- Analysis: `analysis/pubmed_year_distribution.md`, `analysis/data_summary.md`
 
-- Publication year analysis completed — see `analysis/pubmed_year_distribution.md`
+---
+
+## Planned
 
 ### Step 1d — Mapping & Merge (`build_mapping.py`)
 - Join KEGG + Reactome records on shared pathway names and KEGG cross-references
