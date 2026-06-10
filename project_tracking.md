@@ -62,6 +62,8 @@ Recon    ───┘                                              │
 - **Output:** `data/raw/abstracts.jsonl`
 - **Results:** 1,112 records · 1,109 with abstract · 154 with full-text · 80 skipped (no text)
 
+- Publication year analysis completed — see `analysis/pubmed_year_distribution.md`
+
 ### Step 1d — Mapping & Merge (`build_mapping.py`)
 - Join KEGG + Reactome records on shared pathway names and KEGG cross-references
 - Merge synonyms across sources (KEGG names, Reactome names, Recon subsystem names)
