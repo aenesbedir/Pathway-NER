@@ -9,9 +9,13 @@ Strategy:
   1. Collect + deduplicate all PMIDs from kegg_pathways.jsonl and
      reactome_pathways.jsonl.
   2. Batch-fetch PubMed records (200/request) to get title + abstract.
-  3. Use NCBI elink to find which PMIDs have PMC Open Access full-text.
-  4. Fetch PMC full-text (JATS XML) individually; extract body paragraphs.
+     Parsed results cached per-article as abs_{pmid}.json.
+  3. Extract PMC IDs from PubMed XML ArticleIdList (no elink needed).
+  4. Fetch PMC full-text per article; try NCBI XML first, fall back to HTML.
+     Parsed result cached as pmc_{PMCID}.json.
   5. Merge and write one record per PMID.
+
+All cache files are JSON. No XML or HTML files are persisted.
 
 NCBI API key increases rate limit from 3 → 10 req/s.
 Set via environment variable NCBI_API_KEY, or edit FALLBACK_API_KEY below.
@@ -38,11 +42,12 @@ from urllib3.util.retry import Retry
 # Config
 # ---------------------------------------------------------------------------
 NCBI_BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
+PMC_HTML_BASE = "https://pmc.ncbi.nlm.nih.gov/articles"
 FALLBACK_API_KEY = "d4e795e70597e6edfa4d1282886100ecee08"
 API_KEY = os.environ.get("NCBI_API_KEY", FALLBACK_API_KEY)
 
 REQUEST_DELAY = 0.11        # ~9 req/s — stays under the 10 req/s API-key limit
-BATCH_SIZE = 200            # NCBI recommended max for efetch / elink
+BATCH_SIZE = 200            # NCBI recommended max for efetch
 
 KEGG_FILE = Path("data/raw/kegg_pathways.jsonl")
 REACTOME_FILE = Path("data/raw/reactome_pathways.jsonl")
@@ -99,6 +104,7 @@ def collect_pmids() -> list[str]:
 
 # ---------------------------------------------------------------------------
 # Step 2 — PubMed batch fetch (title + abstract)
+# Cache: one JSON file per article → abs_{pmid}.json
 # ---------------------------------------------------------------------------
 def _text_content(element: Optional[ET.Element]) -> str:
     """Concatenate all text/tail within an XML element (handles mixed content)."""
@@ -114,8 +120,8 @@ def _text_content(element: Optional[ET.Element]) -> str:
     return "".join(parts).strip()
 
 
-def parse_pubmed_xml(xml_text: str) -> dict[str, dict]:
-    """Parse PubMed efetch XML → {pmid: {title, abstract}}."""
+def _parse_pubmed_xml_batch(xml_text: str) -> dict[str, dict]:
+    """Parse PubMed efetch XML → {pmid: {title, abstract, pmc_id}}."""
     results: dict[str, dict] = {}
     try:
         root = ET.fromstring(xml_text)
@@ -132,7 +138,6 @@ def parse_pubmed_xml(xml_text: str) -> dict[str, dict]:
         title_el = article.find(".//ArticleTitle")
         title = _text_content(title_el)
 
-        # AbstractText can be a single element or multiple with Label attrs
         abstract_parts = []
         for ab_el in article.findall(".//AbstractText"):
             label = ab_el.get("Label")
@@ -141,63 +146,75 @@ def parse_pubmed_xml(xml_text: str) -> dict[str, dict]:
                 abstract_parts.append(f"{label}: {text}" if label else text)
         abstract = " ".join(abstract_parts)
 
-        results[pmid] = {"title": title, "abstract": abstract}
+        # PMC ID is embedded in ArticleIdList — extract here to avoid a
+        # separate pass over the XML later
+        pmc_id = None
+        for art_id in article.findall(".//ArticleIdList/ArticleId"):
+            if art_id.get("IdType") == "pmc" and art_id.text:
+                pmc_id = art_id.text.strip()
+                break
+
+        results[pmid] = {"title": title, "abstract": abstract, "pmc_id": pmc_id}
     return results
 
 
-def fetch_pubmed_batch(
+def fetch_pubmed_abstracts(
     session: requests.Session,
-    pmids: list[str],
-    batch_index: int,
+    all_pmids: list[str],
 ) -> dict[str, dict]:
-    cache_path = CACHE_DIR / f"pubmed_batch_{batch_index:04d}.xml"
-    if cache_path.exists():
-        xml_text = cache_path.read_text(encoding="utf-8")
-    else:
+    """
+    Fetch title + abstract for all PMIDs.
+
+    Sends batched requests (BATCH_SIZE each) and caches parsed results as
+    abs_{pmid}.json per article. Already-cached articles are skipped.
+    Returns {pmid: {title, abstract, pmc_id}}.
+    """
+    results: dict[str, dict] = {}
+
+    # Load already-cached articles
+    cached = []
+    missing = []
+    for pmid in all_pmids:
+        cache_path = CACHE_DIR / f"abs_{pmid}.json"
+        if cache_path.exists():
+            results[pmid] = json.loads(cache_path.read_text(encoding="utf-8"))
+            cached.append(pmid)
+        else:
+            missing.append(pmid)
+
+    if cached:
+        log.info("Loaded %d abstracts from cache", len(cached))
+
+    if not missing:
+        return results
+
+    # Fetch missing PMIDs in batches
+    batches = [missing[i: i + BATCH_SIZE] for i in range(0, len(missing), BATCH_SIZE)]
+    for batch in tqdm(batches, desc="PubMed batches", unit="batch"):
         resp = get(
             session,
             f"{NCBI_BASE}/efetch.fcgi",
             {
                 "db": "pubmed",
-                "id": ",".join(pmids),
+                "id": ",".join(batch),
                 "rettype": "abstract",
                 "retmode": "xml",
             },
         )
-        xml_text = resp.text
-        cache_path.write_text(xml_text, encoding="utf-8")
-    return parse_pubmed_xml(xml_text)
+        parsed = _parse_pubmed_xml_batch(resp.text)
+        for pmid, data in parsed.items():
+            cache_path = CACHE_DIR / f"abs_{pmid}.json"
+            cache_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            results[pmid] = data
+
+    return results
 
 
 # ---------------------------------------------------------------------------
-# Step 3 — extract PMID → PMCID from already-fetched PubMed XML
-# (PubMed efetch XML includes <ArticleId IdType="pmc"> — no elink call needed)
+# Step 3 — PMC full-text fetch
+# Cache: pmc_{PMCID}.json → {"full_text": "..."}
 # ---------------------------------------------------------------------------
-def extract_pmc_ids_from_pubmed_xml(xml_text: str) -> dict[str, str]:
-    """Parse PubMed efetch XML → {pmid: pmc_id} using ArticleIdList entries."""
-    pmid_to_pmc: dict[str, str] = {}
-    try:
-        root = ET.fromstring(xml_text)
-    except ET.ParseError:
-        return pmid_to_pmc
-
-    for article in root.findall(".//PubmedArticle"):
-        pmid_el = article.find(".//PMID")
-        if pmid_el is None or not pmid_el.text:
-            continue
-        pmid = pmid_el.text.strip()
-        for art_id in article.findall(".//ArticleIdList/ArticleId"):
-            if art_id.get("IdType") == "pmc" and art_id.text:
-                pmid_to_pmc[pmid] = art_id.text.strip()
-                break
-
-    return pmid_to_pmc
-
-
-# ---------------------------------------------------------------------------
-# Step 4 — PMC full-text fetch
-# ---------------------------------------------------------------------------
-def parse_pmc_xml(xml_text: str) -> str:
+def _parse_pmc_xml(xml_text: str) -> str:
     """Extract body paragraphs from PMC JATS XML → plain text."""
     try:
         root = ET.fromstring(xml_text)
@@ -205,28 +222,22 @@ def parse_pmc_xml(xml_text: str) -> str:
         log.debug("PMC XML parse error: %s", exc)
         return ""
 
-    paragraphs: list[str] = []
     body = root.find(".//body")
     if body is None:
-        # Some records wrap body differently
         body = root.find(".//{http://www.ncbi.nlm.nih.gov/pmc/articles/sets/}body")
     if body is None:
         return ""
 
+    paragraphs = []
     for p in body.findall(".//p"):
         text = _text_content(p)
         if text:
             paragraphs.append(text)
-
     return "\n\n".join(paragraphs)
-
-
-PMC_HTML_BASE = "https://pmc.ncbi.nlm.nih.gov/articles"
 
 
 def _parse_pmc_html(html: str) -> str:
     """Extract body paragraphs from PMC article HTML page."""
-    # Locate <section class="body main-article-body"> … </section>
     match = re.search(
         r'<section[^>]*class="[^"]*body main-article-body[^"]*"[^>]*>(.*?)</section>',
         html,
@@ -235,57 +246,39 @@ def _parse_pmc_html(html: str) -> str:
     if not match:
         return ""
     body_html = match.group(1)
-    # Strip all tags, collapse whitespace, split on double-newlines
     text = re.sub(r"<[^>]+>", " ", body_html)
     text = re.sub(r"[ \t]+", " ", text)
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
     return text
 
 
-def fetch_pmc_fulltext(
-    session: requests.Session,
-    pmc_id: str,
-) -> str:
-    """Fetch and parse PMC full-text for a given PMCID (e.g. 'PMC1234567').
-
-    Strategy:
-      1. Try XML via NCBI efetch (works for Open Access articles).
-      2. If XML contains no body (publisher blocks XML), fall back to fetching
-         the HTML page from pmc.ncbi.nlm.nih.gov and parsing the body section.
+def fetch_pmc_fulltext(session: requests.Session, pmc_id: str) -> str:
     """
+    Fetch full-text for a PMCID. Returns plain text or empty string.
+
+    Cache: pmc_{PMCID}.json with {"full_text": "..."}.
+    Strategy: NCBI XML first; HTML fallback for publisher-blocked articles.
+    """
+    cache_path = CACHE_DIR / f"pmc_{pmc_id}.json"
+    if cache_path.exists():
+        return json.loads(cache_path.read_text(encoding="utf-8")).get("full_text", "")
+
     numeric_id = pmc_id.lstrip("PMCpmc")
+    full_text = ""
 
-    # -- XML path ---------------------------------------------------------------
-    xml_cache = CACHE_DIR / f"pmc_{pmc_id}.xml"
-    if xml_cache.exists():
-        xml_text = xml_cache.read_text(encoding="utf-8")
-    else:
-        try:
-            resp = get(
-                session,
-                f"{NCBI_BASE}/efetch.fcgi",
-                {
-                    "db": "pmc",
-                    "id": numeric_id,
-                    "rettype": "full",
-                    "retmode": "xml",
-                },
-            )
-            xml_text = resp.text
-            xml_cache.write_text(xml_text, encoding="utf-8")
-        except requests.HTTPError as exc:
-            log.debug("PMC XML fetch failed for %s: %s", pmc_id, exc)
-            xml_text = ""
+    # -- Try XML ---------------------------------------------------------------
+    try:
+        resp = get(
+            session,
+            f"{NCBI_BASE}/efetch.fcgi",
+            {"db": "pmc", "id": numeric_id, "rettype": "full", "retmode": "xml"},
+        )
+        full_text = _parse_pmc_xml(resp.text)
+    except requests.HTTPError as exc:
+        log.debug("PMC XML fetch failed for %s: %s", pmc_id, exc)
 
-    text = parse_pmc_xml(xml_text)
-    if text:
-        return text
-
-    # -- HTML fallback (publisher blocked XML download) -------------------------
-    html_cache = CACHE_DIR / f"pmc_{pmc_id}.html"
-    if html_cache.exists():
-        html = html_cache.read_text(encoding="utf-8")
-    else:
+    # -- HTML fallback ---------------------------------------------------------
+    if not full_text:
         try:
             resp = session.get(
                 f"{PMC_HTML_BASE}/{pmc_id}/",
@@ -293,24 +286,20 @@ def fetch_pmc_fulltext(
                 timeout=30,
             )
             resp.raise_for_status()
-            html = resp.text
-            html_cache.write_text(html, encoding="utf-8")
+            full_text = _parse_pmc_html(resp.text)
             time.sleep(REQUEST_DELAY)
         except requests.HTTPError as exc:
             log.debug("PMC HTML fetch failed for %s: %s", pmc_id, exc)
-            return ""
 
-    return _parse_pmc_html(html)
+    cache_path.write_text(
+        json.dumps({"full_text": full_text}, ensure_ascii=False), encoding="utf-8"
+    )
+    return full_text
 
 
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
-def batched(lst: list, size: int):
-    for i in range(0, len(lst), size):
-        yield lst[i : i + size]
-
-
 def main() -> None:
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -322,37 +311,26 @@ def main() -> None:
     all_pmids = collect_pmids()
     log.info("Unique PMIDs: %d", len(all_pmids))
 
-    # -- 2. Fetch PubMed abstracts (batched) -----------------------------------
-    log.info("Fetching PubMed abstracts in batches of %d …", BATCH_SIZE)
-    pubmed_records: dict[str, dict] = {}
-    batches = list(batched(all_pmids, BATCH_SIZE))
-    for i, batch in enumerate(tqdm(batches, desc="PubMed batches", unit="batch")):
-        records = fetch_pubmed_batch(session, batch, i)
-        pubmed_records.update(records)
+    # -- 2. Fetch abstracts (per-article JSON cache) ---------------------------
+    log.info("Fetching PubMed abstracts …")
+    pubmed_records = fetch_pubmed_abstracts(session, all_pmids)
     log.info("Abstracts fetched: %d / %d", len(pubmed_records), len(all_pmids))
 
-    # -- 3. Extract PMC IDs from already-cached PubMed XML --------------------
-    log.info("Extracting PMC IDs from PubMed XML …")
-    pmid_to_pmc: dict[str, str] = {}
-    for i in range(len(batches)):
-        cache_path = CACHE_DIR / f"pubmed_batch_{i:04d}.xml"
-        if cache_path.exists():
-            xml_text = cache_path.read_text(encoding="utf-8")
-            links = extract_pmc_ids_from_pubmed_xml(xml_text)
-            pmid_to_pmc.update(links)
+    # -- 3. Identify PMIDs with PMC full-text ----------------------------------
+    pmid_to_pmc: dict[str, str] = {
+        pmid: data["pmc_id"]
+        for pmid, data in pubmed_records.items()
+        if data.get("pmc_id")
+    }
+    log.info("PMIDs with PMC ID: %d / %d", len(pmid_to_pmc), len(all_pmids))
 
-    log.info("PMIDs with PMC full-text: %d / %d", len(pmid_to_pmc), len(all_pmids))
-
-    # -- 4. Fetch PMC full-text ------------------------------------------------
+    # -- 4. Fetch PMC full-text (per-article JSON cache) ----------------------
     log.info("Fetching PMC full-text for %d articles …", len(pmid_to_pmc))
     pmc_fulltext: dict[str, str] = {}
-    for pmid, pmc_id in tqdm(
-        pmid_to_pmc.items(), desc="PMC full-text", unit="article"
-    ):
+    for pmid, pmc_id in tqdm(pmid_to_pmc.items(), desc="PMC full-text", unit="article"):
         text = fetch_pmc_fulltext(session, pmc_id)
         if text:
             pmc_fulltext[pmid] = text
-
     log.info("Full-text articles retrieved: %d", len(pmc_fulltext))
 
     # -- 5. Write output -------------------------------------------------------
@@ -365,7 +343,6 @@ def main() -> None:
             full_text = pmc_fulltext.get(pmid)
             pmc_id = pmid_to_pmc.get(pmid)
 
-            # Skip PMIDs with neither abstract nor full-text
             if not abstract and not full_text:
                 skipped += 1
                 continue
@@ -387,13 +364,11 @@ def main() -> None:
 
     # -- 6. Summary ------------------------------------------------------------
     has_abstract = sum(1 for p in pubmed_records.values() if p.get("abstract"))
-    has_fulltext = len(pmc_fulltext)
-
     log.info("─" * 60)
     log.info("Output          : %s", OUTPUT_FILE)
     log.info("Total PMIDs     : %d", len(all_pmids))
     log.info("With abstract   : %d", has_abstract)
-    log.info("With full-text  : %d", has_fulltext)
+    log.info("With full-text  : %d", len(pmc_fulltext))
     log.info("Records written : %d", written)
     log.info("Skipped (empty) : %d", skipped)
     log.info("─" * 60)
