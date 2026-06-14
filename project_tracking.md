@@ -3,6 +3,8 @@
 ## Goal
 Fine-tune `microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext` for Named Entity Recognition of **Metabolic Pathways** in biomedical literature, using a distant supervision + local LLM hybrid approach.
 
+> **Bigger picture:** Combine this pathway NER model with an existing disease NER model (off-the-shelf), then apply a relation extraction model to find pathway↔disease associations evidenced by literature. End goal: a database linking metabolic pathways to diseases with source PMIDs. Current project covers only the pathway NER step.
+
 ---
 
 ## Architecture Overview
@@ -67,12 +69,12 @@ Recon    ───┘                                              │
 
 ## Planned
 
-### Step 1d — Mapping & Merge (`build_mapping.py`)
-- Join KEGG + Reactome records on shared pathway names and KEGG cross-references
-- Merge synonyms across sources (KEGG names, Reactome names, Recon subsystem names)
-- Filter Recon artifact entries (`"intracellular demand"`, `"exchange/demand reaction"`, etc.)
-- Produce `(pathway_id, canonical_name, all_synonyms[], pmid, abstract_text)` pairs
+### ✅ Step 1d — Mapping (`build_mapping.py`)
+- KEGG and Reactome kept separate (no cross-database merging — no mapping exists)
+- Enriched synonyms with Recon subsystem names (89 usable, 9 artifacts filtered)
+- Joined (pathway, pmid) pairs with `abstracts.jsonl` — stored pmid reference only, not text
 - **Output:** `data/processed/pathway_abstract_pairs.jsonl`
+- **Results:** 1,366 pairs · 51 pathways skipped (no PMIDs) · 91 PMIDs skipped (no text)
 
 ### Step 2 — Rule-Based Matching (`match_exact.py`)
 - SpaCy `PhraseMatcher` with `attr="LOWER"` over each abstract
