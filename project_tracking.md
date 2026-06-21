@@ -76,10 +76,13 @@ Recon    ───┘                                              │
 - **Output:** `data/processed/pathway_abstract_pairs.jsonl`
 - **Results:** 1,366 pairs · 51 pathways skipped (no PMIDs) · 91 PMIDs skipped (no text)
 
-### Step 2 — Rule-Based Matching (`match_exact.py`)
-- SpaCy `PhraseMatcher` with `attr="LOWER"` over each abstract
-- Match canonical name + all synonyms for the paired pathway
-- Output character-level span annotations
+### ✅ Step 2 — Rule-Based Matching (`match_exact.py`)
+- SpaCy `en_core_sci_sm` PhraseMatcher (`attr="LOWER"`) over abstract + full_text
+- Match canonical name + all synonyms per pathway; longest span wins on overlap
+- All pairs written to output (zero-span pairs pass to Step 3)
+- **Output:** `data/processed/exact_matches.jsonl`
+- **Results:** 1,366 pairs · 86 with spans (6.3%) · 1,280 no spans → Step 3 · 228 total spans
+- Low match rate expected: KEGG/Reactome links are gene/enzyme based, not pathway-name based
 
 ### Step 3 — LLM Variant Extraction (`match_llm.py`)
 - For sentences with no span found after Step 2, call a local LLM (Ollama Python API)
