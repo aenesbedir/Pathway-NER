@@ -67,10 +67,8 @@ Recon    ───┘                                              │
 
 ---
 
-## Planned
-
 ### ✅ Step 1d — Mapping (`build_mapping.py`)
-- KEGG and Reactome kept separate (no cross-database merging — no mapping exists)
+- KEGG and Reactome kept separate (no cross-database merging — no mapping exists between the two databases)
 - Enriched synonyms with Recon subsystem names (89 usable, 9 artifacts filtered)
 - Joined (pathway, pmid) pairs with `abstracts.jsonl` — stored pmid reference only, not text
 - **Output:** `data/processed/pathway_abstract_pairs.jsonl`
@@ -84,11 +82,49 @@ Recon    ───┘                                              │
 - **Results:** 1,366 pairs · 86 with spans (6.3%) · 1,280 no spans → Step 3 · 228 total spans
 - Low match rate expected: KEGG/Reactome links are gene/enzyme based, not pathway-name based
 
+---
+
+### 🔬 LLM Extraction Experiment (`extract_pathway_from_db.py`)
+
+Separate experiment using a pre-built disease-pathway dataset to evaluate and
+refine LLM prompting before applying to the main pipeline (Step 3).
+
+**Input:** `data/raw/extracted_disease_pathway_db_disease_pathway_just_abstracts.json`
+- 450 records, each with: `disease`, `pathway`, `abstract`, `pmid`, `mesh_descriptors`
+- Pre-built using PubMed API; covers known pathway↔disease article pairs
+- Useful for prompt benchmarking since ground-truth pathway associations are known
+
+**Model:** `qwen2.5:7b` via Ollama (local, RTX 4060 8GB VRAM)
+- Chosen for: best JSON output discipline among 7B models, fits in 8GB VRAM
+- All LLM responses verified verbatim against source text before accepting
+
+**Prompt versions benchmarked** (see `prompts/pathway_extraction.py`):
+
+| Version | Strategy | Found | Notes |
+|---|---|---|---|
+| V1 (active) | Zero-shot with rules | 296/450 (65.8%) | Best precision, fewest false positives |
+| V2 | + word-order variant rule | 294/450 (65.3%) | Slight regression — rule confused model |
+| V3 | Few-shot (5 examples + entity def) | 198/450 (44.0%) | Significant regression on 7B model |
+
+- V3 confirmed finding from research: few-shot helps GPT-4/70B but hurts smaller models
+- V1 is active; V2 and V3 kept in `prompts/pathway_extraction.py` for future model testing
+- **Next improvement:** Option B — token overlap post-processing as deterministic fallback (not yet implemented)
+
+**Outputs:**
+- `data/processed/db_with_extracted_pathways.json` — V1 results (296 matches)
+- `data/processed/db_with_extracted_pathways_v2.json` — V2 results (294 matches)
+- `data/processed/db_with_extracted_pathways_v3.json` — V3 results (198 matches)
+
+---
+
+## Planned
+
 ### Step 3 — LLM Variant Extraction (`match_llm.py`)
-- For sentences with no span found after Step 2, call a local LLM (Ollama Python API)
-- Prompt: extract pathway name variant as strict JSON list
-- Re-verify every LLM-extracted string has an exact character span in the source sentence before accepting
-- Merge with Step 2 output
+- For 1,280 pairs with no spans from Step 2, call Ollama (`qwen2.5:7b`) via REST API
+- Use V1 prompt from `prompts/pathway_extraction.py`
+- Re-verify every LLM-returned string exists verbatim in source text before accepting
+- Resumable via `data/raw/llm_cache/` (per-pair JSON cache)
+- **Output:** `data/processed/all_matches.jsonl` (Step 2 spans + LLM spans, all 1,366 pairs)
 
 ### Step 4 — Token Alignment & BIO Tagging (`tag_bio.py`)
 - HF fast tokenizer `word_ids()` for subword-accurate alignment
