@@ -10,7 +10,7 @@ Output : data/processed/db_with_extracted_pathways.json  (same order, added fiel
 Cache  : data/raw/llm_cache_db/{pmid}__{pathway}.json  (resumable)
 
 Run with:
-    venv310/bin/python3 extract_pathway_from_db.py
+    venv310/bin/python3 llm/extract_pathway_from_db.py
 """
 
 import json

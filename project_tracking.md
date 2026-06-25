@@ -84,7 +84,7 @@ Recon    ───┘                                              │
 
 ---
 
-### 🔬 LLM Extraction Experiment (`extract_pathway_from_db.py`)
+### 🔬 LLM Extraction Experiment (`llm/extract_pathway_from_db.py`)
 
 Separate experiment using a pre-built disease-pathway dataset to evaluate and
 refine LLM prompting before applying to the main pipeline (Step 3).
@@ -98,7 +98,7 @@ refine LLM prompting before applying to the main pipeline (Step 3).
 - Chosen for: best JSON output discipline among 7B models, fits in 8GB VRAM
 - All LLM responses verified verbatim against source text before accepting
 
-**Prompt versions benchmarked** (see `prompts/pathway_extraction.py`):
+**Prompt versions benchmarked** (see `llm/prompts/pathway_extraction.py`):
 
 | Version | Strategy | Found | Notes |
 |---|---|---|---|
@@ -107,7 +107,7 @@ refine LLM prompting before applying to the main pipeline (Step 3).
 | V3 | Few-shot (5 examples + entity def) | 198/450 (44.0%) | Significant regression on 7B model |
 
 - V3 confirmed finding from research: few-shot helps GPT-4/70B but hurts smaller models
-- V1 is active; V2 and V3 kept in `prompts/pathway_extraction.py` for future model testing
+- V1 is active; V2 and V3 kept in `llm/prompts/pathway_extraction.py` for future model testing
 - **Next improvement:** Option B — token overlap post-processing as deterministic fallback (not yet implemented)
 
 **Outputs:**
@@ -117,14 +117,33 @@ refine LLM prompting before applying to the main pipeline (Step 3).
 
 ---
 
-## Planned
+### ✅ Step 3 — LLM Variant Extraction (`llm/match_llm.py`)
+- For 1,280 pairs with no spans from Step 2, called Ollama (`qwen2.5:7b`) via REST API
+- Used V1 prompt imported from `llm/prompts/pathway_extraction.py`
+- Re-verified every LLM-returned string verbatim against source text before accepting
+- Resumable via `data/raw/llm_cache/` (per-pair JSON cache, 87 pre-cached from earlier run)
+- **Results:** 178 additional pairs found by LLM · 144 hallucinations dropped · 12 min runtime
 
-### Step 3 — LLM Variant Extraction (`match_llm.py`)
-- For 1,280 pairs with no spans from Step 2, call Ollama (`qwen2.5:7b`) via REST API
-- Use V1 prompt from `prompts/pathway_extraction.py`
-- Re-verify every LLM-returned string exists verbatim in source text before accepting
-- Resumable via `data/raw/llm_cache/` (per-pair JSON cache)
-- **Output:** `data/processed/all_matches.jsonl` (Step 2 spans + LLM spans, all 1,366 pairs)
+### ✅ Source 3 Merge — DB Spans (`llm/merge_db_spans.py`)
+- Converted `db_with_extracted_pathways.json` (V1 results) into character-offset spans
+- Matched pathway names to KEGG/Reactome IDs via normalized + synonym lookup
+- Unmatched pathway names (Recon3D-specific names) assigned synthetic `db__` IDs with `source: "recon3d"`
+- Appended 296 new records to `all_matches.jsonl`
+- **Results:** 162 mapped to KEGG/Reactome · 134 assigned recon3d source · 0 skipped
+
+**Final `data/processed/all_matches.jsonl`:**
+
+| Source | Records with spans | Notes |
+|---|---|---|
+| Step 2 (rule-based) | 86 | SpaCy PhraseMatcher |
+| Step 3 (LLM) | 178 | qwen2.5:7b via Ollama |
+| Source 3 (DB merge) | 296 | disease-pathway DB, V1 prompt |
+| **Total** | **560** | 704 spans · 318 unique span texts |
+
+Record-level `source` field values: `"kegg"`, `"reactome"`, `"recon3d"`  
+Span-level `source` field values: `"abstract"`, `"full_text"`
+
+## Planned
 
 ### Step 4 — Token Alignment & BIO Tagging (`tag_bio.py`)
 - HF fast tokenizer `word_ids()` for subword-accurate alignment

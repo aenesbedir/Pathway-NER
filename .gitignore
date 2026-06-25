@@ -5,6 +5,13 @@
 data/raw/kegg_cache/
 data/raw/reactome_cache/
 data/raw/pubmed_cache/
+data/raw/llm_cache/
+data/raw/llm_cache_db/
+
+# Images
+*.png
+*.jpg
+*.jpeg
 
 # OS
 .DS_Store

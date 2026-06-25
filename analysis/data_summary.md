@@ -9,13 +9,22 @@ Summary of all data collected and analysed in Steps 1a–1c.
 ```
 data/
 ├── raw/
-│   ├── kegg_pathways.jsonl       — 86 entries
-│   ├── reactome_pathways.jsonl   — 335 entries
-│   ├── abstracts.jsonl           — 1,122 entries
-│   └── pubmed_cache/
-│       ├── abs_{pmid}.json       — 1,191 files (one per fetched PMID)
-│       └── pmc_PMC{id}.json      — 386 files (one per PMC article)
-└── processed/                    — empty (Step 1d output will go here)
+│   ├── kegg_pathways.jsonl                                          — 86 pathway entries
+│   ├── reactome_pathways.jsonl                                      — 335 pathway entries
+│   ├── abstracts.jsonl                                              — 1,122 article entries
+│   ├── extracted_disease_pathway_db_disease_pathway_just_abstracts.json — 450 disease-pathway pairs
+│   ├── pubmed_cache/                                                — gitignored
+│   │   ├── abs_{pmid}.json       — 1,191 files
+│   │   └── pmc_PMC{id}.json      — 386 files
+│   ├── llm_cache/                                                   — gitignored, 1,280 files
+│   └── llm_cache_db/                                                — gitignored, 450 files
+└── processed/
+    ├── pathway_abstract_pairs.jsonl        — 1,366 (pathway, pmid) pairs (Step 1d)
+    ├── exact_matches.jsonl                 — 1,366 pairs with rule-based spans (Step 2)
+    ├── all_matches.jsonl                   — 1,662 pairs, all sources merged (Steps 2+3+DB)
+    ├── db_with_extracted_pathways.json     — V1 LLM results on disease-pathway DB (296/450)
+    ├── db_with_extracted_pathways_v2.json  — V2 results (294/450)
+    └── db_with_extracted_pathways_v3.json  — V3 results (198/450)
 ```
 
 All cache files are JSON. Cache directories are gitignored (regenerable by re-running fetch scripts).
@@ -95,3 +104,40 @@ Two methods were used to retrieve full-text, in order:
 | XML only | 154 |
 | HTML fallback (additional) | 206 |
 | **Total** | **360** |
+
+---
+
+## all_matches.jsonl
+
+**1,662 records** — the main annotation file fed into Step 4 (BIO tagging). Merges three sources:
+
+| Source | Records | How spans were found |
+|---|---|---|
+| Step 2 rule-based | 1,366 | SpaCy PhraseMatcher on KEGG/Reactome pairs |
+| Step 3 LLM | +0 new records (spans added to existing) | qwen2.5:7b via Ollama |
+| Source 3 DB merge | +296 new records | LLM on disease-pathway DB, offsets resolved |
+| **Total** | **1,662** | |
+
+560 records have at least one span · 1,102 have no spans (will be filtered in Step 5)  
+704 total spans · 318 unique span texts · 571 from abstract · 133 from full_text
+
+Each record schema:
+```json
+{
+  "pathway_id": "hsa00030",
+  "source": "kegg",
+  "pmid": "16788179",
+  "spans": [
+    {"start": 42, "end": 68, "text": "pentose phosphate pathway", "source": "abstract"}
+  ]
+}
+```
+
+**Record-level `source`** — which database the pathway came from:
+- `"kegg"` — KEGG human metabolism pathways
+- `"reactome"` — Reactome metabolism hierarchy
+- `"recon3d"` — disease-pathway DB records whose pathway name did not map to a KEGG/Reactome ID
+
+**Span-level `source`** — which part of the article the span was found in:
+- `"abstract"` — character offsets index into the `abstract` field of `abstracts.jsonl`
+- `"full_text"` — character offsets index into the `full_text` field (offsets can be very large)
