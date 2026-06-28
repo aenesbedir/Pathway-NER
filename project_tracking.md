@@ -143,13 +143,6 @@ refine LLM prompting before applying to the main pipeline (Step 3).
 Record-level `source` field values: `"kegg"`, `"reactome"`, `"recon3d"`  
 Span-level `source` field values: `"abstract"`, `"full_text"`
 
-## Planned
-
-### Step 6 — Fine-tuning (`train.py`)
-- Fine-tune `microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext` using HF `Trainer`
-- Load `train.jsonl`, `val.jsonl`, `test.jsonl` as HF datasets
-- `BertForTokenClassification` with 3 labels: O, B-Pathway, I-Pathway
-
 ---
 
 ## Completed
@@ -181,3 +174,23 @@ Span-level `source` field values: `"abstract"`, `"full_text"`
 - All pipeline scripts moved to `preprocessing/` (fetch_kegg, fetch_reactome, fetch_pubmed, build_mapping, match_exact, tag_bio, build_dataset)
 - All LLM scripts remain in `llm/` (match_llm, extract_pathway_from_db, merge_db_spans, prompts/)
 - `knowledge_base/nlp_concepts.md` created — running glossary of NLP concepts encountered
+
+---
+
+## Step 6 — Fine-tuning (`train.py`)
+
+Fine-tunes `BertForTokenClassification` on train/val/test splits using HuggingFace `Trainer`.
+All experiments tracked in `knowledge_base/model_experiments.md`.
+
+### ✅ Run 001 — Baseline, all layers fine-tuned
+- All layers fine-tuned (no freezing) — BiomedBERT pre-trained on same domain
+- Weighted cross-entropy loss `[O=0.1, B=5.0, I=3.0]` to handle 98.6% O imbalance
+- Early stopping on val F1 (patience=5); stopped at epoch 15, best at epoch 10
+- **Test results:** F1=0.46 · Precision=0.40 · Recall=0.55
+- **Saved to:** `models/pathway-ner/`
+- **Key finding:** Precision too low (0.40) — class weights too aggressive, pushing too many false positives
+
+### Planned experiments
+- Run 002: Reduce class weights `[0.1, 2.0, 1.5]` to improve precision
+- Run 003: Freeze bottom 6 layers, fine-tune top 6 + classifier head
+- Error analysis: inspect false positives to understand mislabeling patterns

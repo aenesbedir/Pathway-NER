@@ -1,6 +1,9 @@
 # Virtual environment
 .venv/
 
+# Model checkpoints (large binary files)
+models/
+
 # API response caches (large, regenerable)
 data/raw/kegg_cache/
 data/raw/reactome_cache/
