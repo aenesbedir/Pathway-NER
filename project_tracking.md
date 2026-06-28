@@ -145,13 +145,39 @@ Span-level `source` field values: `"abstract"`, `"full_text"`
 
 ## Planned
 
-### Step 4 — Token Alignment & BIO Tagging (`tag_bio.py`)
-- HF fast tokenizer `word_ids()` for subword-accurate alignment
-- Sliding window with overlap for abstracts near the 512-token BiomedBERT limit
-- Special tokens (`[CLS]`, `[SEP]`) get label `-100`
-- Per-token label sequences: `B-Pathway`, `I-Pathway`, `O`
+### Step 6 — Fine-tuning (`train.py`)
+- Fine-tune `microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext` using HF `Trainer`
+- Load `train.jsonl`, `val.jsonl`, `test.jsonl` as HF datasets
+- `BertForTokenClassification` with 3 labels: O, B-Pathway, I-Pathway
 
-### Step 5 — Dataset Compilation (`build_dataset.py`)
-- Filter out samples with zero positive labels
-- Stratified split by pathway (not random) to prevent data leakage
-- Write `train.json`, `val.json`, `test.json` in HF NER format
+---
+
+## Completed
+
+### ✅ Step 4 — Token Alignment & BIO Tagging (`preprocessing/tag_bio.py`)
+- Loaded `all_matches.jsonl` + `abstracts.jsonl`; supplemented with DB file for recon3d PMIDs
+- Grouped spans by pmid; abstract spans → full abstract, full-text spans → ±500 char window
+- Tokenized with BiomedBERT fast tokenizer (`AutoTokenizer`); used `word_ids()` + `offset_mapping` for alignment
+- First subword of each word gets real BIO label; continuations and special tokens get `-100`
+- Nearby full-text spans merged into the same window to avoid redundant examples
+- **Output:** `data/processed/bio_tags.jsonl`
+- **Results:** 597 records · 488 from abstracts · 109 from full-text windows · 684 B-Pathway · 1,401 I-Pathway tokens · 98.6% O (expected imbalance)
+
+### ✅ Step 5 — Dataset Compilation (`preprocessing/build_dataset.py`)
+- Filtered 1 record with no positive labels after tokenization (truncation edge case)
+- Stratified split by pathway (primary pathway_id) with seed=42 — all records for a pathway go to the same split to prevent data leakage
+- Ratios: 80% train / 10% val / 10% test applied at pathway level
+- **Output:** `data/processed/train.jsonl`, `val.jsonl`, `test.jsonl`
+- **Results:**
+
+| Split | Pathways | Records | Positive labels |
+|---|---|---|---|
+| train | 148 | 502 | 1,708 |
+| val | 18 | 44 | 224 |
+| test | 19 | 50 | 153 |
+| **Total** | **185** | **596** | **2,085** |
+
+### 📁 Code reorganisation
+- All pipeline scripts moved to `preprocessing/` (fetch_kegg, fetch_reactome, fetch_pubmed, build_mapping, match_exact, tag_bio, build_dataset)
+- All LLM scripts remain in `llm/` (match_llm, extract_pathway_from_db, merge_db_spans, prompts/)
+- `knowledge_base/nlp_concepts.md` created — running glossary of NLP concepts encountered
