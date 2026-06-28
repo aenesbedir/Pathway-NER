@@ -42,7 +42,7 @@ from transformers import (
 # ---------------------------------------------------------------------------
 
 MODEL_NAME = "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext"
-OUTPUT_DIR = Path("models/pathway-ner")
+OUTPUT_DIR = Path("models/pathway-ner-004")
 
 LABEL2ID = {"O": 0, "B-Pathway": 1, "I-Pathway": 2}
 ID2LABEL = {v: k for k, v in LABEL2ID.items()}
@@ -144,6 +144,14 @@ def main() -> None:
         id2label=ID2LABEL,
         label2id=LABEL2ID,
     )
+
+    # Freeze bottom 6 BERT layers (embeddings + layers 0-5)
+    for name, param in model.named_parameters():
+        if "embeddings" in name or any(f"encoder.layer.{i}." in name for i in range(9)):
+            param.requires_grad = False
+    frozen = sum(1 for p in model.parameters() if not p.requires_grad)
+    total = sum(1 for p in model.parameters())
+    log.info("Frozen params: %d / %d", frozen, total)
 
     data_collator = DataCollatorForTokenClassification(tokenizer=tokenizer, padding=True)
 

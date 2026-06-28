@@ -58,3 +58,121 @@ Early stopping triggered at epoch 15 (no val F1 improvement for 5 epochs after e
 - Human review of a sample of training annotations
 
 ---
+
+## Run 002 — Reduced class weights
+
+**Path:** `models/pathway-ner-002/`
+
+**Date:** 2026-06-26
+
+**Change from Run 001:** Class weights reduced from `[0.1, 5.0, 3.0]` to `[0.1, 2.0, 1.5]` to improve precision.
+
+### Hyperparameters
+Same as Run 001 except:
+
+| Setting | Value |
+|---|---|
+| Class weights (O / B / I) | `0.1 / 2.0 / 1.5` |
+
+### Results
+| Metric | Val (best) | Test |
+|---|---|---|
+| F1 | — | 0.4500 |
+| Precision | — | 0.3529 |
+| Recall | — | 0.6207 |
+
+Early stopping triggered at epoch 14.
+
+### Notes
+- Recall increased (0.55 → 0.62) but precision dropped further (0.40 → 0.35) — opposite of intended
+- Reducing weights alone does not fix the precision problem
+- Root cause: noisy distant supervision labels teach the model to over-predict
+- Weight tuning is not the right lever here
+
+---
+
+## Run 003 — Freeze bottom 6 layers
+
+**Path:** `models/pathway-ner-003/`
+
+**Date:** 2026-06-29
+
+**Change from Run 001:** Froze bottom 6 BERT layers (embeddings + layers 0–5). Only top 6 layers + classifier head trained. 101/199 parameter groups frozen.
+
+### Hyperparameters
+Same as Run 001 except:
+
+| Setting | Value |
+|---|---|
+| Frozen layers | Embeddings + encoder layers 0–5 |
+| Trainable layers | Encoder layers 6–11 + classifier |
+
+### Results
+| Metric | Val (best) | Test |
+|---|---|---|
+| F1 | — | 0.4177 |
+| Precision | — | 0.3300 |
+| Recall | — | 0.5690 |
+
+Ran all 20 epochs (no early stopping triggered).
+
+### Notes
+- Worst result of the three runs — freezing hurt performance
+- Precision dropped further (0.40 → 0.33) despite fewer trainable parameters
+- Confirms BiomedBERT lower layers need full adaptation even within the same domain
+- Freezing strategy ruled out for this dataset
+
+### Summary across runs
+
+| Run | Change | F1 | Precision | Recall |
+|---|---|---|---|---|
+| 001 | Baseline, all layers | **0.46** | **0.40** | 0.55 |
+| 002 | Reduced weights [0.1/2.0/1.5] | 0.45 | 0.35 | **0.62** |
+| 003 | Freeze bottom 6 layers | 0.42 | 0.33 | 0.57 |
+
+Run 001 is the best checkpoint. Precision consistently low across all runs — points to data quality (noisy distant supervision labels) rather than hyperparameters.
+
+---
+
+## Run 004 — Freeze bottom 9 layers
+
+**Path:** `models/pathway-ner-004/`
+
+**Date:** 2026-06-29
+
+**Change from Run 003:** Froze 9 layers instead of 6. Only top 3 layers + classifier head trained. 149/199 parameter groups frozen.
+
+### Hyperparameters
+Same as Run 001 except:
+
+| Setting | Value |
+|---|---|
+| Frozen layers | Embeddings + encoder layers 0–8 |
+| Trainable layers | Encoder layers 9–11 + classifier |
+
+### Results
+| Metric | Val (best) | Test |
+|---|---|---|
+| F1 | — | 0.3656 |
+| Precision | — | 0.2656 |
+| Recall | — | 0.5862 |
+
+Ran all 20 epochs (no early stopping triggered).
+
+### Notes
+- Worst result overall — freezing 9 layers significantly hurts all metrics
+- Clear trend: more frozen layers → worse F1 and precision
+- Freezing strategy definitively ruled out for this dataset and domain
+
+### Full summary across all runs
+
+| Run | Change | F1 | Precision | Recall |
+|---|---|---|---|---|
+| 001 | All layers, w=[0.1/5.0/3.0] | **0.46** | **0.40** | 0.55 |
+| 002 | All layers, w=[0.1/2.0/1.5] | 0.45 | 0.35 | **0.62** |
+| 003 | Freeze 6 layers | 0.42 | 0.33 | 0.57 |
+| 004 | Freeze 9 layers | 0.37 | 0.27 | 0.59 |
+
+**Conclusion:** Run 001 is the best. Precision is consistently low (0.27–0.40) across all hyperparameter changes — root cause is data quality, not model configuration. Next step: error analysis.
+
+---

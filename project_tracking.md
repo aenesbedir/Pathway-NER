@@ -190,7 +190,36 @@ All experiments tracked in `knowledge_base/model_experiments.md`.
 - **Saved to:** `models/pathway-ner/`
 - **Key finding:** Precision too low (0.40) — class weights too aggressive, pushing too many false positives
 
-### Planned experiments
-- Run 002: Reduce class weights `[0.1, 2.0, 1.5]` to improve precision
-- Run 003: Freeze bottom 6 layers, fine-tune top 6 + classifier head
-- Error analysis: inspect false positives to understand mislabeling patterns
+### ✅ Run 002 — Reduced class weights `[0.1, 2.0, 1.5]`
+- Precision dropped further (0.40 → 0.35), recall increased (0.55 → 0.62)
+- Weight tuning is not the right lever — ruled out
+
+### ✅ Run 003 — Freeze bottom 6 layers
+- F1 dropped to 0.42, precision 0.33 — freezing hurts performance
+- BiomedBERT lower layers need full adaptation even within same domain
+
+### ✅ Run 004 — Freeze bottom 9 layers
+- Worst result: F1=0.37, Precision=0.27 — clear trend: more freezing = worse
+- Freezing strategy definitively ruled out
+
+### Full results
+
+| Run | Change | F1 | Precision | Recall |
+|---|---|---|---|---|
+| 001 | All layers, w=[0.1/5.0/3.0] | **0.46** | **0.40** | 0.55 |
+| 002 | All layers, w=[0.1/2.0/1.5] | 0.45 | 0.35 | **0.62** |
+| 003 | Freeze 6 layers | 0.42 | 0.33 | 0.57 |
+| 004 | Freeze 9 layers | 0.37 | 0.27 | 0.59 |
+
+**Best checkpoint: Run 001** (`models/pathway-ner/`)
+
+### ✅ Error Analysis (`analysis/error_analysis.py`)
+- Ran Run 001 on test set, decoded all predictions back to readable spans
+- Output saved to `analysis/error_analysis.json` (per-record + summary)
+- **Span-level:** TP=40, FP=41, FN=24 · P=0.49 · R=0.63 · F1=0.55
+
+**Key findings:**
+- Many false positives are legitimate pathway names missed by distant supervision (e.g. `"heme synthesis"`, `"cholesterol metabolism"`, `"glycolytic pathway"`) — **data quality is the root cause**
+- Partial term false positives (`"sulfate"`, `"biosynthesis"`, `"metabolism"`) — model over-generalizes on pathway name components
+- Tokenizer artifact: `"dermatan"` → `"dermat" + "##an"` causes consistent misses (11 FN for dermatan sulfate)
+- Conclusion: improving the annotation pipeline will have more impact than further hyperparameter tuning
