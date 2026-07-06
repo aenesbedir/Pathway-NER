@@ -1,21 +1,24 @@
 #!/usr/bin/env python3
 """
-match_exact.py  —  Step 2
+match_exact.py
 
-Runs SpaCy PhraseMatcher over each article (abstract + full_text) to find
-exact/case-insensitive mentions of pathway names and synonyms.
+Case-insensitive exact matching of pathway names over article abstracts and
+full texts using SpaCy PhraseMatcher.
 
-All (pathway, pmid) pairs are written to output regardless of match count.
-Pairs with no spans are passed to Step 3 (LLM matching).
+Supported pathway sources (add new loaders to SOURCES to extend):
+  - "recon"    : unique_pathways_from_recon.json  (flat name list, no IDs)
+  - "kegg"     : data/raw/kegg_pathways.jsonl
+  - "reactome" : data/raw/reactome_pathways.jsonl
 
-Input  : data/processed/pathway_abstract_pairs.jsonl
-         data/raw/abstracts.jsonl
+Usage:
+  python3 preprocessing/match_exact.py --sources recon
+  python3 preprocessing/match_exact.py --sources recon kegg reactome
+
+Input  : data/raw/articles.json
 Output : data/processed/exact_matches.jsonl
-
-Run with the project venv:
-    venv310/bin/python3 match_exact.py
 """
 
+import argparse
 import json
 import logging
 from collections import defaultdict
@@ -24,11 +27,10 @@ from pathlib import Path
 import spacy
 from spacy.matcher import PhraseMatcher
 
-PAIRS_FILE = Path("data/processed/pathway_abstract_pairs.jsonl")
-ABSTRACTS_FILE = Path("data/raw/abstracts.jsonl")
-OUTPUT_FILE = Path("data/processed/exact_matches.jsonl")
+ARTICLES_FILE = Path("data/raw/articles.json")
+OUTPUT_FILE   = Path("data/processed/exact_matches.jsonl")
 
-SPACY_MODEL = "en_core_sci_sm"
+MIN_TERM_LEN  = 4   # skip terms shorter than this (characters)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -38,27 +40,87 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 
 
-def load_abstracts() -> dict[str, dict]:
-    abstracts = {}
-    with ABSTRACTS_FILE.open(encoding="utf-8") as fh:
+# ---------------------------------------------------------------------------
+# Pathway loaders — each loader returns list[dict]:
+#   {"pathway_id": str, "canonical_name": str, "synonyms": list[str]}
+# ---------------------------------------------------------------------------
+
+def load_recon() -> list[dict]:
+    path = Path("unique_pathways_from_recon.json")
+    names = json.loads(path.read_text(encoding="utf-8"))
+    return [
+        {"pathway_id": name, "canonical_name": name, "synonyms": []}
+        for name in names
+    ]
+
+
+def load_kegg() -> list[dict]:
+    path = Path("data/raw/kegg_pathways.jsonl")
+    pathways = []
+    with path.open(encoding="utf-8") as fh:
         for line in fh:
-            rec = json.loads(line)
-            abstracts[rec["pmid"]] = rec
-    return abstracts
+            r = json.loads(line)
+            pathways.append({
+                "pathway_id":     r["pathway_id"],
+                "canonical_name": r["canonical_name"],
+                "synonyms":       r.get("synonyms", []),
+            })
+    return pathways
 
 
-def load_pairs() -> dict[str, list[dict]]:
-    """Group pairs by pmid → list of pathway records."""
-    by_pmid: dict[str, list[dict]] = defaultdict(list)
-    with PAIRS_FILE.open(encoding="utf-8") as fh:
+def load_reactome() -> list[dict]:
+    path = Path("data/raw/reactome_pathways.jsonl")
+    pathways = []
+    with path.open(encoding="utf-8") as fh:
         for line in fh:
-            pair = json.loads(line)
-            by_pmid[pair["pmid"]].append(pair)
-    return by_pmid
+            r = json.loads(line)
+            pathways.append({
+                "pathway_id":     r["pathway_id"],
+                "canonical_name": r["canonical_name"],
+                "synonyms":       r.get("synonyms", []),
+            })
+    return pathways
 
+
+SOURCES = {
+    "recon":    load_recon,
+    "kegg":     load_kegg,
+    "reactome": load_reactome,
+}
+
+
+# ---------------------------------------------------------------------------
+# Matcher
+# ---------------------------------------------------------------------------
+
+def build_matcher(
+    nlp: spacy.Language,
+    pathways: list[dict],
+) -> tuple[PhraseMatcher, dict[str, list[str]]]:
+    """Build a single PhraseMatcher from all pathway names and synonyms.
+    Also returns a term_text → [pathway_id, ...] mapping."""
+    term_to_ids: dict[str, list[str]] = defaultdict(list)
+    for pw in pathways:
+        pid = pw["pathway_id"]
+        terms = [pw["canonical_name"]] + pw.get("synonyms", [])
+        for term in terms:
+            term = term.strip()
+            if len(term) >= MIN_TERM_LEN:
+                term_to_ids[term].append(pid)
+
+    matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
+    for term in term_to_ids:
+        matcher.add(term, [nlp.make_doc(term)])
+
+    log.info("Unique terms in matcher: %d", len(term_to_ids))
+    return matcher, dict(term_to_ids)
+
+
+# ---------------------------------------------------------------------------
+# Span helpers
+# ---------------------------------------------------------------------------
 
 def keep_longest(spans: list[dict]) -> list[dict]:
-    """Remove spans that are fully contained within a longer span."""
     spans = sorted(spans, key=lambda s: s["end"] - s["start"], reverse=True)
     kept = []
     for span in spans:
@@ -70,82 +132,108 @@ def keep_longest(spans: list[dict]) -> list[dict]:
 def find_spans(
     nlp: spacy.Language,
     matcher: PhraseMatcher,
+    term_to_ids: dict[str, list[str]],
     text: str,
     source: str,
 ) -> list[dict]:
     doc = nlp(text)
-    matches = matcher(doc)
-    spans = []
-    for _, start, end in matches:
-        spans.append({
-            "start": doc[start].idx,
-            "end": doc[end - 1].idx + len(doc[end - 1].text),
-            "text": doc[start:end].text,
-            "source": source,
-        })
-    return keep_longest(spans)
+    raw = []
+    for match_id, start, end in matcher(doc):
+        term       = nlp.vocab.strings[match_id]
+        span_start = doc[start].idx
+        span_end   = doc[end - 1].idx + len(doc[end - 1].text)
+        for pid in term_to_ids.get(term, []):
+            raw.append({
+                "start":      span_start,
+                "end":        span_end,
+                "text":       doc[start:end].text,
+                "pathway_id": pid,
+                "source":     source,
+            })
+    return keep_longest(raw)
 
 
-def build_matcher(nlp: spacy.Language, pathway: dict) -> PhraseMatcher:
-    matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
-    terms = [pathway["canonical_name"]] + pathway.get("synonyms", [])
-    patterns = [nlp.make_doc(t) for t in terms if t.strip()]
-    matcher.add("PATHWAY", patterns)
-    return matcher
-
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--sources",
+        nargs="+",
+        default=["recon"],
+        choices=list(SOURCES),
+        help="Pathway sources to use (default: recon)",
+    )
+    args = parser.parse_args()
+
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
 
-    log.info("Loading spaCy model: %s", SPACY_MODEL)
-    nlp = spacy.load(SPACY_MODEL, disable=["ner", "parser"])
+    log.info("Loading spaCy model: en_core_sci_sm")
+    nlp = spacy.load("en_core_sci_sm", disable=["ner", "parser"])
 
-    log.info("Loading abstracts …")
-    abstracts = load_abstracts()
+    # Load pathways from selected sources
+    pathways: list[dict] = []
+    for src in args.sources:
+        loaded = SOURCES[src]()
+        log.info("  %-10s → %d pathways", src, len(loaded))
+        pathways.extend(loaded)
+    log.info("Total pathways: %d", len(pathways))
 
-    log.info("Loading pathway-pmid pairs …")
-    by_pmid = load_pairs()
+    matcher, term_to_ids = build_matcher(nlp, pathways)
 
-    total_pairs = sum(len(v) for v in by_pmid.values())
-    log.info("Total pairs: %d across %d articles", total_pairs, len(by_pmid))
+    log.info("Loading articles: %s", ARTICLES_FILE)
+    articles = json.loads(ARTICLES_FILE.read_text(encoding="utf-8"))
+    log.info("Articles: %d", len(articles))
 
-    written = 0
-    with_spans = 0
-    total_spans = 0
+    written = with_spans = total_spans = 0
 
     with OUTPUT_FILE.open("w", encoding="utf-8") as out:
-        for pmid, pathways in by_pmid.items():
-            article = abstracts.get(pmid, {})
-            abstract_text = article.get("abstract") or ""
-            full_text = article.get("full_text") or ""
+        for i, article in enumerate(articles):
+            pmid      = article["pmid"]
+            abstract  = (article.get("abstract") or "").strip()
+            full_text = (article.get("full_text") or "").strip()
 
-            for pathway in pathways:
-                matcher = build_matcher(nlp, pathway)
-                spans = []
+            all_spans: list[dict] = []
+            if abstract:
+                all_spans += find_spans(nlp, matcher, term_to_ids, abstract, "abstract")
+            if full_text:
+                all_spans += find_spans(nlp, matcher, term_to_ids, full_text, "full_text")
 
-                if abstract_text:
-                    spans += find_spans(nlp, matcher, abstract_text, "abstract")
-                if full_text:
-                    spans += find_spans(nlp, matcher, full_text, "full_text")
+            # Group spans by pathway_id
+            by_pathway: dict[str, list[dict]] = defaultdict(list)
+            for span in all_spans:
+                pid = span.pop("pathway_id")
+                by_pathway[pid].append(span)
 
-                out.write(json.dumps({
-                    "pathway_id": pathway["pathway_id"],
-                    "source": pathway["source"],
-                    "pmid": pmid,
-                    "spans": spans,
-                }, ensure_ascii=False) + "\n")
-
-                written += 1
-                if spans:
+            if by_pathway:
+                for pid, spans in by_pathway.items():
+                    out.write(json.dumps(
+                        {"pmid": pmid, "pathway_id": pid, "spans": spans},
+                        ensure_ascii=False,
+                    ) + "\n")
+                    written += 1
                     with_spans += 1
                     total_spans += len(spans)
+            else:
+                # No spans found — write empty record for downstream LLM step
+                out.write(json.dumps(
+                    {"pmid": pmid, "pathway_id": None, "spans": []},
+                    ensure_ascii=False,
+                ) + "\n")
+                written += 1
+
+            if (i + 1) % 500 == 0:
+                log.info("  %d / %d articles processed", i + 1, len(articles))
 
     log.info("─" * 60)
-    log.info("Output          : %s", OUTPUT_FILE)
-    log.info("Pairs written   : %d", written)
-    log.info("With spans      : %d (%.1f%%)", with_spans, 100 * with_spans / written)
-    log.info("No spans        : %d → goes to Step 3", written - with_spans)
-    log.info("Total spans     : %d", total_spans)
+    log.info("Sources       : %s", ", ".join(args.sources))
+    log.info("Output        : %s", OUTPUT_FILE)
+    log.info("Records       : %d", written)
+    log.info("With spans    : %d", with_spans)
+    log.info("No spans      : %d", written - with_spans)
+    log.info("Total spans   : %d", total_spans)
     log.info("─" * 60)
 
 

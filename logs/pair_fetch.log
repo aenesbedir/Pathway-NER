@@ -1,0 +1,22 @@
+03:54:02  INFO      Diseases file: data/raw/selected_diseases.json  |  Pathways: 98  |  Diseases: 98  |  Total pairs: 9604
+03:54:02  INFO        500 / 9604 pairs searched  |  46 with hits  |  62 unique PMIDs
+03:54:02  INFO        1000 / 9604 pairs searched  |  71 with hits  |  166 unique PMIDs
+03:54:02  INFO        1500 / 9604 pairs searched  |  214 with hits  |  1253 unique PMIDs
+03:54:02  INFO        2000 / 9604 pairs searched  |  330 with hits  |  1886 unique PMIDs
+03:54:02  INFO        2500 / 9604 pairs searched  |  398 with hits  |  2581 unique PMIDs
+03:54:02  INFO        3000 / 9604 pairs searched  |  455 with hits  |  2803 unique PMIDs
+03:54:02  INFO        3500 / 9604 pairs searched  |  601 with hits  |  3531 unique PMIDs
+03:54:02  INFO        4000 / 9604 pairs searched  |  709 with hits  |  3924 unique PMIDs
+03:54:02  INFO        4500 / 9604 pairs searched  |  788 with hits  |  4286 unique PMIDs
+03:54:02  INFO        5000 / 9604 pairs searched  |  818 with hits  |  4353 unique PMIDs
+03:54:02  INFO        5500 / 9604 pairs searched  |  890 with hits  |  4759 unique PMIDs
+03:54:02  INFO        6000 / 9604 pairs searched  |  1035 with hits  |  5404 unique PMIDs
+03:54:02  INFO        6500 / 9604 pairs searched  |  1193 with hits  |  6184 unique PMIDs
+03:54:02  INFO        7000 / 9604 pairs searched  |  1380 with hits  |  7529 unique PMIDs
+03:54:02  INFO        7500 / 9604 pairs searched  |  1536 with hits  |  8268 unique PMIDs
+03:54:02  INFO        8000 / 9604 pairs searched  |  1774 with hits  |  9548 unique PMIDs
+03:54:02  INFO        8500 / 9604 pairs searched  |  1824 with hits  |  9803 unique PMIDs
+03:54:02  INFO        9000 / 9604 pairs searched  |  1867 with hits  |  9956 unique PMIDs
+03:56:43  INFO        9500 / 9604 pairs searched  |  1943 with hits  |  10289 unique PMIDs
+03:59:48  INFO      Done. 1959 / 9604 pairs with hits. 10329 unique PMIDs.
+03:59:48  INFO      Saved pairs → data/raw/pathway_disease_pairs.json

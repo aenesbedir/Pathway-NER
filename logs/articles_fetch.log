@@ -1,0 +1,361 @@
+05:27:38  INFO      Pairs: 1959  |  Unique PMIDs: 10329
+05:27:38  INFO      Step 1/3: ELink PMID → PMCID (batch=25)...
+05:28:32  WARNING   ELink batch failed (offset 75, size 25): Response ended prematurely
+05:28:43  WARNING   ELink single failed for PMID 21562757: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:30:09  WARNING   ELink batch failed (offset 125, size 25): 502 Server Error: Bad Gateway for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi
+05:32:55  WARNING   ELink batch failed (offset 375, size 25): Response ended prematurely
+05:33:03  WARNING   ELink single failed for PMID 23624749: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:33:12  WARNING   ELink single failed for PMID 23625971: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:33:21  WARNING   ELink single failed for PMID 23641933: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:33:43  WARNING   ELink single failed for PMID 23665398: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:34:06  WARNING   ELink single failed for PMID 23675481: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:34:15  WARNING   ELink single failed for PMID 23680095: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:34:25  WARNING   ELink single failed for PMID 23680642: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:34:35  WARNING   ELink single failed for PMID 23682557: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:34:43  WARNING   ELink single failed for PMID 23685169: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:34:52  WARNING   ELink single failed for PMID 23690849: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:35:15  WARNING   ELink single failed for PMID 23691124: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:36:21  WARNING   ELink batch failed (offset 400, size 25): Response ended prematurely
+05:38:29  WARNING   ELink batch failed (offset 425, size 25): HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=30)
+05:41:39  WARNING   ELink batch failed (offset 675, size 25): 502 Server Error: Bad Gateway for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi
+05:44:09  WARNING   ELink batch failed (offset 725, size 25): Response ended prematurely
+05:47:21  WARNING   ELink batch failed (offset 1075, size 25): Response ended prematurely
+05:51:28  WARNING   ELink batch failed (offset 1350, size 25): Response ended prematurely
+05:51:53  WARNING   ELink single failed for PMID 28937257: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:52:02  WARNING   ELink single failed for PMID 28937628: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:52:59  WARNING   ELink single failed for PMID 28977862: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:53:09  WARNING   ELink single failed for PMID 28982329: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:53:21  WARNING   ELink single failed for PMID 28993242: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:53:29  WARNING   ELink single failed for PMID 29018486: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:53:42  WARNING   ELink single failed for PMID 29031566: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:53:51  WARNING   ELink single failed for PMID 29044647: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:54:11  WARNING   ELink single failed for PMID 29050221: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:54:23  WARNING   ELink single failed for PMID 29059163: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:54:43  WARNING   ELink single failed for PMID 29084592: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:55:07  WARNING   ELink batch failed (offset 1375, size 25): Response ended prematurely
+05:55:17  WARNING   ELink single failed for PMID 29088732: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:55:26  WARNING   ELink single failed for PMID 29093325: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:55:44  WARNING   ELink single failed for PMID 29098764: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:56:31  WARNING   ELink single failed for PMID 29128352: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:57:20  WARNING   ELink single failed for PMID 29200553: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:57:37  WARNING   ELink single failed for PMID 29215423: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+05:58:10  WARNING   ELink batch failed (offset 1450, size 25): 502 Server Error: Bad Gateway for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi
+06:00:36  WARNING   ELink batch failed (offset 1675, size 25): 502 Server Error: Bad Gateway for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi
+06:05:37  WARNING   ELink batch failed (offset 2325, size 25): Response ended prematurely
+06:07:23  WARNING   ELink single failed for PMID 3248116: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:07:41  WARNING   ELink batch failed (offset 2350, size 25): Response ended prematurely
+06:08:06  WARNING   ELink single failed for PMID 32499887: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:10:57  WARNING   ELink batch failed (offset 2500, size 25): Response ended prematurely
+06:12:24  WARNING   ELink single failed for PMID 32980779: Invalid control character at: line 1 column 86 (char 85)
+06:13:31  WARNING   ELink batch failed (offset 2550, size 25): Response ended prematurely
+06:13:41  WARNING   ELink single failed for PMID 33070662: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:13:50  WARNING   ELink single failed for PMID 33074605: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:18:09  WARNING   ELink batch failed (offset 2925, size 25): Response ended prematurely
+06:19:27  WARNING   ELink batch failed (offset 2950, size 25): 502 Server Error: Bad Gateway for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi
+06:25:45  WARNING   ELink batch failed (offset 3625, size 25): Response ended prematurely
+06:28:32  WARNING   ELink batch failed (offset 3775, size 25): Response ended prematurely
+06:30:43  WARNING   ELink batch failed (offset 3900, size 25): Response ended prematurely
+06:33:32  WARNING   ELink batch failed (offset 4125, size 25): Response ended prematurely
+06:36:55  WARNING   ELink batch failed (offset 4450, size 25): Response ended prematurely
+06:37:04  WARNING   ELink single failed for PMID 37311504: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:37:13  WARNING   ELink single failed for PMID 37311754: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:37:22  WARNING   ELink single failed for PMID 37315437: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:37:52  WARNING   ELink single failed for PMID 37333039: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:39:01  WARNING   ELink single failed for PMID 37367058: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:39:55  WARNING   ELink batch failed (offset 4550, size 25): Response ended prematurely
+06:41:14  WARNING   ELink single failed for PMID 37553601: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:41:33  WARNING   ELink single failed for PMID 37559673: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:41:42  WARNING   ELink single failed for PMID 37562090: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:41:51  WARNING   ELink single failed for PMID 37563469: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:42:01  WARNING   ELink single failed for PMID 37565253: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:42:11  WARNING   ELink single failed for PMID 37565616: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:44:03  WARNING   ELink batch failed (offset 4825, size 25): Response ended prematurely
+06:47:01  WARNING   ELink batch failed (offset 5075, size 25): Response ended prematurely
+06:47:10  WARNING   ELink single failed for PMID 38494143: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:47:29  WARNING   ELink single failed for PMID 38498130: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:51:29  WARNING   ELink batch failed (offset 5475, size 25): Response ended prematurely
+06:53:47  WARNING   ELink batch failed (offset 5575, size 25): Response ended prematurely
+06:55:15  WARNING   ELink single failed for PMID 39362324: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:56:17  WARNING   ELink batch failed (offset 5625, size 25): Response ended prematurely
+06:56:37  WARNING   ELink single failed for PMID 39411175: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:58:03  WARNING   ELink single failed for PMID 39439201: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+06:58:38  WARNING   ELink batch failed (offset 5675, size 25): 502 Server Error: Bad Gateway for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi
+06:59:06  WARNING   ELink single failed for PMID 39483435: Invalid control character at: line 1 column 86 (char 85)
+06:59:51  WARNING   ELink single failed for PMID 39496388: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:00:28  WARNING   ELink single failed for PMID 39504041: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:01:00  WARNING   ELink batch failed (offset 5725, size 25): Response ended prematurely
+07:01:55  WARNING   ELink single failed for PMID 39562371: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:02:04  WARNING   ELink single failed for PMID 39562821: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:02:13  WARNING   ELink single failed for PMID 39564113: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:02:21  WARNING   ELink single failed for PMID 39564988: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:02:47  WARNING   ELink single failed for PMID 39569614: Invalid control character at: line 1 column 86 (char 85)
+07:02:57  WARNING   ELink single failed for PMID 39571660: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:03:13  WARNING   ELink batch failed (offset 5750, size 25): Response ended prematurely
+07:05:53  WARNING   ELink batch failed (offset 6000, size 25): Response ended prematurely
+07:06:13  WARNING   ELink single failed for PMID 39908235: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:06:39  WARNING   ELink single failed for PMID 39911541: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:07:03  WARNING   ELink single failed for PMID 39913017: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:08:40  WARNING   ELink batch failed (offset 6075, size 25): Response ended prematurely
+07:08:50  WARNING   ELink single failed for PMID 39980443: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:09:26  WARNING   ELink single failed for PMID 39983345: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:09:54  WARNING   ELink single failed for PMID 39988219: Invalid control character at: line 1 column 86 (char 85)
+07:10:13  WARNING   ELink single failed for PMID 39991505: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:10:23  WARNING   ELink single failed for PMID 39993962: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:10:32  WARNING   ELink single failed for PMID 39995248: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:10:41  WARNING   ELink single failed for PMID 39995310: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:11:01  WARNING   ELink single failed for PMID 39996489: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:11:10  WARNING   ELink single failed for PMID 39996855: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:11:20  WARNING   ELink single failed for PMID 39997700: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:11:40  WARNING   ELink single failed for PMID 40002499: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:11:51  WARNING   ELink single failed for PMID 40004195: Invalid control character at: line 1 column 86 (char 85)
+07:12:07  WARNING   ELink batch failed (offset 6100, size 25): Response ended prematurely
+07:12:30  WARNING   ELink single failed for PMID 40006055: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:12:44  WARNING   ELink single failed for PMID 4000948: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:12:53  WARNING   ELink single failed for PMID 40010622: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:13:02  WARNING   ELink single failed for PMID 40011918: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:13:36  WARNING   ELink single failed for PMID 40018730: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:13:45  WARNING   ELink single failed for PMID 40019378: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:17:59  WARNING   ELink batch failed (offset 6800, size 25): Response ended prematurely
+07:18:09  WARNING   ELink single failed for PMID 40771314: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:18:19  WARNING   ELink single failed for PMID 40775789: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:18:28  WARNING   ELink single failed for PMID 40777411: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:18:38  WARNING   ELink single failed for PMID 40779003: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:18:47  WARNING   ELink single failed for PMID 40781762: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:18:55  WARNING   ELink single failed for PMID 40788876: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:19:21  WARNING   ELink single failed for PMID 40794250: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:19:43  WARNING   ELink single failed for PMID 40796654: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:19:55  WARNING   ELink single failed for PMID 40796737: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:20:05  WARNING   ELink single failed for PMID 40797237: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:20:23  WARNING   ELink single failed for PMID 40801207: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:20:31  WARNING   ELink single failed for PMID 40801266: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:20:41  WARNING   ELink single failed for PMID 40801555: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:20:52  WARNING   ELink single failed for PMID 40801789: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:22:17  WARNING   ELink batch failed (offset 6900, size 25): Response ended prematurely
+07:28:05  WARNING   ELink batch failed (offset 7675, size 25): 502 Server Error: Bad Gateway for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi
+07:28:27  WARNING   ELink single failed for PMID 41560327: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:28:36  WARNING   ELink single failed for PMID 41562040: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:28:46  WARNING   ELink single failed for PMID 41562358: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:28:55  WARNING   ELink single failed for PMID 41564247: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:29:05  WARNING   ELink single failed for PMID 41564793: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:29:22  WARNING   ELink single failed for PMID 41566481: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:30:15  WARNING   ELink single failed for PMID 41576477: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:33:31  WARNING   ELink batch failed (offset 8150, size 25): Response ended prematurely
+07:36:19  WARNING   ELink batch failed (offset 8300, size 25): Response ended prematurely
+07:39:10  WARNING   ELink batch failed (offset 8600, size 25): Response ended prematurely
+07:40:48  WARNING   ELink single failed for PMID 42213268: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:41:35  WARNING   ELink batch failed (offset 8675, size 25): Response ended prematurely
+07:42:35  WARNING   ELink single failed for PMID 42255705: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:43:36  WARNING   ELink single failed for PMID 42263482: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:43:53  WARNING   ELink batch failed (offset 8700, size 25): Response ended prematurely
+07:44:43  WARNING   ELink single failed for PMID 42267403: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:45:31  WARNING   ELink single failed for PMID 42270555: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:46:08  WARNING   ELink single failed for PMID 42275871: Invalid control character at: line 1 column 86 (char 85)
+07:46:24  WARNING   ELink batch failed (offset 8725, size 25): Response ended prematurely
+07:47:18  WARNING   ELink single failed for PMID 42282358: Invalid control character at: line 1 column 86 (char 85)
+07:48:09  WARNING   ELink batch failed (offset 8750, size 25): Response ended prematurely
+07:48:31  WARNING   ELink single failed for PMID 42288493: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:49:14  WARNING   ELink single failed for PMID 42291184: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:49:45  WARNING   ELink single failed for PMID 42294882: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:50:35  WARNING   ELink batch failed (offset 8775, size 25): HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=30)
+07:50:44  WARNING   ELink single failed for PMID 42297537: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:51:01  WARNING   ELink single failed for PMID 42299266: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:53:36  WARNING   ELink batch failed (offset 8900, size 25): Response ended prematurely
+07:53:45  WARNING   ELink single failed for PMID 42372598: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:55:41  WARNING   ELink batch failed (offset 8925, size 25): Response ended prematurely
+07:56:49  WARNING   ELink single failed for PMID 42394439: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:56:58  WARNING   ELink single failed for PMID 42394492: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:57:07  WARNING   ELink single failed for PMID 42395385: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:57:17  WARNING   ELink single failed for PMID 42395567: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:57:34  WARNING   ELink single failed for PMID 42397637: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:57:43  WARNING   ELink single failed for PMID 42398205: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:58:04  WARNING   ELink single failed for PMID 42398811: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:58:22  WARNING   ELink single failed for PMID 42399085: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:58:38  WARNING   ELink batch failed (offset 8950, size 25): Response ended prematurely
+07:58:47  WARNING   ELink single failed for PMID 42399626: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:59:01  WARNING   ELink single failed for PMID 42401103: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:59:11  WARNING   ELink single failed for PMID 42401247: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:59:20  WARNING   ELink single failed for PMID 42401310: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:59:29  WARNING   ELink single failed for PMID 42401573: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:59:38  WARNING   ELink single failed for PMID 42402249: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+07:59:47  WARNING   ELink single failed for PMID 42917: HTTPSConnectionPool(host='eutils.ncbi.nlm.nih.gov', port=443): Read timed out. (read timeout=8)
+08:02:08  WARNING   ELink batch failed (offset 9175, size 25): 502 Server Error: Bad Gateway for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi
+08:03:40  INFO        ELink done: 6485 / 10329 → PMC
+08:03:40  INFO      PMC full text: 6485  |  Abstract only: 3844
+08:03:40  INFO      Step 2/3: Fetching PubMed metadata for all 10329 articles...
+08:03:46  INFO        PubMed batch 1–100: 100 records
+08:03:48  INFO        PubMed batch 101–200: 100 records
+08:03:51  INFO        PubMed batch 201–300: 100 records
+08:03:53  INFO        PubMed batch 301–400: 0 records
+08:03:55  INFO        PubMed batch 401–500: 100 records
+08:04:00  INFO        PubMed batch 501–600: 100 records
+08:04:02  INFO        PubMed batch 601–700: 100 records
+08:04:09  INFO        PubMed batch 701–800: 100 records
+08:04:15  INFO        PubMed batch 801–900: 100 records
+08:04:17  INFO        PubMed batch 901–1000: 100 records
+08:04:24  INFO        PubMed batch 1001–1100: 97 records
+08:04:25  INFO        PubMed batch 1101–1200: 100 records
+08:04:27  INFO        PubMed batch 1201–1300: 100 records
+08:04:32  INFO        PubMed batch 1301–1400: 100 records
+08:04:34  INFO        PubMed batch 1401–1500: 100 records
+08:04:37  INFO        PubMed batch 1501–1600: 99 records
+08:04:41  INFO        PubMed batch 1601–1700: 100 records
+08:04:46  INFO        PubMed batch 1701–1800: 100 records
+08:04:49  INFO        PubMed batch 1801–1900: 99 records
+08:04:59  INFO        PubMed batch 1901–2000: 100 records
+08:05:17  INFO        PubMed batch 2001–2100: 100 records
+08:05:21  INFO        PubMed batch 2101–2200: 98 records
+08:05:31  INFO        PubMed batch 2201–2300: 100 records
+08:05:41  INFO        PubMed batch 2301–2400: 100 records
+08:05:46  INFO        PubMed batch 2401–2500: 98 records
+08:05:49  INFO        PubMed batch 2501–2600: 99 records
+08:06:11  INFO        PubMed batch 2601–2700: 100 records
+08:06:13  INFO        PubMed batch 2701–2800: 100 records
+08:06:16  INFO        PubMed batch 2801–2900: 99 records
+08:06:19  INFO        PubMed batch 2901–3000: 100 records
+08:06:23  INFO        PubMed batch 3001–3100: 99 records
+08:06:26  INFO        PubMed batch 3101–3200: 93 records
+08:06:36  INFO        PubMed batch 3201–3300: 100 records
+08:06:42  INFO        PubMed batch 3301–3400: 100 records
+08:06:52  INFO        PubMed batch 3401–3500: 100 records
+08:07:04  INFO        PubMed batch 3501–3600: 98 records
+08:07:09  INFO        PubMed batch 3601–3700: 100 records
+08:07:16  INFO        PubMed batch 3701–3800: 100 records
+08:07:44  INFO        PubMed batch 3801–3900: 100 records
+08:08:27  INFO        PubMed batch 3901–4000: 99 records
+08:08:32  INFO        PubMed batch 4001–4100: 99 records
+08:08:37  INFO        PubMed batch 4101–4200: 100 records
+08:08:41  INFO        PubMed batch 4201–4300: 100 records
+08:08:44  INFO        PubMed batch 4301–4400: 100 records
+08:08:58  INFO        PubMed batch 4401–4500: 99 records
+08:09:01  INFO        PubMed batch 4501–4600: 100 records
+08:09:13  INFO        PubMed batch 4601–4700: 100 records
+08:09:27  INFO        PubMed batch 4701–4800: 100 records
+08:09:29  INFO        PubMed batch 4801–4900: 0 records
+08:09:39  INFO        PubMed batch 4901–5000: 100 records
+08:09:44  INFO        PubMed batch 5001–5100: 100 records
+08:09:50  INFO        PubMed batch 5101–5200: 100 records
+08:10:08  INFO        PubMed batch 5201–5300: 100 records
+08:10:17  INFO        PubMed batch 5301–5400: 100 records
+08:12:05  INFO        PubMed batch 5401–5500: 100 records
+08:12:11  INFO        PubMed batch 5501–5600: 100 records
+08:12:18  INFO        PubMed batch 5601–5700: 0 records
+08:12:54  INFO        PubMed batch 5701–5800: 100 records
+08:13:26  INFO        PubMed batch 5801–5900: 100 records
+08:13:34  INFO        PubMed batch 5901–6000: 100 records
+08:14:14  INFO        PubMed batch 6001–6100: 100 records
+08:14:50  INFO        PubMed batch 6101–6200: 100 records
+08:14:54  INFO        PubMed batch 6201–6300: 100 records
+08:15:30  INFO        PubMed batch 6301–6400: 100 records
+08:15:39  INFO        PubMed batch 6401–6500: 100 records
+08:15:51  INFO        PubMed batch 6501–6600: 100 records
+08:15:55  INFO        PubMed batch 6601–6700: 100 records
+08:16:02  INFO        PubMed batch 6701–6800: 100 records
+08:16:06  INFO        PubMed batch 6801–6900: 100 records
+08:16:16  INFO        PubMed batch 6901–7000: 100 records
+08:16:25  INFO        PubMed batch 7001–7100: 100 records
+08:16:30  INFO        PubMed batch 7101–7200: 100 records
+08:16:34  INFO        PubMed batch 7201–7300: 100 records
+08:16:58  INFO        PubMed batch 7301–7400: 100 records
+08:17:03  WARNING   PubMed batch EFetch failed (offset 7400): 400 Client Error: Bad Request for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=40294723%2C40294741%2C40295005%2C40295665%2C40299047%2C40300216%2C40300390%2C40301518%2C40301898%2C40301925%2C40302296%2C40302336%2C40303399%2C40303507%2C40305337%2C40305778%2C40306098%2C40306481%2C40307064%2C40307425%2C40307749%2C40308585%2C40309478%2C40310505%2C40311669%2C40311679%2C40313868%2C40314721%2C40318824%2C40320039%2C40320474%2C40320990%2C40326077%2C40326103%2C40326980%2C40329467%2C40330818%2C40331539%2C40332319%2C40335153%2C40335932%2C40339555%2C40339786%2C40341189%2C40341459%2C40343334%2C40344290%2C40344848%2C40345144%2C40345262%2C40345707%2C40346366%2C40346526%2C40348200%2C40349161%2C40349856%2C40350443%2C40350800%2C40350954%2C40350961%2C40352037%2C40353332%2C40353918%2C40356178%2C40356654%2C40356954%2C40357176%2C40358176%2C40359785%2C40360795%2C40361009%2C40361215%2C40362248%2C40362857%2C40362912%2C40365443%2C40372498%2C40372944%2C40375831%2C40376089%2C40376539%2C40376582%2C40376583%2C40377822%2C40377860%2C40378670%2C40382826%2C40383067%2C40383719%2C40384804%2C40384857%2C40385275%2C40386589%2C40387938%2C40390218%2C40394288%2C40395548%2C40395817%2C40398555%2C40399861&rettype=xml&retmode=xml&api_key=d4e795e70597e6edfa4d1282886100ecee08
+08:17:10  INFO        PubMed batch 7501–7600: 99 records
+08:17:30  INFO        PubMed batch 7601–7700: 100 records
+08:17:42  INFO        PubMed batch 7701–7800: 100 records
+08:18:24  INFO        PubMed batch 7801–7900: 100 records
+08:18:41  INFO        PubMed batch 7901–8000: 100 records
+08:19:06  INFO        PubMed batch 8001–8100: 100 records
+08:19:11  INFO        PubMed batch 8101–8200: 100 records
+08:19:17  INFO        PubMed batch 8201–8300: 100 records
+08:19:28  INFO        PubMed batch 8301–8400: 100 records
+08:19:41  INFO        PubMed batch 8401–8500: 100 records
+08:19:55  INFO        PubMed batch 8501–8600: 100 records
+08:20:22  INFO        PubMed batch 8601–8700: 100 records
+08:20:26  INFO        PubMed batch 8701–8800: 100 records
+08:20:45  INFO        PubMed batch 8801–8900: 100 records
+08:21:04  INFO        PubMed batch 8901–9000: 100 records
+08:21:22  INFO        PubMed batch 9001–9100: 100 records
+08:21:42  INFO        PubMed batch 9101–9200: 100 records
+08:22:12  INFO        PubMed batch 9201–9300: 100 records
+08:22:16  INFO        PubMed batch 9301–9400: 100 records
+08:23:47  INFO        PubMed batch 9401–9500: 100 records
+08:23:57  INFO        PubMed batch 9501–9600: 100 records
+08:24:01  INFO        PubMed batch 9601–9700: 100 records
+08:24:24  INFO        PubMed batch 9701–9800: 100 records
+08:24:37  INFO        PubMed batch 9801–9900: 100 records
+08:24:48  INFO        PubMed batch 9901–10000: 100 records
+08:24:53  INFO        PubMed batch 10001–10100: 100 records
+08:24:59  INFO        PubMed batch 10101–10200: 100 records
+08:25:05  INFO        PubMed batch 10201–10300: 100 records
+08:25:08  INFO        PubMed batch 10301–10329: 29 records
+08:25:08  INFO      Step 3/3: Fetching PMC full texts for 6485 articles...
+08:29:27  INFO        PMC 100 / 6485
+08:33:05  INFO        PMC 200 / 6485
+08:36:09  INFO        PMC 300 / 6485
+08:40:05  INFO        PMC 400 / 6485
+08:44:37  INFO        PMC 500 / 6485
+08:50:02  INFO        PMC 600 / 6485
+08:55:06  INFO        PMC 700 / 6485
+08:59:25  INFO        PMC 800 / 6485
+09:03:22  INFO        PMC 900 / 6485
+09:07:53  INFO        PMC 1000 / 6485
+09:12:55  INFO        PMC 1100 / 6485
+09:17:55  INFO        PMC 1200 / 6485
+09:23:36  INFO        PMC 1300 / 6485
+09:28:32  INFO        PMC 1400 / 6485
+09:32:35  INFO        PMC 1500 / 6485
+09:36:47  INFO        PMC 1600 / 6485
+09:41:11  INFO        PMC 1700 / 6485
+09:47:43  INFO        PMC 1800 / 6485
+09:52:39  INFO        PMC 1900 / 6485
+09:58:30  INFO        PMC 2000 / 6485
+10:02:24  INFO        PMC 2100 / 6485
+10:06:39  INFO        PMC 2200 / 6485
+10:10:24  INFO        PMC 2300 / 6485
+10:15:15  INFO        PMC 2400 / 6485
+10:21:30  INFO        PMC 2500 / 6485
+10:26:27  INFO        PMC 2600 / 6485
+10:30:49  INFO        PMC 2700 / 6485
+10:34:35  INFO        PMC 2800 / 6485
+10:39:33  INFO        PMC 2900 / 6485
+10:44:42  INFO        PMC 3000 / 6485
+10:50:43  INFO        PMC 3100 / 6485
+10:56:03  WARNING   PMC EFetch failed for PMCID 10148689: 400 Client Error: Bad Request for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=10148689&rettype=xml&retmode=xml&api_key=d4e795e70597e6edfa4d1282886100ecee08
+10:56:26  INFO        PMC 3200 / 6485
+11:00:47  INFO        PMC 3300 / 6485
+11:04:00  INFO        PMC 3400 / 6485
+11:07:01  INFO        PMC 3500 / 6485
+11:10:46  INFO        PMC 3600 / 6485
+11:16:54  INFO        PMC 3700 / 6485
+11:21:49  INFO        PMC 3800 / 6485
+11:27:19  INFO        PMC 3900 / 6485
+11:30:38  WARNING   PMC EFetch failed for PMCID 11309649: 502 Server Error: Bad Gateway for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=11309649&rettype=xml&retmode=xml&api_key=d4e795e70597e6edfa4d1282886100ecee08
+11:31:33  INFO        PMC 4000 / 6485
+11:34:56  INFO        PMC 4100 / 6485
+11:38:14  INFO        PMC 4200 / 6485
+11:42:26  INFO        PMC 4300 / 6485
+11:49:14  INFO        PMC 4400 / 6485
+11:54:16  INFO        PMC 4500 / 6485
+11:59:57  INFO        PMC 4600 / 6485
+12:03:27  INFO        PMC 4700 / 6485
+12:06:40  INFO        PMC 4800 / 6485
+12:10:50  INFO        PMC 4900 / 6485
+12:15:31  INFO        PMC 5000 / 6485
+12:22:07  INFO        PMC 5100 / 6485
+12:26:48  INFO        PMC 5200 / 6485
+12:31:00  INFO        PMC 5300 / 6485
+12:34:12  INFO        PMC 5400 / 6485
+12:37:14  INFO        PMC 5500 / 6485
+12:41:57  INFO        PMC 5600 / 6485
+12:48:03  INFO        PMC 5700 / 6485
+12:54:10  INFO        PMC 5800 / 6485
+12:58:46  INFO        PMC 5900 / 6485
+13:02:31  INFO        PMC 6000 / 6485
+13:05:27  INFO        PMC 6100 / 6485
+13:08:36  INFO        PMC 6200 / 6485
+13:13:17  INFO        PMC 6300 / 6485
+13:19:38  INFO        PMC 6400 / 6485
+13:23:14  INFO        PMC 6485 / 6485
+13:23:14  INFO      Assembling output...
+13:23:20  INFO      Done. Articles written: 10329
+13:23:20  INFO        Has full text : 5837 / 10329 (56.5%)
+13:23:20  INFO        Abstract only : 4492 / 10329
+13:23:20  INFO        Saved → data/raw/articles.json

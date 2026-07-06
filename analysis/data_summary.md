@@ -1,6 +1,122 @@
 # Data Summary
 
-Summary of all data collected and analysed in Steps 1a–1c.
+Summary of all data collected and processed across pipeline phases.
+
+---
+
+## Phase 2 — PubMed Pathway×Disease Corpus (Jul 2026)
+
+### File Overview
+
+```
+data/
+├── raw/
+│   ├── selected_diseases.json          — 98 MeSH diseases (with synonyms)
+│   ├── mesh_all_diseases.json          — full MeSH disease descriptor list
+│   ├── pathway_disease_pairs.json      — 9,604 pairs searched; 1,959 with hits
+│   └── articles.json                   — 10,329 articles (466 MB)
+└── processed/
+    └── exact_matches.jsonl             — 19,513 (pmid, pathway_id) records with spans
+```
+
+---
+
+### selected_diseases.json
+
+**98 diseases** — manually curated subset of MeSH C-tree descriptors across 6 categories (cancer, metabolic, neurological, cardiovascular, inflammatory, genetic).
+
+Each record:
+```json
+{
+  "mesh_id": "68001943",
+  "name": "Breast Neoplasms",
+  "synonyms": ["Breast Cancer", "Mammary Carcinoma", ...],
+  "category": "cancer"
+}
+```
+
+Synonym lists come directly from MeSH entry terms (avg ~15 synonyms/disease).
+
+---
+
+### pathway_disease_pairs.json
+
+**9,604 pairs** (98 pathways × 98 diseases) searched via PubMed ESearch.
+Query template: `("pathway name"[Title/Abstract]) AND ("disease name"[Title/Abstract])`
+
+| Metric | Value |
+|---|---|
+| Total pairs searched | 9,604 |
+| Pairs with ≥1 hit | 1,959 (20.4%) |
+| Pairs with 0 hits | 7,645 (79.6%) |
+| Unique PMIDs | 10,329 |
+| Avg articles per hit pair | 6.8 |
+| Median articles per hit pair | 3 |
+| Max articles per pair | 20 (retmax cap) |
+
+---
+
+### articles.json
+
+**10,329 articles** — one record per PMID. Fetched via PubMed EFetch (metadata + abstract) and PMC EFetch (JATS XML full text).
+
+Each record schema:
+```json
+{
+  "pmid": "32303640",
+  "pmcid": "PMC7278340",
+  "doi": "...",
+  "title": "...",
+  "year": 2020,
+  "journal": "...",
+  "pub_types": ["Journal Article"],
+  "keywords": [...],
+  "mesh_headings": [{"term": "...", "ui": "...", "major": false, "qualifiers": [...]}],
+  "abstract": "...",
+  "sections": [...],
+  "full_text": "...",
+  "has_full_text": true
+}
+```
+
+| Metric | Value |
+|---|---|
+| Total articles | 10,329 |
+| With full text (PMC) | 5,837 (56.5%) |
+| Abstract only | 4,492 (43.5%) |
+| Avg abstract length | ~1,500 chars |
+| Avg full-text length | ~32,000 chars |
+| Total file size | 466 MB |
+
+---
+
+### exact_matches.jsonl (Phase 2)
+
+**19,513 records** — one per (pmid, pathway_id) pair where a match was found. Built by SpaCy PhraseMatcher over KEGG + Reactome canonical names + synonyms (MIN_TERM_LEN=4).
+
+| Metric | Value |
+|---|---|
+| Total records | 32,862 |
+| Records with spans | 31,544 (96.0%) |
+| Records with no spans | 1,318 |
+| Total spans | 129,305 |
+
+> **Note:** Generic single-word terms (e.g. "metabolism" from a Reactome entry) can inflate span counts. Consider applying a MIN_WORDS=2 filter before BIO tagging if noise becomes an issue.
+
+Each record schema:
+```json
+{
+  "pmid": "32303640",
+  "pathway_id": "hsa00010",
+  "spans": [
+    {"start": 42, "end": 67, "text": "pentose phosphate pathway", "source": "abstract"}
+  ]
+}
+```
+
+---
+
+## Phase 1 — Original Small Corpus (Steps 1a–1c)
 
 ---
 
