@@ -10,6 +10,10 @@ data/raw/reactome_cache/
 data/raw/pubmed_cache/
 data/raw/llm_cache/
 data/raw/llm_cache_db/
+data/raw/article_cache/
+data/raw/mesh_cache/
+data/raw/pair_cache/
+data/raw/articles.json
 
 # Images
 *.png

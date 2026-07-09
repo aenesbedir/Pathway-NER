@@ -176,3 +176,39 @@ Ran all 20 epochs (no early stopping triggered).
 **Conclusion:** Run 001 is the best. Precision is consistently low (0.27–0.40) across all hyperparameter changes — root cause is data quality, not model configuration. Next step: error analysis.
 
 ---
+
+## Error Analysis — Run 001
+
+**Script:** `analysis/error_analysis.py`  
+**Output:** `analysis/error_analysis.json`
+
+Span text recovered by slicing source text via `offset_mapping` (fixes tokenizer decoding artifact — `"dermat"` → `"dermatan"`). Adjacent predicted spans merged if within 2 chars. Partial TPs: predicted span overlaps true span AND intersection ≥ 50% of predicted span length.
+
+**Span counts (test set, 50 records):**
+
+| Category | Count |
+|---|---|
+| True Positives (exact match) | 38 |
+| Partial True Positives (boundary mismatch) | 3 |
+| False Positives | 30 |
+| False Negatives | 23 |
+| Total predicted spans | 71 |
+| Total true spans | 64 |
+
+**Metrics:**
+
+| Scheme | P | R | F1 |
+|---|---|---|---|
+| Exact only | 0.559 | 0.623 | 0.589 |
+| Partial TPs full credit | 0.578 | 0.641 | 0.607 |
+| nervaluate strict | 0.412 | 0.509 | 0.455 |
+| nervaluate partial | 0.456 | 0.564 | 0.504 |
+| nervaluate type | 0.500 | 0.618 | 0.553 |
+
+**Key findings:**
+- Many FPs are legitimate pathway names missed by distant supervision (`"heme synthesis"`, `"cholesterol metabolism"`, `"glycolytic pathway"`) — data quality is the root cause
+- 3 partial TPs are boundary errors: model extends or truncates span slightly (e.g. `"dermatan sulfate biosynthesis"` vs `"dermatan sulfate"`)
+- Tokenizer artifact: `"dermatan"` → `"dermat" + "##an"` causes 10 FNs for dermatan sulfate pathway
+- Conclusion: improving the annotation pipeline will have more impact than further hyperparameter tuning
+
+---

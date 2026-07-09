@@ -223,3 +223,159 @@ All experiments tracked in `knowledge_base/model_experiments.md`.
 - Partial term false positives (`"sulfate"`, `"biosynthesis"`, `"metabolism"`) — model over-generalizes on pathway name components
 - Tokenizer artifact: `"dermatan"` → `"dermat" + "##an"` causes consistent misses (11 FN for dermatan sulfate)
 - Conclusion: improving the annotation pipeline will have more impact than further hyperparameter tuning
+
+---
+
+---
+
+# Phase 2 — Corpus Expansion via PubMed Pipeline
+
+**Motivation:** Error analysis of Phase 1 models showed data quality (noisy distant supervision labels, missing pathway names in annotation) is the primary bottleneck, not model capacity. Precision consistently low (0.27–0.40) across all four training runs. Phase 2 builds a much larger, higher-quality corpus by:
+1. Collecting a broad disease list (cancer + neurodegenerative + metabolic) from MeSH
+2. Querying PubMed for pathway–disease co-occurring articles at scale
+3. Applying exact string matching to generate new span annotations
+
+---
+
+## Phase 2 Architecture
+
+```
+MeSH API (ESearch + EFetch)
+  C18 (Metabolic), C04 (Cancer), C10.574 (Neurodegenerative)
+         │
+         ▼
+fetch_mesh_diseases.py  ──►  834 MeSH disease descriptors (name + synonyms + tree numbers)
+         │
+         ▼
+select_diseases.py  ──►  98 curated target diseases (selected_diseases.json)
+                          37 cancer · 33 metabolic · 28 neurodegenerative
+         │
+         ▼
+fetch_pathway_disease_pairs.py
+  ("pathway"[Title/Abstract]) AND ("disease"[Title/Abstract])
+  98 Recon3D pathways × 98 diseases = 9,604 pairs searched
+         │
+         ▼
+fetch_articles.py
+  ELink PMID → PMCID (batch) → PMC full text (JATS XML)
+  + PubMed metadata (MeSH, year, DOI, keywords, journal, pub types)
+         │
+         ▼
+preprocessing/match_exact.py  (SpaCy PhraseMatcher, same method as Phase 1 Step 2)
+  + synonym expansion (TCA cycle, beta-oxidation, etc.)
+  + Recon3D blocklist (non-literary subsystem names filtered)
+         │
+         ▼
+data/processed/exact_matches.jsonl  ──►  22,017 records  (new NER training candidates)
+```
+
+---
+
+## Phase 2 Steps
+
+### ✅ Step P2-1 — Disease List from MeSH (`pubmed_api/fetch_mesh_diseases.py`)
+
+Built and rewrote script to use NCBI ESearch + EFetch (NLM text format) instead of the NLM MeSH lookup API (which returned HTTP 400 for tree-prefix queries).
+
+- **ESearch query:** `C18.*[Tree Number]` wildcard returns all numeric UIDs under a subtree
+- **EFetch response:** plain text format (one record per numbered block); parsed name, Entry Terms (synonyms), Tree Number(s)
+- Script supports `--trees` flag: can fetch multiple tree prefixes in one run
+- Results deduplicated across trees; one JSON file saved per prefix + combined file if multiple
+
+| Tree | Category | Descriptors |
+|---|---|---|
+| C18 | Metabolic / Nutritional Diseases | 334 |
+| C04 | Neoplasms (Cancer) | 455 |
+| C10.574 | Neurodegenerative Diseases | 77 |
+| **Total unique** | — | **834** |
+
+**Outputs:** `data/raw/mesh_C18_diseases.json`, `data/raw/mesh_C04_diseases.json`, `data/raw/mesh_C10_574_diseases.json`  
+**Cache:** `data/raw/mesh_cache/`
+
+---
+
+### ✅ Step P2-2 — Disease Curation (`pubmed_api/select_diseases.py`)
+
+Curated a focused list of ~100 high-relevance diseases from the 834 MeSH descriptors, covering three clinically important categories.
+
+- **Output:** `data/raw/selected_diseases.json`
+- **Results:** 98 diseases — 37 cancer · 33 metabolic · 28 neurodegenerative
+- Fields per entry: `mesh_id`, `name`, `synonyms[]`, `tree_numbers[]`, `category`, `query_name`
+
+---
+
+### ✅ Step P2-3 — PubMed Co-occurrence Search (`pubmed_api/fetch_pathway_disease_pairs.py`)
+
+For every (Recon3D pathway × selected disease) pair, queried PubMed with:
+```
+("pathway name"[Title/Abstract]) AND ("disease name"[Title/Abstract])
+```
+
+- 98 pathways × 98 diseases = **9,604 pairs** searched
+- Capped at 20 PMIDs per pair to avoid flooding on broad terms
+- Per-pair cache in `data/raw/pair_cache/` (resumable — process was interrupted and restarted; all results read from cache on final run)
+- `--dry-run` flag skips article fetch; article fetching separated into `fetch_articles.py`
+
+| Metric | Value |
+|---|---|
+| Total pairs searched | 9,604 |
+| Pairs with ≥1 hit | 1,959 (20.4%) |
+| Unique PMIDs | 10,329 |
+
+| Category | Pair hits | Unique PMIDs |
+|---|---|---|
+| Cancer | 601 | 3,531 |
+| Neurodegenerative | 573 | 2,667 |
+| Metabolic | 785 | 4,399 |
+
+**Output:** `data/raw/pathway_disease_pairs.json`
+
+---
+
+### ✅ Step P2-4 — Article Fetch (`pubmed_api/fetch_articles.py`)
+
+For every unique PMID from Step P2-3:
+1. **ELink** (batch POST, 25 PMIDs/request): PMID → PMCID
+2. **PMC EFetch**: JATS XML → full text parsed section by section (label + paragraph text)
+3. **PubMed EFetch**: abstract XML → title, abstract, year, journal, DOI, MeSH headings, pub types, keywords
+4. Records assembled combining both sources; per-PMID cache for all three operations
+
+| Metric | Value |
+|---|---|
+| Total articles | 10,329 |
+| Has PMC full text | 5,837 (56.5%) |
+| Abstract only | 4,492 |
+| Has MeSH headings | 7,506 |
+| Has DOI | 9,507 |
+
+**Output:** `data/raw/articles.json`  
+**Cache:** `data/raw/article_cache/` (elink + pubmed + pmc XML per PMID)
+
+---
+
+### ✅ Step P2-5 — Exact Matching on New Corpus (`preprocessing/match_exact.py`)
+
+Same SpaCy PhraseMatcher approach as Phase 1 Step 2, now applied over the 10,329 newly fetched articles. Additions over Phase 1:
+- **Synonym expansion** for Recon3D names with common literature variants (e.g. `"TCA cycle"` → `"citric acid cycle"`, `"beta-oxidation"` → `"fatty acid oxidation"`)
+- **Recon blocklist**: 8 non-literary subsystem names excluded (e.g. `"miscellaneous"`, `"protein formation"`, `"intracellular demand"`)
+- Matches cover both abstract and full_text fields with source tagged per span
+
+**Output:** `data/processed/exact_matches.jsonl`  
+**Results:** 22,017 records (pmid × pathway_id pairs with character-offset spans)
+
+---
+
+## Phase 2 Status
+
+| Step | Script | Status | Output |
+|---|---|---|---|
+| P2-1: MeSH diseases | `pubmed_api/fetch_mesh_diseases.py` | ✅ Done | `mesh_*.json` (834 diseases) |
+| P2-2: Disease curation | `pubmed_api/select_diseases.py` | ✅ Done | `selected_diseases.json` (98) |
+| P2-3: Pair search | `pubmed_api/fetch_pathway_disease_pairs.py` | ✅ Done | `pathway_disease_pairs.json` |
+| P2-4: Article fetch | `pubmed_api/fetch_articles.py` | ✅ Done | `articles.json` (10,329) |
+| P2-5: Exact matching | `preprocessing/match_exact.py` | ✅ Done | `exact_matches.jsonl` (22,017) |
+| P2-6: BIO tagging | `preprocessing/tag_bio.py` | 🔲 Next | `bio_tags_v2.jsonl` |
+| P2-7: Dataset build | `preprocessing/build_dataset.py` | 🔲 Next | new train/val/test splits |
+| P2-8: Fine-tune Run 005 | `train.py` | 🔲 Next | `models/pathway-ner-005/` |
+
+**Next step:** Run `preprocessing/tag_bio.py` on `exact_matches.jsonl` to generate BIO-tagged examples, merge with Phase 1 data, and retrain.

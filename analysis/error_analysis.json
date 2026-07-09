@@ -2,168 +2,253 @@
   "summary": {
     "true_positives": [
       {
-        "span": "glycosamin biosynthesis",
+        "span": {
+          "text": "glycosaminoglycan biosynthesis",
+          "start": 299,
+          "end": 329
+        },
         "pmid": "11551958",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "glycosamin biosynthesis",
+        "span": {
+          "text": "glycosaminoglycan biosynthesis",
+          "start": 1186,
+          "end": 1216
+        },
         "pmid": "11551958",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "glycosamin biosynthesis",
+        "span": {
+          "text": "glycosaminoglycan biosynthesis",
+          "start": 47,
+          "end": 77
+        },
         "pmid": "14568616",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "thi biosynthesis",
+        "span": {
+          "text": "thiamin biosynthesis",
+          "start": 951,
+          "end": 971
+        },
         "pmid": "12777485",
         "pathway_ids": [
           "hsa00730"
         ]
       },
       {
-        "span": "thiamine homeostasis",
+        "span": {
+          "text": "thiamine homeostasis",
+          "start": 827,
+          "end": 847
+        },
         "pmid": "25484137",
         "pathway_ids": [
           "hsa00730"
         ]
       },
       {
-        "span": "thiamine metabolism",
+        "span": {
+          "text": "thiamine metabolism",
+          "start": 1775,
+          "end": 1794
+        },
         "pmid": "15328374",
         "pathway_ids": [
           "hsa00730"
         ]
       },
       {
-        "span": "thiamine metabolism",
+        "span": {
+          "text": "Thiamine metabolism",
+          "start": 1285,
+          "end": 1304
+        },
         "pmid": "39501961",
         "pathway_ids": [
           "hsa00730"
         ]
       },
       {
-        "span": "thiamine metabolism",
+        "span": {
+          "text": "thiamine metabolism",
+          "start": 1341,
+          "end": 1360
+        },
         "pmid": "35116980",
         "pathway_ids": [
           "hsa00730"
         ]
       },
       {
-        "span": "oxidative phosphorylation",
+        "span": {
+          "text": "oxidative phosphorylation",
+          "start": 66,
+          "end": 91
+        },
         "pmid": "38396915",
         "pathway_ids": [
           "R-HSA-163210"
         ]
       },
       {
-        "span": "heme biosynthetic pathway",
+        "span": {
+          "text": "heme biosynthetic pathway",
+          "start": 311,
+          "end": 336
+        },
         "pmid": "16839620",
         "pathway_ids": [
           "R-HSA-189451"
         ]
       },
       {
-        "span": "heme biosynthetic pathway",
+        "span": {
+          "text": "heme biosynthetic pathway",
+          "start": 584,
+          "end": 609
+        },
         "pmid": "16839620",
         "pathway_ids": [
           "R-HSA-189451"
         ]
       },
       {
-        "span": "heme biosynthesis",
+        "span": {
+          "text": "heme biosynthesis",
+          "start": 429,
+          "end": 446
+        },
         "pmid": "10522552",
         "pathway_ids": [
           "R-HSA-189451"
         ]
       },
       {
-        "span": "heme biosynthesis",
+        "span": {
+          "text": "heme biosynthesis",
+          "start": 811,
+          "end": 828
+        },
         "pmid": "10522552",
         "pathway_ids": [
           "R-HSA-189451"
         ]
       },
       {
-        "span": "heme biosynthesis",
+        "span": {
+          "text": "heme biosynthesis",
+          "start": 518,
+          "end": 535
+        },
         "pmid": "20506125",
         "pathway_ids": [
           "R-HSA-189451"
         ]
       },
       {
-        "span": "heme biosynthesis",
+        "span": {
+          "text": "heme biosynthesis",
+          "start": -1,
+          "end": -1
+        },
         "pmid": "20506125",
         "pathway_ids": [
           "R-HSA-189451"
         ]
       },
       {
-        "span": "heme biosynthesis",
+        "span": {
+          "text": "heme biosynthesis",
+          "start": -1,
+          "end": -1
+        },
         "pmid": "20506125",
         "pathway_ids": [
           "R-HSA-189451"
         ]
       },
       {
-        "span": "haem biosynthesis pathway",
+        "span": {
+          "text": "haem biosynthesis pathway",
+          "start": 79,
+          "end": 104
+        },
         "pmid": "26774916",
         "pathway_ids": [
           "R-HSA-189451"
         ]
       },
       {
-        "span": "cholesterol biosynthesis",
+        "span": {
+          "text": "cholesterol biosynthesis",
+          "start": 563,
+          "end": 587
+        },
         "pmid": "1390320",
         "pathway_ids": [
           "R-HSA-191273"
         ]
       },
       {
-        "span": "cholesterol biosynthesis",
-        "pmid": "12668600",
-        "pathway_ids": [
-          "R-HSA-191273"
-        ]
-      },
-      {
-        "span": "cholesterol synthesis",
+        "span": {
+          "text": "cholesterol synthesis",
+          "start": 20,
+          "end": 41
+        },
         "pmid": "16054061",
         "pathway_ids": [
           "R-HSA-191273"
         ]
       },
       {
-        "span": "cholesterol synthesis",
+        "span": {
+          "text": "cholesterol synthesis",
+          "start": 265,
+          "end": 286
+        },
         "pmid": "16054061",
         "pathway_ids": [
           "R-HSA-191273"
         ]
       },
       {
-        "span": "cholesterol synthesis",
+        "span": {
+          "text": "cholesterol synthesis",
+          "start": 381,
+          "end": 402
+        },
         "pmid": "16054061",
         "pathway_ids": [
           "R-HSA-191273"
         ]
       },
       {
-        "span": "polyamine biosynthesis",
+        "span": {
+          "text": "Polyamine biosynthesis",
+          "start": 97,
+          "end": 119
+        },
         "pmid": "12686127",
         "pathway_ids": [
           "R-HSA-351202"
         ]
       },
       {
-        "span": "glycogen metabolism",
+        "span": {
+          "text": "glycogen metabolism",
+          "start": 31,
+          "end": 50
+        },
         "pmid": "183599",
         "pathway_ids": [
           "R-HSA-70221",
@@ -171,268 +256,393 @@
         ]
       },
       {
-        "span": "fatty acid alpha - oxidation",
+        "span": {
+          "text": "fatty acid alpha-oxidation",
+          "start": 601,
+          "end": 627
+        },
         "pmid": "12633678",
         "pathway_ids": [
           "R-HSA-389599"
         ]
       },
       {
-        "span": "fatty acid alpha - oxidation",
+        "span": {
+          "text": "fatty acid alpha-oxidation",
+          "start": 769,
+          "end": 795
+        },
         "pmid": "12633678",
         "pathway_ids": [
           "R-HSA-389599"
         ]
       },
       {
-        "span": "cs biosynthesis",
+        "span": {
+          "text": "CS biosynthesis",
+          "start": 424,
+          "end": 439
+        },
         "pmid": "23774590",
         "pathway_ids": [
           "R-HSA-2022870"
         ]
       },
       {
-        "span": "cs biosynthesis",
+        "span": {
+          "text": "CS biosynthesis",
+          "start": 621,
+          "end": 636
+        },
         "pmid": "23774590",
         "pathway_ids": [
           "R-HSA-2022870"
         ]
       },
       {
-        "span": "cs biosynthesis",
+        "span": {
+          "text": "CS biosynthesis",
+          "start": 1053,
+          "end": 1068
+        },
         "pmid": "23774590",
         "pathway_ids": [
           "R-HSA-2022870"
         ]
       },
       {
-        "span": "glycos metabolism",
+        "span": {
+          "text": "glycosphingolipid metabolism",
+          "start": 1464,
+          "end": 1492
+        },
         "pmid": "41519015",
         "pathway_ids": [
           "R-HSA-1660662"
         ]
       },
       {
-        "span": "glycos metabolism",
+        "span": {
+          "text": "glycosphingolipid metabolism",
+          "start": 678,
+          "end": 706
+        },
         "pmid": "39395135",
         "pathway_ids": [
           "R-HSA-1660662"
         ]
       },
       {
-        "span": "o - glycan biosynthesis",
+        "span": {
+          "text": "O-glycan biosynthesis",
+          "start": 583,
+          "end": 604
+        },
         "pmid": "41383589",
         "pathway_ids": [
           "db__o_glycan_metabolism"
         ]
       },
       {
-        "span": "o - glycan biosynthesis",
+        "span": {
+          "text": "O-glycan biosynthesis",
+          "start": 1483,
+          "end": 1504
+        },
         "pmid": "41549136",
         "pathway_ids": [
           "db__o_glycan_metabolism"
         ]
       },
       {
-        "span": "tyrosine metabolism",
+        "span": {
+          "text": "tyrosine metabolism",
+          "start": 1518,
+          "end": 1537
+        },
         "pmid": "42161051",
         "pathway_ids": [
           "hsa00350"
         ]
       },
       {
-        "span": "tyrosine metabolism",
+        "span": {
+          "text": "tyrosine metabolism",
+          "start": 26,
+          "end": 45
+        },
         "pmid": "41021173",
         "pathway_ids": [
           "hsa00350"
         ]
       },
       {
-        "span": "tyrosine metabolism",
+        "span": {
+          "text": "tyrosine metabolism",
+          "start": 524,
+          "end": 543
+        },
         "pmid": "40022152",
         "pathway_ids": [
           "hsa00350"
         ]
       },
       {
-        "span": "tyrosine metabolism",
-        "pmid": "39872045",
-        "pathway_ids": [
-          "hsa00350"
-        ]
-      },
-      {
-        "span": "tyrosine metabolism",
+        "span": {
+          "text": "tyrosine metabolism",
+          "start": 795,
+          "end": 814
+        },
         "pmid": "39755002",
         "pathway_ids": [
           "hsa00350"
         ]
       },
       {
-        "span": "tyrosine metabolism",
+        "span": {
+          "text": "tyrosine metabolism",
+          "start": 1284,
+          "end": 1303
+        },
         "pmid": "32316597",
         "pathway_ids": [
           "hsa00350"
         ]
       },
       {
-        "span": "vitamin b12 metabolism",
+        "span": {
+          "text": "vitamin B12 metabolism",
+          "start": 1342,
+          "end": 1364
+        },
         "pmid": "34998874",
         "pathway_ids": [
           "db__vitamin_b12_metabolism"
         ]
       }
     ],
+    "partial_true_positives": [
+      {
+        "pred": {
+          "text": "dermatan sulfate biosynthesis",
+          "start": 565,
+          "end": 594
+        },
+        "true": {
+          "text": "dermatan sulfate",
+          "start": 565,
+          "end": 581
+        },
+        "pmid": "11099377",
+        "pathway_ids": [
+          "hsa00532"
+        ]
+      },
+      {
+        "pred": {
+          "text": "thiamine",
+          "start": 2131,
+          "end": 2139
+        },
+        "true": {
+          "text": "thiamine-dependent metabolism",
+          "start": 2131,
+          "end": 2160
+        },
+        "pmid": "24454921",
+        "pathway_ids": [
+          "hsa00730"
+        ]
+      },
+      {
+        "pred": {
+          "text": "tyrosine metabolism pathways",
+          "start": 1434,
+          "end": 1462
+        },
+        "true": {
+          "text": "tyrosine metabolism",
+          "start": 1434,
+          "end": 1453
+        },
+        "pmid": "40906027",
+        "pathway_ids": [
+          "hsa00350"
+        ]
+      }
+    ],
     "false_positives": [
       {
-        "span": "sulfate",
+        "span": {
+          "text": "heparin",
+          "start": 553,
+          "end": 560
+        },
         "pmid": "11099377",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "heparin",
-        "pmid": "11099377",
-        "pathway_ids": [
-          "hsa00532"
-        ]
-      },
-      {
-        "span": "dermat sulfate biosynthesis",
-        "pmid": "11099377",
-        "pathway_ids": [
-          "hsa00532"
-        ]
-      },
-      {
-        "span": "chondroitin sulfate and dermat sulfate",
+        "span": {
+          "text": "Chondroitin sulfate and dermatan sulfate",
+          "start": 0,
+          "end": 40
+        },
         "pmid": "12512856",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "chondroitin sulfate",
+        "span": {
+          "text": "chondroitin sulfate CS/DS proteoglycans",
+          "start": 458,
+          "end": 498
+        },
         "pmid": "22899863",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "cs / ds proteoglycans",
-        "pmid": "22899863",
-        "pathway_ids": [
-          "hsa00532"
-        ]
-      },
-      {
-        "span": "ds biosynthesis",
+        "span": {
+          "text": "DS biosynthesis",
+          "start": 319,
+          "end": 334
+        },
         "pmid": "12847091",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "id acid ( ido ) formation",
+        "span": {
+          "text": "iduronic acid (IdoUA) formation",
+          "start": 385,
+          "end": 416
+        },
         "pmid": "12847091",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "thiamine",
-        "pmid": "24454921",
-        "pathway_ids": [
-          "hsa00730"
-        ]
-      },
-      {
-        "span": "dependent",
-        "pmid": "24454921",
-        "pathway_ids": [
-          "hsa00730"
-        ]
-      },
-      {
-        "span": "complex v",
+        "span": {
+          "text": "Complex V",
+          "start": 28,
+          "end": 37
+        },
         "pmid": "38396915",
         "pathway_ids": [
           "R-HSA-163210"
         ]
       },
       {
-        "span": "heme synthesis",
+        "span": {
+          "text": "heme synthesis",
+          "start": 525,
+          "end": 539
+        },
         "pmid": "10522552",
         "pathway_ids": [
           "R-HSA-189451"
         ]
       },
       {
-        "span": "heme synthesis",
+        "span": {
+          "text": "heme synthesis",
+          "start": 893,
+          "end": 907
+        },
         "pmid": "10522552",
         "pathway_ids": [
           "R-HSA-189451"
         ]
       },
       {
-        "span": "heme biosynthetic",
+        "span": {
+          "text": "heme biosynthetic",
+          "start": -1,
+          "end": -1
+        },
         "pmid": "20506125",
         "pathway_ids": [
           "R-HSA-189451"
         ]
       },
       {
-        "span": "cholesterol metabolism",
+        "span": {
+          "text": "cholesterol metabolism",
+          "start": 762,
+          "end": 784
+        },
         "pmid": "1390320",
         "pathway_ids": [
           "R-HSA-191273"
         ]
       },
       {
-        "span": "cholesterol metabolism",
+        "span": {
+          "text": "cholesterol metabolism",
+          "start": 1045,
+          "end": 1067
+        },
         "pmid": "1390320",
         "pathway_ids": [
           "R-HSA-191273"
         ]
       },
       {
-        "span": "cholesterol biosynthetic pathway",
+        "span": {
+          "text": "cholesterol biosynthetic pathway",
+          "start": 1172,
+          "end": 1204
+        },
         "pmid": "1390320",
         "pathway_ids": [
           "R-HSA-191273"
         ]
       },
       {
-        "span": "cholesterol biosynthetic pathway",
+        "span": {
+          "text": "cholesterol biosynthetic pathway",
+          "start": 736,
+          "end": 768
+        },
         "pmid": "12668600",
         "pathway_ids": [
           "R-HSA-191273"
         ]
       },
       {
-        "span": "biosynthesis",
-        "pmid": "12668600",
-        "pathway_ids": [
-          "R-HSA-191273"
-        ]
-      },
-      {
-        "span": "cholesterol synthetic pathway",
+        "span": {
+          "text": "cholesterol synthetic pathway",
+          "start": 1031,
+          "end": 1060
+        },
         "pmid": "16054061",
         "pathway_ids": [
           "R-HSA-191273"
         ]
       },
       {
-        "span": "polyamine synthesis",
+        "span": {
+          "text": "polyamine synthesis",
+          "start": 877,
+          "end": 896
+        },
         "pmid": "12686127",
         "pathway_ids": [
           "R-HSA-351202"
         ]
       },
       {
-        "span": "glycogen synthesis",
+        "span": {
+          "text": "glycogen synthesis",
+          "start": 254,
+          "end": 272
+        },
         "pmid": "183599",
         "pathway_ids": [
           "R-HSA-70221",
@@ -440,7 +650,11 @@
         ]
       },
       {
-        "span": "glycogen synthesis",
+        "span": {
+          "text": "Glycogen synthesis",
+          "start": 512,
+          "end": 530
+        },
         "pmid": "183599",
         "pathway_ids": [
           "R-HSA-70221",
@@ -448,126 +662,143 @@
         ]
       },
       {
-        "span": "cardio synthesis",
+        "span": {
+          "text": "cardiolipin synthesis",
+          "start": 1031,
+          "end": 1052
+        },
         "pmid": "20025994",
         "pathway_ids": [
           "R-HSA-1482925"
         ]
       },
       {
-        "span": "cardio biosynthesis",
+        "span": {
+          "text": "cardiolipin biosynthesis",
+          "start": 1652,
+          "end": 1676
+        },
         "pmid": "20025994",
         "pathway_ids": [
           "R-HSA-1482925"
         ]
       },
       {
-        "span": "ps biosynthesis",
+        "span": {
+          "text": "PS biosynthesis",
+          "start": 1356,
+          "end": 1371
+        },
         "pmid": "9642289",
         "pathway_ids": [
           "R-HSA-1483101"
         ]
       },
       {
-        "span": "fatty acid",
+        "span": {
+          "text": "fatty acid",
+          "start": 343,
+          "end": 353
+        },
         "pmid": "12633678",
         "pathway_ids": [
           "R-HSA-389599"
         ]
       },
       {
-        "span": "- oxidation",
-        "pmid": "12633678",
-        "pathway_ids": [
-          "R-HSA-389599"
-        ]
-      },
-      {
-        "span": "catabolism",
-        "pmid": "23774590",
-        "pathway_ids": [
-          "R-HSA-2022870"
-        ]
-      },
-      {
-        "span": "e2 biosynthesis",
+        "span": {
+          "text": "E2 biosynthesis",
+          "start": 450,
+          "end": 465
+        },
         "pmid": "41977303",
         "pathway_ids": [
           "db__androgen_and_estrogen_synthesis_and_metabolism"
         ]
       },
       {
-        "span": "e2 biosynthesis",
+        "span": {
+          "text": "E2 biosynthesis",
+          "start": 1081,
+          "end": 1096
+        },
         "pmid": "41977303",
         "pathway_ids": [
           "db__androgen_and_estrogen_synthesis_and_metabolism"
         ]
       },
       {
-        "span": "glycos metabolism pathway",
+        "span": {
+          "text": "glycosphingolipid metabolism",
+          "start": 1635,
+          "end": 1663
+        },
         "pmid": "42099633",
         "pathway_ids": [
           "R-HSA-1660662"
         ]
       },
       {
-        "span": "glycos metabolism",
-        "pmid": "42099633",
-        "pathway_ids": [
-          "R-HSA-1660662"
-        ]
-      },
-      {
-        "span": "sulf",
+        "span": {
+          "text": "sulfation",
+          "start": 203,
+          "end": 212
+        },
         "pmid": "41549136",
         "pathway_ids": [
           "db__o_glycan_metabolism"
         ]
       },
       {
-        "span": "glycolytic pathway",
+        "span": {
+          "text": "glycolytic pathway",
+          "start": 210,
+          "end": 228
+        },
         "pmid": "41656811",
         "pathway_ids": [
           "hsa00350"
         ]
       },
       {
-        "span": "metabolism",
-        "pmid": "41021173",
-        "pathway_ids": [
-          "hsa00350"
-        ]
-      },
-      {
-        "span": "tyrosine metabolism pathways",
-        "pmid": "40906027",
-        "pathway_ids": [
-          "hsa00350"
-        ]
-      },
-      {
-        "span": "tryptophan metabolism",
+        "span": {
+          "text": "tyrosine metabolism tryptophan metabolism",
+          "start": 1377,
+          "end": 1419
+        },
         "pmid": "39872045",
         "pathway_ids": [
           "hsa00350"
         ]
       },
       {
-        "span": "steroid",
+        "span": {
+          "text": "steroid",
+          "start": 723,
+          "end": 730
+        },
         "pmid": "39755002",
         "pathway_ids": [
           "hsa00350"
         ]
       },
       {
-        "span": "sec biosynthesis",
+        "span": {
+          "text": "Sec biosynthesis",
+          "start": 376,
+          "end": 392
+        },
         "pmid": "32316597",
         "pathway_ids": [
           "hsa00350"
         ]
       },
       {
-        "span": "fatty acid degradation",
+        "span": {
+          "text": "fatty acid degradation",
+          "start": 1341,
+          "end": 1363
+        },
         "pmid": "32316597",
         "pathway_ids": [
           "hsa00350"
@@ -576,98 +807,154 @@
     ],
     "false_negatives": [
       {
-        "span": "dermat sulfate",
-        "pmid": "11099377",
-        "pathway_ids": [
-          "hsa00532"
-        ]
-      },
-      {
-        "span": "dermat sulfate",
+        "span": {
+          "text": "dermatan sulfate",
+          "start": 24,
+          "end": 40
+        },
         "pmid": "12512856",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "dermat sulfate",
+        "span": {
+          "text": "dermatan sulfate",
+          "start": 411,
+          "end": 427
+        },
         "pmid": "12512856",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "dermat sulfate",
+        "span": {
+          "text": "dermatan sulfate",
+          "start": 500,
+          "end": 516
+        },
         "pmid": "22899863",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "dermat sulfate",
+        "span": {
+          "text": "dermatan sulfate",
+          "start": 518,
+          "end": 534
+        },
         "pmid": "22899863",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "dermat sulfate",
+        "span": {
+          "text": "dermatan sulfate",
+          "start": 554,
+          "end": 570
+        },
         "pmid": "22899863",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "dermat sulfate",
+        "span": {
+          "text": "dermatan sulfate",
+          "start": 249,
+          "end": 265
+        },
         "pmid": "17928217",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "dermat sulfate",
+        "span": {
+          "text": "dermatan sulfate",
+          "start": 540,
+          "end": 556
+        },
         "pmid": "19661164",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "dermat sulfate",
+        "span": {
+          "text": "dermatan sulfate",
+          "start": 984,
+          "end": 1000
+        },
         "pmid": "19661164",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "dermat sulfate",
+        "span": {
+          "text": "dermatan sulfate",
+          "start": 1477,
+          "end": 1493
+        },
         "pmid": "19661164",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "dermat sulfate",
+        "span": {
+          "text": "dermatan sulfate",
+          "start": 84,
+          "end": 100
+        },
         "pmid": "12847091",
         "pathway_ids": [
           "hsa00532"
         ]
       },
       {
-        "span": "thiamine - dependent metabolism",
-        "pmid": "24454921",
-        "pathway_ids": [
-          "hsa00730"
-        ]
-      },
-      {
-        "span": "regulation of lipoprotein metabolism",
+        "span": {
+          "text": "Regulation of lipoprotein metabolism",
+          "start": 138,
+          "end": 174
+        },
         "pmid": "18288277",
         "pathway_ids": [
           "R-HSA-400206"
         ]
       },
       {
-        "span": "glycogen breakdown",
+        "span": {
+          "text": "cholesterol biosynthesis",
+          "start": 69,
+          "end": 93
+        },
+        "pmid": "12668600",
+        "pathway_ids": [
+          "R-HSA-191273"
+        ]
+      },
+      {
+        "span": {
+          "text": "cholesterol biosynthesis",
+          "start": 863,
+          "end": 887
+        },
+        "pmid": "12668600",
+        "pathway_ids": [
+          "R-HSA-191273"
+        ]
+      },
+      {
+        "span": {
+          "text": "glycogen breakdown",
+          "start": 160,
+          "end": 178
+        },
         "pmid": "183599",
         "pathway_ids": [
           "R-HSA-70221",
@@ -675,70 +962,99 @@
         ]
       },
       {
-        "span": "gpr is a g protein - coupled receptor regulating free fatty acid - induced insulin secretion.",
+        "span": {
+          "text": "GPR40 is a G protein-coupled receptor regulating free fatty acid-induced insulin secretion.",
+          "start": 11,
+          "end": 102
+        },
         "pmid": "19401434",
         "pathway_ids": [
           "R-HSA-434316"
         ]
       },
       {
-        "span": "cl remodeling",
+        "span": {
+          "text": "CL remodeling",
+          "start": 489,
+          "end": 502
+        },
         "pmid": "19741254",
         "pathway_ids": [
           "R-HSA-1482798"
         ]
       },
       {
-        "span": "pg remodeling",
+        "span": {
+          "text": "PG remodeling",
+          "start": 564,
+          "end": 577
+        },
         "pmid": "20025994",
         "pathway_ids": [
           "R-HSA-1482925"
         ]
       },
       {
-        "span": "of psa",
-        "pmid": "9642289",
-        "pathway_ids": [
-          "R-HSA-1483101"
-        ]
-      },
-      {
-        "span": "arom of androgens to estrogens",
+        "span": {
+          "text": "aromatization of androgens to estrogens",
+          "start": 227,
+          "end": 266
+        },
         "pmid": "41977303",
         "pathway_ids": [
           "db__androgen_and_estrogen_synthesis_and_metabolism"
         ]
       },
       {
-        "span": "lact / neo glycos metabolism pathway",
+        "span": {
+          "text": "Lacto/Neolacto glycosphingolipid metabolism pathway",
+          "start": 962,
+          "end": 1013
+        },
         "pmid": "42099633",
         "pathway_ids": [
           "R-HSA-1660662"
         ]
       },
       {
-        "span": "o - glycosylation",
+        "span": {
+          "text": "O-glycosylation",
+          "start": 15,
+          "end": 30
+        },
         "pmid": "41764140",
         "pathway_ids": [
           "db__o_glycan_metabolism"
         ]
       },
       {
-        "span": "glycolysis",
+        "span": {
+          "text": "glycolysis",
+          "start": 764,
+          "end": 774
+        },
         "pmid": "41656811",
         "pathway_ids": [
           "hsa00350"
         ]
       },
       {
-        "span": "tyrosine metabolism",
-        "pmid": "40906027",
+        "span": {
+          "text": "tyrosine metabolism",
+          "start": 1377,
+          "end": 1396
+        },
+        "pmid": "39872045",
         "pathway_ids": [
           "hsa00350"
         ]
       },
       {
-        "span": "tyrosine metabolic pathway",
+        "span": {
+          "text": "tyrosine metabolic pathway",
+          "start": 770,
+          "end": 796
+        },
         "pmid": "35562974",
         "pathway_ids": [
           "hsa00350"
@@ -754,22 +1070,47 @@
       ],
       "abstract": "Human UDP-d-xylose:proteoglycan core protein beta-d-xylosyltransferase (EC 2.4.2.26, XT-I) initiates the biosynthesis of glycosaminoglycan chains in proteoglycans by transferring xylose from UDP-xylose to specific serine residues of the core protein. Based on the partial amino acid sequence of the purified enzyme from human JAR choriocarcinoma cell culture supernatant we isolated a cDNA encoding XT-I using the degenerate reverse transcriptase-polymerase chain reaction method. This enzyme, which ",
       "true_spans": [
-        "dermat sulfate"
+        {
+          "text": "dermatan sulfate",
+          "start": 565,
+          "end": 581
+        }
       ],
       "pred_spans": [
-        "sulfate",
-        "heparin",
-        "dermat sulfate biosynthesis"
+        {
+          "text": "heparin",
+          "start": 553,
+          "end": 560
+        },
+        {
+          "text": "dermatan sulfate biosynthesis",
+          "start": 565,
+          "end": 594
+        }
       ],
       "true_positives": [],
-      "false_positives": [
-        "sulfate",
-        "heparin",
-        "dermat sulfate biosynthesis"
+      "partial_true_positives": [
+        {
+          "pred": {
+            "text": "dermatan sulfate biosynthesis",
+            "start": 565,
+            "end": 594
+          },
+          "true": {
+            "text": "dermatan sulfate",
+            "start": 565,
+            "end": 581
+          }
+        }
       ],
-      "false_negatives": [
-        "dermat sulfate"
-      ]
+      "false_positives": [
+        {
+          "text": "heparin",
+          "start": 553,
+          "end": 560
+        }
+      ],
+      "false_negatives": []
     },
     {
       "pmid": "11551958",
@@ -778,16 +1119,37 @@
       ],
       "abstract": "A family of five beta1,3-galactosyltransferases has been characterized that catalyze the formation of Galbeta1,3GlcNAcbeta and Galbeta1,3GalNAcbeta linkages present in glycoproteins and glycolipids (beta3GalT1, -2, -3, -4, and -5). We now report a new member of the family (beta3GalT6), involved in glycosaminoglycan biosynthesis. The human and mouse genes were located on chromosomes 1p36.3 and 4E2, respectively, and homologs are found in Drosophila melanogaster and Caenorhabditis elegans. Unlike ",
       "true_spans": [
-        "glycosamin biosynthesis"
+        {
+          "text": "glycosaminoglycan biosynthesis",
+          "start": 299,
+          "end": 329
+        }
       ],
       "pred_spans": [
-        "glycosamin biosynthesis",
-        "glycosamin biosynthesis"
+        {
+          "text": "glycosaminoglycan biosynthesis",
+          "start": 299,
+          "end": 329
+        },
+        {
+          "text": "glycosaminoglycan biosynthesis",
+          "start": 1186,
+          "end": 1216
+        }
       ],
       "true_positives": [
-        "glycosamin biosynthesis",
-        "glycosamin biosynthesis"
+        {
+          "text": "glycosaminoglycan biosynthesis",
+          "start": 299,
+          "end": 329
+        },
+        {
+          "text": "glycosaminoglycan biosynthesis",
+          "start": 1186,
+          "end": 1216
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -798,19 +1160,44 @@
       ],
       "abstract": "Chondroitin sulfate and dermatan sulfate are synthesized as galactosaminoglycan polymers containing N-acetylgalactosmine alternating with glucuronic acid. The sugar residues are sulfated to varying degrees and positions depending upon the tissue sources and varying conditions of formation. Epimerization of any of the glucuronic acid residues to iduronic acid at the polymer level constitutes the formation of dermatan sulfate. Chondroitin/dermatan glycosaminoglycans are covalently attached by a co",
       "true_spans": [
-        "dermat sulfate",
-        "dermat sulfate"
+        {
+          "text": "dermatan sulfate",
+          "start": 24,
+          "end": 40
+        },
+        {
+          "text": "dermatan sulfate",
+          "start": 411,
+          "end": 427
+        }
       ],
       "pred_spans": [
-        "chondroitin sulfate and dermat sulfate"
+        {
+          "text": "Chondroitin sulfate and dermatan sulfate",
+          "start": 0,
+          "end": 40
+        }
       ],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [
-        "chondroitin sulfate and dermat sulfate"
+        {
+          "text": "Chondroitin sulfate and dermatan sulfate",
+          "start": 0,
+          "end": 40
+        }
       ],
       "false_negatives": [
-        "dermat sulfate",
-        "dermat sulfate"
+        {
+          "text": "dermatan sulfate",
+          "start": 24,
+          "end": 40
+        },
+        {
+          "text": "dermatan sulfate",
+          "start": 411,
+          "end": 427
+        }
       ]
     },
     {
@@ -820,23 +1207,54 @@
       ],
       "abstract": "The ability of chondroitin/dermatan sulfate (CS/DS) to convey biological information is enriched by the presence of iduronic acid. DS-epimerases 1 and 2 (DS-epi1 and 2), in conjunction with DS-4-O-sulfotransferase 1, are the enzymes responsible for iduronic acid biosynthesis and will be the major focus of this review. CS/DS proteoglycans (CS/DS-PGs) are ubiquitously found in connective tissues, basement membranes, and cell surfaces or are stored intracellularly. Such wide distribution reflects t",
       "true_spans": [
-        "dermat sulfate",
-        "dermat sulfate",
-        "dermat sulfate"
+        {
+          "text": "dermatan sulfate",
+          "start": 500,
+          "end": 516
+        },
+        {
+          "text": "dermatan sulfate",
+          "start": 518,
+          "end": 534
+        },
+        {
+          "text": "dermatan sulfate",
+          "start": 554,
+          "end": 570
+        }
       ],
       "pred_spans": [
-        "chondroitin sulfate",
-        "cs / ds proteoglycans"
+        {
+          "text": "chondroitin sulfate CS/DS proteoglycans",
+          "start": 458,
+          "end": 498
+        }
       ],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [
-        "chondroitin sulfate",
-        "cs / ds proteoglycans"
+        {
+          "text": "chondroitin sulfate CS/DS proteoglycans",
+          "start": 458,
+          "end": 498
+        }
       ],
       "false_negatives": [
-        "dermat sulfate",
-        "dermat sulfate",
-        "dermat sulfate"
+        {
+          "text": "dermatan sulfate",
+          "start": 500,
+          "end": 516
+        },
+        {
+          "text": "dermatan sulfate",
+          "start": 518,
+          "end": 534
+        },
+        {
+          "text": "dermatan sulfate",
+          "start": 554,
+          "end": 570
+        }
       ]
     },
     {
@@ -846,13 +1264,22 @@
       ],
       "abstract": "In the central nervous system (CNS) chondroitin sulfate proteoglycans, as one of the major barrier-forming molecules, influence cell migration patterns and axon pathfinding. By contrast, chondroitin sulfate side chains often form hybrid chains with dermatan sulfate and serve as a neural stem cell marker and neurogenic/neuritogenic molecules involved in neural stem cell proliferation. Hybrid chondroitin/dermatan sulfate chains are also involved in formation of the neural network by capturing and ",
       "true_spans": [
-        "dermat sulfate"
+        {
+          "text": "dermatan sulfate",
+          "start": 249,
+          "end": 265
+        }
       ],
       "pred_spans": [],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": [
-        "dermat sulfate"
+        {
+          "text": "dermatan sulfate",
+          "start": 249,
+          "end": 265
+        }
       ]
     },
     {
@@ -862,14 +1289,27 @@
       ],
       "abstract": "Most of the sulfotransferases participating in glycosaminoglycan biosynthesis have now been identified. Their essential role in generating binding sites for proteins interacting with glycosaminoglycans is apparent. These interactions may influence important biological processes such as growth control, signal transduction, cell adhesion and lipid metabolism. Gene targeting in mice as well as studies in Drosophila melanogaster and Caenorhabditis elegans have shown that dysfunction or lack of glyco",
       "true_spans": [
-        "glycosamin biosynthesis"
+        {
+          "text": "glycosaminoglycan biosynthesis",
+          "start": 47,
+          "end": 77
+        }
       ],
       "pred_spans": [
-        "glycosamin biosynthesis"
+        {
+          "text": "glycosaminoglycan biosynthesis",
+          "start": 47,
+          "end": 77
+        }
       ],
       "true_positives": [
-        "glycosamin biosynthesis"
+        {
+          "text": "glycosaminoglycan biosynthesis",
+          "start": 47,
+          "end": 77
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -880,17 +1320,42 @@
       ],
       "abstract": "Chondroitin/dermatan sulfate is a highly complex linear polysaccharide ubiquitously found in the extracellular matrix and at the cell surface. Several of its functions, such as binding to growth factors, are mediated by domains composed of alternating iduronic acid and 4-O-sulfated N-acetylgalactosamine residues, named 4-O-sulfated iduronic acid blocks. These domains are generated by the action of two DS-epimerases, which convert D-glucuronic acid into its epimer L-iduronic acid, in close connec",
       "true_spans": [
-        "dermat sulfate",
-        "dermat sulfate",
-        "dermat sulfate"
+        {
+          "text": "dermatan sulfate",
+          "start": 540,
+          "end": 556
+        },
+        {
+          "text": "dermatan sulfate",
+          "start": 984,
+          "end": 1000
+        },
+        {
+          "text": "dermatan sulfate",
+          "start": 1477,
+          "end": 1493
+        }
       ],
       "pred_spans": [],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": [
-        "dermat sulfate",
-        "dermat sulfate",
-        "dermat sulfate"
+        {
+          "text": "dermatan sulfate",
+          "start": 540,
+          "end": 556
+        },
+        {
+          "text": "dermatan sulfate",
+          "start": 984,
+          "end": 1000
+        },
+        {
+          "text": "dermatan sulfate",
+          "start": 1477,
+          "end": 1493
+        }
       ]
     },
     {
@@ -900,19 +1365,44 @@
       ],
       "abstract": "4-O-Sulfation of GalNAc is a high frequency modification of chondroitin sulfate and dermatan sulfate (DS), and three major GalNAc 4-O-sulfotransferases including dermatan 4-O-sulfotransferase-1 (D4ST-1) and chondroitin 4-O-sulfotransferases-1 and -2 (C4ST-1 and -2) have been identified. 4-O-Sulfation of GalNAc during DS biosynthesis had long been postulated to be a prerequisite for iduronic acid (IdoUA) formation by C5-epimerization of GlcUA. This hypothesis has recently been argued based on enz",
       "true_spans": [
-        "dermat sulfate"
+        {
+          "text": "dermatan sulfate",
+          "start": 84,
+          "end": 100
+        }
       ],
       "pred_spans": [
-        "ds biosynthesis",
-        "id acid ( ido ) formation"
+        {
+          "text": "DS biosynthesis",
+          "start": 319,
+          "end": 334
+        },
+        {
+          "text": "iduronic acid (IdoUA) formation",
+          "start": 385,
+          "end": 416
+        }
       ],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [
-        "ds biosynthesis",
-        "id acid ( ido ) formation"
+        {
+          "text": "DS biosynthesis",
+          "start": 319,
+          "end": 334
+        },
+        {
+          "text": "iduronic acid (IdoUA) formation",
+          "start": 385,
+          "end": 416
+        }
       ],
       "false_negatives": [
-        "dermat sulfate"
+        {
+          "text": "dermatan sulfate",
+          "start": 84,
+          "end": 100
+        }
       ]
     },
     {
@@ -922,14 +1412,27 @@
       ],
       "abstract": "The THI5 gene family of Saccharomyces cerevisiae comprises four highly conserved members named THI5 (YFL058w), THI11 (YJR156c), THI12 (YNL332w) and THI13 (YDL244w). Each gene copy is located within the subtelomeric region of a different chromosome and all are homologues of the Schizosaccharomyces pombe nmt1 gene which is thought to function in the biosynthesis of hydroxymethylpyrimidine (HMP), a precursor of vitamin B(1), thiamin. A comprehensive phylogenetic study has shown that the existence o",
       "true_spans": [
-        "thi biosynthesis"
+        {
+          "text": "thiamin biosynthesis",
+          "start": 951,
+          "end": 971
+        }
       ],
       "pred_spans": [
-        "thi biosynthesis"
+        {
+          "text": "thiamin biosynthesis",
+          "start": 951,
+          "end": 971
+        }
       ],
       "true_positives": [
-        "thi biosynthesis"
+        {
+          "text": "thiamin biosynthesis",
+          "start": 951,
+          "end": 971
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -940,14 +1443,27 @@
       ],
       "abstract": "microRNA-155 (miR-155) is one of the well-known oncogenic miRNA implicated in various types of tumors. Thiamine, commonly known as vitamin B1, is one of critical cofactors for energy metabolic enzymes including pyruvate dehydrogenase, alpha ketoglutarate dehydrogenase, and transketolase. Here we report a novel role of miR-155 in cancer metabolism through the up-regulation of thiamine in breast cancer cells. A bioinformatic analysis of miRNA array and metabolite-profiling data from NCI-60 cancer ",
       "true_spans": [
-        "thiamine homeostasis"
+        {
+          "text": "thiamine homeostasis",
+          "start": 827,
+          "end": 847
+        }
       ],
       "pred_spans": [
-        "thiamine homeostasis"
+        {
+          "text": "thiamine homeostasis",
+          "start": 827,
+          "end": 847
+        }
       ],
       "true_positives": [
-        "thiamine homeostasis"
+        {
+          "text": "thiamine homeostasis",
+          "start": 827,
+          "end": 847
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -958,20 +1474,36 @@
       ],
       "abstract": "Thiamine-dependent enzymes (TDEs) control metabolic pathways that are frequently altered in cancer and therefore present cancer-relevant targets. We have previously shown that the recombinant enzyme thiaminase cleaves and depletes intracellular thiamine, has growth inhibitory activity against leukemia and breast cancer cell lines, and that its growth inhibitory effects were reversed in leukemia cell lines by rapamycin. Now, we first show further evidence of thiaminase therapeutic potential by de",
       "true_spans": [
-        "thiamine - dependent metabolism"
+        {
+          "text": "thiamine-dependent metabolism",
+          "start": 2131,
+          "end": 2160
+        }
       ],
       "pred_spans": [
-        "thiamine",
-        "dependent"
+        {
+          "text": "thiamine",
+          "start": 2131,
+          "end": 2139
+        }
       ],
       "true_positives": [],
-      "false_positives": [
-        "thiamine",
-        "dependent"
+      "partial_true_positives": [
+        {
+          "pred": {
+            "text": "thiamine",
+            "start": 2131,
+            "end": 2139
+          },
+          "true": {
+            "text": "thiamine-dependent metabolism",
+            "start": 2131,
+            "end": 2160
+          }
+        }
       ],
-      "false_negatives": [
-        "thiamine - dependent metabolism"
-      ]
+      "false_positives": [],
+      "false_negatives": []
     },
     {
       "pmid": "15328374",
@@ -980,14 +1512,27 @@
       ],
       "abstract": "In previous studies, we have shown that RNA levels of the thiamine transporter THTR2 were down-regulated in breast cancer tumors in comparison with normal tissues and that THTR2-mediated increases in thiamine uptake activity contributed to increased apoptosis after exposure to ionizing radiation. To further understand the biological effects of the alteration of THTR2 expression, we conducted a DNA microarray study of gene expression in THTR2-transfected breast cancer cells and found that, in add",
       "true_spans": [
-        "thiamine metabolism"
+        {
+          "text": "thiamine metabolism",
+          "start": 1775,
+          "end": 1794
+        }
       ],
       "pred_spans": [
-        "thiamine metabolism"
+        {
+          "text": "thiamine metabolism",
+          "start": 1775,
+          "end": 1794
+        }
       ],
       "true_positives": [
-        "thiamine metabolism"
+        {
+          "text": "thiamine metabolism",
+          "start": 1775,
+          "end": 1794
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -998,14 +1543,27 @@
       ],
       "abstract": "BACKGROUND: Colorectal cancer is one of the common malignant tumors in clinical practice, and traditional Chinese medicine, as an important adjuvant treatment method, plays important roles in the treatment of malignant tumors. OBJECTIVE: This study aims to explore the mechanism of action of the Qizhu anti-cancer recipe on colorectal cancer through transcriptome sequencing. METHODS: The control group and Qizhu anti-cancer recipe group were established separately, and sequencing of the cells of th",
       "true_spans": [
-        "thiamine metabolism"
+        {
+          "text": "Thiamine metabolism",
+          "start": 1285,
+          "end": 1304
+        }
       ],
       "pred_spans": [
-        "thiamine metabolism"
+        {
+          "text": "Thiamine metabolism",
+          "start": 1285,
+          "end": 1304
+        }
       ],
       "true_positives": [
-        "thiamine metabolism"
+        {
+          "text": "Thiamine metabolism",
+          "start": 1285,
+          "end": 1304
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -1016,14 +1574,27 @@
       ],
       "abstract": "BACKGROUND: Proliferation-associated nucleolar protein p120 (NOP2) has been proven to be a promising tumor cell maker, but it has not been specifically studied in colon cancer. This study aims to investigate the role and action mechanism of NOP2 in colon cancer. METHODS: Fluorescence quantitative PCR and western blot assays were used to evaluate the expression of NOP2. NOP2 siRNA was transfected into HCT116, LOVO, and CCK-8 cells, and transwell assays were performed to evaluate the cell prolifer",
       "true_spans": [
-        "thiamine metabolism"
+        {
+          "text": "thiamine metabolism",
+          "start": 1341,
+          "end": 1360
+        }
       ],
       "pred_spans": [
-        "thiamine metabolism"
+        {
+          "text": "thiamine metabolism",
+          "start": 1341,
+          "end": 1360
+        }
       ],
       "true_positives": [
-        "thiamine metabolism"
+        {
+          "text": "thiamine metabolism",
+          "start": 1341,
+          "end": 1360
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -1034,17 +1605,38 @@
       ],
       "abstract": "Mitochondrial ATP synthase (Complex V) catalyzes the last step of oxidative phosphorylation and provides most of the energy (ATP) required by human cells. The mitochondrial genes MT-ATP6 and MT-ATP8 encode two subunits of the multi-subunit Complex V. Since the discovery of the first MT-ATP6 variant in the year 1990 as the cause of Neuropathy, Ataxia, and Retinitis Pigmentosa (NARP) syndrome, a large and continuously increasing number of inborn variants in the MT-ATP6 and MT-ATP8 genes have been ",
       "true_spans": [
-        "oxidative phosphorylation"
+        {
+          "text": "oxidative phosphorylation",
+          "start": 66,
+          "end": 91
+        }
       ],
       "pred_spans": [
-        "complex v",
-        "oxidative phosphorylation"
+        {
+          "text": "Complex V",
+          "start": 28,
+          "end": 37
+        },
+        {
+          "text": "oxidative phosphorylation",
+          "start": 66,
+          "end": 91
+        }
       ],
       "true_positives": [
-        "oxidative phosphorylation"
+        {
+          "text": "oxidative phosphorylation",
+          "start": 66,
+          "end": 91
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [
-        "complex v"
+        {
+          "text": "Complex V",
+          "start": 28,
+          "end": 37
+        }
       ],
       "false_negatives": []
     },
@@ -1055,16 +1647,37 @@
       ],
       "abstract": "Most iron in mammalian systems is routed to mitochondria to serve as a substrate for ferrochelatase. Ferrochelatase inserts iron into protoporphyrin IX to form heme which is incorporated into hemoglobin and cytochromes, the dominant hemoproteins in mammals. Tissue-specific regulatory features characterize the heme biosynthetic pathway. In erythroid cells, regulation is mediated by erythroid-specific transcription factors and the availability of iron as Fe/S clusters. In non-erythroid cells the p",
       "true_spans": [
-        "heme biosynthetic pathway"
+        {
+          "text": "heme biosynthetic pathway",
+          "start": 311,
+          "end": 336
+        }
       ],
       "pred_spans": [
-        "heme biosynthetic pathway",
-        "heme biosynthetic pathway"
+        {
+          "text": "heme biosynthetic pathway",
+          "start": 311,
+          "end": 336
+        },
+        {
+          "text": "heme biosynthetic pathway",
+          "start": 584,
+          "end": 609
+        }
       ],
       "true_positives": [
-        "heme biosynthetic pathway",
-        "heme biosynthetic pathway"
+        {
+          "text": "heme biosynthetic pathway",
+          "start": 311,
+          "end": 336
+        },
+        {
+          "text": "heme biosynthetic pathway",
+          "start": 584,
+          "end": 609
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -1075,22 +1688,63 @@
       ],
       "abstract": "Heme is a complex of iron with protoporphyrin IX that is essential for the function of all aerobic cells. Heme serves as the prosthetic group of numerous hemoproteins (eg, hemoglobin, myoglobin, cytochromes, guanylate cyclase, and nitric oxide synthase) and plays an important role in controlling protein synthesis and cell differentiation. Cellular heme levels are tightly controlled; this is achieved by a fine balance between heme biosynthesis and catabolism by the enzyme heme oxygenase. On a per",
       "true_spans": [
-        "heme biosynthesis",
-        "heme biosynthesis"
+        {
+          "text": "heme biosynthesis",
+          "start": 429,
+          "end": 446
+        },
+        {
+          "text": "heme biosynthesis",
+          "start": 811,
+          "end": 828
+        }
       ],
       "pred_spans": [
-        "heme biosynthesis",
-        "heme synthesis",
-        "heme biosynthesis",
-        "heme synthesis"
+        {
+          "text": "heme biosynthesis",
+          "start": 429,
+          "end": 446
+        },
+        {
+          "text": "heme synthesis",
+          "start": 525,
+          "end": 539
+        },
+        {
+          "text": "heme biosynthesis",
+          "start": 811,
+          "end": 828
+        },
+        {
+          "text": "heme synthesis",
+          "start": 893,
+          "end": 907
+        }
       ],
       "true_positives": [
-        "heme biosynthesis",
-        "heme biosynthesis"
+        {
+          "text": "heme biosynthesis",
+          "start": 429,
+          "end": 446
+        },
+        {
+          "text": "heme biosynthesis",
+          "start": 811,
+          "end": 828
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [
-        "heme synthesis",
-        "heme synthesis"
+        {
+          "text": "heme synthesis",
+          "start": 525,
+          "end": 539
+        },
+        {
+          "text": "heme synthesis",
+          "start": 893,
+          "end": 907
+        }
       ],
       "false_negatives": []
     },
@@ -1101,14 +1755,27 @@
       ],
       "abstract": "Tetrapyrroles like hemes, chlorophylls, and cobalamin are complex macrocycles which play essential roles in almost all living organisms. Heme serves as prosthetic group of many proteins involved in fundamental biological processes like respiration, photosynthesis, and the metabolism and transport of oxygen. Further, enzymes such as catalases, peroxidases, or cytochromes P450 rely on heme as essential cofactors. Heme is synthesized in most organisms via a highly conserved biosynthetic route. In h",
       "true_spans": [
-        "heme biosynthesis"
+        {
+          "text": "heme biosynthesis",
+          "start": 518,
+          "end": 535
+        }
       ],
       "pred_spans": [
-        "heme biosynthesis"
+        {
+          "text": "heme biosynthesis",
+          "start": 518,
+          "end": 535
+        }
       ],
       "true_positives": [
-        "heme biosynthesis"
+        {
+          "text": "heme biosynthesis",
+          "start": 518,
+          "end": 535
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -1119,14 +1786,27 @@
       ],
       "abstract": "Tetrapyrroles like hemes, chlorophylls, and cobalamin are complex macrocycles which play essential roles in almost all living organisms. Heme serves as prosthetic group of many proteins involved in fundamental biological processes like respiration, photosynthesis, and the metabolism and transport of oxygen. Further, enzymes such as catalases, peroxidases, or cytochromes P450 rely on heme as essential cofactors. Heme is synthesized in most organisms via a highly conserved biosynthetic route. In h",
       "true_spans": [
-        "heme biosynthesis"
+        {
+          "text": "heme biosynthesis",
+          "start": -1,
+          "end": -1
+        }
       ],
       "pred_spans": [
-        "heme biosynthesis"
+        {
+          "text": "heme biosynthesis",
+          "start": -1,
+          "end": -1
+        }
       ],
       "true_positives": [
-        "heme biosynthesis"
+        {
+          "text": "heme biosynthesis",
+          "start": -1,
+          "end": -1
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -1137,17 +1817,38 @@
       ],
       "abstract": "Tetrapyrroles like hemes, chlorophylls, and cobalamin are complex macrocycles which play essential roles in almost all living organisms. Heme serves as prosthetic group of many proteins involved in fundamental biological processes like respiration, photosynthesis, and the metabolism and transport of oxygen. Further, enzymes such as catalases, peroxidases, or cytochromes P450 rely on heme as essential cofactors. Heme is synthesized in most organisms via a highly conserved biosynthetic route. In h",
       "true_spans": [
-        "heme biosynthesis"
+        {
+          "text": "heme biosynthesis",
+          "start": -1,
+          "end": -1
+        }
       ],
       "pred_spans": [
-        "heme biosynthetic",
-        "heme biosynthesis"
+        {
+          "text": "heme biosynthetic",
+          "start": -1,
+          "end": -1
+        },
+        {
+          "text": "heme biosynthesis",
+          "start": -1,
+          "end": -1
+        }
       ],
       "true_positives": [
-        "heme biosynthesis"
+        {
+          "text": "heme biosynthesis",
+          "start": -1,
+          "end": -1
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [
-        "heme biosynthetic"
+        {
+          "text": "heme biosynthetic",
+          "start": -1,
+          "end": -1
+        }
       ],
       "false_negatives": []
     },
@@ -1158,14 +1859,27 @@
       ],
       "abstract": "The hereditary porphyrias comprise a group of eight metabolic disorders of the haem biosynthesis pathway characterised by acute neurovisceral symptoms, skin lesions or both. Each porphyria is caused by abnormal function of a separate enzymatic step resulting in a specific accumulation of haem precursors. Seven porphyrias are the consequence of a partial enzyme deficiency while a gain of function mechanism has been recently characterised in a novel porphyria. Acute porphyrias present with severe ",
       "true_spans": [
-        "haem biosynthesis pathway"
+        {
+          "text": "haem biosynthesis pathway",
+          "start": 79,
+          "end": 104
+        }
       ],
       "pred_spans": [
-        "haem biosynthesis pathway"
+        {
+          "text": "haem biosynthesis pathway",
+          "start": 79,
+          "end": 104
+        }
       ],
       "true_positives": [
-        "haem biosynthesis pathway"
+        {
+          "text": "haem biosynthesis pathway",
+          "start": 79,
+          "end": 104
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -1176,13 +1890,22 @@
       ],
       "abstract": "Plasma lipoproteins are responsible for carrying triglycerides and cholesterol in the blood and ensuring their delivery to target organs. Regulation of lipoprotein metabolism takes place at numerous levels including via changes in gene transcription. An important group of transcription factors that mediates the effect of dietary fatty acids and certain drugs on plasma lipoproteins are the peroxisome proliferator activated receptors (PPARs). Three PPAR isotypes can be distinguished, all of which ",
       "true_spans": [
-        "regulation of lipoprotein metabolism"
+        {
+          "text": "Regulation of lipoprotein metabolism",
+          "start": 138,
+          "end": 174
+        }
       ],
       "pred_spans": [],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": [
-        "regulation of lipoprotein metabolism"
+        {
+          "text": "Regulation of lipoprotein metabolism",
+          "start": 138,
+          "end": 174
+        }
       ]
     },
     {
@@ -1192,21 +1915,58 @@
       ],
       "abstract": "Cholesterol plays an essential role in cell membrane synthesis and in cell growth and differentiation. In mammalian cells, cholesterol can be synthesized from acetate precursors or taken up from dietary or exogenous sources. The major catabolic route for disposal of cholesterol involves conversion into excretable bile acids. The maintenance of cholesterol homeostasis is influenced and carefully controlled by multiple feedback mechanisms. The key regulatory targets of these feedback mechanisms ar",
       "true_spans": [
-        "cholesterol biosynthesis"
+        {
+          "text": "cholesterol biosynthesis",
+          "start": 563,
+          "end": 587
+        }
       ],
       "pred_spans": [
-        "cholesterol biosynthesis",
-        "cholesterol metabolism",
-        "cholesterol metabolism",
-        "cholesterol biosynthetic pathway"
+        {
+          "text": "cholesterol biosynthesis",
+          "start": 563,
+          "end": 587
+        },
+        {
+          "text": "cholesterol metabolism",
+          "start": 762,
+          "end": 784
+        },
+        {
+          "text": "cholesterol metabolism",
+          "start": 1045,
+          "end": 1067
+        },
+        {
+          "text": "cholesterol biosynthetic pathway",
+          "start": 1172,
+          "end": 1204
+        }
       ],
       "true_positives": [
-        "cholesterol biosynthesis"
+        {
+          "text": "cholesterol biosynthesis",
+          "start": 563,
+          "end": 587
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [
-        "cholesterol metabolism",
-        "cholesterol metabolism",
-        "cholesterol biosynthetic pathway"
+        {
+          "text": "cholesterol metabolism",
+          "start": 762,
+          "end": 784
+        },
+        {
+          "text": "cholesterol metabolism",
+          "start": 1045,
+          "end": 1067
+        },
+        {
+          "text": "cholesterol biosynthetic pathway",
+          "start": 1172,
+          "end": 1204
+        }
       ],
       "false_negatives": []
     },
@@ -1217,22 +1977,45 @@
       ],
       "abstract": "Since 1998, five disorders involving enzyme defects in post-squalene cholesterol biosynthesis have been identified-desmosterolosis, X-linked dominant chondrodysplasia punctata, CHILD syndrome, lathosterolosis, and hydrops-ectopic calcification-moth-eaten skeletal dysplasia. They join the most common cholesterol biosynthetic disorder, Smith-Lemli-Opitz syndrome, whose underlying defect was identified in 1993. All are associated with major developmental malformations that are unusual for metabolic",
       "true_spans": [
-        "cholesterol biosynthesis",
-        "cholesterol biosynthesis"
+        {
+          "text": "cholesterol biosynthesis",
+          "start": 69,
+          "end": 93
+        },
+        {
+          "text": "cholesterol biosynthesis",
+          "start": 863,
+          "end": 887
+        }
       ],
       "pred_spans": [
-        "cholesterol biosynthesis",
-        "cholesterol biosynthetic pathway",
-        "biosynthesis"
+        {
+          "text": "cholesterol biosynthetic pathway",
+          "start": 736,
+          "end": 768
+        }
       ],
-      "true_positives": [
-        "cholesterol biosynthesis"
-      ],
+      "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [
-        "cholesterol biosynthetic pathway",
-        "biosynthesis"
+        {
+          "text": "cholesterol biosynthetic pathway",
+          "start": 736,
+          "end": 768
+        }
       ],
-      "false_negatives": []
+      "false_negatives": [
+        {
+          "text": "cholesterol biosynthesis",
+          "start": 69,
+          "end": 93
+        },
+        {
+          "text": "cholesterol biosynthesis",
+          "start": 863,
+          "end": 887
+        }
+      ]
     },
     {
       "pmid": "16054061",
@@ -1241,21 +2024,58 @@
       ],
       "abstract": "Feedback control of cholesterol synthesis is mediated in part by sterol-induced binding of HMG CoA reductase to Insig proteins in the endoplasmic reticulum (ER). Binding leads to ubiquitination and proteasomal degradation of reductase, a rate-controlling enzyme in cholesterol synthesis. Using in vitro and in vivo assays, we show that lanosterol, the first sterol intermediate in cholesterol synthesis, potently stimulates ubiquitination of reductase, whereas cholesterol has no effect at 10-fold hi",
       "true_spans": [
-        "cholesterol synthesis"
+        {
+          "text": "cholesterol synthesis",
+          "start": 20,
+          "end": 41
+        }
       ],
       "pred_spans": [
-        "cholesterol synthesis",
-        "cholesterol synthesis",
-        "cholesterol synthesis",
-        "cholesterol synthetic pathway"
+        {
+          "text": "cholesterol synthesis",
+          "start": 20,
+          "end": 41
+        },
+        {
+          "text": "cholesterol synthesis",
+          "start": 265,
+          "end": 286
+        },
+        {
+          "text": "cholesterol synthesis",
+          "start": 381,
+          "end": 402
+        },
+        {
+          "text": "cholesterol synthetic pathway",
+          "start": 1031,
+          "end": 1060
+        }
       ],
       "true_positives": [
-        "cholesterol synthesis",
-        "cholesterol synthesis",
-        "cholesterol synthesis"
+        {
+          "text": "cholesterol synthesis",
+          "start": 20,
+          "end": 41
+        },
+        {
+          "text": "cholesterol synthesis",
+          "start": 265,
+          "end": 286
+        },
+        {
+          "text": "cholesterol synthesis",
+          "start": 381,
+          "end": 402
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [
-        "cholesterol synthetic pathway"
+        {
+          "text": "cholesterol synthetic pathway",
+          "start": 1031,
+          "end": 1060
+        }
       ],
       "false_negatives": []
     },
@@ -1266,17 +2086,38 @@
       ],
       "abstract": "Polyamines are ubiquitous cellular components that are involved in normal and neoplastic growth. Polyamine biosynthesis is very highly regulated in mammalian cells by the activities of two key decarboxylases acting on ornithine and S-adenosylmethionine. Recent studies, which include crystallographic analysis of the recombinant human proteins, have provided a detailed knowledge of their structure and function. Ornithine decarboxylase is a PLP-requiring decarboxylase, whereas S-adenosylmethionine ",
       "true_spans": [
-        "polyamine biosynthesis"
+        {
+          "text": "Polyamine biosynthesis",
+          "start": 97,
+          "end": 119
+        }
       ],
       "pred_spans": [
-        "polyamine biosynthesis",
-        "polyamine synthesis"
+        {
+          "text": "Polyamine biosynthesis",
+          "start": 97,
+          "end": 119
+        },
+        {
+          "text": "polyamine synthesis",
+          "start": 877,
+          "end": 896
+        }
       ],
       "true_positives": [
-        "polyamine biosynthesis"
+        {
+          "text": "Polyamine biosynthesis",
+          "start": 97,
+          "end": 119
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [
-        "polyamine synthesis"
+        {
+          "text": "polyamine synthesis",
+          "start": 877,
+          "end": 896
+        }
       ],
       "false_negatives": []
     },
@@ -1288,23 +2129,60 @@
       ],
       "abstract": "The major factor that controls glycogen metabolism in the liver is the concentration of phorphorylase alpha. Indeed, this enzyme catalyzes the limiting step of glycogen breakdown and, by controlling the activity of synthetase phosphatase, also regulates glycogen synthesis. The formation of phosphorylase alpha is stimulated by cAMP, by glycogen, and presumably also by some still ill-defined ionic changes. The ininactivation of phosphorylase is greatly stimulated by glucose and inhibited by AMP an",
       "true_spans": [
-        "glycogen metabolism",
-        "glycogen breakdown"
+        {
+          "text": "glycogen metabolism",
+          "start": 31,
+          "end": 50
+        },
+        {
+          "text": "glycogen breakdown",
+          "start": 160,
+          "end": 178
+        }
       ],
       "pred_spans": [
-        "glycogen metabolism",
-        "glycogen synthesis",
-        "glycogen synthesis"
+        {
+          "text": "glycogen metabolism",
+          "start": 31,
+          "end": 50
+        },
+        {
+          "text": "glycogen synthesis",
+          "start": 254,
+          "end": 272
+        },
+        {
+          "text": "Glycogen synthesis",
+          "start": 512,
+          "end": 530
+        }
       ],
       "true_positives": [
-        "glycogen metabolism"
+        {
+          "text": "glycogen metabolism",
+          "start": 31,
+          "end": 50
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [
-        "glycogen synthesis",
-        "glycogen synthesis"
+        {
+          "text": "glycogen synthesis",
+          "start": 254,
+          "end": 272
+        },
+        {
+          "text": "Glycogen synthesis",
+          "start": 512,
+          "end": 530
+        }
       ],
       "false_negatives": [
-        "glycogen breakdown"
+        {
+          "text": "glycogen breakdown",
+          "start": 160,
+          "end": 178
+        }
       ]
     },
     {
@@ -1314,13 +2192,22 @@
       ],
       "abstract": "OBJECTIVE: GPR40 is a G protein-coupled receptor regulating free fatty acid-induced insulin secretion. We generated transgenic mice overexpressing the hGPR40 gene under control of the mouse insulin II promoter and used them to examine the role of GPR40 in the regulation of insulin secretion and glucose homeostasis. RESEARCH DESIGN AND METHODS: Normal (C57BL/6J) and diabetic (KK) mice overexpressing the hGPR40 gene under control of the insulin II promoter were generated, and their glucose metabol",
       "true_spans": [
-        "gpr is a g protein - coupled receptor regulating free fatty acid - induced insulin secretion."
+        {
+          "text": "GPR40 is a G protein-coupled receptor regulating free fatty acid-induced insulin secretion.",
+          "start": 11,
+          "end": 102
+        }
       ],
       "pred_spans": [],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": [
-        "gpr is a g protein - coupled receptor regulating free fatty acid - induced insulin secretion."
+        {
+          "text": "GPR40 is a G protein-coupled receptor regulating free fatty acid-induced insulin secretion.",
+          "start": 11,
+          "end": 102
+        }
       ]
     },
     {
@@ -1330,13 +2217,22 @@
       ],
       "abstract": "Cardiolipin (CL) is an essential phospholipid component of the inner mitochondrial membrane. In the mammalian heart, the functional form of CL is tetralinoleoyl CL [(18:2)(4)CL]. A decrease in (18:2)(4)CL content, which is believed to negatively impact mitochondrial energetics, occurs in heart failure (HF) and other mitochondrial diseases. Presumably, (18:2)(4)CL is generated by remodeling nascent CL in a series of deacylation-reacylation cycles; however, our overall understanding of CL remodeli",
       "true_spans": [
-        "cl remodeling"
+        {
+          "text": "CL remodeling",
+          "start": 489,
+          "end": 502
+        }
       ],
       "pred_spans": [],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": [
-        "cl remodeling"
+        {
+          "text": "CL remodeling",
+          "start": 489,
+          "end": 502
+        }
       ]
     },
     {
@@ -1346,19 +2242,44 @@
       ],
       "abstract": "Phosphatidylglycerol (PG) is a precursor for the biosynthesis of cardiolipin and a signaling molecule required for various cellular functions. PG is subjected to remodeling subsequent to its de novo biosynthesis in mitochondria to incorporate appropriate acyl content for its biological functions and to prevent the harmful effect of lysophosphatidylglycerol (LPG) accumulation. Yet, a gene encoding a mitochondrial LPG acyltransferase has not been identified. In this report, we identified a novel f",
       "true_spans": [
-        "pg remodeling"
+        {
+          "text": "PG remodeling",
+          "start": 564,
+          "end": 577
+        }
       ],
       "pred_spans": [
-        "cardio synthesis",
-        "cardio biosynthesis"
+        {
+          "text": "cardiolipin synthesis",
+          "start": 1031,
+          "end": 1052
+        },
+        {
+          "text": "cardiolipin biosynthesis",
+          "start": 1652,
+          "end": 1676
+        }
       ],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [
-        "cardio synthesis",
-        "cardio biosynthesis"
+        {
+          "text": "cardiolipin synthesis",
+          "start": 1031,
+          "end": 1052
+        },
+        {
+          "text": "cardiolipin biosynthesis",
+          "start": 1652,
+          "end": 1676
+        }
       ],
       "false_negatives": [
-        "pg remodeling"
+        {
+          "text": "PG remodeling",
+          "start": 564,
+          "end": 577
+        }
       ]
     },
     {
@@ -1367,19 +2288,24 @@
         "R-HSA-1483101"
       ],
       "abstract": "Phosphatidylserine (PS) in mammalian cells is synthesized through the exchange of free L-serine with the base moiety of phosphatidylcholine or phosphatidylethanolamine (PE). The serine base exchange in Chinese hamster ovary (CHO) cells is catalyzed by at least two enzymes, PS synthase (PSS) I and II. A PSS I-lacking mutant of CHO-K1 cells, PSA-3, which exhibits approximately 2-fold lower serine base exchange activity than CHO-K1, is defective in the conversion of phosphatidylcholine to PS but ha",
-      "true_spans": [
-        "of psa"
-      ],
+      "true_spans": [],
       "pred_spans": [
-        "ps biosynthesis"
+        {
+          "text": "PS biosynthesis",
+          "start": 1356,
+          "end": 1371
+        }
       ],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [
-        "ps biosynthesis"
+        {
+          "text": "PS biosynthesis",
+          "start": 1356,
+          "end": 1371
+        }
       ],
-      "false_negatives": [
-        "of psa"
-      ]
+      "false_negatives": []
     },
     {
       "pmid": "12633678",
@@ -1388,21 +2314,48 @@
       ],
       "abstract": "Phytanic acid (3,7,10,14-tetramethylhexadecanoic acid) is a branched-chain fatty acid which is known to accumulate in a number of different genetic diseases including Refsum disease. Due to the presence of a methyl-group at the 3-position, phytanic acid and other 3-methyl fatty acids can not undergo beta-oxidation but are first subjected to fatty acid alpha-oxidation in which the terminal carboxyl-group is released as CO(2). The mechanism of alpha-oxidation has long remained obscure but has been",
       "true_spans": [
-        "fatty acid alpha - oxidation"
+        {
+          "text": "fatty acid alpha-oxidation",
+          "start": 343,
+          "end": 369
+        }
       ],
       "pred_spans": [
-        "fatty acid",
-        "- oxidation",
-        "fatty acid alpha - oxidation",
-        "fatty acid alpha - oxidation"
+        {
+          "text": "fatty acid",
+          "start": 343,
+          "end": 353
+        },
+        {
+          "text": "fatty acid alpha-oxidation",
+          "start": 601,
+          "end": 627
+        },
+        {
+          "text": "fatty acid alpha-oxidation",
+          "start": 769,
+          "end": 795
+        }
       ],
       "true_positives": [
-        "fatty acid alpha - oxidation",
-        "fatty acid alpha - oxidation"
+        {
+          "text": "fatty acid alpha-oxidation",
+          "start": 601,
+          "end": 627
+        },
+        {
+          "text": "fatty acid alpha-oxidation",
+          "start": 769,
+          "end": 795
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [
-        "fatty acid",
-        "- oxidation"
+        {
+          "text": "fatty acid",
+          "start": 343,
+          "end": 353
+        }
       ],
       "false_negatives": []
     },
@@ -1413,22 +2366,48 @@
       ],
       "abstract": "BACKGROUND: Chondroitin sulfate proteoglycans (CSPGs) are principal pericellular and extracellular components that form regulatory milieu involving numerous biological and pathophysiological phenomena. Diverse functions of CSPGs can be mainly attributed to structural variability of their polysaccharide moieties, chondroitin sulfate glycosaminoglycans (CS-GAG). Comprehensive understanding of the regulatory mechanisms for CS biosynthesis and its catabolic processes is required in order to understa",
       "true_spans": [
-        "cs biosynthesis"
+        {
+          "text": "CS biosynthesis",
+          "start": 424,
+          "end": 439
+        }
       ],
       "pred_spans": [
-        "cs biosynthesis",
-        "cs biosynthesis",
-        "cs biosynthesis",
-        "catabolism"
+        {
+          "text": "CS biosynthesis",
+          "start": 424,
+          "end": 439
+        },
+        {
+          "text": "CS biosynthesis",
+          "start": 621,
+          "end": 636
+        },
+        {
+          "text": "CS biosynthesis",
+          "start": 1053,
+          "end": 1068
+        }
       ],
       "true_positives": [
-        "cs biosynthesis",
-        "cs biosynthesis",
-        "cs biosynthesis"
+        {
+          "text": "CS biosynthesis",
+          "start": 424,
+          "end": 439
+        },
+        {
+          "text": "CS biosynthesis",
+          "start": 621,
+          "end": 636
+        },
+        {
+          "text": "CS biosynthesis",
+          "start": 1053,
+          "end": 1068
+        }
       ],
-      "false_positives": [
-        "catabolism"
-      ],
+      "partial_true_positives": [],
+      "false_positives": [],
       "false_negatives": []
     },
     {
@@ -1438,19 +2417,44 @@
       ],
       "abstract": "Breast cancer (BC), a multifactorial condition, remains one of the most common malignancies in women, in which the majority of BCs are hormone-sensitive and are activated by estrogens, especially 17beta-estradiol (E2). Whereas aromatization of androgens to estrogens is achieved by the aromatase enzyme, the steroidogenic acute regulatory (StAR) protein, by mobilizing the transport of intra-mitochondrial cholesterol, plays an indispensable role in E2 biosynthesis. Accumulating evidence indicates t",
       "true_spans": [
-        "arom of androgens to estrogens"
+        {
+          "text": "aromatization of androgens to estrogens",
+          "start": 227,
+          "end": 266
+        }
       ],
       "pred_spans": [
-        "e2 biosynthesis",
-        "e2 biosynthesis"
+        {
+          "text": "E2 biosynthesis",
+          "start": 450,
+          "end": 465
+        },
+        {
+          "text": "E2 biosynthesis",
+          "start": 1081,
+          "end": 1096
+        }
       ],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [
-        "e2 biosynthesis",
-        "e2 biosynthesis"
+        {
+          "text": "E2 biosynthesis",
+          "start": 450,
+          "end": 465
+        },
+        {
+          "text": "E2 biosynthesis",
+          "start": 1081,
+          "end": 1096
+        }
       ],
       "false_negatives": [
-        "arom of androgens to estrogens"
+        {
+          "text": "aromatization of androgens to estrogens",
+          "start": 227,
+          "end": 266
+        }
       ]
     },
     {
@@ -1460,19 +2464,34 @@
       ],
       "abstract": "BACKGROUND: Triple-negative breast cancer (TNBC) is a highly aggressive subtype lacking effective targeted therapies. Increasing evidence highlights metabolic reprogramming as a hallmark of tumor progression and immune evasion. However, in this context, the specific metabolic-immune mechanisms underlying TNBC remain unclear. METHODS: We performed an integrative multi-omics analysis combining bulk RNA-seq, single-cell RNA-seq, and spatial transcriptomics across TNBC and non-TNBC samples from TCGA",
       "true_spans": [
-        "lact / neo glycos metabolism pathway"
+        {
+          "text": "Lacto/Neolacto glycosphingolipid metabolism pathway",
+          "start": 962,
+          "end": 1013
+        }
       ],
       "pred_spans": [
-        "glycos metabolism pathway",
-        "glycos metabolism"
+        {
+          "text": "glycosphingolipid metabolism",
+          "start": 1635,
+          "end": 1663
+        }
       ],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [
-        "glycos metabolism pathway",
-        "glycos metabolism"
+        {
+          "text": "glycosphingolipid metabolism",
+          "start": 1635,
+          "end": 1663
+        }
       ],
       "false_negatives": [
-        "lact / neo glycos metabolism pathway"
+        {
+          "text": "Lacto/Neolacto glycosphingolipid metabolism pathway",
+          "start": 962,
+          "end": 1013
+        }
       ]
     },
     {
@@ -1482,14 +2501,27 @@
       ],
       "abstract": "Cells of breast cancer (BC) can metastasize to lymph nodes or other organs and is the high leading cause of female cancer deaths. Efforts to improve the performance of early detection and precise treatment are urgent and important for BC management. In clinical application, compared with highly complex classification functions, precise, simple and biologically interpretable algorithms can strengthen the understanding of disease development and facilitate the personalization of therapeutic strate",
       "true_spans": [
-        "glycos metabolism"
+        {
+          "text": "glycosphingolipid metabolism",
+          "start": 1464,
+          "end": 1492
+        }
       ],
       "pred_spans": [
-        "glycos metabolism"
+        {
+          "text": "glycosphingolipid metabolism",
+          "start": 1464,
+          "end": 1492
+        }
       ],
       "true_positives": [
-        "glycos metabolism"
+        {
+          "text": "glycosphingolipid metabolism",
+          "start": 1464,
+          "end": 1492
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -1500,14 +2532,27 @@
       ],
       "abstract": "O-acetylated GD2 (OAcGD2) is a cancer-related antigen that is currently being explored for therapeutic use. Exploring the intricate mechanisms behind OAcGD2 synthesis in cancer cells has long been a challenge. Leveraging state-of-the-art high-throughput RNAi screening and confocal imaging technologies, our study delves into the genetic network orchestrating OAcGD2 synthesis in breast cancer cells. By conducting a comprehensive siRNA screen targeting the OAcGD2 phosphatome/kinome, we identified 4",
       "true_spans": [
-        "glycos metabolism"
+        {
+          "text": "glycosphingolipid metabolism",
+          "start": 678,
+          "end": 706
+        }
       ],
       "pred_spans": [
-        "glycos metabolism"
+        {
+          "text": "glycosphingolipid metabolism",
+          "start": 678,
+          "end": 706
+        }
       ],
       "true_positives": [
-        "glycos metabolism"
+        {
+          "text": "glycosphingolipid metabolism",
+          "start": 678,
+          "end": 706
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -1518,13 +2563,22 @@
       ],
       "abstract": "SummaryAltered O-glycosylation of cancer cells is frequently associated with metastasis and poor prognosis. During metastasis, cells must also lose their epithelial characteristics and become mesenchymal and motile, termed epithelial-mesenchymal transition (EMT). While it is established that transforming growth factor beta-1 (TGF-beta1) can induce EMT, the effect of cytokine-induced EMT on O-glycosylation of breast cancer cells has not previously been explored. MCF-7 and T47-D breast cancer cell",
       "true_spans": [
-        "o - glycosylation"
+        {
+          "text": "O-glycosylation",
+          "start": 15,
+          "end": 30
+        }
       ],
       "pred_spans": [],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": [
-        "o - glycosylation"
+        {
+          "text": "O-glycosylation",
+          "start": 15,
+          "end": 30
+        }
       ]
     },
     {
@@ -1534,14 +2588,27 @@
       ],
       "abstract": "BACKGROUND: Abnormal protein glycosylation is a key feature of tumors. Among the modifications, Tn antigen (GalNAcalpha1-Ser/Thr) and its sialylated derivative, STn antigen (Neu5Acalpha2-6GalNAcalpha1-O-Ser/Thr), are prominent tumor-associated carbohydrate antigens. These antigens exhibit abnormal accumulation in epithelial malignancies, including colorectal cancer, breast cancer, and pancreatic cancer. Their pathological overexpression primarily stems from inactivation of the COSMC/T-synthase a",
       "true_spans": [
-        "o - glycan biosynthesis"
+        {
+          "text": "O-glycan biosynthesis",
+          "start": 583,
+          "end": 604
+        }
       ],
       "pred_spans": [
-        "o - glycan biosynthesis"
+        {
+          "text": "O-glycan biosynthesis",
+          "start": 583,
+          "end": 604
+        }
       ],
       "true_positives": [
-        "o - glycan biosynthesis"
+        {
+          "text": "O-glycan biosynthesis",
+          "start": 583,
+          "end": 604
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -1552,17 +2619,38 @@
       ],
       "abstract": "Colon cancer represents a global health challenge. The 3'-phosphoadenosine 5'-phosphosulfate (PAPS) synthase 2 (PAPSS2) is the key enzyme to generate PAPS, which is the universal sulfonate donor for all sulfation reactions. However, the correlation between PAPSS2 and diagnosis, prognosis, and immune cell infiltration in colon adenocarcinoma (COAD) has rarely been mentioned. We analyzed PAPSS2 expression levels in pan-cancer from The Cancer Genome Atlas (TCGA) database; and validated it in the Ge",
       "true_spans": [
-        "o - glycan biosynthesis"
+        {
+          "text": "O-glycan biosynthesis",
+          "start": 1483,
+          "end": 1504
+        }
       ],
       "pred_spans": [
-        "sulf",
-        "o - glycan biosynthesis"
+        {
+          "text": "sulfation",
+          "start": 203,
+          "end": 212
+        },
+        {
+          "text": "O-glycan biosynthesis",
+          "start": 1483,
+          "end": 1504
+        }
       ],
       "true_positives": [
-        "o - glycan biosynthesis"
+        {
+          "text": "O-glycan biosynthesis",
+          "start": 1483,
+          "end": 1504
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [
-        "sulf"
+        {
+          "text": "sulfation",
+          "start": 203,
+          "end": 212
+        }
       ],
       "false_negatives": []
     },
@@ -1573,14 +2661,27 @@
       ],
       "abstract": "Triple-negative breast cancer (TNBC) is an aggressive breast cancer (BC) subtype with limited benefit from immune checkpoint blockade (ICB) and frequent immune-related adverse events (irAEs). We achieved stable overexpression of PD-1 in tumor cells through intratumoral injection of a PD-1-overexpressing plasmid. The results indicated that intratumoral PD-1 gene therapy exerted a dual effect. It significantly inhibited tumor cell growth via PD-1/PD-L1 interaction. Moreover, it promoted antitumor ",
       "true_spans": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 1518,
+          "end": 1537
+        }
       ],
       "pred_spans": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 1518,
+          "end": 1537
+        }
       ],
       "true_positives": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 1518,
+          "end": 1537
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -1591,17 +2692,34 @@
       ],
       "abstract": "OBJECTIVES: Breast cancer is one of the most common malignant tumors in women, and some patients face poor therapeutic efficacy and recurrence. Tumor cells are extremely dependent on the energy produced by the glycolytic pathway, which not only provides adenosine triphosphate (ATP) for rapid tumor cell proliferation, but also creates favorable conditions for tumor cell growth by regulating the acidity of the tumor microenvironment. Nitrosative stress refers to a pathophysiological state characte",
       "true_spans": [
-        "glycolysis"
+        {
+          "text": "glycolysis",
+          "start": 764,
+          "end": 774
+        }
       ],
       "pred_spans": [
-        "glycolytic pathway"
+        {
+          "text": "glycolytic pathway",
+          "start": 210,
+          "end": 228
+        }
       ],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [
-        "glycolytic pathway"
+        {
+          "text": "glycolytic pathway",
+          "start": 210,
+          "end": 228
+        }
       ],
       "false_negatives": [
-        "glycolysis"
+        {
+          "text": "glycolysis",
+          "start": 764,
+          "end": 774
+        }
       ]
     },
     {
@@ -1611,18 +2729,28 @@
       ],
       "abstract": "BACKGROUND: The impact of tyrosine metabolism on the early diagnosis and treatment of breast cancer remains unclear. This underlines importance of exploring its mechanisms. METHODS: This study conducted an integrated analysis of breast cancer transcriptome data from the TCGA and GEO databases, utilizing differential expression analysis, enrichment analysis, immune infiltration analysis, single-cell RNA sequencing analysis, hdWGCNA analysis, and molecular docking to investigate the role of tyrosi",
       "true_spans": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 26,
+          "end": 45
+        }
       ],
       "pred_spans": [
-        "tyrosine metabolism",
-        "metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 26,
+          "end": 45
+        }
       ],
       "true_positives": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 26,
+          "end": 45
+        }
       ],
-      "false_positives": [
-        "metabolism"
-      ],
+      "partial_true_positives": [],
+      "false_positives": [],
       "false_negatives": []
     },
     {
@@ -1632,18 +2760,36 @@
       ],
       "abstract": "The associations of colorectal cancer (CRC) risk with metabolites, lifestyle factors and their joint effects have not been fully elucidated. Therefore, we conducted a prospective cohort study to estimate the associations of CRC risk with metabolites, metabolic risk score (MRS) and its joint associations with lifestyle factors. This study included 82,514 participants with plasma metabolites data in the UK Biobank. LASSO-COX and Random Forest was used to select metabolites. Cox regression was util",
       "true_spans": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 1434,
+          "end": 1453
+        }
       ],
       "pred_spans": [
-        "tyrosine metabolism pathways"
+        {
+          "text": "tyrosine metabolism pathways",
+          "start": 1434,
+          "end": 1462
+        }
       ],
       "true_positives": [],
-      "false_positives": [
-        "tyrosine metabolism pathways"
+      "partial_true_positives": [
+        {
+          "pred": {
+            "text": "tyrosine metabolism pathways",
+            "start": 1434,
+            "end": 1462
+          },
+          "true": {
+            "text": "tyrosine metabolism",
+            "start": 1434,
+            "end": 1453
+          }
+        }
       ],
-      "false_negatives": [
-        "tyrosine metabolism"
-      ]
+      "false_positives": [],
+      "false_negatives": []
     },
     {
       "pmid": "40022152",
@@ -1652,14 +2798,27 @@
       ],
       "abstract": "BACKGROUND: Fecal abundances of Enterobacteriaceae and Enterococcaceae are elevated in patients following Roux-en-Y gastric bypass (RYGB) surgery. Concurrently, fecal concentrations of tyramine, derived from gut bacterial metabolism of tyrosine and/or food, increased post-RYGB. Furthermore, emerging evidence suggests that RYGB is associated with increased colorectal cancer (CRC) risk. However, the causal link between RYGB-associated microbial metabolites and CRC risk remains unclear. Hence, this",
       "true_spans": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 524,
+          "end": 543
+        }
       ],
       "pred_spans": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 524,
+          "end": 543
+        }
       ],
       "true_positives": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 524,
+          "end": 543
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     },
@@ -1670,19 +2829,35 @@
       ],
       "abstract": "OBJECTIVE: To elucidate the metabolic mechanisms by which acteoside (ACT) isolated from Cistanche tubulosa alleviates cancer-related fatigue (CRF) in a murine model of colon cancer with cachexia. METHODS: BALB/c mice inoculated with C26 colon cancer cells were treated with paclitaxel (PTX, 10 mg/kg) and ACT (100 mg/kg) alone or in combination for 21 days. Fatigue-associated behaviors, tumor inhibition rate, and skeletal muscle morphology assessed by hematoxylin-eosin (H&E) staining and electron ",
       "true_spans": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 1377,
+          "end": 1396
+        }
       ],
       "pred_spans": [
-        "tyrosine metabolism",
-        "tryptophan metabolism"
+        {
+          "text": "tyrosine metabolism tryptophan metabolism",
+          "start": 1377,
+          "end": 1419
+        }
       ],
-      "true_positives": [
-        "tyrosine metabolism"
-      ],
+      "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [
-        "tryptophan metabolism"
+        {
+          "text": "tyrosine metabolism tryptophan metabolism",
+          "start": 1377,
+          "end": 1419
+        }
       ],
-      "false_negatives": []
+      "false_negatives": [
+        {
+          "text": "tyrosine metabolism",
+          "start": 1377,
+          "end": 1396
+        }
+      ]
     },
     {
       "pmid": "39755002",
@@ -1691,17 +2866,38 @@
       ],
       "abstract": "Previous studies have revealed the essential role of lysosomes in human diseases, including cancer. However, there is a lack of in-depth systematic research on its function in kidney renal clear cell carcinoma (KIRC). In this project, we collected the public dataset of KIRC and selected lysosomal genes tightly linked with survival. Cluster analysis uncovered that these genes possess good classification ability and can divide KIRC patients into multiple subtypes with different survival rates. Enr",
       "true_spans": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 795,
+          "end": 814
+        }
       ],
       "pred_spans": [
-        "steroid",
-        "tyrosine metabolism"
+        {
+          "text": "steroid",
+          "start": 723,
+          "end": 730
+        },
+        {
+          "text": "tyrosine metabolism",
+          "start": 795,
+          "end": 814
+        }
       ],
       "true_positives": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 795,
+          "end": 814
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [
-        "steroid"
+        {
+          "text": "steroid",
+          "start": 723,
+          "end": 730
+        }
       ],
       "false_negatives": []
     },
@@ -1712,13 +2908,22 @@
       ],
       "abstract": "Kidney renal clear cell carcinoma (KIRC) with poor prognosis is the main histological subtype of renal cell carcinoma, accounting for more than 80% of patients. Most patients are diagnosed at an advanced stage due to being asymptomatic early on. Advanced KIRC has an extremely poor prognosis due to its inherent resistance to radiotherapy and chemotherapy. Therefore, a comprehensive understanding of the molecular mechanisms of KIRC and the development of effective early diagnostic and therapeutic ",
       "true_spans": [
-        "tyrosine metabolic pathway"
+        {
+          "text": "tyrosine metabolic pathway",
+          "start": 770,
+          "end": 796
+        }
       ],
       "pred_spans": [],
       "true_positives": [],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": [
-        "tyrosine metabolic pathway"
+        {
+          "text": "tyrosine metabolic pathway",
+          "start": 770,
+          "end": 796
+        }
       ]
     },
     {
@@ -1728,19 +2933,48 @@
       ],
       "abstract": "Kidney renal clear cell carcinoma (KIRC) is the most common and fatal subtype of renal cancer. Antagonistic associations between selenium and cancer have been reported in previous studies. Selenium compounds, as anti-cancer agents, have been reported and approved for clinical trials. The main active form of selenium in selenoproteins is selenocysteine (Sec). The process of Sec biosynthesis and incorporation into selenoproteins plays a significant role in biological processes, including anti-carc",
       "true_spans": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 1284,
+          "end": 1303
+        }
       ],
       "pred_spans": [
-        "sec biosynthesis",
-        "tyrosine metabolism",
-        "fatty acid degradation"
+        {
+          "text": "Sec biosynthesis",
+          "start": 376,
+          "end": 392
+        },
+        {
+          "text": "tyrosine metabolism",
+          "start": 1284,
+          "end": 1303
+        },
+        {
+          "text": "fatty acid degradation",
+          "start": 1341,
+          "end": 1363
+        }
       ],
       "true_positives": [
-        "tyrosine metabolism"
+        {
+          "text": "tyrosine metabolism",
+          "start": 1284,
+          "end": 1303
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [
-        "sec biosynthesis",
-        "fatty acid degradation"
+        {
+          "text": "Sec biosynthesis",
+          "start": 376,
+          "end": 392
+        },
+        {
+          "text": "fatty acid degradation",
+          "start": 1341,
+          "end": 1363
+        }
       ],
       "false_negatives": []
     },
@@ -1751,16 +2985,867 @@
       ],
       "abstract": "Vitamin B12 is an essential nutrient acquired via dietary intake. Receptor-mediated endocytosis is a key mechanism in vitamin B12 absorption, cellular uptake, and reabsorption. CD320 is a type I transmembrane protein responsible for cellular uptake of vitamin B12 in peripheral tissues. In this study, we examined segmental distribution and cellular expression of CD320 in mouse kidneys and intestines. We show that CD320 is expressed on the luminal surface in the small intestine and in proximal tub",
       "true_spans": [
-        "vitamin b12 metabolism"
+        {
+          "text": "vitamin B12 metabolism",
+          "start": 1342,
+          "end": 1364
+        }
       ],
       "pred_spans": [
-        "vitamin b12 metabolism"
+        {
+          "text": "vitamin B12 metabolism",
+          "start": 1342,
+          "end": 1364
+        }
       ],
       "true_positives": [
-        "vitamin b12 metabolism"
+        {
+          "text": "vitamin B12 metabolism",
+          "start": 1342,
+          "end": 1364
+        }
       ],
+      "partial_true_positives": [],
       "false_positives": [],
       "false_negatives": []
     }
-  ]
+  ],
+  "nervaluate": {
+    "true_named_entities": [
+      [
+        {
+          "label": "Pathway",
+          "start": 565,
+          "end": 581
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 299,
+          "end": 329
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 24,
+          "end": 40
+        },
+        {
+          "label": "Pathway",
+          "start": 411,
+          "end": 427
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 500,
+          "end": 516
+        },
+        {
+          "label": "Pathway",
+          "start": 518,
+          "end": 534
+        },
+        {
+          "label": "Pathway",
+          "start": 554,
+          "end": 570
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 249,
+          "end": 265
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 47,
+          "end": 77
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 540,
+          "end": 556
+        },
+        {
+          "label": "Pathway",
+          "start": 984,
+          "end": 1000
+        },
+        {
+          "label": "Pathway",
+          "start": 1477,
+          "end": 1493
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 84,
+          "end": 100
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 951,
+          "end": 971
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 827,
+          "end": 847
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 2131,
+          "end": 2160
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1775,
+          "end": 1794
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1285,
+          "end": 1304
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1341,
+          "end": 1360
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 66,
+          "end": 91
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 311,
+          "end": 336
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 429,
+          "end": 446
+        },
+        {
+          "label": "Pathway",
+          "start": 811,
+          "end": 828
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 518,
+          "end": 535
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": -1,
+          "end": -1
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": -1,
+          "end": -1
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 79,
+          "end": 104
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 138,
+          "end": 174
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 563,
+          "end": 587
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 69,
+          "end": 93
+        },
+        {
+          "label": "Pathway",
+          "start": 863,
+          "end": 887
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 20,
+          "end": 41
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 97,
+          "end": 119
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 31,
+          "end": 50
+        },
+        {
+          "label": "Pathway",
+          "start": 160,
+          "end": 178
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 11,
+          "end": 102
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 489,
+          "end": 502
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 564,
+          "end": 577
+        }
+      ],
+      [],
+      [
+        {
+          "label": "Pathway",
+          "start": 343,
+          "end": 369
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 424,
+          "end": 439
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 227,
+          "end": 266
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 962,
+          "end": 1013
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1464,
+          "end": 1492
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 678,
+          "end": 706
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 15,
+          "end": 30
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 583,
+          "end": 604
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1483,
+          "end": 1504
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1518,
+          "end": 1537
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 764,
+          "end": 774
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 26,
+          "end": 45
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1434,
+          "end": 1453
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 524,
+          "end": 543
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1377,
+          "end": 1396
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 795,
+          "end": 814
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 770,
+          "end": 796
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1284,
+          "end": 1303
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1342,
+          "end": 1364
+        }
+      ]
+    ],
+    "pred_named_entities": [
+      [
+        {
+          "label": "Pathway",
+          "start": 553,
+          "end": 560
+        },
+        {
+          "label": "Pathway",
+          "start": 565,
+          "end": 594
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 299,
+          "end": 329
+        },
+        {
+          "label": "Pathway",
+          "start": 1186,
+          "end": 1216
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 0,
+          "end": 40
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 458,
+          "end": 498
+        }
+      ],
+      [],
+      [
+        {
+          "label": "Pathway",
+          "start": 47,
+          "end": 77
+        }
+      ],
+      [],
+      [
+        {
+          "label": "Pathway",
+          "start": 319,
+          "end": 334
+        },
+        {
+          "label": "Pathway",
+          "start": 385,
+          "end": 416
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 951,
+          "end": 971
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 827,
+          "end": 847
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 2131,
+          "end": 2139
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1775,
+          "end": 1794
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1285,
+          "end": 1304
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1341,
+          "end": 1360
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 28,
+          "end": 37
+        },
+        {
+          "label": "Pathway",
+          "start": 66,
+          "end": 91
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 311,
+          "end": 336
+        },
+        {
+          "label": "Pathway",
+          "start": 584,
+          "end": 609
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 429,
+          "end": 446
+        },
+        {
+          "label": "Pathway",
+          "start": 525,
+          "end": 539
+        },
+        {
+          "label": "Pathway",
+          "start": 811,
+          "end": 828
+        },
+        {
+          "label": "Pathway",
+          "start": 893,
+          "end": 907
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 518,
+          "end": 535
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": -1,
+          "end": -1
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": -1,
+          "end": -1
+        },
+        {
+          "label": "Pathway",
+          "start": -1,
+          "end": -1
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 79,
+          "end": 104
+        }
+      ],
+      [],
+      [
+        {
+          "label": "Pathway",
+          "start": 563,
+          "end": 587
+        },
+        {
+          "label": "Pathway",
+          "start": 762,
+          "end": 784
+        },
+        {
+          "label": "Pathway",
+          "start": 1045,
+          "end": 1067
+        },
+        {
+          "label": "Pathway",
+          "start": 1172,
+          "end": 1204
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 736,
+          "end": 768
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 20,
+          "end": 41
+        },
+        {
+          "label": "Pathway",
+          "start": 265,
+          "end": 286
+        },
+        {
+          "label": "Pathway",
+          "start": 381,
+          "end": 402
+        },
+        {
+          "label": "Pathway",
+          "start": 1031,
+          "end": 1060
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 97,
+          "end": 119
+        },
+        {
+          "label": "Pathway",
+          "start": 877,
+          "end": 896
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 31,
+          "end": 50
+        },
+        {
+          "label": "Pathway",
+          "start": 254,
+          "end": 272
+        },
+        {
+          "label": "Pathway",
+          "start": 512,
+          "end": 530
+        }
+      ],
+      [],
+      [],
+      [
+        {
+          "label": "Pathway",
+          "start": 1031,
+          "end": 1052
+        },
+        {
+          "label": "Pathway",
+          "start": 1652,
+          "end": 1676
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1356,
+          "end": 1371
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 343,
+          "end": 353
+        },
+        {
+          "label": "Pathway",
+          "start": 601,
+          "end": 627
+        },
+        {
+          "label": "Pathway",
+          "start": 769,
+          "end": 795
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 424,
+          "end": 439
+        },
+        {
+          "label": "Pathway",
+          "start": 621,
+          "end": 636
+        },
+        {
+          "label": "Pathway",
+          "start": 1053,
+          "end": 1068
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 450,
+          "end": 465
+        },
+        {
+          "label": "Pathway",
+          "start": 1081,
+          "end": 1096
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1635,
+          "end": 1663
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1464,
+          "end": 1492
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 678,
+          "end": 706
+        }
+      ],
+      [],
+      [
+        {
+          "label": "Pathway",
+          "start": 583,
+          "end": 604
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 203,
+          "end": 212
+        },
+        {
+          "label": "Pathway",
+          "start": 1483,
+          "end": 1504
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1518,
+          "end": 1537
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 210,
+          "end": 228
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 26,
+          "end": 45
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1434,
+          "end": 1462
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 524,
+          "end": 543
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1377,
+          "end": 1419
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 723,
+          "end": 730
+        },
+        {
+          "label": "Pathway",
+          "start": 795,
+          "end": 814
+        }
+      ],
+      [],
+      [
+        {
+          "label": "Pathway",
+          "start": 376,
+          "end": 392
+        },
+        {
+          "label": "Pathway",
+          "start": 1284,
+          "end": 1303
+        },
+        {
+          "label": "Pathway",
+          "start": 1341,
+          "end": 1363
+        }
+      ],
+      [
+        {
+          "label": "Pathway",
+          "start": 1342,
+          "end": 1364
+        }
+      ]
+    ]
+  }
 }
