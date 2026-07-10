@@ -253,6 +253,35 @@ Many papers report **KEGG pathway enrichment** results whose pathway names overl
 
 ---
 
+## Known Limitation — shared-head enumerations
+
+Exact matching only fires on the **canonical contiguous** surface form
+(`"X metabolism"`). When several pathways are listed with a **factored-out
+head/tail** `metabolism`, the middle items never match, so they are labeled
+`O` in training — and the model faithfully reproduces this blind spot.
+
+**Concrete example — PMID 41998452** (see `playground/model_005_analysis/model_005_abstract_predictions.json`).
+Abstract text:
+
+> "...revealed alterations in **the metabolism of** alanine, aspartate, and glutamate; arginine and proline; starch and sucrose; and butanoate **metabolism**."
+
+| List item | Matched? | Why |
+|---|---|---|
+| metabolism of alanine, aspartate, and glutamate | ❌ | word order reversed, "metabolism" prefixed not suffixed, comma-separated, includes glutamate (this is the KEGG name `Alanine, aspartate and glutamate metabolism`, hsa00250) |
+| arginine and proline | ❌ | trailing "metabolism" factored out — not contiguous with `arginine and proline metabolism` |
+| starch and sucrose | ❌ | trailing "metabolism" factored out |
+| butanoate metabolism | ✅ | the one item written in canonical contiguous form |
+
+The Run 005 model detected only `butanoate metabolism` here — not a model bug
+but the propagated distant-supervision label distribution.
+
+**Fixes (in order of effort):** (1) add KEGG-name synonyms for the few pathways
+that differ from Recon phrasing; (2) pre-process shared-head enumerations to
+distribute the factored `metabolism` before matching; (3) human- or
+LLM-assisted annotation — the real ceiling of exact-match distant supervision.
+
+---
+
 ## Recommended Actions
 
 ### Applied (in `match_exact.py`)

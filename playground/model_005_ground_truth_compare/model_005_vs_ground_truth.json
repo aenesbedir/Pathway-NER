@@ -1,0 +1,926 @@
+{
+  "summary": {
+    "articles": 21,
+    "total_gt_inscope": 87,
+    "total_gt_named_in_text": 4,
+    "matched": 4,
+    "recall_vs_all_gt": 0.046,
+    "recall_vs_named_gt": 1.0,
+    "note": "recall_vs_named_gt is the true model metric: of GT pathways actually written by name in the article, how many the model detected. recall_vs_all_gt is dragged down by blanket-citation articles (genome-scale metabolic-model papers) whose GT subsystem labels never appear as prose."
+  },
+  "per_article": [
+    {
+      "pmid": "39001365",
+      "pmcid": "PMC11240338",
+      "title": "Pan-Cancer, Genome-Scale Metabolic Network Analysis of over 10,000 Patients Elucidates Relationship between Metabolism and Survival.",
+      "gt_inscope": [
+        "alanine and aspartate metabolism",
+        "arginine and proline metabolism",
+        "beta-alanine metabolism",
+        "c5-branched dibasic acid metabolism",
+        "citric acid cycle",
+        "fatty acid oxidation",
+        "heme degradation",
+        "heme synthesis",
+        "histidine metabolism",
+        "lysine metabolism",
+        "peptide metabolism",
+        "phenylalanine metabolism",
+        "tyrosine metabolism",
+        "urea cycle",
+        "valine, leucine, and isoleucine metabolism",
+        "vitamin a metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "fatty acid synthesis",
+        "folate metabolism",
+        "glutathione metabolism",
+        "glycolysis/gluconeogenesis",
+        "oxidative phosphorylation",
+        "pentose phosphate pathway",
+        "steroid metabolism"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "alanine and aspartate metabolism",
+        "arginine and proline metabolism",
+        "beta-alanine metabolism",
+        "c5-branched dibasic acid metabolism",
+        "citric acid cycle",
+        "fatty acid oxidation",
+        "heme degradation",
+        "heme synthesis",
+        "histidine metabolism",
+        "lysine metabolism",
+        "peptide metabolism",
+        "phenylalanine metabolism",
+        "tyrosine metabolism",
+        "urea cycle",
+        "valine, leucine, and isoleucine metabolism",
+        "vitamin a metabolism"
+      ],
+      "extra": [
+        "fatty acid synthesis",
+        "folate metabolism",
+        "glutathione metabolism",
+        "glycolysis/gluconeogenesis",
+        "oxidative phosphorylation",
+        "pentose phosphate pathway",
+        "steroid metabolism"
+      ],
+      "detected_surface_forms": {
+        "glycolysis/gluconeogenesis": [
+          "glycolysis"
+        ],
+        "oxidative phosphorylation": [
+          "Oxidative phosphorylation",
+          "oxidative phosphorylation"
+        ],
+        "fatty acid synthesis": [
+          "Fatty acid biosynthesis",
+          "fatty acid biosynthesis"
+        ],
+        "folate metabolism": [
+          "folate metabolism"
+        ],
+        "steroid metabolism": [
+          "Steroid metabolism",
+          "steroid metabolism"
+        ],
+        "glutathione metabolism": [
+          "Glutathione metabolism",
+          "glutathione metabolism"
+        ],
+        "pentose phosphate pathway": [
+          "pentose phosphate pathway"
+        ]
+      }
+    },
+    {
+      "pmid": "29457794",
+      "pmcid": "PMC5840010",
+      "title": "Recon3D enables a three-dimensional view of gene variation in human metabolism.",
+      "gt_inscope": [
+        "alkaloid synthesis",
+        "d-alanine metabolism",
+        "limonene and pinene degradation"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "cholesterol metabolism",
+        "citric acid cycle",
+        "glycolysis/gluconeogenesis",
+        "nucleotide metabolism"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "alkaloid synthesis",
+        "d-alanine metabolism",
+        "limonene and pinene degradation"
+      ],
+      "extra": [
+        "cholesterol metabolism",
+        "citric acid cycle",
+        "glycolysis/gluconeogenesis",
+        "nucleotide metabolism"
+      ],
+      "detected_surface_forms": {
+        "glycolysis/gluconeogenesis": [
+          "glycolysis"
+        ],
+        "citric acid cycle": [
+          "citric acid cycle"
+        ],
+        "cholesterol metabolism": [
+          "cholesterol metabolism"
+        ],
+        "nucleotide metabolism": [
+          "nucleotide metabolism"
+        ]
+      }
+    },
+    {
+      "pmid": "38486989",
+      "pmcid": "PMC10935144",
+      "title": "The role of ",
+      "gt_inscope": [
+        "aminosugar metabolism",
+        "blood group synthesis",
+        "chondroitin sulfate degradation",
+        "chondroitin synthesis",
+        "fructose and mannose metabolism",
+        "galactose metabolism",
+        "heparan sulfate degradation",
+        "hyaluronan metabolism",
+        "keratan sulfate degradation",
+        "keratan sulfate synthesis",
+        "n-glycan degradation",
+        "n-glycan metabolism",
+        "n-glycan synthesis",
+        "nucleotide sugar metabolism",
+        "o-glycan metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "glycolysis/gluconeogenesis"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "aminosugar metabolism",
+        "blood group synthesis",
+        "chondroitin sulfate degradation",
+        "chondroitin synthesis",
+        "fructose and mannose metabolism",
+        "galactose metabolism",
+        "heparan sulfate degradation",
+        "hyaluronan metabolism",
+        "keratan sulfate degradation",
+        "keratan sulfate synthesis",
+        "n-glycan degradation",
+        "n-glycan metabolism",
+        "n-glycan synthesis",
+        "nucleotide sugar metabolism",
+        "o-glycan metabolism"
+      ],
+      "extra": [
+        "glycolysis/gluconeogenesis"
+      ],
+      "detected_surface_forms": {
+        "glycolysis/gluconeogenesis": [
+          "glycolysis"
+        ]
+      }
+    },
+    {
+      "pmid": "27325648",
+      "pmcid": null,
+      "title": "Cholesterol Metabolism and Prostate Cancer Lethality.",
+      "gt_inscope": [
+        "androgen and estrogen synthesis and metabolism",
+        "steroid metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "cholesterol metabolism"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "androgen and estrogen synthesis and metabolism",
+        "steroid metabolism"
+      ],
+      "extra": [
+        "cholesterol metabolism"
+      ],
+      "detected_surface_forms": {
+        "cholesterol metabolism": [
+          "Cholesterol metabolism"
+        ]
+      }
+    },
+    {
+      "pmid": "36901842",
+      "pmcid": "PMC10002396",
+      "title": "Metabolomics Analysis Reveals Novel Targets of Chemosensitizing Polyphenols and Omega-3 Polyunsaturated Fatty Acids in Triple Negative Breast Cancer Cells.",
+      "gt_inscope": [
+        "arachidonic acid metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "arginine and proline metabolism",
+        "citric acid cycle",
+        "fatty acid oxidation",
+        "fatty acid synthesis",
+        "glycolysis/gluconeogenesis",
+        "histidine metabolism",
+        "oxidative phosphorylation"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "arachidonic acid metabolism"
+      ],
+      "extra": [
+        "arginine and proline metabolism",
+        "citric acid cycle",
+        "fatty acid oxidation",
+        "fatty acid synthesis",
+        "glycolysis/gluconeogenesis",
+        "histidine metabolism",
+        "oxidative phosphorylation"
+      ],
+      "detected_surface_forms": {
+        "fatty acid oxidation": [
+          "fatty acid oxidation",
+          "β-oxidation"
+        ],
+        "histidine metabolism": [
+          "histidine metabolism"
+        ],
+        "arginine and proline metabolism": [
+          "arginine and proline metabolism"
+        ],
+        "citric acid cycle": [
+          "TCA cycle"
+        ],
+        "glycolysis/gluconeogenesis": [
+          "glycolysis"
+        ],
+        "fatty acid synthesis": [
+          "lipogenesis"
+        ],
+        "oxidative phosphorylation": [
+          "electron transport chain",
+          "oxidative phosphorylation"
+        ]
+      }
+    },
+    {
+      "pmid": "34030708",
+      "pmcid": "PMC8142489",
+      "title": "Pan-cancer characterization of metabolism-related biomarkers identifies potential therapeutic targets.",
+      "gt_inscope": [
+        "bile acid synthesis",
+        "butanoate metabolism",
+        "hippurate metabolism",
+        "propanoate metabolism",
+        "taurine and hypotaurine metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "citric acid cycle",
+        "glycolysis/gluconeogenesis",
+        "oxidative phosphorylation"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "bile acid synthesis",
+        "butanoate metabolism",
+        "hippurate metabolism",
+        "propanoate metabolism",
+        "taurine and hypotaurine metabolism"
+      ],
+      "extra": [
+        "citric acid cycle",
+        "glycolysis/gluconeogenesis",
+        "oxidative phosphorylation"
+      ],
+      "detected_surface_forms": {
+        "glycolysis/gluconeogenesis": [
+          "Glycolysis",
+          "Warburg effect",
+          "glycolysis"
+        ],
+        "oxidative phosphorylation": [
+          "OXPHOS",
+          "electron transport chain",
+          "oxidative phosphorylation"
+        ],
+        "citric acid cycle": [
+          "TCA cycle",
+          "tricarboxylic acid cycle"
+        ]
+      }
+    },
+    {
+      "pmid": "36714093",
+      "pmcid": "PMC9880062",
+      "title": "Comprehensive genome-scale metabolic model of the human pathogen ",
+      "gt_inscope": [
+        "biotin metabolism",
+        "coa catabolism",
+        "coa synthesis",
+        "cytochrome metabolism",
+        "drug metabolism",
+        "lipoate metabolism",
+        "tetrahydrobiopterin metabolism",
+        "thiamine metabolism",
+        "ubiquinone synthesis",
+        "vitamin b2 metabolism",
+        "vitamin b6 metabolism",
+        "vitamin c metabolism",
+        "vitamin d metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "citric acid cycle",
+        "fatty acid synthesis",
+        "glycolysis/gluconeogenesis",
+        "nucleotide sugar metabolism",
+        "oxidative phosphorylation",
+        "sphingolipid metabolism",
+        "steroid metabolism"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "biotin metabolism",
+        "coa catabolism",
+        "coa synthesis",
+        "cytochrome metabolism",
+        "drug metabolism",
+        "lipoate metabolism",
+        "tetrahydrobiopterin metabolism",
+        "thiamine metabolism",
+        "ubiquinone synthesis",
+        "vitamin b2 metabolism",
+        "vitamin b6 metabolism",
+        "vitamin c metabolism",
+        "vitamin d metabolism"
+      ],
+      "extra": [
+        "citric acid cycle",
+        "fatty acid synthesis",
+        "glycolysis/gluconeogenesis",
+        "nucleotide sugar metabolism",
+        "oxidative phosphorylation",
+        "sphingolipid metabolism",
+        "steroid metabolism"
+      ],
+      "detected_surface_forms": {
+        "steroid metabolism": [
+          "steroid metabolism"
+        ],
+        "sphingolipid metabolism": [
+          "sphingolipid metabolism"
+        ],
+        "oxidative phosphorylation": [
+          "oxidative phosphorylation"
+        ],
+        "glycolysis/gluconeogenesis": [
+          "gluconeogenesis",
+          "glycolysis",
+          "glycolysis/gluconeogenesis"
+        ],
+        "citric acid cycle": [
+          "TCA cycle"
+        ],
+        "nucleotide sugar metabolism": [
+          "nucleotide sugar metabolism"
+        ],
+        "fatty acid synthesis": [
+          "fatty acid biosynthesis"
+        ]
+      }
+    },
+    {
+      "pmid": "34199169",
+      "pmcid": null,
+      "title": "The Role of Prostaglandins in Different Types of Cancer.",
+      "gt_inscope": [
+        "eicosanoid metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "eicosanoid metabolism"
+      ],
+      "extra": [],
+      "detected_surface_forms": {}
+    },
+    {
+      "pmid": "36588722",
+      "pmcid": "PMC9795015",
+      "title": "The significance of glycolysis in tumor progression and its relationship with the tumor microenvironment.",
+      "gt_inscope": [
+        "glycolysis/gluconeogenesis",
+        "pyruvate metabolism"
+      ],
+      "gt_present_in_text": [
+        "glycolysis/gluconeogenesis"
+      ],
+      "detected": [
+        "glycolysis/gluconeogenesis",
+        "oxidative phosphorylation",
+        "pentose phosphate pathway"
+      ],
+      "matched": [
+        "glycolysis/gluconeogenesis"
+      ],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "pyruvate metabolism"
+      ],
+      "extra": [
+        "oxidative phosphorylation",
+        "pentose phosphate pathway"
+      ],
+      "detected_surface_forms": {
+        "glycolysis/gluconeogenesis": [
+          "Glycolysis",
+          "Warburg effect",
+          "glycolysis"
+        ],
+        "pentose phosphate pathway": [
+          "pentose phosphate pathway"
+        ],
+        "oxidative phosphorylation": [
+          "oxidative phosphorylation"
+        ]
+      }
+    },
+    {
+      "pmid": "34321955",
+      "pmcid": "PMC8312377",
+      "title": "Lipid metabolism in cancer: A systematic review.",
+      "gt_inscope": [
+        "fatty acid oxidation"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "fatty acid synthesis",
+        "glycolysis/gluconeogenesis"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "fatty acid oxidation"
+      ],
+      "extra": [
+        "fatty acid synthesis",
+        "glycolysis/gluconeogenesis"
+      ],
+      "detected_surface_forms": {
+        "glycolysis/gluconeogenesis": [
+          "glycolysis"
+        ],
+        "fatty acid synthesis": [
+          "fatty acid biosynthesis",
+          "fatty acid synthesis",
+          "lipogenesis"
+        ]
+      }
+    },
+    {
+      "pmid": "38273440",
+      "pmcid": "PMC11332710",
+      "title": "Regulation of fatty acid synthase on tumor and progress in the development of related therapies.",
+      "gt_inscope": [
+        "fatty acid synthesis"
+      ],
+      "gt_present_in_text": [
+        "fatty acid synthesis"
+      ],
+      "detected": [
+        "citric acid cycle",
+        "fatty acid synthesis",
+        "glycolysis/gluconeogenesis",
+        "oxidative phosphorylation"
+      ],
+      "matched": [
+        "fatty acid synthesis"
+      ],
+      "missed_but_named": [],
+      "missed_not_named": [],
+      "extra": [
+        "citric acid cycle",
+        "glycolysis/gluconeogenesis",
+        "oxidative phosphorylation"
+      ],
+      "detected_surface_forms": {
+        "fatty acid synthesis": [
+          "Fatty acid synthesis",
+          "fatty acid synthesis",
+          "lipogenesis"
+        ],
+        "glycolysis/gluconeogenesis": [
+          "glycolysis",
+          "glycolysis/gluconeogenesis"
+        ],
+        "citric acid cycle": [
+          "Krebs cycle",
+          "TCA cycle",
+          "tricarboxylic acid cycle"
+        ],
+        "oxidative phosphorylation": [
+          "OXPHOS",
+          "oxidative phosphorylation"
+        ]
+      }
+    },
+    {
+      "pmid": "30631755",
+      "pmcid": "PMC6315198",
+      "title": "NAD Metabolism in Cancer Therapeutics.",
+      "gt_inscope": [
+        "folate metabolism",
+        "glutathione metabolism",
+        "glycine, serine, alanine, and threonine metabolism",
+        "methionine and cysteine metabolism",
+        "ros detoxification",
+        "vitamin b12 metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "citric acid cycle",
+        "fatty acid oxidation",
+        "glycolysis/gluconeogenesis",
+        "nad metabolism",
+        "oxidative phosphorylation",
+        "pentose phosphate pathway"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "folate metabolism",
+        "glutathione metabolism",
+        "glycine, serine, alanine, and threonine metabolism",
+        "methionine and cysteine metabolism",
+        "ros detoxification",
+        "vitamin b12 metabolism"
+      ],
+      "extra": [
+        "citric acid cycle",
+        "fatty acid oxidation",
+        "glycolysis/gluconeogenesis",
+        "nad metabolism",
+        "oxidative phosphorylation",
+        "pentose phosphate pathway"
+      ],
+      "detected_surface_forms": {
+        "glycolysis/gluconeogenesis": [
+          "Warburg effect",
+          "glycolysis"
+        ],
+        "oxidative phosphorylation": [
+          "oxidative phosphorylation"
+        ],
+        "nad metabolism": [
+          "NAD metabolism"
+        ],
+        "pentose phosphate pathway": [
+          "pentose phosphate pathway"
+        ],
+        "citric acid cycle": [
+          "TCA cycle"
+        ],
+        "fatty acid oxidation": [
+          "fatty acid oxidation"
+        ]
+      }
+    },
+    {
+      "pmid": "38172980",
+      "pmcid": "PMC10763057",
+      "title": "Glutamine addiction in tumor cell: oncogene regulation and clinical treatment.",
+      "gt_inscope": [
+        "glutamate metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "citric acid cycle",
+        "fatty acid synthesis",
+        "glycolysis/gluconeogenesis",
+        "oxidative phosphorylation",
+        "purine synthesis",
+        "pyrimidine synthesis"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "glutamate metabolism"
+      ],
+      "extra": [
+        "citric acid cycle",
+        "fatty acid synthesis",
+        "glycolysis/gluconeogenesis",
+        "oxidative phosphorylation",
+        "purine synthesis",
+        "pyrimidine synthesis"
+      ],
+      "detected_surface_forms": {
+        "glycolysis/gluconeogenesis": [
+          "Warburg effect",
+          "glycolysis"
+        ],
+        "citric acid cycle": [
+          "Krebs cycle",
+          "TCA cycle"
+        ],
+        "oxidative phosphorylation": [
+          "electron transport chain",
+          "oxidative phosphorylation"
+        ],
+        "pyrimidine synthesis": [
+          "pyrimidine synthesis"
+        ],
+        "purine synthesis": [
+          "purine synthesis"
+        ],
+        "fatty acid synthesis": [
+          "Fatty acid synthesis",
+          "fatty acid synthesis"
+        ]
+      }
+    },
+    {
+      "pmid": "35965565",
+      "pmcid": "PMC9364366",
+      "title": "The key role of sphingolipid metabolism in cancer: New therapeutic targets, diagnostic and prognostic values, and anti-tumor immunotherapy resistance.",
+      "gt_inscope": [
+        "glycosphingolipid metabolism",
+        "sphingolipid metabolism"
+      ],
+      "gt_present_in_text": [
+        "sphingolipid metabolism"
+      ],
+      "detected": [
+        "sphingolipid metabolism"
+      ],
+      "matched": [
+        "sphingolipid metabolism"
+      ],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "glycosphingolipid metabolism"
+      ],
+      "extra": [],
+      "detected_surface_forms": {
+        "sphingolipid metabolism": [
+          "Sphingolipid metabolism",
+          "sphingolipid metabolism"
+        ]
+      }
+    },
+    {
+      "pmid": "32209698",
+      "pmcid": "PMC7331181",
+      "title": "An atlas of human metabolism.",
+      "gt_inscope": [
+        "glyoxylate and dicarboxylate metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "fatty acid oxidation",
+        "heme degradation",
+        "oxidative phosphorylation",
+        "phenylalanine metabolism"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "glyoxylate and dicarboxylate metabolism"
+      ],
+      "extra": [
+        "fatty acid oxidation",
+        "heme degradation",
+        "oxidative phosphorylation",
+        "phenylalanine metabolism"
+      ],
+      "detected_surface_forms": {
+        "phenylalanine metabolism": [
+          "phenylalanine metabolism"
+        ],
+        "fatty acid oxidation": [
+          "fatty acid oxidation"
+        ],
+        "heme degradation": [
+          "heme degradation"
+        ],
+        "oxidative phosphorylation": [
+          "electron transport chain"
+        ]
+      }
+    },
+    {
+      "pmid": "35545044",
+      "pmcid": null,
+      "title": "A pan-cancer metabolic atlas of the tumor microenvironment.",
+      "gt_inscope": [
+        "inositol phosphate metabolism",
+        "nucleotide interconversion",
+        "nucleotide metabolism",
+        "oxidative phosphorylation",
+        "pentose phosphate pathway",
+        "phosphatidylinositol phosphate metabolism",
+        "purine synthesis",
+        "pyrimidine synthesis",
+        "tryptophan metabolism"
+      ],
+      "gt_present_in_text": [
+        "oxidative phosphorylation"
+      ],
+      "detected": [
+        "glycolysis/gluconeogenesis",
+        "oxidative phosphorylation"
+      ],
+      "matched": [
+        "oxidative phosphorylation"
+      ],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "inositol phosphate metabolism",
+        "nucleotide interconversion",
+        "nucleotide metabolism",
+        "pentose phosphate pathway",
+        "phosphatidylinositol phosphate metabolism",
+        "purine synthesis",
+        "pyrimidine synthesis",
+        "tryptophan metabolism"
+      ],
+      "extra": [
+        "glycolysis/gluconeogenesis"
+      ],
+      "detected_surface_forms": {
+        "oxidative phosphorylation": [
+          "Oxidative phosphorylation"
+        ],
+        "glycolysis/gluconeogenesis": [
+          "Warburg effect"
+        ]
+      }
+    },
+    {
+      "pmid": "41210682",
+      "pmcid": "PMC12595249",
+      "title": "Regulating arachidonic acid metabolism: a novel strategy to prevent colorectal inflammatory cancer transformation.",
+      "gt_inscope": [
+        "leukotriene metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "fatty acid synthesis"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "leukotriene metabolism"
+      ],
+      "extra": [
+        "fatty acid synthesis"
+      ],
+      "detected_surface_forms": {
+        "fatty acid synthesis": [
+          "fatty acid synthesis"
+        ]
+      }
+    },
+    {
+      "pmid": "33637672",
+      "pmcid": null,
+      "title": "Metabolism pathways of arachidonic acids: mechanisms and potential therapeutic targets.",
+      "gt_inscope": [
+        "linoleate metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "linoleate metabolism"
+      ],
+      "extra": [],
+      "detected_surface_forms": {}
+    },
+    {
+      "pmid": "38396769",
+      "pmcid": null,
+      "title": "Inhibitors of NAD",
+      "gt_inscope": [
+        "nad metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "nad metabolism"
+      ],
+      "extra": [],
+      "detected_surface_forms": {}
+    },
+    {
+      "pmid": "37627013",
+      "pmcid": "PMC10452188",
+      "title": "Pan-Cancer Identification of Prognostic-Associated Metabolic Pathways.",
+      "gt_inscope": [
+        "nucleotide salvage pathway",
+        "purine catabolism",
+        "pyrimidine catabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "bile acid synthesis",
+        "butanoate metabolism",
+        "glycolysis/gluconeogenesis",
+        "nucleotide metabolism",
+        "vitamin b2 metabolism",
+        "vitamin b6 metabolism"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "nucleotide salvage pathway",
+        "purine catabolism",
+        "pyrimidine catabolism"
+      ],
+      "extra": [
+        "bile acid synthesis",
+        "butanoate metabolism",
+        "glycolysis/gluconeogenesis",
+        "nucleotide metabolism",
+        "vitamin b2 metabolism",
+        "vitamin b6 metabolism"
+      ],
+      "detected_surface_forms": {
+        "bile acid synthesis": [
+          "primary bile acid biosynthesis"
+        ],
+        "butanoate metabolism": [
+          "butanoate metabolism"
+        ],
+        "nucleotide metabolism": [
+          "nucleotide metabolism"
+        ],
+        "vitamin b6 metabolism": [
+          "vitamin B6 metabolism"
+        ],
+        "vitamin b2 metabolism": [
+          "riboflavin metabolism"
+        ],
+        "glycolysis/gluconeogenesis": [
+          "glycolysis"
+        ]
+      }
+    },
+    {
+      "pmid": "38762377",
+      "pmcid": "PMC11162322",
+      "title": "Emerging targets in lipid metabolism for cancer therapy.",
+      "gt_inscope": [
+        "triacylglycerol synthesis",
+        "vitamin e metabolism"
+      ],
+      "gt_present_in_text": [],
+      "detected": [
+        "fatty acid oxidation",
+        "fatty acid synthesis"
+      ],
+      "matched": [],
+      "missed_but_named": [],
+      "missed_not_named": [
+        "triacylglycerol synthesis",
+        "vitamin e metabolism"
+      ],
+      "extra": [
+        "fatty acid oxidation",
+        "fatty acid synthesis"
+      ],
+      "detected_surface_forms": {
+        "fatty acid synthesis": [
+          "fatty acid synthesis"
+        ],
+        "fatty acid oxidation": [
+          "fatty acid oxidation"
+        ]
+      }
+    }
+  ]
+}
