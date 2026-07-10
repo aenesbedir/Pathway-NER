@@ -19,6 +19,7 @@ Run with:
     venv310/bin/python3 train.py
 """
 
+import argparse
 import json
 import logging
 from pathlib import Path
@@ -42,19 +43,21 @@ from transformers import (
 # ---------------------------------------------------------------------------
 
 MODEL_NAME = "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext"
-OUTPUT_DIR = Path("models/pathway-ner-004")
 
 LABEL2ID = {"O": 0, "B-Pathway": 1, "I-Pathway": 2}
 ID2LABEL = {v: k for k, v in LABEL2ID.items()}
 NUM_LABELS = len(LABEL2ID)
 
 # Class weights: down-weight O (0), up-weight B and I
-# Inverse frequency approximation: O=98.6%, B=0.4%, I=0.9%
 CLASS_WEIGHTS = [0.1, 5.0, 3.0]  # O, B-Pathway, I-Pathway
 
-TRAIN_FILE = Path("data/processed/train.jsonl")
-VAL_FILE = Path("data/processed/val.jsonl")
-TEST_FILE = Path("data/processed/test.jsonl")
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--data-dir", default="data/processed",
+                        help="Directory containing train/val/test.jsonl")
+    parser.add_argument("--output-dir", default="models/pathway-ner-005",
+                        help="Output directory for best checkpoint")
+    return parser.parse_args()
 
 logging.basicConfig(
     level=logging.INFO,
@@ -128,12 +131,18 @@ def compute_metrics(eval_pred):
 # ---------------------------------------------------------------------------
 
 def main() -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    args = parse_args()
+    data_dir = Path(args.data_dir)
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    log.info("Data dir   : %s", data_dir)
+    log.info("Output dir : %s", output_dir)
 
     log.info("Loading datasets …")
-    train_dataset = load_dataset(TRAIN_FILE)
-    val_dataset = load_dataset(VAL_FILE)
-    test_dataset = load_dataset(TEST_FILE)
+    train_dataset = load_dataset(data_dir / "train.jsonl")
+    val_dataset = load_dataset(data_dir / "val.jsonl")
+    test_dataset = load_dataset(data_dir / "test.jsonl")
     log.info("Train: %d  Val: %d  Test: %d", len(train_dataset), len(val_dataset), len(test_dataset))
 
     log.info("Loading model: %s", MODEL_NAME)
@@ -156,7 +165,7 @@ def main() -> None:
     data_collator = DataCollatorForTokenClassification(tokenizer=tokenizer, padding=True)
 
     training_args = TrainingArguments(
-        output_dir=str(OUTPUT_DIR),
+        output_dir=str(output_dir),
         num_train_epochs=20,
         per_device_train_batch_size=16,
         per_device_eval_batch_size=32,
@@ -195,12 +204,12 @@ def main() -> None:
     log.info("Test Recall    : %.4f", test_results.get("eval_recall", 0))
     log.info("─" * 60)
 
-    log.info("Saving best model to %s", OUTPUT_DIR)
-    trainer.save_model(str(OUTPUT_DIR))
-    tokenizer.save_pretrained(str(OUTPUT_DIR))
+    log.info("Saving best model to %s", output_dir)
+    trainer.save_model(str(output_dir))
+    tokenizer.save_pretrained(str(output_dir))
 
     # Save test results
-    results_path = OUTPUT_DIR / "test_results.json"
+    results_path = output_dir / "test_results.json"
     results_path.write_text(json.dumps(test_results, indent=2), encoding="utf-8")
     log.info("Test results saved to %s", results_path)
 

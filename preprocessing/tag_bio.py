@@ -2,7 +2,7 @@
 """
 tag_bio.py — Step 4
 
-Tokenizes text and aligns character-level spans from all_matches.jsonl
+Tokenizes text and aligns character-level spans from a matches JSONL file
 to per-token BIO labels using BiomedBERT's fast tokenizer.
 
 Strategy:
@@ -16,18 +16,19 @@ Label scheme:
   O         = 0  (outside)
   -100           (special tokens and subword continuations — ignored by loss)
 
-Input:
-  data/processed/all_matches.jsonl
-  data/raw/abstracts.jsonl
-  data/processed/db_with_extracted_pathways.json   (text for recon3d records)
+Phase 1 (default):
+  python3 preprocessing/tag_bio.py
 
-Output:
-  data/processed/bio_tags.jsonl
+Phase 2:
+  python3 preprocessing/tag_bio.py \\
+      --matches  data/processed/exact_matches.jsonl \\
+      --articles data/raw/articles.json \\
+      --output   data/processed/bio_tags_v2.jsonl
 
-Run with:
-    python3 preprocessing/tag_bio.py
+Articles file can be JSONL (one record per line) or a JSON array.
 """
 
+import argparse
 import json
 import logging
 from collections import defaultdict
@@ -35,14 +36,9 @@ from pathlib import Path
 
 from transformers import AutoTokenizer
 
-ALL_MATCHES = Path("data/processed/all_matches.jsonl")
-ABSTRACTS_FILE = Path("data/raw/abstracts.jsonl")
-DB_FILE = Path("data/processed/db_with_extracted_pathways.json")
-OUTPUT = Path("data/processed/bio_tags.jsonl")
-
 MODEL = "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext"
 MAX_TOKENS = 512
-WINDOW_CHARS = 500  # chars on each side of a full-text span
+WINDOW_CHARS = 500
 
 logging.basicConfig(
     level=logging.INFO,
@@ -56,21 +52,33 @@ log = logging.getLogger(__name__)
 # Data loading
 # ---------------------------------------------------------------------------
 
-def load_articles() -> dict[str, dict]:
-    articles = {}
-    for line in ABSTRACTS_FILE.open(encoding="utf-8"):
-        r = json.loads(line)
-        articles[r["pmid"]] = r
-    # Supplement with DB abstracts for recon3d records (different PMIDs)
-    db = json.loads(DB_FILE.read_text(encoding="utf-8"))
-    for rec in db:
-        pmid = str(rec["pmid"])
-        if pmid not in articles and rec.get("abstract"):
-            articles[pmid] = {
-                "pmid": pmid,
-                "abstract": rec["abstract"],
-                "full_text": "",
-            }
+def load_articles(articles_path: Path, db_path: Path | None = None) -> dict[str, dict]:
+    """Load articles from a JSONL or JSON-array file, keyed by str(pmid)."""
+    articles: dict[str, dict] = {}
+    raw = articles_path.read_text(encoding="utf-8").strip()
+
+    if raw.startswith("["):
+        records = json.loads(raw)
+    else:
+        records = [json.loads(line) for line in raw.splitlines() if line.strip()]
+
+    for r in records:
+        pmid = str(r.get("pmid", ""))
+        if pmid:
+            articles[pmid] = r
+
+    # Phase 1 supplement: DB abstracts for recon3d records
+    if db_path and db_path.exists():
+        db = json.loads(db_path.read_text(encoding="utf-8"))
+        for rec in db:
+            pmid = str(rec["pmid"])
+            if pmid not in articles and rec.get("abstract"):
+                articles[pmid] = {
+                    "pmid": pmid,
+                    "abstract": rec["abstract"],
+                    "full_text": "",
+                }
+
     return articles
 
 
@@ -113,13 +121,10 @@ def tokenize_and_align(
 
     for i, word_id in enumerate(word_ids):
         if word_id is None:
-            # [CLS], [SEP], padding — ignore in loss
             token_labels.append(-100)
         elif word_id == prev_word_id:
-            # Subword continuation — ignore in loss
             token_labels.append(-100)
         else:
-            # First subword of a word — assign real label
             token_start = offset_mapping[i][0]
             cl = char_labels[token_start] if token_start < len(char_labels) else 0
             token_labels.append(cl)
@@ -139,13 +144,7 @@ def tokenize_and_align(
 # Per-source processing
 # ---------------------------------------------------------------------------
 
-def process_abstract(
-    tokenizer,
-    pmid: str,
-    article: dict,
-    spans: list[dict],
-    pathway_ids: list[str],
-) -> dict | None:
+def process_abstract(tokenizer, pmid, article, spans, pathway_ids):
     text = (article.get("abstract") or "").strip()
     if not text:
         return None
@@ -153,13 +152,7 @@ def process_abstract(
     return tokenize_and_align(tokenizer, text, char_labels, pathway_ids, pmid, 0)
 
 
-def process_fulltext(
-    tokenizer,
-    pmid: str,
-    article: dict,
-    spans: list[dict],
-    pathway_ids: list[str],
-) -> list[dict]:
+def process_fulltext(tokenizer, pmid, article, spans, pathway_ids):
     full_text = (article.get("full_text") or "").strip()
     if not full_text:
         return []
@@ -175,7 +168,6 @@ def process_fulltext(
         win_start = max(0, span["start"] - WINDOW_CHARS)
         win_end = min(len(full_text), span["end"] + WINDOW_CHARS)
 
-        # Merge nearby spans into the same window
         window_spans = [span]
         for j, other in enumerate(spans_sorted):
             if j != i and j not in used:
@@ -202,25 +194,56 @@ def process_fulltext(
 # ---------------------------------------------------------------------------
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--matches",
+        default="data/processed/all_matches.jsonl",
+        help="Input matches JSONL (default: Phase 1 all_matches.jsonl)",
+    )
+    parser.add_argument(
+        "--articles",
+        default="data/raw/abstracts.jsonl",
+        help="Articles file: JSONL or JSON array (default: Phase 1 abstracts.jsonl)",
+    )
+    parser.add_argument(
+        "--output",
+        default="data/processed/bio_tags.jsonl",
+        help="Output BIO tags JSONL (default: data/processed/bio_tags.jsonl)",
+    )
+    parser.add_argument(
+        "--db",
+        default="data/processed/db_with_extracted_pathways.json",
+        help="Optional DB supplement for Phase 1 recon3d records",
+    )
+    args = parser.parse_args()
+
+    matches_path = Path(args.matches)
+    articles_path = Path(args.articles)
+    output_path = Path(args.output)
+    db_path = Path(args.db) if args.db else None
+
+    log.info("Matches  : %s", matches_path)
+    log.info("Articles : %s", articles_path)
+    log.info("Output   : %s", output_path)
+
     log.info("Loading tokenizer: %s", MODEL)
     tokenizer = AutoTokenizer.from_pretrained(MODEL)
 
-    log.info("Loading articles …")
-    articles = load_articles()
+    log.info("Loading articles...")
+    articles = load_articles(articles_path, db_path)
     log.info("Articles loaded: %d", len(articles))
 
-    # Group all_matches by pmid
     pmid_data: dict[str, dict] = defaultdict(
         lambda: {"pathway_ids": set(), "abstract_spans": [], "fulltext_spans": []}
     )
     skipped_no_spans = skipped_no_article = 0
 
-    for line in ALL_MATCHES.open(encoding="utf-8"):
+    for line in matches_path.open(encoding="utf-8"):
         r = json.loads(line)
-        if not r["spans"]:
+        if not r.get("spans"):
             skipped_no_spans += 1
             continue
-        pmid = r["pmid"]
+        pmid = str(r["pmid"])
         if pmid not in articles:
             skipped_no_article += 1
             continue
@@ -235,9 +258,10 @@ def main() -> None:
     log.info("Skipped (no spans)   : %d", skipped_no_spans)
     log.info("Skipped (no article) : %d", skipped_no_article)
 
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     written = abs_written = ft_written = 0
 
-    with OUTPUT.open("w", encoding="utf-8") as out:
+    with output_path.open("w", encoding="utf-8") as out:
         for pmid, data in pmid_data.items():
             article = articles[pmid]
             pathway_ids = sorted(data["pathway_ids"])
@@ -259,7 +283,6 @@ def main() -> None:
                 ft_written += 1
 
     log.info("─" * 60)
-    log.info("Output              : %s", OUTPUT)
     log.info("Total records       : %d", written)
     log.info("  — from abstract   : %d", abs_written)
     log.info("  — from full-text  : %d", ft_written)

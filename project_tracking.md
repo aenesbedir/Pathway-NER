@@ -365,17 +365,91 @@ Same SpaCy PhraseMatcher approach as Phase 1 Step 2, now applied over the 10,329
 
 ---
 
+### ✅ Step P2-6 — BIO Tagging (`preprocessing/tag_bio.py`)
+
+`tag_bio.py` güncellendi: `--matches`, `--articles`, `--output`, `--db` flag'leri eklendi; articles dosyası JSONL veya JSON array formatını otomatik algılıyor.
+
+```bash
+python3 preprocessing/tag_bio.py \
+    --matches  data/processed/exact_matches.jsonl \
+    --articles data/raw/articles.json \
+    --output   data/processed/bio_tags_v2.jsonl \
+    --db ""
+```
+
+| Metrik | Değer |
+|---|---|
+| Span'lı PMID | 8,886 |
+| Span'sız atlandı | 1,443 |
+| Artikel bulunamadı | 0 |
+| Toplam kayıt | 41,754 |
+| — abstract'tan | 8,415 |
+| — full-text window'dan | 33,339 |
+
+**Çıktı:** `data/processed/bio_tags_v2.jsonl`
+
+---
+
+### ✅ Step P2-7 — Dataset Build (`preprocessing/build_dataset.py`)
+
+`build_dataset.py` güncellendi: `--input` ve `--outdir` flag'leri eklendi.
+
+```bash
+python3 preprocessing/build_dataset.py \
+    --input  data/processed/bio_tags_v2.jsonl \
+    --outdir data/processed/phase2
+```
+
+| Split | Pathway | Kayıt | Positive label |
+|---|---|---|---|
+| train | 57 | 37,766 | 134,081 |
+| val | 7 | 1,311 | 4,765 |
+| test | 8 | 2,624 | 12,182 |
+| **Toplam** | **72** | **41,701** | **151,028** |
+
+Phase 1 ile karşılaştırma: 596 → **41,701 kayıt** (70x artış), 2,085 → **151,028 positive label** (72x artış).
+
+**Çıktı:** `data/processed/phase2/train.jsonl`, `val.jsonl`, `test.jsonl`
+
+---
+
+### ⚠️ Run 005 — Phase 2 Only (Durduruldu — Data Leakage Şüphesi)
+
+`train.py` güncellendi: `--data-dir` ve `--output-dir` flag'leri eklendi.
+
+```bash
+python3 train.py \
+    --data-dir  data/processed/phase2 \
+    --output-dir models/pathway-ner-005
+```
+
+Eğitim epoch 13'e kadar çalıştı, sonra kullanıcı isteğiyle durduruldu. Checkpoint'ler korunuyor.
+
+| Epoch | Val F1 | Precision | Recall |
+|---|---|---|---|
+| 9 | 0.969 | 0.947 | 0.993 |
+| 10 | 0.974 | 0.956 | 0.992 |
+| 11 | 0.977 | 0.962 | 0.993 |
+| 12 | 0.980 | 0.966 | 0.994 |
+| 13 | 0.980 | 0.967 | 0.994 |
+
+**⚠️ Şüpheli durum:** Val F1 = 0.98 Phase 1'deki 0.49'a kıyasla çok yüksek. Muhtemel neden: aynı PMID'den üretilen abstract + full-text window kayıtları split sırasında farklı split'lere düşmüş olabilir (split pathway bazlı yapılıyor, PMID bazlı değil), bu da train ve val'da aynı metnin farklı window'larının bulunmasına yol açıyor → **data leakage**.
+
+**Kaydedilen checkpoint'ler:** `models/pathway-ner-005/checkpoint-28332`, `checkpoint-30693`
+
+---
+
 ## Phase 2 Status
 
-| Step | Script | Status | Output |
+| Step | Script | Status | Çıktı |
 |---|---|---|---|
-| P2-1: MeSH diseases | `pubmed_api/fetch_mesh_diseases.py` | ✅ Done | `mesh_*.json` (834 diseases) |
+| P2-1: MeSH diseases | `pubmed_api/fetch_mesh_diseases.py` | ✅ Done | `mesh_*.json` (834 hastalık) |
 | P2-2: Disease curation | `pubmed_api/select_diseases.py` | ✅ Done | `selected_diseases.json` (98) |
 | P2-3: Pair search | `pubmed_api/fetch_pathway_disease_pairs.py` | ✅ Done | `pathway_disease_pairs.json` |
 | P2-4: Article fetch | `pubmed_api/fetch_articles.py` | ✅ Done | `articles.json` (10,329) |
 | P2-5: Exact matching | `preprocessing/match_exact.py` | ✅ Done | `exact_matches.jsonl` (22,017) |
-| P2-6: BIO tagging | `preprocessing/tag_bio.py` | 🔲 Next | `bio_tags_v2.jsonl` |
-| P2-7: Dataset build | `preprocessing/build_dataset.py` | 🔲 Next | new train/val/test splits |
-| P2-8: Fine-tune Run 005 | `train.py` | 🔲 Next | `models/pathway-ner-005/` |
+| P2-6: BIO tagging | `preprocessing/tag_bio.py` | ✅ Done | `bio_tags_v2.jsonl` (41,754) |
+| P2-7: Dataset build | `preprocessing/build_dataset.py` | ✅ Done | `phase2/{train,val,test}.jsonl` |
+| P2-8: Run 005 | `train.py` | ⚠️ Durduruldu | checkpoint'ler var, devam edilecek |
 
-**Next step:** Run `preprocessing/tag_bio.py` on `exact_matches.jsonl` to generate BIO-tagged examples, merge with Phase 1 data, and retrain.
+**Sonraki adım (önce çözülmesi gereken):** Data leakage araştırması — `build_dataset.py`'de split stratejisi pathway bazlı, PMID bazlı değil. Aynı PMID'den gelen abstract ve full-text window'ları farklı split'lere düşebiliyor. Düzeltme: split'i **PMID bazlı** yapmak; tüm aynı PMID kayıtları aynı split'e gitsin, sonra Run 005'i yeniden başlat.

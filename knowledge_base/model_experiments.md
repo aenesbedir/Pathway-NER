@@ -177,6 +177,61 @@ Ran all 20 epochs (no early stopping triggered).
 
 ---
 
+## Run 005 — Phase 2 data (PubMed co-occurrence, PMID-based split)
+
+**Path:** `models/pathway-ner-005/`
+
+**Date:** 2026-07-10
+
+**Change from Run 001–004:** Entirely new training data from Phase 2 pipeline. Articles fetched via PubMed co-occurrence search (pathway × disease pairs), annotated with exact string matching. Split changed from pathway-based to **PMID-based** to prevent data leakage (all records from the same article go to the same split).
+
+### Training Data
+| Split | PMIDs | Records | Positive labels |
+|---|---|---|---|
+| Train | 7,085 | 33,328 | 120,761 |
+| Val | 885 | 3,970 | 14,087 |
+| Test | 887 | 4,403 | 16,180 |
+
+*Records include 1 abstract record + N full-text window records (±500 char context around each annotated span) per PMID.*
+
+### Hyperparameters
+Same as Run 001 except:
+
+| Setting | Value |
+|---|---|
+| Frozen layers | Embeddings + encoder layers 0–8 (149/199 params frozen) |
+
+### Results
+| Metric | Val (best, epoch 20) | Test |
+|---|---|---|
+| F1 | 0.9857 | **0.9812** |
+| Precision | 0.9751 | 0.9713 |
+| Recall | 0.9966 | 0.9913 |
+
+Ran all 20 epochs (early stopping not triggered — F1 kept slowly improving).
+
+### Notes
+- Massive improvement over Phase 1 runs (F1: 0.46 → 0.98) driven entirely by data quality and quantity
+- Phase 2 annotations are high-precision: articles were fetched because they co-mention the pathway, so exact string matching yields 93.4% hit rate (vs 6.3% in Phase 1)
+- Val/test gap is minimal (0.9857 vs 0.9812) — model generalizes well, no overfitting
+- High recall (0.99) suggests the model finds nearly all pathway mentions in the text
+- High precision (0.97) suggests very few false positives — opposite of Phase 1 behavior
+- First attempt had data leakage (val F1=0.98 at epoch 13 with pathway-based split); fixed by switching to PMID-based split — see `lessons_learned/challenges.md`
+
+### Full summary across all runs
+
+| Run | Data | Change | Weights (O/B/I) | F1 | Precision | Recall |
+|---|---|---|---|---|---|---|
+| 001 | Phase 1 | All layers | 0.1 / 5.0 / 3.0 | 0.46 | 0.40 | 0.55 |
+| 002 | Phase 1 | All layers | 0.1 / 2.0 / 1.5 | 0.45 | 0.35 | 0.62 |
+| 003 | Phase 1 | Freeze 6 layers | 0.1 / 5.0 / 3.0 | 0.42 | 0.33 | 0.57 |
+| 004 | Phase 1 | Freeze 9 layers | 0.1 / 5.0 / 3.0 | 0.37 | 0.27 | 0.59 |
+| **005** | **Phase 2** | **PMID-based split, 33K records** | **0.1 / 5.0 / 3.0** | **0.9812** | **0.9713** | **0.9913** |
+
+**Conclusion:** Data quality and quantity is the dominant factor. Phase 2's co-occurrence-fetched, exact-matched annotations produce a dramatically better model with no architectural changes.
+
+---
+
 ## Error Analysis — Run 001
 
 **Script:** `analysis/error_analysis.py`  
