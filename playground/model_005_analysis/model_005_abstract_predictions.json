@@ -1,0 +1,5992 @@
+[
+  {
+    "pmid": "42213466",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Alanine and aspartate metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1032,
+        "end": 1052,
+        "text": "glutamate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42053447",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Alanine and aspartate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41998452",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Alanine and aspartate metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 906,
+        "end": 930,
+        "text": "tricarboxylic acid cycle"
+      },
+      {
+        "start": 1176,
+        "end": 1196,
+        "text": "butanoate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42121935",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Androgen and estrogen synthesis and metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42111748",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Androgen and estrogen synthesis and metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1054,
+        "end": 1073,
+        "text": "estrogen metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41977303",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Androgen and estrogen synthesis and metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42096008",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Arachidonic acid metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 103,
+        "end": 130,
+        "text": "Arachidonic acid metabolism"
+      },
+      {
+        "start": 421,
+        "end": 448,
+        "text": "arachidonic acid metabolism"
+      },
+      {
+        "start": 870,
+        "end": 897,
+        "text": "arachidonic acid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42058674",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Arachidonic acid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 590,
+        "end": 617,
+        "text": "arachidonic acid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42051267",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Arachidonic acid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40645971",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Arginine and proline metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 745,
+        "end": 765,
+        "text": "glutamate metabolism"
+      },
+      {
+        "start": 790,
+        "end": 821,
+        "text": "arginine and proline metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40075737",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Arginine and proline metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 983,
+        "end": 1003,
+        "text": "histidine metabolism"
+      },
+      {
+        "start": 1033,
+        "end": 1064,
+        "text": "arginine and proline metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39868332",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Arginine and proline metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 741,
+        "end": 761,
+        "text": "glutamate metabolism"
+      },
+      {
+        "start": 786,
+        "end": 817,
+        "text": "arginine and proline metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41558225",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Beta-Alanine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1482,
+        "end": 1505,
+        "text": "beta-alanine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41067076",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Beta-Alanine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 889,
+        "end": 912,
+        "text": "beta-alanine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41042469",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Beta-Alanine metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 330,
+        "end": 353,
+        "text": "beta-alanine metabolism"
+      },
+      {
+        "start": 532,
+        "end": 555,
+        "text": "beta-alanine metabolism"
+      },
+      {
+        "start": 1413,
+        "end": 1436,
+        "text": "beta-alanine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40364906",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Bile acid synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1553,
+        "end": 1572,
+        "text": "bile acid synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "35429253",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Bile acid synthesis",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 176,
+        "end": 195,
+        "text": "bile acid synthesis"
+      },
+      {
+        "start": 862,
+        "end": 884,
+        "text": "bile acid biosynthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "31739163",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Bile acid synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1451,
+        "end": 1470,
+        "text": "bile acid synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "30099850",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Biomass and maintenance functions",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "27347936",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Biomass and maintenance functions",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "38562932",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Biotin metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "34204178",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Biotin metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "32750887",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Biotin metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1310,
+        "end": 1327,
+        "text": "Biotin Metabolism"
+      },
+      {
+        "start": 1339,
+        "end": 1370,
+        "text": "Arginine and Proline Metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42213729",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Blood group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42196289",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Blood group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42153095",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Blood group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41998452",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Butanoate metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 906,
+        "end": 930,
+        "text": "tricarboxylic acid cycle"
+      },
+      {
+        "start": 1176,
+        "end": 1196,
+        "text": "butanoate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39354768",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Butanoate metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1852,
+        "end": 1875,
+        "text": "beta-alanine metabolism"
+      },
+      {
+        "start": 1881,
+        "end": 1901,
+        "text": "butanoate metabolism"
+      },
+      {
+        "start": 1911,
+        "end": 1950,
+        "text": "glyoxylate and dicarboxylate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42202249",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Cholesterol metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1064,
+        "end": 1086,
+        "text": "cholesterol metabolism"
+      },
+      {
+        "start": 1223,
+        "end": 1245,
+        "text": "cholesterol metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42038024",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Cholesterol metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 543,
+        "end": 565,
+        "text": "cholesterol metabolism"
+      },
+      {
+        "start": 601,
+        "end": 624,
+        "text": "sphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42030227",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Cholesterol metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 920,
+        "end": 942,
+        "text": "cholesterol metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41958074",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Citric acid cycle",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41859964",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Citric acid cycle",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 633,
+        "end": 642,
+        "text": "TCA cycle"
+      }
+    ]
+  },
+  {
+    "pmid": "41570283",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Citric acid cycle",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 881,
+        "end": 898,
+        "text": "citric acid cycle"
+      },
+      {
+        "start": 903,
+        "end": 928,
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "start": 930,
+        "end": 936,
+        "text": "OXPHOS"
+      }
+    ]
+  },
+  {
+    "pmid": "41040402",
+    "disease": "Breast Cancer",
+    "expected_pathway": "CoA synthesis",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1210,
+        "end": 1219,
+        "text": "TCA cycle"
+      },
+      {
+        "start": 1236,
+        "end": 1256,
+        "text": "fatty acid synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "24097824",
+    "disease": "Breast Cancer",
+    "expected_pathway": "CoA synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39061008",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Dietary fiber binding",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "34836804",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Dietary fiber binding",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "25994566",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Dietary fiber binding",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42181075",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Drug metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 865,
+        "end": 880,
+        "text": "drug metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42161265",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Drug metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42119788",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Drug metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "37696380",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Eicosanoid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "30707908",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Eicosanoid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "17651499",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Eicosanoid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 921,
+        "end": 942,
+        "text": "eicosanoid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "38253885",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Exchange/demand reaction",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "30580920",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Exchange/demand reaction",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42209456",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Fatty acid oxidation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1062,
+        "end": 1082,
+        "text": "fatty acid oxidation"
+      }
+    ]
+  },
+  {
+    "pmid": "42109861",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Fatty acid oxidation",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 380,
+        "end": 405,
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "start": 655,
+        "end": 675,
+        "text": "fatty acid oxidation"
+      }
+    ]
+  },
+  {
+    "pmid": "42099586",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Fatty acid oxidation",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 505,
+        "end": 530,
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "start": 532,
+        "end": 552,
+        "text": "fatty acid oxidation"
+      }
+    ]
+  },
+  {
+    "pmid": "42209456",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Fatty acid synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1062,
+        "end": 1082,
+        "text": "fatty acid oxidation"
+      }
+    ]
+  },
+  {
+    "pmid": "42034064",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Fatty acid synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 899,
+        "end": 919,
+        "text": "fatty acid synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "41876831",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Fatty acid synthesis",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 648,
+        "end": 668,
+        "text": "fatty acid synthesis"
+      },
+      {
+        "start": 1315,
+        "end": 1326,
+        "text": "lipogenesis"
+      }
+    ]
+  },
+  {
+    "pmid": "42161229",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Folate metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1190,
+        "end": 1214,
+        "text": "tricarboxylic acid cycle"
+      },
+      {
+        "start": 1231,
+        "end": 1248,
+        "text": "folate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41079121",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Folate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39696655",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Folate metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 73,
+        "end": 90,
+        "text": "folate metabolism"
+      },
+      {
+        "start": 295,
+        "end": 312,
+        "text": "folate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41376217",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Fructose and mannose metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1584,
+        "end": 1604,
+        "text": "galactose metabolism"
+      },
+      {
+        "start": 1616,
+        "end": 1647,
+        "text": "fructose and mannose metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40645269",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Fructose and mannose metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 829,
+        "end": 859,
+        "text": "glycerophospholipid metabolism"
+      },
+      {
+        "start": 891,
+        "end": 922,
+        "text": "fructose and mannose metabolism"
+      },
+      {
+        "start": 974,
+        "end": 1000,
+        "text": "glycolysis/gluconeogenesis"
+      },
+      {
+        "start": 1002,
+        "end": 1031,
+        "text": "inositol phosphate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40642486",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Fructose and mannose metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1322,
+        "end": 1346,
+        "text": ", and mannose metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41376217",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Galactose metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1584,
+        "end": 1604,
+        "text": "galactose metabolism"
+      },
+      {
+        "start": 1616,
+        "end": 1647,
+        "text": "fructose and mannose metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40597935",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Galactose metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 3146,
+        "end": 3161,
+        "text": "gluconeogenesis"
+      }
+    ]
+  },
+  {
+    "pmid": "39596062",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Galactose metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42213466",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glutamate metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1032,
+        "end": 1052,
+        "text": "glutamate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41880732",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glutamate metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 334,
+        "end": 354,
+        "text": "glutamate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41787748",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glutamate metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 743,
+        "end": 763,
+        "text": "glutamate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42094736",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glutathione metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42039556",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glutathione metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 729,
+        "end": 751,
+        "text": "glutathione metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41981970",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glutathione metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41413590",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glycerophospholipid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1699,
+        "end": 1729,
+        "text": "glycerophospholipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41276638",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glycerophospholipid metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 858,
+        "end": 880,
+        "text": "glutathione metabolism"
+      },
+      {
+        "start": 882,
+        "end": 912,
+        "text": "glycerophospholipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41033176",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glycerophospholipid metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1089,
+        "end": 1119,
+        "text": "glycerophospholipid metabolism"
+      },
+      {
+        "start": 1508,
+        "end": 1538,
+        "text": "glycerophospholipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39050765",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glycine, serine, alanine, and threonine metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 955,
+        "end": 975,
+        "text": "glutamate metabolism"
+      },
+      {
+        "start": 1135,
+        "end": 1158,
+        "text": "beta-alanine metabolism"
+      },
+      {
+        "start": 1225,
+        "end": 1247,
+        "text": "glutathione metabolism"
+      },
+      {
+        "start": 1558,
+        "end": 1578,
+        "text": "glutamate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "37092500",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glycine, serine, alanine, and threonine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "35422172",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glycine, serine, alanine, and threonine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1323,
+        "end": 1343,
+        "text": "glutamate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40950672",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glycolysis/gluconeogenesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1528,
+        "end": 1554,
+        "text": "glycolysis/gluconeogenesis"
+      }
+    ]
+  },
+  {
+    "pmid": "40645269",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glycolysis/gluconeogenesis",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 829,
+        "end": 859,
+        "text": "glycerophospholipid metabolism"
+      },
+      {
+        "start": 891,
+        "end": 922,
+        "text": "fructose and mannose metabolism"
+      },
+      {
+        "start": 974,
+        "end": 1000,
+        "text": "glycolysis/gluconeogenesis"
+      },
+      {
+        "start": 1002,
+        "end": 1031,
+        "text": "inositol phosphate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40597935",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glycolysis/gluconeogenesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 3146,
+        "end": 3161,
+        "text": "gluconeogenesis"
+      }
+    ]
+  },
+  {
+    "pmid": "42099633",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glycosphingolipid metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 977,
+        "end": 1005,
+        "text": "glycosphingolipid metabolism"
+      },
+      {
+        "start": 1635,
+        "end": 1663,
+        "text": "glycosphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41519015",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glycosphingolipid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1464,
+        "end": 1492,
+        "text": "glycosphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39395135",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glycosphingolipid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 678,
+        "end": 706,
+        "text": "glycosphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42045116",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glyoxylate and dicarboxylate metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1207,
+        "end": 1246,
+        "text": "glyoxylate and dicarboxylate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40854667",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glyoxylate and dicarboxylate metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1061,
+        "end": 1081,
+        "text": "arginine and proline"
+      }
+    ]
+  },
+  {
+    "pmid": "39354768",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Glyoxylate and dicarboxylate metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1852,
+        "end": 1875,
+        "text": "beta-alanine metabolism"
+      },
+      {
+        "start": 1881,
+        "end": 1901,
+        "text": "butanoate metabolism"
+      },
+      {
+        "start": 1911,
+        "end": 1950,
+        "text": "glyoxylate and dicarboxylate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40627458",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Heme degradation",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 381,
+        "end": 397,
+        "text": "heme degradation"
+      },
+      {
+        "start": 1118,
+        "end": 1134,
+        "text": "heme degradation"
+      }
+    ]
+  },
+  {
+    "pmid": "37747058",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Heme degradation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 729,
+        "end": 745,
+        "text": "heme degradation"
+      }
+    ]
+  },
+  {
+    "pmid": "37344532",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Heme degradation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 318,
+        "end": 334,
+        "text": "heme degradation"
+      }
+    ]
+  },
+  {
+    "pmid": "38635773",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Heme synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1053,
+        "end": 1067,
+        "text": "heme synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "36829809",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Heme synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 340,
+        "end": 354,
+        "text": "heme synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "34807950",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Heme synthesis",
+    "num_detected": 11,
+    "detected_pathways": [
+      {
+        "start": 49,
+        "end": 73,
+        "text": "electron transport chain"
+      },
+      {
+        "start": 115,
+        "end": 140,
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "start": 142,
+        "end": 148,
+        "text": "OXPHOS"
+      },
+      {
+        "start": 286,
+        "end": 296,
+        "text": "glycolysis"
+      },
+      {
+        "start": 335,
+        "end": 349,
+        "text": "Heme synthesis"
+      },
+      {
+        "start": 464,
+        "end": 478,
+        "text": "heme synthesis"
+      },
+      {
+        "start": 617,
+        "end": 627,
+        "text": "glycolysis"
+      },
+      {
+        "start": 638,
+        "end": 644,
+        "text": "OXPHOS"
+      },
+      {
+        "start": 726,
+        "end": 740,
+        "text": "heme synthesis"
+      },
+      {
+        "start": 864,
+        "end": 874,
+        "text": "glycolysis"
+      },
+      {
+        "start": 1357,
+        "end": 1371,
+        "text": "heme synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "42096976",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Hippurate metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 2004,
+        "end": 2019,
+        "text": "drug metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "36295878",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Hippurate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "30282037",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Hippurate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42059393",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Histidine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 960,
+        "end": 980,
+        "text": "histidine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40075737",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Histidine metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 983,
+        "end": 1003,
+        "text": "histidine metabolism"
+      },
+      {
+        "start": 1033,
+        "end": 1064,
+        "text": "arginine and proline metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "36674685",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Histidine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 959,
+        "end": 973,
+        "text": "beta-oxidation"
+      }
+    ]
+  },
+  {
+    "pmid": "41373491",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Hyaluronan metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41204774",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Hyaluronan metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1012,
+        "end": 1033,
+        "text": "hyaluronan metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41019491",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Hyaluronan metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 375,
+        "end": 396,
+        "text": "hyaluronan metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40645269",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Inositol phosphate metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 829,
+        "end": 859,
+        "text": "glycerophospholipid metabolism"
+      },
+      {
+        "start": 891,
+        "end": 922,
+        "text": "fructose and mannose metabolism"
+      },
+      {
+        "start": 974,
+        "end": 1000,
+        "text": "glycolysis/gluconeogenesis"
+      },
+      {
+        "start": 1002,
+        "end": 1031,
+        "text": "inositol phosphate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "36255176",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Inositol phosphate metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1208,
+        "end": 1237,
+        "text": "inositol phosphate metabolism"
+      },
+      {
+        "start": 1239,
+        "end": 1266,
+        "text": "arachidonic acid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "34033488",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Inositol phosphate metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 2007,
+        "end": 2036,
+        "text": "inositol phosphate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "28413640",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Leukotriene metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 99,
+        "end": 121,
+        "text": "leukotriene metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "22465464",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Leukotriene metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "20824707",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Leukotriene metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42196471",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Lysine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42065076",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Lysine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1650,
+        "end": 1667,
+        "text": "lysine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41958074",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Lysine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40762698",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Miscellaneous",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40283974",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Miscellaneous",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40278951",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Miscellaneous",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "33425736",
+    "disease": "Breast Cancer",
+    "expected_pathway": "N-glycan metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1310,
+        "end": 1329,
+        "text": "N-Glycan metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42055667",
+    "disease": "Breast Cancer",
+    "expected_pathway": "NAD metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42043614",
+    "disease": "Breast Cancer",
+    "expected_pathway": "NAD metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41980900",
+    "disease": "Breast Cancer",
+    "expected_pathway": "NAD metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1722,
+        "end": 1747,
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "start": 1752,
+        "end": 1762,
+        "text": "glycolysis"
+      },
+      {
+        "start": 2093,
+        "end": 2108,
+        "text": "NAD+ metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41871245",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Nucleotide metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41858377",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Nucleotide metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 240,
+        "end": 261,
+        "text": "nucleotide metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41780429",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Nucleotide metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 463,
+        "end": 484,
+        "text": "nucleotide metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40522370",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Nucleotide salvage pathway",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 338,
+        "end": 364,
+        "text": "nucleotide salvage pathway"
+      },
+      {
+        "start": 718,
+        "end": 728,
+        "text": "glycolysis"
+      },
+      {
+        "start": 842,
+        "end": 852,
+        "text": "glycolysis"
+      }
+    ]
+  },
+  {
+    "pmid": "33115804",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Nucleotide salvage pathway",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 471,
+        "end": 492,
+        "text": "nucleotide metabolism"
+      },
+      {
+        "start": 564,
+        "end": 590,
+        "text": "nucleotide salvage pathway"
+      }
+    ]
+  },
+  {
+    "pmid": "30214377",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Nucleotide salvage pathway",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 457,
+        "end": 483,
+        "text": "nucleotide salvage pathway"
+      }
+    ]
+  },
+  {
+    "pmid": "41530794",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Nucleotide sugar metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1164,
+        "end": 1191,
+        "text": "nucleotide sugar metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39653201",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Nucleotide sugar metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 839,
+        "end": 864,
+        "text": "pentose phosphate pathway"
+      },
+      {
+        "start": 866,
+        "end": 888,
+        "text": "glutathione metabolism"
+      },
+      {
+        "start": 915,
+        "end": 942,
+        "text": "nucleotide sugar metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "38576560",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Nucleotide sugar metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1455,
+        "end": 1482,
+        "text": "nucleotide sugar metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41764140",
+    "disease": "Breast Cancer",
+    "expected_pathway": "O-glycan metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41383589",
+    "disease": "Breast Cancer",
+    "expected_pathway": "O-glycan metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39654023",
+    "disease": "Breast Cancer",
+    "expected_pathway": "O-glycan metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42211829",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Oxidative phosphorylation",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 166,
+        "end": 191,
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "start": 193,
+        "end": 199,
+        "text": "OXPHOS"
+      }
+    ]
+  },
+  {
+    "pmid": "42184719",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Oxidative phosphorylation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 959,
+        "end": 984,
+        "text": "Oxidative phosphorylation"
+      }
+    ]
+  },
+  {
+    "pmid": "42183833",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Oxidative phosphorylation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 627,
+        "end": 652,
+        "text": "oxidative phosphorylation"
+      }
+    ]
+  },
+  {
+    "pmid": "41874757",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Pentose phosphate pathway",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1601,
+        "end": 1611,
+        "text": "glycolysis"
+      },
+      {
+        "start": 1613,
+        "end": 1638,
+        "text": "pentose phosphate pathway"
+      },
+      {
+        "start": 1640,
+        "end": 1665,
+        "text": "oxidative phosphorylation"
+      }
+    ]
+  },
+  {
+    "pmid": "41872210",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Pentose phosphate pathway",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 192,
+        "end": 217,
+        "text": "pentose phosphate pathway"
+      }
+    ]
+  },
+  {
+    "pmid": "41836266",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Pentose phosphate pathway",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1197,
+        "end": 1222,
+        "text": "pentose phosphate pathway"
+      },
+      {
+        "start": 1230,
+        "end": 1240,
+        "text": "glycolysis"
+      }
+    ]
+  },
+  {
+    "pmid": "41650969",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Peptide metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41616927",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Peptide metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40545252",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Peptide metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39529035",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Phenylalanine metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1081,
+        "end": 1100,
+        "text": "tyrosine metabolism"
+      },
+      {
+        "start": 1102,
+        "end": 1126,
+        "text": "phenylalanine metabolism"
+      },
+      {
+        "start": 1132,
+        "end": 1158,
+        "text": "glycolysis/gluconeogenesis"
+      }
+    ]
+  },
+  {
+    "pmid": "38954227",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Phenylalanine metabolism",
+    "num_detected": 6,
+    "detected_pathways": [
+      {
+        "start": 75,
+        "end": 94,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 619,
+        "end": 638,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 1371,
+        "end": 1395,
+        "text": "Phenylalanine metabolism"
+      },
+      {
+        "start": 1470,
+        "end": 1489,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 1805,
+        "end": 1824,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 1988,
+        "end": 2007,
+        "text": "pyruvate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "35686034",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Phenylalanine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1158,
+        "end": 1182,
+        "text": "phenylalanine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40548719",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Propanoate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "38715825",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Propanoate metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1590,
+        "end": 1607,
+        "text": "Citric Acid Cycle"
+      },
+      {
+        "start": 1609,
+        "end": 1623,
+        "text": "Warburg effect"
+      },
+      {
+        "start": 1674,
+        "end": 1695,
+        "text": "propanoate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "32582991",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Propanoate metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 165,
+        "end": 175,
+        "text": "glycolysis"
+      },
+      {
+        "start": 1956,
+        "end": 1977,
+        "text": "propanoate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "38612711",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Protein formation",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "31819019",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Protein formation",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "11396794",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Protein formation",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "35154904",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Purine catabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 407,
+        "end": 424,
+        "text": "purine catabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41501456",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Purine synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 790,
+        "end": 806,
+        "text": "purine synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "40036676",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Purine synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 532,
+        "end": 548,
+        "text": "purine synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "40033100",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Purine synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 369,
+        "end": 385,
+        "text": "purine synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "32244187",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Pyrimidine catabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 12,
+        "end": 33,
+        "text": "Nucleotide metabolism"
+      },
+      {
+        "start": 177,
+        "end": 198,
+        "text": "nucleotide metabolism"
+      },
+      {
+        "start": 459,
+        "end": 480,
+        "text": "nucleotide metabolism"
+      },
+      {
+        "start": 1068,
+        "end": 1089,
+        "text": "pyrimidine catabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "30737477",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Pyrimidine catabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 30,
+        "end": 51,
+        "text": "nucleotide metabolism"
+      },
+      {
+        "start": 935,
+        "end": 956,
+        "text": "pyrimidine catabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "24887406",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Pyrimidine catabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1955,
+        "end": 1976,
+        "text": "pyrimidine catabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41332638",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Pyrimidine synthesis",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 482,
+        "end": 502,
+        "text": "pyrimidine synthesis"
+      },
+      {
+        "start": 764,
+        "end": 784,
+        "text": "pyrimidine synthesis"
+      },
+      {
+        "start": 1586,
+        "end": 1606,
+        "text": "pyrimidine synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "40324880",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Pyrimidine synthesis",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 691,
+        "end": 716,
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "start": 1045,
+        "end": 1065,
+        "text": "pyrimidine synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "37658191",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Pyrimidine synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1271,
+        "end": 1291,
+        "text": "pyrimidine synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "42025918",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Pyruvate metabolism",
+    "num_detected": 10,
+    "detected_pathways": [
+      {
+        "start": 865,
+        "end": 875,
+        "text": "glycolysis"
+      },
+      {
+        "start": 877,
+        "end": 896,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 902,
+        "end": 913,
+        "text": "Krebs cycle"
+      },
+      {
+        "start": 919,
+        "end": 934,
+        "text": "gluconeogenesis"
+      },
+      {
+        "start": 1189,
+        "end": 1195,
+        "text": "OXPHOS"
+      },
+      {
+        "start": 2097,
+        "end": 2107,
+        "text": "glycolysis"
+      },
+      {
+        "start": 2109,
+        "end": 2128,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 2130,
+        "end": 2141,
+        "text": "Krebs cycle"
+      },
+      {
+        "start": 2146,
+        "end": 2161,
+        "text": "gluconeogenesis"
+      },
+      {
+        "start": 2434,
+        "end": 2440,
+        "text": "OXPHOS"
+      }
+    ]
+  },
+  {
+    "pmid": "40023122",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Pyruvate metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1702,
+        "end": 1721,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 1742,
+        "end": 1776,
+        "text": "taurine and hypotaurine metabolism"
+      },
+      {
+        "start": 1782,
+        "end": 1801,
+        "text": "tyrosine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39694040",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Pyruvate metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 873,
+        "end": 883,
+        "text": "glycolysis"
+      },
+      {
+        "start": 888,
+        "end": 907,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 1089,
+        "end": 1099,
+        "text": "glycolysis"
+      }
+    ]
+  },
+  {
+    "pmid": "42148109",
+    "disease": "Breast Cancer",
+    "expected_pathway": "R group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42142024",
+    "disease": "Breast Cancer",
+    "expected_pathway": "R group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42126428",
+    "disease": "Breast Cancer",
+    "expected_pathway": "R group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39053265",
+    "disease": "Breast Cancer",
+    "expected_pathway": "ROS detoxification",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 400,
+        "end": 410,
+        "text": "glycolysis"
+      }
+    ]
+  },
+  {
+    "pmid": "38145660",
+    "disease": "Breast Cancer",
+    "expected_pathway": "ROS detoxification",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "33396819",
+    "disease": "Breast Cancer",
+    "expected_pathway": "ROS detoxification",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 758,
+        "end": 778,
+        "text": "fatty acid oxidation"
+      },
+      {
+        "start": 780,
+        "end": 797,
+        "text": "citric acid cycle"
+      }
+    ]
+  },
+  {
+    "pmid": "42038024",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Sphingolipid metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 543,
+        "end": 565,
+        "text": "cholesterol metabolism"
+      },
+      {
+        "start": 601,
+        "end": 624,
+        "text": "sphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41752062",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Sphingolipid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1463,
+        "end": 1486,
+        "text": "sphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41726913",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Sphingolipid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 438,
+        "end": 461,
+        "text": "sphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "35045984",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Squalene and cholesterol synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "33664822",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Squalene and cholesterol synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "33515592",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Squalene and cholesterol synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39461067",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Starch and sucrose metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1355,
+        "end": 1377,
+        "text": "glutathione metabolism"
+      },
+      {
+        "start": 1512,
+        "end": 1541,
+        "text": "starch and sucrose metabolism"
+      },
+      {
+        "start": 1547,
+        "end": 1567,
+        "text": "galactose metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "34216208",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Starch and sucrose metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 437,
+        "end": 466,
+        "text": "starch and sucrose metabolism"
+      },
+      {
+        "start": 703,
+        "end": 718,
+        "text": "gluconeogenesis"
+      }
+    ]
+  },
+  {
+    "pmid": "33178343",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Starch and sucrose metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1195,
+        "end": 1224,
+        "text": "starch and sucrose metabolism"
+      },
+      {
+        "start": 1458,
+        "end": 1483,
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "start": 1740,
+        "end": 1765,
+        "text": "oxidative phosphorylation"
+      }
+    ]
+  },
+  {
+    "pmid": "41963522",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Steroid metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 507,
+        "end": 517,
+        "text": "metabolism"
+      },
+      {
+        "start": 975,
+        "end": 993,
+        "text": "steroid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41636472",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Steroid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40856424",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Steroid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40137118",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Taurine and hypotaurine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1898,
+        "end": 1932,
+        "text": "taurine and hypotaurine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40023122",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Taurine and hypotaurine metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1702,
+        "end": 1721,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 1742,
+        "end": 1776,
+        "text": "taurine and hypotaurine metabolism"
+      },
+      {
+        "start": 1782,
+        "end": 1801,
+        "text": "tyrosine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "35713123",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Taurine and hypotaurine metabolism",
+    "num_detected": 7,
+    "detected_pathways": [
+      {
+        "start": 2261,
+        "end": 2281,
+        "text": "glutamate metabolism"
+      },
+      {
+        "start": 2283,
+        "end": 2313,
+        "text": "glycerophospholipid metabolism"
+      },
+      {
+        "start": 2315,
+        "end": 2335,
+        "text": "histidine metabolism"
+      },
+      {
+        "start": 2633,
+        "end": 2667,
+        "text": "taurine and hypotaurine metabolism"
+      },
+      {
+        "start": 2669,
+        "end": 2699,
+        "text": "Glycerophospholipid metabolism"
+      },
+      {
+        "start": 2701,
+        "end": 2728,
+        "text": "arachidonic acid metabolism"
+      },
+      {
+        "start": 2762,
+        "end": 2792,
+        "text": "primary bile acid biosynthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "25484137",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Thiamine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "24454921",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Thiamine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "15328374",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Thiamine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1775,
+        "end": 1794,
+        "text": "thiamine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "21569413",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Triacylglycerol synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 166,
+        "end": 191,
+        "text": "triacylglycerol synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "42134511",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Tryptophan metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 39,
+        "end": 60,
+        "text": "tryptophan metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42097513",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Tryptophan metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 0,
+        "end": 21,
+        "text": "Tryptophan metabolism"
+      },
+      {
+        "start": 357,
+        "end": 378,
+        "text": "tryptophan metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42055335",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Tryptophan metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42161051",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Tyrosine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41656811",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Tyrosine metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 764,
+        "end": 774,
+        "text": "glycolysis"
+      },
+      {
+        "start": 1616,
+        "end": 1626,
+        "text": "Glycolysis"
+      },
+      {
+        "start": 1656,
+        "end": 1666,
+        "text": "glycolysis"
+      },
+      {
+        "start": 3038,
+        "end": 3048,
+        "text": "glycolysis"
+      }
+    ]
+  },
+  {
+    "pmid": "41021173",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Tyrosine metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 26,
+        "end": 45,
+        "text": "tyrosine metabolism"
+      },
+      {
+        "start": 494,
+        "end": 513,
+        "text": "tyrosine metabolism"
+      },
+      {
+        "start": 626,
+        "end": 645,
+        "text": "tyrosine metabolism"
+      },
+      {
+        "start": 1188,
+        "end": 1207,
+        "text": "tyrosine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "42140950",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Urea cycle",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1599,
+        "end": 1609,
+        "text": "urea cycle"
+      }
+    ]
+  },
+  {
+    "pmid": "41841461",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Urea cycle",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 369,
+        "end": 379,
+        "text": "urea cycle"
+      }
+    ]
+  },
+  {
+    "pmid": "41688291",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Urea cycle",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39461067",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Valine, leucine, and isoleucine metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1355,
+        "end": 1377,
+        "text": "glutathione metabolism"
+      },
+      {
+        "start": 1512,
+        "end": 1541,
+        "text": "starch and sucrose metabolism"
+      },
+      {
+        "start": 1547,
+        "end": 1567,
+        "text": "galactose metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "38715825",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Valine, leucine, and isoleucine metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1590,
+        "end": 1607,
+        "text": "Citric Acid Cycle"
+      },
+      {
+        "start": 1609,
+        "end": 1623,
+        "text": "Warburg effect"
+      },
+      {
+        "start": 1674,
+        "end": 1695,
+        "text": "propanoate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "38652345",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Valine, leucine, and isoleucine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "35269414",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Vitamin A metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "29904382",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Vitamin A metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "28300567",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Vitamin A metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "28447237",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Vitamin B12 metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40815148",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Vitamin B6 metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41452538",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Vitamin D metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41198001",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Vitamin D metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40630116",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Vitamin D metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 697,
+        "end": 717,
+        "text": "vitamin D metabolism"
+      },
+      {
+        "start": 946,
+        "end": 966,
+        "text": "vitamin D metabolism"
+      },
+      {
+        "start": 1702,
+        "end": 1722,
+        "text": "vitamin D metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "31912555",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Vitamin E metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "31881053",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Vitamin E metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "30548200",
+    "disease": "Breast Cancer",
+    "expected_pathway": "Vitamin E metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1310,
+        "end": 1333,
+        "text": "sphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39462726",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Alanine and aspartate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39020485",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Alanine and aspartate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "35748566",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Alanine and aspartate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41285660",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Androgen and estrogen synthesis and metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "38992454",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Androgen and estrogen synthesis and metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "38867310",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Androgen and estrogen synthesis and metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41064160",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Arachidonic acid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 710,
+        "end": 737,
+        "text": "arachidonic acid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39605002",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Arachidonic acid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "37474994",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Arachidonic acid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 2022,
+        "end": 2049,
+        "text": "arachidonic acid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "38615857",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Arginine and proline metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 821,
+        "end": 852,
+        "text": "arginine and proline metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "31417867",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Arginine and proline metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 646,
+        "end": 677,
+        "text": "arginine and proline metabolism"
+      },
+      {
+        "start": 797,
+        "end": 828,
+        "text": "arginine and proline metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "30296444",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Arginine and proline metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 1184,
+        "end": 1215,
+        "text": "arginine and proline metabolism"
+      },
+      {
+        "start": 1217,
+        "end": 1237,
+        "text": "histidine metabolism"
+      },
+      {
+        "start": 1239,
+        "end": 1262,
+        "text": "beta-alanine metabolism"
+      },
+      {
+        "start": 1267,
+        "end": 1288,
+        "text": "vitamin B6 metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "30296444",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Beta-Alanine metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 1184,
+        "end": 1215,
+        "text": "arginine and proline metabolism"
+      },
+      {
+        "start": 1217,
+        "end": 1237,
+        "text": "histidine metabolism"
+      },
+      {
+        "start": 1239,
+        "end": 1262,
+        "text": "beta-alanine metabolism"
+      },
+      {
+        "start": 1267,
+        "end": 1288,
+        "text": "vitamin B6 metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "24842606",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Beta-Alanine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "3125967",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Beta-Alanine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41631414",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Bile acid synthesis",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1121,
+        "end": 1140,
+        "text": "bile acid synthesis"
+      },
+      {
+        "start": 1357,
+        "end": 1379,
+        "text": "cholesterol metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41008633",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Bile acid synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 509,
+        "end": 528,
+        "text": "bile acid synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "40301518",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Bile acid synthesis",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 879,
+        "end": 898,
+        "text": "bile acid synthesis"
+      },
+      {
+        "start": 1220,
+        "end": 1239,
+        "text": "bile acid synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "37213159",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Biomass and maintenance functions",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "19741203",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Biotin metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "17987629",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Biotin metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "11221827",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Biotin metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42203320",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Blood group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42198975",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Blood group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41579975",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Blood group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39520809",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Butanoate metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1281,
+        "end": 1300,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 1305,
+        "end": 1325,
+        "text": "butanoate metabolism"
+      },
+      {
+        "start": 1483,
+        "end": 1506,
+        "text": "fatty acid biosynthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "37807318",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Butanoate metabolism",
+    "num_detected": 5,
+    "detected_pathways": [
+      {
+        "start": 769,
+        "end": 794,
+        "text": "pentose phosphate pathway"
+      },
+      {
+        "start": 800,
+        "end": 809,
+        "text": "TCA cycle"
+      },
+      {
+        "start": 811,
+        "end": 821,
+        "text": "glycolysis"
+      },
+      {
+        "start": 823,
+        "end": 843,
+        "text": "galactose metabolism"
+      },
+      {
+        "start": 849,
+        "end": 869,
+        "text": "butanoate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41631414",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Cholesterol metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1121,
+        "end": 1140,
+        "text": "bile acid synthesis"
+      },
+      {
+        "start": 1357,
+        "end": 1379,
+        "text": "cholesterol metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41567641",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Cholesterol metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1758,
+        "end": 1780,
+        "text": "cholesterol metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41116228",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Cholesterol metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42074334",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Citric acid cycle",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 436,
+        "end": 450,
+        "text": "Warburg effect"
+      },
+      {
+        "start": 866,
+        "end": 877,
+        "text": "Krebs cycle"
+      },
+      {
+        "start": 908,
+        "end": 913,
+        "text": "cycle"
+      }
+    ]
+  },
+  {
+    "pmid": "39094359",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Citric acid cycle",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 642,
+        "end": 659,
+        "text": "citric acid cycle"
+      },
+      {
+        "start": 848,
+        "end": 858,
+        "text": "glycolysis"
+      },
+      {
+        "start": 1094,
+        "end": 1111,
+        "text": "citric acid cycle"
+      }
+    ]
+  },
+  {
+    "pmid": "36633771",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Citric acid cycle",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 62,
+        "end": 71,
+        "text": "TCA cycle"
+      }
+    ]
+  },
+  {
+    "pmid": "11029587",
+    "disease": "Colon Cancer",
+    "expected_pathway": "CoA synthesis",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1354,
+        "end": 1379,
+        "text": "pentose phosphate pathway"
+      },
+      {
+        "start": 1418,
+        "end": 1429,
+        "text": "lipogenesis"
+      }
+    ]
+  },
+  {
+    "pmid": "39676876",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Dietary fiber binding",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "32003320",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Dietary fiber binding",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "31830158",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Dietary fiber binding",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42017623",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Drug metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41760525",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Drug metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41734437",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Drug metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 399,
+        "end": 414,
+        "text": "drug metabolism"
+      },
+      {
+        "start": 962,
+        "end": 972,
+        "text": "glycolysis"
+      },
+      {
+        "start": 2173,
+        "end": 2188,
+        "text": "drug metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "23567332",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Eicosanoid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "22678777",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Eicosanoid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1782,
+        "end": 1803,
+        "text": "eicosanoid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "18346463",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Eicosanoid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 485,
+        "end": 506,
+        "text": "eicosanoid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41135952",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Fatty acid oxidation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 631,
+        "end": 651,
+        "text": "fatty acid oxidation"
+      }
+    ]
+  },
+  {
+    "pmid": "40069590",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Fatty acid oxidation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 372,
+        "end": 392,
+        "text": "fatty acid oxidation"
+      }
+    ]
+  },
+  {
+    "pmid": "39859448",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Fatty acid oxidation",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1889,
+        "end": 1909,
+        "text": "fatty acid oxidation"
+      },
+      {
+        "start": 1997,
+        "end": 2017,
+        "text": "fatty acid oxidation"
+      }
+    ]
+  },
+  {
+    "pmid": "41399140",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Fatty acid synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1047,
+        "end": 1067,
+        "text": "fatty acid synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "38474695",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Fatty acid synthesis",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 309,
+        "end": 329,
+        "text": "fatty acid synthesis"
+      },
+      {
+        "start": 1063,
+        "end": 1083,
+        "text": "fatty acid synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "36300096",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Fatty acid synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 103,
+        "end": 123,
+        "text": "fatty acid synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "40533631",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Folate metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1189,
+        "end": 1209,
+        "text": "bile acid production"
+      },
+      {
+        "start": 1231,
+        "end": 1248,
+        "text": "folate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "38256120",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Folate metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 103,
+        "end": 120,
+        "text": "folate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "31058257",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Folate metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 141,
+        "end": 166,
+        "text": "pentose phosphate pathway"
+      },
+      {
+        "start": 431,
+        "end": 448,
+        "text": "folate metabolism"
+      },
+      {
+        "start": 1067,
+        "end": 1084,
+        "text": "folate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40605035",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Galactose metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1664,
+        "end": 1684,
+        "text": "galactose metabolism"
+      },
+      {
+        "start": 1686,
+        "end": 1698,
+        "text": "sphingolipid"
+      },
+      {
+        "start": 1776,
+        "end": 1797,
+        "text": "tryptophan metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40298386",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Galactose metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1308,
+        "end": 1328,
+        "text": "Galactose metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "37807318",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Galactose metabolism",
+    "num_detected": 5,
+    "detected_pathways": [
+      {
+        "start": 769,
+        "end": 794,
+        "text": "pentose phosphate pathway"
+      },
+      {
+        "start": 800,
+        "end": 809,
+        "text": "TCA cycle"
+      },
+      {
+        "start": 811,
+        "end": 821,
+        "text": "glycolysis"
+      },
+      {
+        "start": 823,
+        "end": 843,
+        "text": "galactose metabolism"
+      },
+      {
+        "start": 849,
+        "end": 869,
+        "text": "butanoate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "33129117",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glutamate metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1767,
+        "end": 1790,
+        "text": "nicotinamide metabolism"
+      },
+      {
+        "start": 1890,
+        "end": 1914,
+        "text": "Phenylalanine metabolism"
+      },
+      {
+        "start": 1980,
+        "end": 2000,
+        "text": "glutamate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "32422185",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glutamate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "26859520",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glutamate metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 672,
+        "end": 695,
+        "text": "sphingolipid metabolism"
+      },
+      {
+        "start": 720,
+        "end": 740,
+        "text": "glutamate metabolism"
+      },
+      {
+        "start": 782,
+        "end": 812,
+        "text": "glycerophospholipid metabolism"
+      },
+      {
+        "start": 1342,
+        "end": 1351,
+        "text": "TCA cycle"
+      }
+    ]
+  },
+  {
+    "pmid": "41950646",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glutathione metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41858713",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glutathione metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41092544",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glutathione metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41516095",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glycerophospholipid metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 447,
+        "end": 457,
+        "text": "glycolysis"
+      },
+      {
+        "start": 783,
+        "end": 813,
+        "text": "glycerophospholipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "33281602",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glycerophospholipid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 896,
+        "end": 926,
+        "text": "glycerophospholipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "32512070",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glycerophospholipid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "31054283",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glycine, serine, alanine, and threonine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "38750680",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glycolysis/gluconeogenesis",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 75,
+        "end": 85,
+        "text": "glycolysis"
+      },
+      {
+        "start": 965,
+        "end": 991,
+        "text": "glycolysis/gluconeogenesis"
+      },
+      {
+        "start": 1197,
+        "end": 1223,
+        "text": "glycolysis/gluconeogenesis"
+      }
+    ]
+  },
+  {
+    "pmid": "37605648",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glycolysis/gluconeogenesis",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1901,
+        "end": 1902,
+        "text": ","
+      },
+      {
+        "start": 1903,
+        "end": 1930,
+        "text": "glycolysis/gluconeogenesis,"
+      }
+    ]
+  },
+  {
+    "pmid": "35837174",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Glycolysis/gluconeogenesis",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 2299,
+        "end": 2325,
+        "text": "glycolysis/gluconeogenesis"
+      },
+      {
+        "start": 2407,
+        "end": 2416,
+        "text": "TCA cycle"
+      },
+      {
+        "start": 2421,
+        "end": 2447,
+        "text": "glycolysis/gluconeogenesis"
+      }
+    ]
+  },
+  {
+    "pmid": "33445377",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Heme degradation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 54,
+        "end": 70,
+        "text": "heme degradation"
+      }
+    ]
+  },
+  {
+    "pmid": "19120903",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Heme degradation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 136,
+        "end": 152,
+        "text": "heme degradation"
+      }
+    ]
+  },
+  {
+    "pmid": "18073533",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Heme degradation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 74,
+        "end": 90,
+        "text": "heme degradation"
+      }
+    ]
+  },
+  {
+    "pmid": "33424832",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Hippurate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "33361317",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Hippurate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "23319439",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Hippurate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41722537",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Histidine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 889,
+        "end": 909,
+        "text": "histidine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "30296444",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Histidine metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 1184,
+        "end": 1215,
+        "text": "arginine and proline metabolism"
+      },
+      {
+        "start": 1217,
+        "end": 1237,
+        "text": "histidine metabolism"
+      },
+      {
+        "start": 1239,
+        "end": 1262,
+        "text": "beta-alanine metabolism"
+      },
+      {
+        "start": 1267,
+        "end": 1288,
+        "text": "vitamin B6 metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "30239257",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Histidine metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 2025,
+        "end": 2052,
+        "text": "nucleotide sugar metabolism"
+      },
+      {
+        "start": 2054,
+        "end": 2085,
+        "text": "arginine and proline metabolism"
+      },
+      {
+        "start": 2107,
+        "end": 2116,
+        "text": "threonine"
+      },
+      {
+        "start": 2129,
+        "end": 2149,
+        "text": "histidine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "31819498",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Inositol phosphate metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 957,
+        "end": 981,
+        "text": "phenylalanine metabolism"
+      },
+      {
+        "start": 1031,
+        "end": 1060,
+        "text": "inositol phosphate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "18097602",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Inositol phosphate metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 1026,
+        "end": 1055,
+        "text": "inositol phosphate metabolism"
+      },
+      {
+        "start": 1336,
+        "end": 1361,
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "start": 1469,
+        "end": 1482,
+        "text": "butanoate and"
+      },
+      {
+        "start": 1483,
+        "end": 1504,
+        "text": "propanoate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "8502588",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Inositol phosphate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "2719111",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Intracellular demand",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "36834820",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Leukotriene metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "32474153",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Leukotriene metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "32333795",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Leukotriene metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42048751",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Lysine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39860204",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Lysine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "38750680",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Lysine metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 75,
+        "end": 85,
+        "text": "glycolysis"
+      },
+      {
+        "start": 965,
+        "end": 991,
+        "text": "glycolysis/gluconeogenesis"
+      },
+      {
+        "start": 1197,
+        "end": 1223,
+        "text": "glycolysis/gluconeogenesis"
+      }
+    ]
+  },
+  {
+    "pmid": "38704091",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Miscellaneous",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "34501294",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Miscellaneous",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "30245004",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Miscellaneous",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41903769",
+    "disease": "Colon Cancer",
+    "expected_pathway": "NAD metabolism",
+    "num_detected": 8,
+    "detected_pathways": [
+      {
+        "start": 23,
+        "end": 33,
+        "text": "glycolysis"
+      },
+      {
+        "start": 134,
+        "end": 144,
+        "text": "glycolysis"
+      },
+      {
+        "start": 202,
+        "end": 212,
+        "text": "glycolysis"
+      },
+      {
+        "start": 616,
+        "end": 626,
+        "text": "glycolysis"
+      },
+      {
+        "start": 759,
+        "end": 769,
+        "text": "glycolysis"
+      },
+      {
+        "start": 867,
+        "end": 877,
+        "text": "glycolysis"
+      },
+      {
+        "start": 933,
+        "end": 943,
+        "text": "glycolysis"
+      },
+      {
+        "start": 1270,
+        "end": 1280,
+        "text": "glycolysis"
+      }
+    ]
+  },
+  {
+    "pmid": "41150773",
+    "disease": "Colon Cancer",
+    "expected_pathway": "NAD metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1076,
+        "end": 1086,
+        "text": "glycolysis"
+      }
+    ]
+  },
+  {
+    "pmid": "40706441",
+    "disease": "Colon Cancer",
+    "expected_pathway": "NAD metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40467247",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Nucleotide metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39747340",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Nucleotide metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 182,
+        "end": 203,
+        "text": "Nucleotide metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "36874006",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Nucleotide metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1406,
+        "end": 1427,
+        "text": "Nucleotide metabolism"
+      },
+      {
+        "start": 1438,
+        "end": 1448,
+        "text": "metabolism"
+      },
+      {
+        "start": 1450,
+        "end": 1465,
+        "text": "Drug metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "30214377",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Nucleotide salvage pathway",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 457,
+        "end": 483,
+        "text": "nucleotide salvage pathway"
+      }
+    ]
+  },
+  {
+    "pmid": "35023953",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Nucleotide sugar metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1692,
+        "end": 1719,
+        "text": "nucleotide sugar metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "30239257",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Nucleotide sugar metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 2025,
+        "end": 2052,
+        "text": "nucleotide sugar metabolism"
+      },
+      {
+        "start": 2054,
+        "end": 2085,
+        "text": "arginine and proline metabolism"
+      },
+      {
+        "start": 2107,
+        "end": 2116,
+        "text": "threonine"
+      },
+      {
+        "start": 2129,
+        "end": 2149,
+        "text": "histidine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41759737",
+    "disease": "Colon Cancer",
+    "expected_pathway": "O-glycan metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41549136",
+    "disease": "Colon Cancer",
+    "expected_pathway": "O-glycan metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "30093410",
+    "disease": "Colon Cancer",
+    "expected_pathway": "O-glycan metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "42106773",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Oxidative phosphorylation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1560,
+        "end": 1585,
+        "text": "oxidative phosphorylation"
+      }
+    ]
+  },
+  {
+    "pmid": "41988364",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Oxidative phosphorylation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 477,
+        "end": 502,
+        "text": "oxidative phosphorylation"
+      }
+    ]
+  },
+  {
+    "pmid": "41898210",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Oxidative phosphorylation",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1387,
+        "end": 1397,
+        "text": "glycolysis"
+      },
+      {
+        "start": 1402,
+        "end": 1427,
+        "text": "oxidative phosphorylation"
+      }
+    ]
+  },
+  {
+    "pmid": "42068038",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Pentose phosphate pathway",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1118,
+        "end": 1143,
+        "text": "pentose phosphate pathway"
+      }
+    ]
+  },
+  {
+    "pmid": "41861993",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Pentose phosphate pathway",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 529,
+        "end": 554,
+        "text": "pentose phosphate pathway"
+      }
+    ]
+  },
+  {
+    "pmid": "40634495",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Pentose phosphate pathway",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1015,
+        "end": 1040,
+        "text": "pentose phosphate pathway"
+      }
+    ]
+  },
+  {
+    "pmid": "41667046",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Peptide metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "36650220",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Peptide metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "35808840",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Peptide metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39670663",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Phenylalanine metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1218,
+        "end": 1242,
+        "text": "phenylalanine metabolism"
+      },
+      {
+        "start": 1283,
+        "end": 1302,
+        "text": "tyrosine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "33129117",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Phenylalanine metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1767,
+        "end": 1790,
+        "text": "nicotinamide metabolism"
+      },
+      {
+        "start": 1890,
+        "end": 1914,
+        "text": "Phenylalanine metabolism"
+      },
+      {
+        "start": 1980,
+        "end": 2000,
+        "text": "glutamate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "32778592",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Phenylalanine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "18097602",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Propanoate metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 1026,
+        "end": 1055,
+        "text": "inositol phosphate metabolism"
+      },
+      {
+        "start": 1336,
+        "end": 1361,
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "start": 1469,
+        "end": 1482,
+        "text": "butanoate and"
+      },
+      {
+        "start": 1483,
+        "end": 1504,
+        "text": "propanoate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "19359593",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Protein formation",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "8226108",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Purine catabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "32839531",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Purine synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1090,
+        "end": 1106,
+        "text": "purine synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "16284371",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Purine synthesis",
+    "num_detected": 5,
+    "detected_pathways": [
+      {
+        "start": 0,
+        "end": 17,
+        "text": "Folate metabolism"
+      },
+      {
+        "start": 1062,
+        "end": 1079,
+        "text": "folate metabolism"
+      },
+      {
+        "start": 1546,
+        "end": 1562,
+        "text": "purine synthesis"
+      },
+      {
+        "start": 1610,
+        "end": 1627,
+        "text": "folate metabolism"
+      },
+      {
+        "start": 1801,
+        "end": 1818,
+        "text": "folate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "14529544",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Purine synthesis",
+    "num_detected": 5,
+    "detected_pathways": [
+      {
+        "start": 1649,
+        "end": 1665,
+        "text": "purine synthesis"
+      },
+      {
+        "start": 1913,
+        "end": 1929,
+        "text": "purine synthesis"
+      },
+      {
+        "start": 2409,
+        "end": 2425,
+        "text": "purine synthesis"
+      },
+      {
+        "start": 3228,
+        "end": 3245,
+        "text": "folate metabolism"
+      },
+      {
+        "start": 3309,
+        "end": 3326,
+        "text": "folate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "31149530",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Pyrimidine catabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 262,
+        "end": 283,
+        "text": "pyrimidine catabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "38858597",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Pyrimidine synthesis",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 22,
+        "end": 32,
+        "text": "urea cycle"
+      },
+      {
+        "start": 198,
+        "end": 218,
+        "text": "pyrimidine synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "34611552",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Pyrimidine synthesis",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 112,
+        "end": 132,
+        "text": "pyrimidine synthesis"
+      },
+      {
+        "start": 238,
+        "end": 258,
+        "text": "pyrimidine synthesis"
+      },
+      {
+        "start": 1719,
+        "end": 1739,
+        "text": "pyrimidine synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "31744820",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Pyrimidine synthesis",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 581,
+        "end": 601,
+        "text": "pyrimidine synthesis"
+      },
+      {
+        "start": 1212,
+        "end": 1232,
+        "text": "pyrimidine synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "39520809",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Pyruvate metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1281,
+        "end": 1300,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 1305,
+        "end": 1325,
+        "text": "butanoate metabolism"
+      },
+      {
+        "start": 1483,
+        "end": 1506,
+        "text": "fatty acid biosynthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "39467887",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Pyruvate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "38947396",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Pyruvate metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 3121,
+        "end": 3140,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 3149,
+        "end": 3173,
+        "text": "tricarboxylic acid cycle"
+      }
+    ]
+  },
+  {
+    "pmid": "41650786",
+    "disease": "Colon Cancer",
+    "expected_pathway": "R group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41092516",
+    "disease": "Colon Cancer",
+    "expected_pathway": "R group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41008633",
+    "disease": "Colon Cancer",
+    "expected_pathway": "R group synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 509,
+        "end": 528,
+        "text": "bile acid synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "36113636",
+    "disease": "Colon Cancer",
+    "expected_pathway": "ROS detoxification",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1250,
+        "end": 1268,
+        "text": "ROS detoxification"
+      }
+    ]
+  },
+  {
+    "pmid": "41493965",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Sphingolipid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 2078,
+        "end": 2101,
+        "text": "sphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "37108361",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Sphingolipid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 244,
+        "end": 267,
+        "text": "sphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "35978522",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Sphingolipid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 220,
+        "end": 243,
+        "text": "sphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "34939274",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Squalene and cholesterol synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "32946903",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Squalene and cholesterol synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "19626588",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Squalene and cholesterol synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "37444500",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Starch and sucrose metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1499,
+        "end": 1528,
+        "text": "starch and sucrose metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40329104",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Steroid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "37696457",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Steroid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "37516405",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Steroid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40539417",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Taurine and hypotaurine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1773,
+        "end": 1807,
+        "text": "taurine and hypotaurine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39501961",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Thiamine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1285,
+        "end": 1304,
+        "text": "Thiamine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "35116980",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Thiamine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1341,
+        "end": 1360,
+        "text": "thiamine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "16136044",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Thiamine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 932,
+        "end": 949,
+        "text": "folate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41831570",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Triacylglycerol synthesis",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 685,
+        "end": 695,
+        "text": "glycolysis"
+      },
+      {
+        "start": 1017,
+        "end": 1042,
+        "text": "triacylglycerol synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "40605035",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Tryptophan metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1664,
+        "end": 1684,
+        "text": "galactose metabolism"
+      },
+      {
+        "start": 1686,
+        "end": 1698,
+        "text": "sphingolipid"
+      },
+      {
+        "start": 1776,
+        "end": 1797,
+        "text": "tryptophan metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40350914",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Tryptophan metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 129,
+        "end": 150,
+        "text": "tryptophan metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40216815",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Tryptophan metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 0,
+        "end": 21,
+        "text": "Tryptophan metabolism"
+      },
+      {
+        "start": 1706,
+        "end": 1727,
+        "text": "tryptophan metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40906027",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Tyrosine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1434,
+        "end": 1453,
+        "text": "tyrosine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40022152",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Tyrosine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 524,
+        "end": 543,
+        "text": "tyrosine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39872045",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Tyrosine metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 1377,
+        "end": 1396,
+        "text": "tyrosine metabolism"
+      },
+      {
+        "start": 1398,
+        "end": 1419,
+        "text": "tryptophan metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "9855569",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Ubiquinone synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 897,
+        "end": 917,
+        "text": "ubiquinone synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "39773964",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Urea cycle",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 557,
+        "end": 567,
+        "text": "urea cycle"
+      }
+    ]
+  },
+  {
+    "pmid": "38858597",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Urea cycle",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 22,
+        "end": 32,
+        "text": "urea cycle"
+      },
+      {
+        "start": 198,
+        "end": 218,
+        "text": "pyrimidine synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "36639644",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Urea cycle",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41525266",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Valine, leucine, and isoleucine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39520809",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Valine, leucine, and isoleucine metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 1281,
+        "end": 1300,
+        "text": "pyruvate metabolism"
+      },
+      {
+        "start": 1305,
+        "end": 1325,
+        "text": "butanoate metabolism"
+      },
+      {
+        "start": 1483,
+        "end": 1506,
+        "text": "fatty acid biosynthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "36874158",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Valine, leucine, and isoleucine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "37185128",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Vitamin A metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "36482184",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Vitamin A metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "29904382",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Vitamin A metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "34998874",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Vitamin B12 metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1342,
+        "end": 1364,
+        "text": "vitamin B12 metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "30296444",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Vitamin B6 metabolism",
+    "num_detected": 4,
+    "detected_pathways": [
+      {
+        "start": 1184,
+        "end": 1215,
+        "text": "arginine and proline metabolism"
+      },
+      {
+        "start": 1217,
+        "end": 1237,
+        "text": "histidine metabolism"
+      },
+      {
+        "start": 1239,
+        "end": 1262,
+        "text": "beta-alanine metabolism"
+      },
+      {
+        "start": 1267,
+        "end": 1288,
+        "text": "vitamin B6 metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "25202454",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Vitamin B6 metabolism",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 943,
+        "end": 965,
+        "text": "bile acid biosynthesis"
+      },
+      {
+        "start": 967,
+        "end": 988,
+        "text": "vitamin B6 metabolism"
+      },
+      {
+        "start": 1014,
+        "end": 1036,
+        "text": "glutathione metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39189761",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Vitamin D metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "37478851",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Vitamin D metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "35662320",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Vitamin D metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "33347911",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Vitamin E metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "30548200",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Vitamin E metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1310,
+        "end": 1333,
+        "text": "sphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "28004603",
+    "disease": "Colon Cancer",
+    "expected_pathway": "Vitamin E metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40392873",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Androgen and estrogen synthesis and metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "33399351",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Androgen and estrogen synthesis and metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "32583986",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Androgen and estrogen synthesis and metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "35363173",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Arachidonic acid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1367,
+        "end": 1394,
+        "text": "arachidonic acid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41419874",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Blood group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41259844",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Blood group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40673609",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Blood group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41258419",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Butanoate metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 948,
+        "end": 968,
+        "text": "butanoate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40576911",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Cholesterol metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 94,
+        "end": 116,
+        "text": "cholesterol metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "35116550",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Cholesterol metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1012,
+        "end": 1034,
+        "text": "cholesterol metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "34646087",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Cholesterol metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 2014,
+        "end": 2036,
+        "text": "cholesterol metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40697520",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Drug metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1623,
+        "end": 1638,
+        "text": "drug metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39647237",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Drug metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1296,
+        "end": 1311,
+        "text": "drug metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "37383233",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Drug metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1328,
+        "end": 1343,
+        "text": "drug metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "39011508",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Fatty acid oxidation",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "38390305",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Fatty acid oxidation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1199,
+        "end": 1219,
+        "text": "fatty acid oxidation"
+      }
+    ]
+  },
+  {
+    "pmid": "38361759",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Fatty acid oxidation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 39,
+        "end": 64,
+        "text": "fatty acid beta-oxidation"
+      }
+    ]
+  },
+  {
+    "pmid": "40189725",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Fatty acid synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 319,
+        "end": 339,
+        "text": "fatty acid synthesis"
+      }
+    ]
+  },
+  {
+    "pmid": "38390305",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Fatty acid synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1199,
+        "end": 1219,
+        "text": "fatty acid oxidation"
+      }
+    ]
+  },
+  {
+    "pmid": "39958609",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Folate metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 43,
+        "end": 60,
+        "text": "folate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "11093055",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Galactose metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1364,
+        "end": 1384,
+        "text": "galactose metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "40836945",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Glutathione metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39732845",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Glutathione metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "37985723",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Glutathione metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1051,
+        "end": 1073,
+        "text": "glutathione metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41979734",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Glycerophospholipid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1017,
+        "end": 1047,
+        "text": "glycerophospholipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "35447281",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Glycerophospholipid metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 336,
+        "end": 366,
+        "text": "glycerophospholipid metabolism"
+      },
+      {
+        "start": 1151,
+        "end": 1161,
+        "text": "glycolysis"
+      }
+    ]
+  },
+  {
+    "pmid": "37553601",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Glycolysis/gluconeogenesis",
+    "num_detected": 6,
+    "detected_pathways": [
+      {
+        "start": 480,
+        "end": 506,
+        "text": "glycolysis/gluconeogenesis"
+      },
+      {
+        "start": 1095,
+        "end": 1110,
+        "text": "gluconeogenesis"
+      },
+      {
+        "start": 1244,
+        "end": 1259,
+        "text": "gluconeogenesis"
+      },
+      {
+        "start": 1507,
+        "end": 1522,
+        "text": "gluconeogenesis"
+      },
+      {
+        "start": 1979,
+        "end": 1994,
+        "text": "gluconeogenesis"
+      },
+      {
+        "start": 2045,
+        "end": 2060,
+        "text": "gluconeogenesis"
+      }
+    ]
+  },
+  {
+    "pmid": "37335542",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Glycolysis/gluconeogenesis",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 70,
+        "end": 95,
+        "text": "pentose phosphate pathway"
+      },
+      {
+        "start": 1627,
+        "end": 1653,
+        "text": "Glycolysis/Gluconeogenesis"
+      },
+      {
+        "start": 1657,
+        "end": 1682,
+        "text": "Pentose phosphate pathway"
+      }
+    ]
+  },
+  {
+    "pmid": "26073078",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Lysine metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "32776490",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Miscellaneous",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "25551297",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Miscellaneous",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "25313783",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Miscellaneous",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "21072169",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Nucleotide metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41547907",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Oxidative phosphorylation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 865,
+        "end": 890,
+        "text": "oxidative phosphorylation"
+      }
+    ]
+  },
+  {
+    "pmid": "41053452",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Oxidative phosphorylation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1334,
+        "end": 1359,
+        "text": "oxidative phosphorylation"
+      }
+    ]
+  },
+  {
+    "pmid": "40124099",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Oxidative phosphorylation",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 999,
+        "end": 1024,
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "start": 1077,
+        "end": 1098,
+        "text": "tryptophan metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41188181",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Pentose phosphate pathway",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1438,
+        "end": 1463,
+        "text": "pentose phosphate pathway"
+      }
+    ]
+  },
+  {
+    "pmid": "37335542",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Pentose phosphate pathway",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 70,
+        "end": 95,
+        "text": "pentose phosphate pathway"
+      },
+      {
+        "start": 1627,
+        "end": 1653,
+        "text": "Glycolysis/Gluconeogenesis"
+      },
+      {
+        "start": 1657,
+        "end": 1682,
+        "text": "Pentose phosphate pathway"
+      }
+    ]
+  },
+  {
+    "pmid": "36831501",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Pentose phosphate pathway",
+    "num_detected": 3,
+    "detected_pathways": [
+      {
+        "start": 316,
+        "end": 326,
+        "text": "glycolysis"
+      },
+      {
+        "start": 1322,
+        "end": 1332,
+        "text": "glycolysis"
+      },
+      {
+        "start": 1407,
+        "end": 1417,
+        "text": "glycolysis"
+      }
+    ]
+  },
+  {
+    "pmid": "41477155",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Propanoate metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1246,
+        "end": 1267,
+        "text": "propanoate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41477155",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "R group synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1246,
+        "end": 1267,
+        "text": "propanoate metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41419874",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "R group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "41198144",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "R group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "35846357",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Sphingolipid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1420,
+        "end": 1443,
+        "text": "sphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "31681747",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Sphingolipid metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 2042,
+        "end": 2065,
+        "text": "sphingolipid metabolism"
+      },
+      {
+        "start": 2333,
+        "end": 2356,
+        "text": "sphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "41268544",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Steroid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1323,
+        "end": 1341,
+        "text": "steroid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "32583986",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Steroid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "30736825",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Steroid metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "40124099",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Tryptophan metabolism",
+    "num_detected": 2,
+    "detected_pathways": [
+      {
+        "start": 999,
+        "end": 1024,
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "start": 1077,
+        "end": 1098,
+        "text": "tryptophan metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "38062922",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Tryptophan metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "39755002",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Tyrosine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 795,
+        "end": 814,
+        "text": "tyrosine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "35562974",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Tyrosine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1083,
+        "end": 1093,
+        "text": "glycolysis"
+      }
+    ]
+  },
+  {
+    "pmid": "32316597",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Tyrosine metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1284,
+        "end": 1303,
+        "text": "tyrosine metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "14581364",
+    "disease": "Clear Cell Carcinoma",
+    "expected_pathway": "Vitamin A metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "23697262",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Alanine and aspartate metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "33558189",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Blood group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "31771043",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Blood group synthesis",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 219,
+        "end": 229,
+        "text": "glycolysis"
+      }
+    ]
+  },
+  {
+    "pmid": "30742728",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Blood group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "38069135",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Cholesterol metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "32698524",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Drug metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 577,
+        "end": 592,
+        "text": "drug metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "28077438",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Drug metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "29293500",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Fatty acid oxidation",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 1214,
+        "end": 1234,
+        "text": "fatty acid oxidation"
+      }
+    ]
+  },
+  {
+    "pmid": "39635901",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Miscellaneous",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "27721927",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Miscellaneous",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "21747745",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Miscellaneous",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "37351197",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "NAD metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "35869257",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "NAD metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "35021095",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Nucleotide metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 942,
+        "end": 963,
+        "text": "nucleotide metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "34480004",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Nucleotide metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 635,
+        "end": 656,
+        "text": "nucleotide metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "33982134",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Nucleotide metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 892,
+        "end": 913,
+        "text": "nucleotide metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "26026136",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "R group synthesis",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "36790532",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Sphingolipid metabolism",
+    "num_detected": 1,
+    "detected_pathways": [
+      {
+        "start": 963,
+        "end": 986,
+        "text": "sphingolipid metabolism"
+      }
+    ]
+  },
+  {
+    "pmid": "29180759",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Tryptophan metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  },
+  {
+    "pmid": "23826131",
+    "disease": "Pancreas Cancer",
+    "expected_pathway": "Vitamin D metabolism",
+    "num_detected": 0,
+    "detected_pathways": []
+  }
+]
