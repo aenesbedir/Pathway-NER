@@ -1,0 +1,2058 @@
+{
+  "source": "data/processed/exact_matches.jsonl",
+  "note": "All unique surface-form span texts found by exact matching (case + synonym variants included). Each maps to its canonical Recon pathway_id(s).",
+  "total_unique_span_texts": 256,
+  "total_spans": 73096,
+  "span_texts_alphabetical": [
+    "ARACHIDONIC ACID METABOLISM",
+    "Alanine and aspartate metabolism",
+    "Arachidonic Acid Metabolism",
+    "Arachidonic acid metabolism",
+    "Arginine and Proline Metabolism",
+    "Arginine and proline metabolism",
+    "BETA-ALANINE METABOLISM",
+    "Beta-Alanine metabolism",
+    "Beta-alanine metabolism",
+    "Beta-oxidation",
+    "Bile Acid Biosynthesis",
+    "Bile acid biosynthesis",
+    "Bile acid synthesis",
+    "Biotin metabolism",
+    "Butanoate Metabolism",
+    "Butanoate metabolism",
+    "C5-Branched dibasic acid metabolism",
+    "C5-branched dibasic acid metabolism",
+    "Cholesterol Metabolism",
+    "Cholesterol metabolism",
+    "Chondroitin Sulfate Degradation",
+    "Chondroitin sulfate degradation",
+    "Citric Acid Cycle",
+    "Citric acid cycle",
+    "CoA Catabolism",
+    "CoA Synthesis",
+    "CoA synthesis",
+    "D-Alanine metabolism",
+    "D-alanine metabolism",
+    "DRUG METABOLISM",
+    "De Novo lipogenesis",
+    "De novo lipogenesis",
+    "Drug Metabolism",
+    "Drug metabolism",
+    "Eicosanoid metabolism",
+    "Electron Transport Chain",
+    "Electron transport chain",
+    "Fatty Acid Biosynthesis",
+    "Fatty Acid Oxidation",
+    "Fatty Acid Synthesis",
+    "Fatty Acid biosynthesis",
+    "Fatty Acid synthesis",
+    "Fatty acid beta-oxidation",
+    "Fatty acid biosynthesis",
+    "Fatty acid oxidation",
+    "Fatty acid synthesis",
+    "Fatty acid β-oxidation",
+    "Folate Metabolism",
+    "Folate metabolism",
+    "Fructose and mannose metabolism",
+    "GLUCONEOGENESIS",
+    "GLYCOLYSIS",
+    "Galactose Metabolism",
+    "Galactose metabolism",
+    "Gluconeogenesis",
+    "Glutamate Metabolism",
+    "Glutamate metabolism",
+    "Glutathione Metabolism",
+    "Glutathione metabolism",
+    "Glycerophospholipid Metabolism",
+    "Glycerophospholipid metabolism",
+    "Glycolysis",
+    "Glycolysis/Gluconeogenesis",
+    "Glycolysis/gluconeogenesis",
+    "Glycosphingolipid metabolism",
+    "Glyoxylate and dicarboxylate metabolism",
+    "Heme degradation",
+    "Heme synthesis",
+    "Heparan sulfate degradation",
+    "Histidine Metabolism",
+    "Histidine metabolism",
+    "Hyaluronan metabolism",
+    "Inositol Phosphate metabolism",
+    "Inositol phosphate metabolism",
+    "Krebs Cycle",
+    "Krebs cycle",
+    "Lipogenesis",
+    "Lysine Metabolism",
+    "Lysine metabolism",
+    "N-Glycan degradation",
+    "N-glycan degradation",
+    "N-glycan synthesis",
+    "NAD Metabolism",
+    "NAD metabolism",
+    "NAD+ Metabolism",
+    "NAD+ metabolism",
+    "NADH metabolism",
+    "NUCLEOTIDE SUGAR METABOLISM",
+    "Nicotinamide metabolism",
+    "Nucleotide Metabolism",
+    "Nucleotide Sugar Metabolism",
+    "Nucleotide metabolism",
+    "Nucleotide sugar metabolism",
+    "O-glycan metabolism",
+    "OXIDATIVE PHOSPHORYLATION",
+    "OXPHOS",
+    "OxPHOS",
+    "OxPhos",
+    "Oxidative Phosphorylation",
+    "Oxidative phosphorylation",
+    "Oxphos",
+    "PENTOSE PHOSPHATE PATHWAY",
+    "PHENYLALANINE METABOLISM",
+    "Pentose Phosphate Pathway",
+    "Pentose phosphate pathway",
+    "Peptide Metabolism",
+    "Phenylalanine Metabolism",
+    "Phenylalanine metabolism",
+    "Primary bile acid biosynthesis",
+    "Propanoate Metabolism",
+    "Propanoate metabolism",
+    "Purine catabolism",
+    "Purine synthesis",
+    "Pyrimidine catabolism",
+    "Pyrimidine synthesis",
+    "Pyruvate Metabolism",
+    "Pyruvate metabolism",
+    "ROS detoxification",
+    "Riboflavin metabolism",
+    "STARCH AND SUCROSE METABOLISM",
+    "Sphingolipid Metabolism",
+    "Sphingolipid metabolism",
+    "Starch and Sucrose metabolism",
+    "Starch and sucrose metabolism",
+    "Steroid metabolism",
+    "TCA Cycle",
+    "TCA cycle",
+    "TRYPTOPHAN METABOLISM",
+    "Taurine and Hypotaurine metabolism",
+    "Taurine and hypotaurine metabolism",
+    "Thiamine Metabolism",
+    "Thiamine metabolism",
+    "Triacylglycerol synthesis",
+    "Tricarboxylic Acid Cycle",
+    "Tricarboxylic Acid cycle",
+    "Tricarboxylic acid cycle",
+    "Tryptophan Metabolism",
+    "Tryptophan metabolism",
+    "Tyrosine Metabolism",
+    "Tyrosine metabolism",
+    "Ubiquinone synthesis",
+    "Urea Cycle",
+    "Urea cycle",
+    "VITAMIN D METABOLISM",
+    "Vitamin A metabolism",
+    "Vitamin B12 Metabolism",
+    "Vitamin B12 metabolism",
+    "Vitamin B6 metabolism",
+    "Vitamin C metabolism",
+    "Vitamin D metabolism",
+    "WARBURG effect",
+    "Warburg Effect",
+    "Warburg effect",
+    "alanine and aspartate metabolism",
+    "alkaloid synthesis",
+    "aminosugar metabolism",
+    "arachidonic acid metabolism",
+    "arginine and proline metabolism",
+    "beta-Alanine metabolism",
+    "beta-Oxidation",
+    "beta-alanine metabolism",
+    "beta-oxidation",
+    "bile acid biosynthesis",
+    "bile acid production",
+    "bile acid synthesis",
+    "biotin metabolism",
+    "butanoate metabolism",
+    "cholesterol metabolism",
+    "chondroitin sulfate degradation",
+    "chondroitin synthesis",
+    "citric acid cycle",
+    "cytochrome metabolism",
+    "d-alanine metabolism",
+    "de novo Lipogenesis",
+    "de novo lipogenesis",
+    "drug metabolism",
+    "eicosanoid metabolism",
+    "electron transport chain",
+    "fatty acid Beta-oxidation",
+    "fatty acid beta-oxidation",
+    "fatty acid biosynthesis",
+    "fatty acid oxidation",
+    "fatty acid synthesis",
+    "fatty acid β-oxidation",
+    "folate metabolism",
+    "fructose and mannose metabolism",
+    "galactose metabolism",
+    "gluconeogenesis",
+    "glutamate metabolism",
+    "glutathione metabolism",
+    "glycerophospholipid metabolism",
+    "glycine, serine, alanine, and threonine metabolism",
+    "glycolysis",
+    "glycolysis/gluconeogenesis",
+    "glycosphingolipid metabolism",
+    "glyoxylate and dicarboxylate metabolism",
+    "heme degradation",
+    "heme synthesis",
+    "heparan sulfate degradation",
+    "hexose monophosphate shunt",
+    "histidine Metabolism",
+    "histidine metabolism",
+    "hyaluronan metabolism",
+    "inositol phosphate metabolism",
+    "keratan-sulfate degradation",
+    "leukotriene metabolism",
+    "limonene and pinene degradation",
+    "linoleate metabolism",
+    "lipogenesis",
+    "lysine metabolism",
+    "methionine and cysteine metabolism",
+    "n-glycan synthesis",
+    "nicotinamide metabolism",
+    "nucleotide interconversion",
+    "nucleotide metabolism",
+    "nucleotide salvage pathway",
+    "nucleotide sugar metabolism",
+    "oxPHOS",
+    "oxidative phosphorylation",
+    "oxphos",
+    "pentose phosphate pathway",
+    "pentose phosphate shunt",
+    "peptide metabolism",
+    "phenylalanine metabolism",
+    "primary bile acid biosynthesis",
+    "propanoate metabolism",
+    "purine catabolism",
+    "purine synthesis",
+    "pyrimidine catabolism",
+    "pyrimidine synthesis",
+    "pyruvate metabolism",
+    "riboflavin metabolism",
+    "sphingolipid metabolism",
+    "starch and sucrose metabolism",
+    "steroid metabolism",
+    "taurine and Hypotaurine Metabolism",
+    "taurine and hypotaurine metabolism",
+    "tca cycle",
+    "tetrahydrobiopterin metabolism",
+    "thiamine metabolism",
+    "triacylglycerol synthesis",
+    "tricarboxylic acid cycle",
+    "tryptophan metabolism",
+    "tyrosine metabolism",
+    "ubiquinone synthesis",
+    "urea cycle",
+    "valine, leucine, and isoleucine metabolism",
+    "vitamin A metabolism",
+    "vitamin B12 metabolism",
+    "vitamin B6 metabolism",
+    "vitamin C metabolism",
+    "vitamin D Metabolism",
+    "vitamin D metabolism",
+    "vitamin E metabolism",
+    "β-Oxidation",
+    "β-oxidation"
+  ],
+  "span_texts_by_count": [
+    {
+      "text": "glycolysis",
+      "count": 10139,
+      "canonical": [
+        "glycolysis/gluconeogenesis"
+      ]
+    },
+    {
+      "text": "oxidative phosphorylation",
+      "count": 4378,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "TCA cycle",
+      "count": 3933,
+      "canonical": [
+        "citric acid cycle"
+      ]
+    },
+    {
+      "text": "OXPHOS",
+      "count": 3689,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "fatty acid oxidation",
+      "count": 3048,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "cholesterol metabolism",
+      "count": 2829,
+      "canonical": [
+        "cholesterol metabolism"
+      ]
+    },
+    {
+      "text": "sphingolipid metabolism",
+      "count": 2126,
+      "canonical": [
+        "sphingolipid metabolism"
+      ]
+    },
+    {
+      "text": "tryptophan metabolism",
+      "count": 2114,
+      "canonical": [
+        "tryptophan metabolism"
+      ]
+    },
+    {
+      "text": "urea cycle",
+      "count": 2036,
+      "canonical": [
+        "urea cycle"
+      ]
+    },
+    {
+      "text": "fatty acid synthesis",
+      "count": 1885,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "gluconeogenesis",
+      "count": 1641,
+      "canonical": [
+        "glycolysis/gluconeogenesis"
+      ]
+    },
+    {
+      "text": "lipogenesis",
+      "count": 1513,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "β-oxidation",
+      "count": 1491,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "pentose phosphate pathway",
+      "count": 1449,
+      "canonical": [
+        "pentose phosphate pathway"
+      ]
+    },
+    {
+      "text": "glycerophospholipid metabolism",
+      "count": 1350,
+      "canonical": [
+        "glycerophospholipid metabolism"
+      ]
+    },
+    {
+      "text": "glutathione metabolism",
+      "count": 1294,
+      "canonical": [
+        "glutathione metabolism"
+      ]
+    },
+    {
+      "text": "drug metabolism",
+      "count": 1288,
+      "canonical": [
+        "drug metabolism"
+      ]
+    },
+    {
+      "text": "nucleotide metabolism",
+      "count": 1238,
+      "canonical": [
+        "nucleotide metabolism"
+      ]
+    },
+    {
+      "text": "glutamate metabolism",
+      "count": 1171,
+      "canonical": [
+        "glutamate metabolism"
+      ]
+    },
+    {
+      "text": "bile acid synthesis",
+      "count": 1078,
+      "canonical": [
+        "bile acid synthesis"
+      ]
+    },
+    {
+      "text": "folate metabolism",
+      "count": 1077,
+      "canonical": [
+        "folate metabolism"
+      ]
+    },
+    {
+      "text": "Warburg effect",
+      "count": 938,
+      "canonical": [
+        "glycolysis/gluconeogenesis"
+      ]
+    },
+    {
+      "text": "arachidonic acid metabolism",
+      "count": 931,
+      "canonical": [
+        "arachidonic acid metabolism"
+      ]
+    },
+    {
+      "text": "electron transport chain",
+      "count": 906,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "pyruvate metabolism",
+      "count": 857,
+      "canonical": [
+        "pyruvate metabolism"
+      ]
+    },
+    {
+      "text": "purine synthesis",
+      "count": 838,
+      "canonical": [
+        "purine synthesis"
+      ]
+    },
+    {
+      "text": "citric acid cycle",
+      "count": 831,
+      "canonical": [
+        "citric acid cycle"
+      ]
+    },
+    {
+      "text": "pyrimidine synthesis",
+      "count": 765,
+      "canonical": [
+        "pyrimidine synthesis"
+      ]
+    },
+    {
+      "text": "de novo lipogenesis",
+      "count": 696,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "vitamin D metabolism",
+      "count": 696,
+      "canonical": [
+        "vitamin d metabolism"
+      ]
+    },
+    {
+      "text": "arginine and proline metabolism",
+      "count": 620,
+      "canonical": [
+        "arginine and proline metabolism"
+      ]
+    },
+    {
+      "text": "tyrosine metabolism",
+      "count": 585,
+      "canonical": [
+        "tyrosine metabolism"
+      ]
+    },
+    {
+      "text": "OxPhos",
+      "count": 536,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "fatty acid β-oxidation",
+      "count": 520,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "histidine metabolism",
+      "count": 520,
+      "canonical": [
+        "histidine metabolism"
+      ]
+    },
+    {
+      "text": "heme synthesis",
+      "count": 502,
+      "canonical": [
+        "heme synthesis"
+      ]
+    },
+    {
+      "text": "tricarboxylic acid cycle",
+      "count": 497,
+      "canonical": [
+        "citric acid cycle"
+      ]
+    },
+    {
+      "text": "phenylalanine metabolism",
+      "count": 491,
+      "canonical": [
+        "phenylalanine metabolism"
+      ]
+    },
+    {
+      "text": "glycolysis/gluconeogenesis",
+      "count": 475,
+      "canonical": [
+        "glycolysis/gluconeogenesis"
+      ]
+    },
+    {
+      "text": "fatty acid biosynthesis",
+      "count": 448,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "NAD+ metabolism",
+      "count": 440,
+      "canonical": [
+        "nad metabolism"
+      ]
+    },
+    {
+      "text": "Krebs cycle",
+      "count": 348,
+      "canonical": [
+        "citric acid cycle"
+      ]
+    },
+    {
+      "text": "galactose metabolism",
+      "count": 341,
+      "canonical": [
+        "galactose metabolism"
+      ]
+    },
+    {
+      "text": "Glycolysis",
+      "count": 335,
+      "canonical": [
+        "glycolysis/gluconeogenesis"
+      ]
+    },
+    {
+      "text": "vitamin B6 metabolism",
+      "count": 293,
+      "canonical": [
+        "vitamin b6 metabolism"
+      ]
+    },
+    {
+      "text": "steroid metabolism",
+      "count": 285,
+      "canonical": [
+        "steroid metabolism"
+      ]
+    },
+    {
+      "text": "beta-oxidation",
+      "count": 270,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "glyoxylate and dicarboxylate metabolism",
+      "count": 259,
+      "canonical": [
+        "glyoxylate and dicarboxylate metabolism"
+      ]
+    },
+    {
+      "text": "heme degradation",
+      "count": 258,
+      "canonical": [
+        "heme degradation"
+      ]
+    },
+    {
+      "text": "butanoate metabolism",
+      "count": 241,
+      "canonical": [
+        "butanoate metabolism"
+      ]
+    },
+    {
+      "text": "NAD metabolism",
+      "count": 234,
+      "canonical": [
+        "nad metabolism"
+      ]
+    },
+    {
+      "text": "nicotinamide metabolism",
+      "count": 234,
+      "canonical": [
+        "nad metabolism"
+      ]
+    },
+    {
+      "text": "purine catabolism",
+      "count": 233,
+      "canonical": [
+        "purine catabolism"
+      ]
+    },
+    {
+      "text": "lysine metabolism",
+      "count": 227,
+      "canonical": [
+        "lysine metabolism"
+      ]
+    },
+    {
+      "text": "propanoate metabolism",
+      "count": 219,
+      "canonical": [
+        "propanoate metabolism"
+      ]
+    },
+    {
+      "text": "primary bile acid biosynthesis",
+      "count": 218,
+      "canonical": [
+        "bile acid synthesis"
+      ]
+    },
+    {
+      "text": "vitamin A metabolism",
+      "count": 203,
+      "canonical": [
+        "vitamin a metabolism"
+      ]
+    },
+    {
+      "text": "taurine and hypotaurine metabolism",
+      "count": 192,
+      "canonical": [
+        "taurine and hypotaurine metabolism"
+      ]
+    },
+    {
+      "text": "inositol phosphate metabolism",
+      "count": 189,
+      "canonical": [
+        "inositol phosphate metabolism"
+      ]
+    },
+    {
+      "text": "nucleotide sugar metabolism",
+      "count": 187,
+      "canonical": [
+        "nucleotide sugar metabolism"
+      ]
+    },
+    {
+      "text": "starch and sucrose metabolism",
+      "count": 184,
+      "canonical": [
+        "starch and sucrose metabolism"
+      ]
+    },
+    {
+      "text": "bile acid biosynthesis",
+      "count": 170,
+      "canonical": [
+        "bile acid synthesis"
+      ]
+    },
+    {
+      "text": "eicosanoid metabolism",
+      "count": 157,
+      "canonical": [
+        "eicosanoid metabolism"
+      ]
+    },
+    {
+      "text": "ROS detoxification",
+      "count": 150,
+      "canonical": [
+        "ros detoxification"
+      ]
+    },
+    {
+      "text": "Tryptophan metabolism",
+      "count": 140,
+      "canonical": [
+        "tryptophan metabolism"
+      ]
+    },
+    {
+      "text": "glycosphingolipid metabolism",
+      "count": 139,
+      "canonical": [
+        "glycosphingolipid metabolism"
+      ]
+    },
+    {
+      "text": "Sphingolipid metabolism",
+      "count": 138,
+      "canonical": [
+        "sphingolipid metabolism"
+      ]
+    },
+    {
+      "text": "Glycerophospholipid metabolism",
+      "count": 135,
+      "canonical": [
+        "glycerophospholipid metabolism"
+      ]
+    },
+    {
+      "text": "beta-alanine metabolism",
+      "count": 135,
+      "canonical": [
+        "beta-alanine metabolism"
+      ]
+    },
+    {
+      "text": "fructose and mannose metabolism",
+      "count": 135,
+      "canonical": [
+        "fructose and mannose metabolism"
+      ]
+    },
+    {
+      "text": "thiamine metabolism",
+      "count": 121,
+      "canonical": [
+        "thiamine metabolism"
+      ]
+    },
+    {
+      "text": "Oxidative phosphorylation",
+      "count": 114,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "bile acid production",
+      "count": 95,
+      "canonical": [
+        "bile acid synthesis"
+      ]
+    },
+    {
+      "text": "triacylglycerol synthesis",
+      "count": 84,
+      "canonical": [
+        "triacylglycerol synthesis"
+      ]
+    },
+    {
+      "text": "vitamin B12 metabolism",
+      "count": 83,
+      "canonical": [
+        "vitamin b12 metabolism"
+      ]
+    },
+    {
+      "text": "fatty acid beta-oxidation",
+      "count": 80,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "Cholesterol metabolism",
+      "count": 79,
+      "canonical": [
+        "cholesterol metabolism"
+      ]
+    },
+    {
+      "text": "biotin metabolism",
+      "count": 76,
+      "canonical": [
+        "biotin metabolism"
+      ]
+    },
+    {
+      "text": "Pyruvate metabolism",
+      "count": 70,
+      "canonical": [
+        "pyruvate metabolism"
+      ]
+    },
+    {
+      "text": "Arachidonic acid metabolism",
+      "count": 70,
+      "canonical": [
+        "arachidonic acid metabolism"
+      ]
+    },
+    {
+      "text": "Glutathione metabolism",
+      "count": 68,
+      "canonical": [
+        "glutathione metabolism"
+      ]
+    },
+    {
+      "text": "Arginine and proline metabolism",
+      "count": 64,
+      "canonical": [
+        "arginine and proline metabolism"
+      ]
+    },
+    {
+      "text": "CoA synthesis",
+      "count": 64,
+      "canonical": [
+        "coa synthesis"
+      ]
+    },
+    {
+      "text": "Urea cycle",
+      "count": 61,
+      "canonical": [
+        "urea cycle"
+      ]
+    },
+    {
+      "text": "Fatty acid oxidation",
+      "count": 61,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "Nucleotide metabolism",
+      "count": 57,
+      "canonical": [
+        "nucleotide metabolism"
+      ]
+    },
+    {
+      "text": "riboflavin metabolism",
+      "count": 56,
+      "canonical": [
+        "vitamin b2 metabolism"
+      ]
+    },
+    {
+      "text": "Folate metabolism",
+      "count": 54,
+      "canonical": [
+        "folate metabolism"
+      ]
+    },
+    {
+      "text": "Phenylalanine metabolism",
+      "count": 54,
+      "canonical": [
+        "phenylalanine metabolism"
+      ]
+    },
+    {
+      "text": "Gluconeogenesis",
+      "count": 54,
+      "canonical": [
+        "glycolysis/gluconeogenesis"
+      ]
+    },
+    {
+      "text": "hyaluronan metabolism",
+      "count": 44,
+      "canonical": [
+        "hyaluronan metabolism"
+      ]
+    },
+    {
+      "text": "Glyoxylate and dicarboxylate metabolism",
+      "count": 41,
+      "canonical": [
+        "glyoxylate and dicarboxylate metabolism"
+      ]
+    },
+    {
+      "text": "Glycolysis/Gluconeogenesis",
+      "count": 39,
+      "canonical": [
+        "glycolysis/gluconeogenesis"
+      ]
+    },
+    {
+      "text": "Histidine metabolism",
+      "count": 35,
+      "canonical": [
+        "histidine metabolism"
+      ]
+    },
+    {
+      "text": "Tyrosine metabolism",
+      "count": 34,
+      "canonical": [
+        "tyrosine metabolism"
+      ]
+    },
+    {
+      "text": "peptide metabolism",
+      "count": 33,
+      "canonical": [
+        "peptide metabolism"
+      ]
+    },
+    {
+      "text": "Vitamin D metabolism",
+      "count": 33,
+      "canonical": [
+        "vitamin d metabolism"
+      ]
+    },
+    {
+      "text": "Pentose phosphate pathway",
+      "count": 32,
+      "canonical": [
+        "pentose phosphate pathway"
+      ]
+    },
+    {
+      "text": "Fatty acid synthesis",
+      "count": 32,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "Galactose metabolism",
+      "count": 31,
+      "canonical": [
+        "galactose metabolism"
+      ]
+    },
+    {
+      "text": "nucleotide salvage pathway",
+      "count": 30,
+      "canonical": [
+        "nucleotide salvage pathway"
+      ]
+    },
+    {
+      "text": "Fatty acid biosynthesis",
+      "count": 30,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "Starch and sucrose metabolism",
+      "count": 29,
+      "canonical": [
+        "starch and sucrose metabolism"
+      ]
+    },
+    {
+      "text": "heparan sulfate degradation",
+      "count": 28,
+      "canonical": [
+        "heparan sulfate degradation"
+      ]
+    },
+    {
+      "text": "nucleotide interconversion",
+      "count": 27,
+      "canonical": [
+        "nucleotide interconversion"
+      ]
+    },
+    {
+      "text": "Drug metabolism",
+      "count": 27,
+      "canonical": [
+        "drug metabolism"
+      ]
+    },
+    {
+      "text": "Primary bile acid biosynthesis",
+      "count": 26,
+      "canonical": [
+        "bile acid synthesis"
+      ]
+    },
+    {
+      "text": "Warburg Effect",
+      "count": 26,
+      "canonical": [
+        "glycolysis/gluconeogenesis"
+      ]
+    },
+    {
+      "text": "Propanoate metabolism",
+      "count": 26,
+      "canonical": [
+        "propanoate metabolism"
+      ]
+    },
+    {
+      "text": "beta-Alanine metabolism",
+      "count": 25,
+      "canonical": [
+        "beta-alanine metabolism"
+      ]
+    },
+    {
+      "text": "Oxidative Phosphorylation",
+      "count": 25,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "Glutamate metabolism",
+      "count": 25,
+      "canonical": [
+        "glutamate metabolism"
+      ]
+    },
+    {
+      "text": "Butanoate metabolism",
+      "count": 25,
+      "canonical": [
+        "butanoate metabolism"
+      ]
+    },
+    {
+      "text": "Bile acid synthesis",
+      "count": 24,
+      "canonical": [
+        "bile acid synthesis"
+      ]
+    },
+    {
+      "text": "Urea Cycle",
+      "count": 24,
+      "canonical": [
+        "urea cycle"
+      ]
+    },
+    {
+      "text": "Vitamin B6 metabolism",
+      "count": 22,
+      "canonical": [
+        "vitamin b6 metabolism"
+      ]
+    },
+    {
+      "text": "vitamin E metabolism",
+      "count": 20,
+      "canonical": [
+        "vitamin e metabolism"
+      ]
+    },
+    {
+      "text": "pyrimidine catabolism",
+      "count": 20,
+      "canonical": [
+        "pyrimidine catabolism"
+      ]
+    },
+    {
+      "text": "De novo lipogenesis",
+      "count": 20,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "Pentose Phosphate Pathway",
+      "count": 18,
+      "canonical": [
+        "pentose phosphate pathway"
+      ]
+    },
+    {
+      "text": "Purine synthesis",
+      "count": 17,
+      "canonical": [
+        "purine synthesis"
+      ]
+    },
+    {
+      "text": "Lipogenesis",
+      "count": 17,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "pentose phosphate shunt",
+      "count": 15,
+      "canonical": [
+        "pentose phosphate pathway"
+      ]
+    },
+    {
+      "text": "Riboflavin metabolism",
+      "count": 15,
+      "canonical": [
+        "vitamin b2 metabolism"
+      ]
+    },
+    {
+      "text": "Oxphos",
+      "count": 15,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "leukotriene metabolism",
+      "count": 14,
+      "canonical": [
+        "leukotriene metabolism"
+      ]
+    },
+    {
+      "text": "N-glycan degradation",
+      "count": 14,
+      "canonical": [
+        "n-glycan degradation"
+      ]
+    },
+    {
+      "text": "Citric acid cycle",
+      "count": 14,
+      "canonical": [
+        "citric acid cycle"
+      ]
+    },
+    {
+      "text": "Fatty acid β-oxidation",
+      "count": 14,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "Tryptophan Metabolism",
+      "count": 13,
+      "canonical": [
+        "tryptophan metabolism"
+      ]
+    },
+    {
+      "text": "Taurine and hypotaurine metabolism",
+      "count": 13,
+      "canonical": [
+        "taurine and hypotaurine metabolism"
+      ]
+    },
+    {
+      "text": "Fatty Acid Oxidation",
+      "count": 13,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "Glycolysis/gluconeogenesis",
+      "count": 12,
+      "canonical": [
+        "glycolysis/gluconeogenesis"
+      ]
+    },
+    {
+      "text": "Fructose and mannose metabolism",
+      "count": 11,
+      "canonical": [
+        "fructose and mannose metabolism"
+      ]
+    },
+    {
+      "text": "Glutamate Metabolism",
+      "count": 11,
+      "canonical": [
+        "glutamate metabolism"
+      ]
+    },
+    {
+      "text": "linoleate metabolism",
+      "count": 11,
+      "canonical": [
+        "linoleate metabolism"
+      ]
+    },
+    {
+      "text": "alanine and aspartate metabolism",
+      "count": 11,
+      "canonical": [
+        "alanine and aspartate metabolism"
+      ]
+    },
+    {
+      "text": "Drug Metabolism",
+      "count": 11,
+      "canonical": [
+        "drug metabolism"
+      ]
+    },
+    {
+      "text": "Nucleotide Metabolism",
+      "count": 11,
+      "canonical": [
+        "nucleotide metabolism"
+      ]
+    },
+    {
+      "text": "Citric Acid Cycle",
+      "count": 11,
+      "canonical": [
+        "citric acid cycle"
+      ]
+    },
+    {
+      "text": "OxPHOS",
+      "count": 11,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "Pyrimidine synthesis",
+      "count": 11,
+      "canonical": [
+        "pyrimidine synthesis"
+      ]
+    },
+    {
+      "text": "Cholesterol Metabolism",
+      "count": 10,
+      "canonical": [
+        "cholesterol metabolism"
+      ]
+    },
+    {
+      "text": "Inositol phosphate metabolism",
+      "count": 10,
+      "canonical": [
+        "inositol phosphate metabolism"
+      ]
+    },
+    {
+      "text": "vitamin C metabolism",
+      "count": 9,
+      "canonical": [
+        "vitamin c metabolism"
+      ]
+    },
+    {
+      "text": "C5-branched dibasic acid metabolism",
+      "count": 9,
+      "canonical": [
+        "c5-branched dibasic acid metabolism"
+      ]
+    },
+    {
+      "text": "Thiamine metabolism",
+      "count": 9,
+      "canonical": [
+        "thiamine metabolism"
+      ]
+    },
+    {
+      "text": "Glutathione Metabolism",
+      "count": 9,
+      "canonical": [
+        "glutathione metabolism"
+      ]
+    },
+    {
+      "text": "tetrahydrobiopterin metabolism",
+      "count": 8,
+      "canonical": [
+        "tetrahydrobiopterin metabolism"
+      ]
+    },
+    {
+      "text": "Heme synthesis",
+      "count": 8,
+      "canonical": [
+        "heme synthesis"
+      ]
+    },
+    {
+      "text": "Electron Transport Chain",
+      "count": 8,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "Bile acid biosynthesis",
+      "count": 8,
+      "canonical": [
+        "bile acid synthesis"
+      ]
+    },
+    {
+      "text": "ubiquinone synthesis",
+      "count": 8,
+      "canonical": [
+        "ubiquinone synthesis"
+      ]
+    },
+    {
+      "text": "O-glycan metabolism",
+      "count": 8,
+      "canonical": [
+        "o-glycan metabolism"
+      ]
+    },
+    {
+      "text": "oxPHOS",
+      "count": 8,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "Beta-oxidation",
+      "count": 7,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "hexose monophosphate shunt",
+      "count": 7,
+      "canonical": [
+        "pentose phosphate pathway"
+      ]
+    },
+    {
+      "text": "Tyrosine Metabolism",
+      "count": 7,
+      "canonical": [
+        "tyrosine metabolism"
+      ]
+    },
+    {
+      "text": "oxphos",
+      "count": 7,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "GLYCOLYSIS",
+      "count": 7,
+      "canonical": [
+        "glycolysis/gluconeogenesis"
+      ]
+    },
+    {
+      "text": "Tricarboxylic acid cycle",
+      "count": 6,
+      "canonical": [
+        "citric acid cycle"
+      ]
+    },
+    {
+      "text": "Beta-alanine metabolism",
+      "count": 6,
+      "canonical": [
+        "beta-alanine metabolism"
+      ]
+    },
+    {
+      "text": "Vitamin A metabolism",
+      "count": 6,
+      "canonical": [
+        "vitamin a metabolism"
+      ]
+    },
+    {
+      "text": "Arginine and Proline Metabolism",
+      "count": 6,
+      "canonical": [
+        "arginine and proline metabolism"
+      ]
+    },
+    {
+      "text": "Lysine metabolism",
+      "count": 6,
+      "canonical": [
+        "lysine metabolism"
+      ]
+    },
+    {
+      "text": "Sphingolipid Metabolism",
+      "count": 5,
+      "canonical": [
+        "sphingolipid metabolism"
+      ]
+    },
+    {
+      "text": "Heme degradation",
+      "count": 5,
+      "canonical": [
+        "heme degradation"
+      ]
+    },
+    {
+      "text": "Purine catabolism",
+      "count": 5,
+      "canonical": [
+        "purine catabolism"
+      ]
+    },
+    {
+      "text": "Pyruvate Metabolism",
+      "count": 5,
+      "canonical": [
+        "pyruvate metabolism"
+      ]
+    },
+    {
+      "text": "Beta-Alanine metabolism",
+      "count": 5,
+      "canonical": [
+        "beta-alanine metabolism"
+      ]
+    },
+    {
+      "text": "Biotin metabolism",
+      "count": 5,
+      "canonical": [
+        "biotin metabolism"
+      ]
+    },
+    {
+      "text": "valine, leucine, and isoleucine metabolism",
+      "count": 5,
+      "canonical": [
+        "valine, leucine, and isoleucine metabolism"
+      ]
+    },
+    {
+      "text": "chondroitin sulfate degradation",
+      "count": 5,
+      "canonical": [
+        "chondroitin sulfate degradation"
+      ]
+    },
+    {
+      "text": "Histidine Metabolism",
+      "count": 5,
+      "canonical": [
+        "histidine metabolism"
+      ]
+    },
+    {
+      "text": "Electron transport chain",
+      "count": 4,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "cytochrome metabolism",
+      "count": 4,
+      "canonical": [
+        "cytochrome metabolism"
+      ]
+    },
+    {
+      "text": "β-Oxidation",
+      "count": 4,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "NADH metabolism",
+      "count": 4,
+      "canonical": [
+        "nad metabolism"
+      ]
+    },
+    {
+      "text": "glycine, serine, alanine, and threonine metabolism",
+      "count": 4,
+      "canonical": [
+        "glycine, serine, alanine, and threonine metabolism"
+      ]
+    },
+    {
+      "text": "Folate Metabolism",
+      "count": 4,
+      "canonical": [
+        "folate metabolism"
+      ]
+    },
+    {
+      "text": "aminosugar metabolism",
+      "count": 4,
+      "canonical": [
+        "aminosugar metabolism"
+      ]
+    },
+    {
+      "text": "C5-Branched dibasic acid metabolism",
+      "count": 4,
+      "canonical": [
+        "c5-branched dibasic acid metabolism"
+      ]
+    },
+    {
+      "text": "Glycosphingolipid metabolism",
+      "count": 4,
+      "canonical": [
+        "glycosphingolipid metabolism"
+      ]
+    },
+    {
+      "text": "Fatty Acid Biosynthesis",
+      "count": 4,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "WARBURG effect",
+      "count": 4,
+      "canonical": [
+        "glycolysis/gluconeogenesis"
+      ]
+    },
+    {
+      "text": "OXIDATIVE PHOSPHORYLATION",
+      "count": 4,
+      "canonical": [
+        "oxidative phosphorylation"
+      ]
+    },
+    {
+      "text": "Fatty Acid Synthesis",
+      "count": 4,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "methionine and cysteine metabolism",
+      "count": 3,
+      "canonical": [
+        "methionine and cysteine metabolism"
+      ]
+    },
+    {
+      "text": "Tricarboxylic Acid Cycle",
+      "count": 3,
+      "canonical": [
+        "citric acid cycle"
+      ]
+    },
+    {
+      "text": "TCA Cycle",
+      "count": 3,
+      "canonical": [
+        "citric acid cycle"
+      ]
+    },
+    {
+      "text": "Propanoate Metabolism",
+      "count": 3,
+      "canonical": [
+        "propanoate metabolism"
+      ]
+    },
+    {
+      "text": "Galactose Metabolism",
+      "count": 3,
+      "canonical": [
+        "galactose metabolism"
+      ]
+    },
+    {
+      "text": "Vitamin B12 metabolism",
+      "count": 3,
+      "canonical": [
+        "vitamin b12 metabolism"
+      ]
+    },
+    {
+      "text": "Steroid metabolism",
+      "count": 3,
+      "canonical": [
+        "steroid metabolism"
+      ]
+    },
+    {
+      "text": "keratan-sulfate degradation",
+      "count": 3,
+      "canonical": [
+        "keratan sulfate degradation"
+      ]
+    },
+    {
+      "text": "Krebs Cycle",
+      "count": 3,
+      "canonical": [
+        "citric acid cycle"
+      ]
+    },
+    {
+      "text": "D-Alanine metabolism",
+      "count": 3,
+      "canonical": [
+        "d-alanine metabolism"
+      ]
+    },
+    {
+      "text": "Chondroitin sulfate degradation",
+      "count": 3,
+      "canonical": [
+        "chondroitin sulfate degradation"
+      ]
+    },
+    {
+      "text": "Bile Acid Biosynthesis",
+      "count": 3,
+      "canonical": [
+        "bile acid synthesis"
+      ]
+    },
+    {
+      "text": "N-glycan synthesis",
+      "count": 3,
+      "canonical": [
+        "n-glycan synthesis"
+      ]
+    },
+    {
+      "text": "Starch and Sucrose metabolism",
+      "count": 3,
+      "canonical": [
+        "starch and sucrose metabolism"
+      ]
+    },
+    {
+      "text": "Glycerophospholipid Metabolism",
+      "count": 3,
+      "canonical": [
+        "glycerophospholipid metabolism"
+      ]
+    },
+    {
+      "text": "Eicosanoid metabolism",
+      "count": 2,
+      "canonical": [
+        "eicosanoid metabolism"
+      ]
+    },
+    {
+      "text": "Triacylglycerol synthesis",
+      "count": 2,
+      "canonical": [
+        "triacylglycerol synthesis"
+      ]
+    },
+    {
+      "text": "d-alanine metabolism",
+      "count": 2,
+      "canonical": [
+        "d-alanine metabolism"
+      ]
+    },
+    {
+      "text": "BETA-ALANINE METABOLISM",
+      "count": 2,
+      "canonical": [
+        "beta-alanine metabolism"
+      ]
+    },
+    {
+      "text": "Butanoate Metabolism",
+      "count": 2,
+      "canonical": [
+        "butanoate metabolism"
+      ]
+    },
+    {
+      "text": "Fatty acid beta-oxidation",
+      "count": 2,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "Vitamin B12 Metabolism",
+      "count": 2,
+      "canonical": [
+        "vitamin b12 metabolism"
+      ]
+    },
+    {
+      "text": "NAD+ Metabolism",
+      "count": 2,
+      "canonical": [
+        "nad metabolism"
+      ]
+    },
+    {
+      "text": "Vitamin C metabolism",
+      "count": 2,
+      "canonical": [
+        "vitamin c metabolism"
+      ]
+    },
+    {
+      "text": "Arachidonic Acid Metabolism",
+      "count": 2,
+      "canonical": [
+        "arachidonic acid metabolism"
+      ]
+    },
+    {
+      "text": "VITAMIN D METABOLISM",
+      "count": 2,
+      "canonical": [
+        "vitamin d metabolism"
+      ]
+    },
+    {
+      "text": "Fatty Acid biosynthesis",
+      "count": 2,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "Inositol Phosphate metabolism",
+      "count": 2,
+      "canonical": [
+        "inositol phosphate metabolism"
+      ]
+    },
+    {
+      "text": "De Novo lipogenesis",
+      "count": 2,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "tca cycle",
+      "count": 1,
+      "canonical": [
+        "citric acid cycle"
+      ]
+    },
+    {
+      "text": "Nucleotide Sugar Metabolism",
+      "count": 1,
+      "canonical": [
+        "nucleotide sugar metabolism"
+      ]
+    },
+    {
+      "text": "Hyaluronan metabolism",
+      "count": 1,
+      "canonical": [
+        "hyaluronan metabolism"
+      ]
+    },
+    {
+      "text": "Tricarboxylic Acid cycle",
+      "count": 1,
+      "canonical": [
+        "citric acid cycle"
+      ]
+    },
+    {
+      "text": "PHENYLALANINE METABOLISM",
+      "count": 1,
+      "canonical": [
+        "phenylalanine metabolism"
+      ]
+    },
+    {
+      "text": "chondroitin synthesis",
+      "count": 1,
+      "canonical": [
+        "chondroitin synthesis"
+      ]
+    },
+    {
+      "text": "Pyrimidine catabolism",
+      "count": 1,
+      "canonical": [
+        "pyrimidine catabolism"
+      ]
+    },
+    {
+      "text": "limonene and pinene degradation",
+      "count": 1,
+      "canonical": [
+        "limonene and pinene degradation"
+      ]
+    },
+    {
+      "text": "Fatty Acid synthesis",
+      "count": 1,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "fatty acid Beta-oxidation",
+      "count": 1,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "Nicotinamide metabolism",
+      "count": 1,
+      "canonical": [
+        "nad metabolism"
+      ]
+    },
+    {
+      "text": "GLUCONEOGENESIS",
+      "count": 1,
+      "canonical": [
+        "glycolysis/gluconeogenesis"
+      ]
+    },
+    {
+      "text": "PENTOSE PHOSPHATE PATHWAY",
+      "count": 1,
+      "canonical": [
+        "pentose phosphate pathway"
+      ]
+    },
+    {
+      "text": "STARCH AND SUCROSE METABOLISM",
+      "count": 1,
+      "canonical": [
+        "starch and sucrose metabolism"
+      ]
+    },
+    {
+      "text": "NUCLEOTIDE SUGAR METABOLISM",
+      "count": 1,
+      "canonical": [
+        "nucleotide sugar metabolism"
+      ]
+    },
+    {
+      "text": "ARACHIDONIC ACID METABOLISM",
+      "count": 1,
+      "canonical": [
+        "arachidonic acid metabolism"
+      ]
+    },
+    {
+      "text": "Thiamine Metabolism",
+      "count": 1,
+      "canonical": [
+        "thiamine metabolism"
+      ]
+    },
+    {
+      "text": "Alanine and aspartate metabolism",
+      "count": 1,
+      "canonical": [
+        "alanine and aspartate metabolism"
+      ]
+    },
+    {
+      "text": "TRYPTOPHAN METABOLISM",
+      "count": 1,
+      "canonical": [
+        "tryptophan metabolism"
+      ]
+    },
+    {
+      "text": "DRUG METABOLISM",
+      "count": 1,
+      "canonical": [
+        "drug metabolism"
+      ]
+    },
+    {
+      "text": "beta-Oxidation",
+      "count": 1,
+      "canonical": [
+        "fatty acid oxidation"
+      ]
+    },
+    {
+      "text": "N-Glycan degradation",
+      "count": 1,
+      "canonical": [
+        "n-glycan degradation"
+      ]
+    },
+    {
+      "text": "Heparan sulfate degradation",
+      "count": 1,
+      "canonical": [
+        "heparan sulfate degradation"
+      ]
+    },
+    {
+      "text": "histidine Metabolism",
+      "count": 1,
+      "canonical": [
+        "histidine metabolism"
+      ]
+    },
+    {
+      "text": "CoA Synthesis",
+      "count": 1,
+      "canonical": [
+        "coa synthesis"
+      ]
+    },
+    {
+      "text": "CoA Catabolism",
+      "count": 1,
+      "canonical": [
+        "coa catabolism"
+      ]
+    },
+    {
+      "text": "NAD Metabolism",
+      "count": 1,
+      "canonical": [
+        "nad metabolism"
+      ]
+    },
+    {
+      "text": "vitamin D Metabolism",
+      "count": 1,
+      "canonical": [
+        "vitamin d metabolism"
+      ]
+    },
+    {
+      "text": "alkaloid synthesis",
+      "count": 1,
+      "canonical": [
+        "alkaloid synthesis"
+      ]
+    },
+    {
+      "text": "D-alanine metabolism",
+      "count": 1,
+      "canonical": [
+        "d-alanine metabolism"
+      ]
+    },
+    {
+      "text": "Peptide Metabolism",
+      "count": 1,
+      "canonical": [
+        "peptide metabolism"
+      ]
+    },
+    {
+      "text": "Lysine Metabolism",
+      "count": 1,
+      "canonical": [
+        "lysine metabolism"
+      ]
+    },
+    {
+      "text": "de novo Lipogenesis",
+      "count": 1,
+      "canonical": [
+        "fatty acid synthesis"
+      ]
+    },
+    {
+      "text": "taurine and Hypotaurine Metabolism",
+      "count": 1,
+      "canonical": [
+        "taurine and hypotaurine metabolism"
+      ]
+    },
+    {
+      "text": "Nucleotide sugar metabolism",
+      "count": 1,
+      "canonical": [
+        "nucleotide sugar metabolism"
+      ]
+    },
+    {
+      "text": "Chondroitin Sulfate Degradation",
+      "count": 1,
+      "canonical": [
+        "chondroitin sulfate degradation"
+      ]
+    },
+    {
+      "text": "Taurine and Hypotaurine metabolism",
+      "count": 1,
+      "canonical": [
+        "taurine and hypotaurine metabolism"
+      ]
+    },
+    {
+      "text": "Phenylalanine Metabolism",
+      "count": 1,
+      "canonical": [
+        "phenylalanine metabolism"
+      ]
+    },
+    {
+      "text": "n-glycan synthesis",
+      "count": 1,
+      "canonical": [
+        "n-glycan synthesis"
+      ]
+    },
+    {
+      "text": "Ubiquinone synthesis",
+      "count": 1,
+      "canonical": [
+        "ubiquinone synthesis"
+      ]
+    }
+  ]
+}

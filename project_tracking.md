@@ -596,4 +596,73 @@ precision — a bare metabolite (`...arginine, and aspartate levels`) never matc
   the text says `prostaglandin` — a biochemical hyponym, not a string relation (same class as
   `cholecalciferol` = vitamin D3, which the LLM happened to catch). Closing it would mean
   hand-adding `prostaglandin` to `RECON_SYNONYMS` **because we saw it in the golden set** —
-  i.e. fitting to the 5-abstract eval. Left open deliberately; see decision note below.
+  i.e. fitting to the 5-abstract eval. **User decision: left open; 83% is enough.**
+
+### ✅ P3-1b — Canonicalizer (`llm/canonicalize.py`)
+Maps an **LLM** surface → one of the 90 Recon canonicals + match_type (booster spans already
+carry their canonical, so only LLM spans go through this). Layers: exact → `RECON_SYNONYMS`
+→ content-phrase overlap (reuses `booster.content_phrases`, handles the `<process> of X`
+word order) → `unmapped`. No embeddings (see plan rationale).
+
+**Gate result (19 golden `spans`): passed.**
+
+| | |
+|---|---|
+| Correct when it commits | **16/16 (100%)** — zero wrong mappings |
+| Coverage | 16/19 (84%) |
+| `unmapped` (abstained) | 3/19 (16%) |
+
+- **Failure mode is abstention, not error** — it never maps to a wrong canonical. A wrong
+  canonical would silently corrupt scope filtering; `unmapped` just routes to the human.
+- The 3 abstentions are exactly the predicted string-unbridgeable classes: chemical synonym
+  (`cholecalciferol metabolism` → vitamin d), biochemical hyponym (`formation of
+  prostaglandin` → eicosanoid), lipid subtype (`lysophospholipid metabolism` →
+  glycerophospholipid). Umbrella terms (`neurotransmitter metabolism`) correctly abstain too.
+- **Golden `unmapped` rate = 16%** — baseline for the embedding decision; compare against the
+  pilot's rate before considering `sentence-transformers`.
+- Tested on the 19 contiguous `spans`; enumeration parts have no standalone surface
+  (`histidine metabolism` is factored inside `histidine and glutathione metabolism`), so they
+  are not directly testable here.
+
+### ✅ P3-1c — 1k pilot run (`llm/run_silver.py`)
+1.000 abstract, `qwen2.5:14b`, chosen config + booster. **5 golden PMID excluded** (they were
+all in the candidate pool; silver becomes training data, so including them would train on our
+own eval set). Stratified by disease category, seed=42, abstract-only, resumable per-pmid
+cache (`data/raw/llm_cache_silver/`, gitignored).
+
+| Metric | Value |
+|---|---|
+| Runtime | 39 min (**2.4s/abstract**) — the 2h estimate was inflated by model load time |
+| Spans | 1.996 (2.0 per abstract) |
+| Source | 1.824 LLM / 172 booster (booster adds ~9%) |
+| match_type | exact 999 (50%) · **unmapped 572 (29%)** · variation 251 (13%) · synonym 174 (9%) |
+| `maybe_partial` | 31 (2%) — booster artifact stays marginal |
+
+- **The payoff: variation + synonym = 425 spans (21%)** are mentions exact matching would miss
+  entirely — plus an unknown share of `unmapped`. This is what the whole pipeline buys.
+- **`unmapped` rose to 29%** (golden 16%, smoke20 22%). Inspected the 353 distinct surfaces:
+  mostly **real pathway mentions we simply cannot name** — `kynurenine pathway` (24),
+  `lipid metabolism` (18), `amino acid metabolism` (16), umbrella terms — all valid positives
+  for a binary tagger. A minority are cheap canonicalizer gaps (`tricarboxylic acid (tca)
+  cycle` + `citrate cycle` = 12 → citric acid cycle synonyms; `linoleic acid metabolism` (11)
+  → Recon *has* `linoleate metabolism`; `oxidative phosphorylation (oxphos)` (10)). A small
+  tail is genuine noise for the human to reject (`urea cycle disorders` (4) — a *disease*,
+  `reductive stress` (5), `mnms` (4)).
+- Since canonical drives no training label, these gaps are **analysis-only** and stay deferred.
+
+**Output:** `data/silver/pilot_1k.jsonl`
+
+### ✅ P3-1d — doccano export + annotation guide
+- `llm/export_doccano.py` → `data/silver/pilot_1k_doccano.jsonl`: 1.000 documents, 1.996
+  labels, single label type `Pathway`. Offset guard fired **zero** mismatches. `canonical` /
+  `match_type` / `source` ride in `meta` as context only.
+- **Review model:** annotators accept / reject / fix boundaries and may add missed spans.
+  They do **not** assign canonical names (expert-level work, and irrelevant to a binary tagger).
+- **`data/silver/ANNOTATION_GUIDE.md`** — derived from the golden set's scope rule.
+  **One deliberate divergence:** golden files `biosynthesis of unsaturated fatty acids` under
+  `out_of_vocab_pathways` because it does not map onto a Recon name — that is a *vocabulary*
+  concern, not a *"is this a pathway mention"* concern. For the binary tagger such subtype
+  names are **accepts**; only genuinely non-metabolic items (`aminoacyl-tRNA biosynthesis`,
+  `mitochondrial metabolism`) are rejects.
+
+**Gate → 10k decision:** pending human review of a sample (real span precision).

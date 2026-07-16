@@ -1,0 +1,501 @@
+{
+  "source": "data/processed/exact_matches.jsonl",
+  "note": "Unique canonical Recon pathway_ids with >=1 exact-match span (pathway_id=None negatives excluded). 82 of 98 Recon pathways.",
+  "total_unique_labels": 82,
+  "labels_alphabetical": [
+    "alanine and aspartate metabolism",
+    "alkaloid synthesis",
+    "aminosugar metabolism",
+    "arachidonic acid metabolism",
+    "arginine and proline metabolism",
+    "beta-alanine metabolism",
+    "bile acid synthesis",
+    "biotin metabolism",
+    "butanoate metabolism",
+    "c5-branched dibasic acid metabolism",
+    "cholesterol metabolism",
+    "chondroitin sulfate degradation",
+    "chondroitin synthesis",
+    "citric acid cycle",
+    "coa catabolism",
+    "coa synthesis",
+    "cytochrome metabolism",
+    "d-alanine metabolism",
+    "drug metabolism",
+    "eicosanoid metabolism",
+    "fatty acid oxidation",
+    "fatty acid synthesis",
+    "folate metabolism",
+    "fructose and mannose metabolism",
+    "galactose metabolism",
+    "glutamate metabolism",
+    "glutathione metabolism",
+    "glycerophospholipid metabolism",
+    "glycine, serine, alanine, and threonine metabolism",
+    "glycolysis/gluconeogenesis",
+    "glycosphingolipid metabolism",
+    "glyoxylate and dicarboxylate metabolism",
+    "heme degradation",
+    "heme synthesis",
+    "heparan sulfate degradation",
+    "histidine metabolism",
+    "hyaluronan metabolism",
+    "inositol phosphate metabolism",
+    "keratan sulfate degradation",
+    "leukotriene metabolism",
+    "limonene and pinene degradation",
+    "linoleate metabolism",
+    "lysine metabolism",
+    "methionine and cysteine metabolism",
+    "n-glycan degradation",
+    "n-glycan synthesis",
+    "nad metabolism",
+    "nucleotide interconversion",
+    "nucleotide metabolism",
+    "nucleotide salvage pathway",
+    "nucleotide sugar metabolism",
+    "o-glycan metabolism",
+    "oxidative phosphorylation",
+    "pentose phosphate pathway",
+    "peptide metabolism",
+    "phenylalanine metabolism",
+    "propanoate metabolism",
+    "purine catabolism",
+    "purine synthesis",
+    "pyrimidine catabolism",
+    "pyrimidine synthesis",
+    "pyruvate metabolism",
+    "ros detoxification",
+    "sphingolipid metabolism",
+    "starch and sucrose metabolism",
+    "steroid metabolism",
+    "taurine and hypotaurine metabolism",
+    "tetrahydrobiopterin metabolism",
+    "thiamine metabolism",
+    "triacylglycerol synthesis",
+    "tryptophan metabolism",
+    "tyrosine metabolism",
+    "ubiquinone synthesis",
+    "urea cycle",
+    "valine, leucine, and isoleucine metabolism",
+    "vitamin a metabolism",
+    "vitamin b12 metabolism",
+    "vitamin b2 metabolism",
+    "vitamin b6 metabolism",
+    "vitamin c metabolism",
+    "vitamin d metabolism",
+    "vitamin e metabolism"
+  ],
+  "labels_by_span_count": [
+    {
+      "pathway": "glycolysis/gluconeogenesis",
+      "spans": 13671,
+      "pmids": 2265
+    },
+    {
+      "pathway": "oxidative phosphorylation",
+      "spans": 9705,
+      "pmids": 1939
+    },
+    {
+      "pathway": "citric acid cycle",
+      "spans": 5651,
+      "pmids": 1453
+    },
+    {
+      "pathway": "fatty acid oxidation",
+      "spans": 5512,
+      "pmids": 1568
+    },
+    {
+      "pathway": "fatty acid synthesis",
+      "spans": 4655,
+      "pmids": 1263
+    },
+    {
+      "pathway": "cholesterol metabolism",
+      "spans": 2918,
+      "pmids": 818
+    },
+    {
+      "pathway": "sphingolipid metabolism",
+      "spans": 2269,
+      "pmids": 623
+    },
+    {
+      "pathway": "tryptophan metabolism",
+      "spans": 2268,
+      "pmids": 622
+    },
+    {
+      "pathway": "urea cycle",
+      "spans": 2121,
+      "pmids": 572
+    },
+    {
+      "pathway": "bile acid synthesis",
+      "spans": 1622,
+      "pmids": 489
+    },
+    {
+      "pathway": "pentose phosphate pathway",
+      "spans": 1522,
+      "pmids": 713
+    },
+    {
+      "pathway": "glycerophospholipid metabolism",
+      "spans": 1488,
+      "pmids": 480
+    },
+    {
+      "pathway": "glutathione metabolism",
+      "spans": 1371,
+      "pmids": 525
+    },
+    {
+      "pathway": "drug metabolism",
+      "spans": 1327,
+      "pmids": 595
+    },
+    {
+      "pathway": "nucleotide metabolism",
+      "spans": 1306,
+      "pmids": 467
+    },
+    {
+      "pathway": "glutamate metabolism",
+      "spans": 1207,
+      "pmids": 522
+    },
+    {
+      "pathway": "folate metabolism",
+      "spans": 1135,
+      "pmids": 361
+    },
+    {
+      "pathway": "arachidonic acid metabolism",
+      "spans": 1004,
+      "pmids": 462
+    },
+    {
+      "pathway": "pyruvate metabolism",
+      "spans": 932,
+      "pmids": 353
+    },
+    {
+      "pathway": "nad metabolism",
+      "spans": 916,
+      "pmids": 277
+    },
+    {
+      "pathway": "purine synthesis",
+      "spans": 855,
+      "pmids": 246
+    },
+    {
+      "pathway": "pyrimidine synthesis",
+      "spans": 776,
+      "pmids": 206
+    },
+    {
+      "pathway": "vitamin d metabolism",
+      "spans": 732,
+      "pmids": 257
+    },
+    {
+      "pathway": "arginine and proline metabolism",
+      "spans": 690,
+      "pmids": 294
+    },
+    {
+      "pathway": "tyrosine metabolism",
+      "spans": 626,
+      "pmids": 271
+    },
+    {
+      "pathway": "histidine metabolism",
+      "spans": 561,
+      "pmids": 172
+    },
+    {
+      "pathway": "phenylalanine metabolism",
+      "spans": 547,
+      "pmids": 220
+    },
+    {
+      "pathway": "heme synthesis",
+      "spans": 510,
+      "pmids": 154
+    },
+    {
+      "pathway": "galactose metabolism",
+      "spans": 375,
+      "pmids": 165
+    },
+    {
+      "pathway": "vitamin b6 metabolism",
+      "spans": 315,
+      "pmids": 96
+    },
+    {
+      "pathway": "glyoxylate and dicarboxylate metabolism",
+      "spans": 300,
+      "pmids": 111
+    },
+    {
+      "pathway": "steroid metabolism",
+      "spans": 288,
+      "pmids": 188
+    },
+    {
+      "pathway": "butanoate metabolism",
+      "spans": 268,
+      "pmids": 121
+    },
+    {
+      "pathway": "heme degradation",
+      "spans": 263,
+      "pmids": 112
+    },
+    {
+      "pathway": "propanoate metabolism",
+      "spans": 248,
+      "pmids": 90
+    },
+    {
+      "pathway": "purine catabolism",
+      "spans": 238,
+      "pmids": 98
+    },
+    {
+      "pathway": "lysine metabolism",
+      "spans": 234,
+      "pmids": 60
+    },
+    {
+      "pathway": "starch and sucrose metabolism",
+      "spans": 217,
+      "pmids": 120
+    },
+    {
+      "pathway": "vitamin a metabolism",
+      "spans": 209,
+      "pmids": 60
+    },
+    {
+      "pathway": "taurine and hypotaurine metabolism",
+      "spans": 207,
+      "pmids": 107
+    },
+    {
+      "pathway": "inositol phosphate metabolism",
+      "spans": 201,
+      "pmids": 84
+    },
+    {
+      "pathway": "nucleotide sugar metabolism",
+      "spans": 190,
+      "pmids": 92
+    },
+    {
+      "pathway": "beta-alanine metabolism",
+      "spans": 173,
+      "pmids": 83
+    },
+    {
+      "pathway": "eicosanoid metabolism",
+      "spans": 159,
+      "pmids": 80
+    },
+    {
+      "pathway": "ros detoxification",
+      "spans": 150,
+      "pmids": 73
+    },
+    {
+      "pathway": "fructose and mannose metabolism",
+      "spans": 146,
+      "pmids": 75
+    },
+    {
+      "pathway": "glycosphingolipid metabolism",
+      "spans": 143,
+      "pmids": 96
+    },
+    {
+      "pathway": "thiamine metabolism",
+      "spans": 131,
+      "pmids": 57
+    },
+    {
+      "pathway": "vitamin b12 metabolism",
+      "spans": 88,
+      "pmids": 48
+    },
+    {
+      "pathway": "triacylglycerol synthesis",
+      "spans": 86,
+      "pmids": 66
+    },
+    {
+      "pathway": "biotin metabolism",
+      "spans": 81,
+      "pmids": 35
+    },
+    {
+      "pathway": "vitamin b2 metabolism",
+      "spans": 71,
+      "pmids": 42
+    },
+    {
+      "pathway": "coa synthesis",
+      "spans": 65,
+      "pmids": 24
+    },
+    {
+      "pathway": "hyaluronan metabolism",
+      "spans": 45,
+      "pmids": 21
+    },
+    {
+      "pathway": "peptide metabolism",
+      "spans": 34,
+      "pmids": 30
+    },
+    {
+      "pathway": "nucleotide salvage pathway",
+      "spans": 30,
+      "pmids": 19
+    },
+    {
+      "pathway": "heparan sulfate degradation",
+      "spans": 29,
+      "pmids": 14
+    },
+    {
+      "pathway": "nucleotide interconversion",
+      "spans": 27,
+      "pmids": 3
+    },
+    {
+      "pathway": "pyrimidine catabolism",
+      "spans": 21,
+      "pmids": 11
+    },
+    {
+      "pathway": "vitamin e metabolism",
+      "spans": 20,
+      "pmids": 10
+    },
+    {
+      "pathway": "n-glycan degradation",
+      "spans": 15,
+      "pmids": 5
+    },
+    {
+      "pathway": "leukotriene metabolism",
+      "spans": 14,
+      "pmids": 10
+    },
+    {
+      "pathway": "c5-branched dibasic acid metabolism",
+      "spans": 13,
+      "pmids": 9
+    },
+    {
+      "pathway": "alanine and aspartate metabolism",
+      "spans": 12,
+      "pmids": 7
+    },
+    {
+      "pathway": "vitamin c metabolism",
+      "spans": 11,
+      "pmids": 10
+    },
+    {
+      "pathway": "linoleate metabolism",
+      "spans": 11,
+      "pmids": 6
+    },
+    {
+      "pathway": "ubiquinone synthesis",
+      "spans": 9,
+      "pmids": 6
+    },
+    {
+      "pathway": "chondroitin sulfate degradation",
+      "spans": 9,
+      "pmids": 5
+    },
+    {
+      "pathway": "tetrahydrobiopterin metabolism",
+      "spans": 8,
+      "pmids": 6
+    },
+    {
+      "pathway": "o-glycan metabolism",
+      "spans": 8,
+      "pmids": 1
+    },
+    {
+      "pathway": "d-alanine metabolism",
+      "spans": 6,
+      "pmids": 5
+    },
+    {
+      "pathway": "valine, leucine, and isoleucine metabolism",
+      "spans": 5,
+      "pmids": 5
+    },
+    {
+      "pathway": "cytochrome metabolism",
+      "spans": 4,
+      "pmids": 3
+    },
+    {
+      "pathway": "glycine, serine, alanine, and threonine metabolism",
+      "spans": 4,
+      "pmids": 4
+    },
+    {
+      "pathway": "aminosugar metabolism",
+      "spans": 4,
+      "pmids": 4
+    },
+    {
+      "pathway": "n-glycan synthesis",
+      "spans": 4,
+      "pmids": 3
+    },
+    {
+      "pathway": "methionine and cysteine metabolism",
+      "spans": 3,
+      "pmids": 2
+    },
+    {
+      "pathway": "keratan sulfate degradation",
+      "spans": 3,
+      "pmids": 1
+    },
+    {
+      "pathway": "chondroitin synthesis",
+      "spans": 1,
+      "pmids": 1
+    },
+    {
+      "pathway": "limonene and pinene degradation",
+      "spans": 1,
+      "pmids": 1
+    },
+    {
+      "pathway": "coa catabolism",
+      "spans": 1,
+      "pmids": 1
+    },
+    {
+      "pathway": "alkaloid synthesis",
+      "spans": 1,
+      "pmids": 1
+    }
+  ]
+}
