@@ -43,9 +43,8 @@ accept.
 ## Boundaries
 
 - Include the whole phrase, process word included: `arginine biosynthesis`, not `arginine`.
-- **Watch partial spans in lists.** The machine sometimes marks only the tail of an
-  enumeration: given `Arginine and proline metabolism`, it may span just
-  `proline metabolism`. Extend it to the full phrase. (~2% of spans.)
+- In a list, each item is its own span: in `glycolysis, gluconeogenesis, and fatty acid
+  oxidation` that is three spans, not one.
 - Modifiers that are part of the pathway name stay in: `de novo pyrimidine synthesis`.
   Modifiers that are not do not: in `carnitine mediated fatty acid oxidation`, the pathway
   is `fatty acid oxidation`.

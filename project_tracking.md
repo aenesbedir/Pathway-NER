@@ -716,3 +716,35 @@ The analysis surfaced semantically **opposite** mappings: `purine biosynthesis` 
 
 `llm/run_silver.py --recanonicalize` re-derives canonical/match_type over the cache with no
 LLM calls (the booster is re-run from scratch since its canonical is baked into the cache).
+
+### ✅ P3-1f — `doccano/` folder + preview
+All doccano-related data/code/docs consolidated into `doccano/`: `pilot_1k_doccano.jsonl`
+(import file), `ANNOTATION_GUIDE.md`, `export_doccano.py`, `preview.py` → `preview.html`,
+`README.md` (import steps + format spec).
+
+- **Format verified against doccano source**, not guessed: `backend/data_import/pipeline/
+  catalog.py` → `ArgColumn` defaults `column_data="text"`, `column_label="label"`. So
+  `label` is **singular** on import: `{"text": ..., "label": [[start, end, "Pathway"]]}`.
+  doccano's *export* uses `labels` (plural) — an asymmetry in their own docs.
+- Extra keys flattened to top level (`pmid`, `model`, `query_pathways`, `span_info`) since
+  doccano stores non-text/label columns as example metadata; the previous nested `meta`
+  object would have become `meta.meta`.
+- `preview.py` renders the import file to static HTML using the exact offsets doccano will
+  read — lets us check the spans without installing doccano.
+
+#### 🐞 `maybe_partial` removed — it was 100% false alarms
+Building the preview exposed it: the flag marked `arachidonic acid metabolism` (a complete
+canonical name) as a boundary error.
+- **Measured:** true partial spans in the 1k = **0**. The flag fired on **23** correct spans.
+- **Why zero:** `merge()` already resolves the artifact — the LLM reliably returns the full
+  canonical name and the longer span wins over the booster's fragment. The problem the flag
+  was built for does not survive the pipeline.
+- **Why it misfired:** the heuristic ("a content phrase of the canonical appears just
+  before") fires on normal enumerations — `gluconeogenesis` in "glycolysis, gluconeogenesis,
+  and …" looks incomplete against the combined canonical `glycolysis/gluconeogenesis`, but
+  the span is correct.
+- Removed from the pipeline, export, preview and guide rather than push annotators to
+  "fix" 23 good boundaries. Earlier "maybe_partial 2%" figures in P3-1c/e are superseded.
+
+Also fixed: `load_query_pathways()` was leaking `pathway_id: null` rows from
+`exact_matches.jsonl` into prompt hints and export metadata (`"query_pathways": [null]`).

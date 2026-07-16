@@ -58,9 +58,13 @@ MODEL = "qwen2.5:14b"
 # Golden-set PMIDs — excluded so silver never trains on the eval set.
 GOLDEN_PMIDS = {"11469814", "29615816", "36294866", "39934780", "40225847"}
 
-# Heuristic for the known booster artifact: a partial span picked out of a longer
-# enumeration ("proline metabolism" inside "Arginine and proline metabolism").
-_LIST_CONTINUATION = re.compile(r"(?:\band\b|,)\s*$", re.IGNORECASE)
+# NOTE: an earlier version carried a `maybe_partial` flag for booster spans clipped out
+# of an enumeration (`proline metabolism` inside `Arginine and proline metabolism`).
+# Measured on the 1k pilot: **zero** such spans exist — merge() already resolves them,
+# because the LLM reliably returns the full canonical name and the longer span wins.
+# The flag fired on 23 correct spans instead (normal list items like `gluconeogenesis`
+# in "glycolysis, gluconeogenesis, and ..."), so it was removed rather than mislead
+# annotators into "fixing" good boundaries.
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s  %(levelname)-8s  %(message)s",
                     datefmt="%H:%M:%S")
@@ -68,12 +72,20 @@ log = logging.getLogger(__name__)
 
 
 def load_query_pathways() -> dict[str, list[str]]:
+    """pmid -> query pathway names.
+
+    `exact_matches.jsonl` carries `pathway_id: null` rows (pairs Step 2 found no span
+    for), which must not leak into the prompt hints or the export metadata.
+    """
     by_pmid: dict[str, set[str]] = defaultdict(set)
     with MATCHES_FILE.open(encoding="utf-8") as fh:
         for line in fh:
             if line.strip():
                 r = json.loads(line)
-                by_pmid[str(r["pmid"])].add(r["pathway_id"])
+                if r.get("pathway_id"):
+                    by_pmid[str(r["pmid"])].add(r["pathway_id"])
+                else:
+                    by_pmid.setdefault(str(r["pmid"]), set())
     return {k: sorted(v) for k, v in by_pmid.items()}
 
 
@@ -111,7 +123,7 @@ def select_sample(n: int, seed: int, qmap, abstracts, cats) -> list[str]:
 
 
 def _annotate(spans: list[dict], text: str, pmid: str, model: str, qps: list[str]) -> dict:
-    """Derive canonical/match_type/maybe_partial from raw (surface, offset, source) spans.
+    """Derive canonical/match_type from raw (surface, offset, source) spans.
 
     Cheap and deterministic — kept separate from the LLM call so that a canonicalizer
     change can be re-applied over the cache without paying for inference again
@@ -126,11 +138,9 @@ def _annotate(spans: list[dict], text: str, pmid: str, model: str, qps: list[str
         else:
             canonical, mtype = canonicalize(s["surface"])
             source = "llm_silver"
-        before = text[max(0, s["start"] - 8):s["start"]]
         out.append({
             "start": s["start"], "end": s["end"], "text": s["surface"],
             "canonical": canonical, "match_type": mtype, "source": source,
-            "maybe_partial": bool(source == "booster" and _LIST_CONTINUATION.search(before)),
         })
     return {"pmid": pmid, "model": model, "query_pathways": qps, "spans": out}
 
@@ -208,7 +218,6 @@ def main() -> None:
     src = Counter(s["source"] for s in spans)
     mt = Counter(s["match_type"] for s in spans)
     unmapped = sum(1 for s in spans if s["canonical"] is None)
-    partial = sum(1 for s in spans if s["maybe_partial"])
     fresh = len(sample) - cached
 
     log.info("─" * 60)
@@ -223,8 +232,6 @@ def main() -> None:
     log.info("  by match_type  : %s", dict(mt))
     log.info("  unmapped       : %d (%.0f%%)  [golden baseline 16%%]",
              unmapped, 100 * unmapped / max(1, len(spans)))
-    log.info("  maybe_partial  : %d (%.0f%%)  [booster artifact watch]",
-             partial, 100 * partial / max(1, len(spans)))
     log.info("─" * 60)
 
 

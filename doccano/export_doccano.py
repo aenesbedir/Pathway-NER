@@ -7,17 +7,26 @@ sequence-labeling import file.
 
 Single label type: "Pathway". Reviewers accept / reject / fix the boundary of each
 span and may add missed ones; they do NOT assign canonical names. `canonical`,
-`match_type` and `source` ride along in `meta` as context only.
+`match_type` and `source` ride along as metadata context only.
 
-Reviewer instructions: data/silver/ANNOTATION_GUIDE.md
+Reviewer instructions: doccano/ANNOTATION_GUIDE.md
+
+Format (verified against doccano's importer, `backend/data_import/pipeline/catalog.py`
+→ `ArgColumn` defaults `column_data="text"`, `column_label="label"`):
+
+    {"text": "<abstract>", "label": [[start, end, "Pathway"], ...], ...extra}
+
+`label` is **singular** on import. (doccano's *export* uses `labels` — a known
+asymmetry in their docs; do not copy the export shape here.) Every top-level key
+other than `text`/`label` is stored by doccano as example metadata, so the extras are
+kept flat rather than nested under a `meta` object.
 
 Input  : data/silver/pilot_1k.jsonl
-Output : data/silver/pilot_1k_doccano.jsonl
-    {"text": "<abstract>", "label": [[start, end, "Pathway"], ...], "meta": {...}}
+Output : doccano/pilot_1k_doccano.jsonl
 
 Run from repo root:
-    venv310/bin/python3 llm/export_doccano.py
-    venv310/bin/python3 llm/export_doccano.py --limit 5 --output /tmp/smoke.jsonl
+    venv310/bin/python3 doccano/export_doccano.py
+    venv310/bin/python3 doccano/export_doccano.py --limit 5 --output /tmp/smoke.jsonl
 """
 
 import argparse
@@ -28,7 +37,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SILVER_FILE = ROOT / "data/silver/pilot_1k.jsonl"
 ARTICLES_FILE = ROOT / "data/raw/articles.json"
-OUTPUT_FILE = ROOT / "data/silver/pilot_1k_doccano.jsonl"
+OUTPUT_FILE = ROOT / "doccano/pilot_1k_doccano.jsonl"
 
 LABEL = "Pathway"
 
@@ -43,7 +52,7 @@ def load_abstracts() -> dict[str, str]:
 
 
 def to_doccano(rec: dict, text: str) -> dict:
-    labels, meta_spans = [], []
+    labels, span_info = [], []
     for s in rec["spans"]:
         # Guard: never emit an offset that does not match the text we ship.
         if text[s["start"]:s["end"]] != s["text"]:
@@ -51,20 +60,18 @@ def to_doccano(rec: dict, text: str) -> dict:
                         rec["pmid"], s["text"])
             continue
         labels.append([s["start"], s["end"], LABEL])
-        meta_spans.append({
+        span_info.append({
             "text": s["text"], "canonical": s["canonical"],
             "match_type": s["match_type"], "source": s["source"],
-            "maybe_partial": s["maybe_partial"],
         })
+    # Keys other than text/label land in doccano's example metadata, so keep them flat.
     return {
         "text": text,
         "label": labels,
-        "meta": {
-            "pmid": rec["pmid"],
-            "model": rec["model"],
-            "query_pathways": rec["query_pathways"],
-            "spans": meta_spans,
-        },
+        "pmid": rec["pmid"],
+        "model": rec["model"],
+        "query_pathways": rec["query_pathways"],
+        "span_info": span_info,
     }
 
 
@@ -93,7 +100,7 @@ def main() -> None:
     log.info("Output    : %s", out)
     log.info("Documents : %d", len(records))
     log.info("Labels    : %d  (%.1f per document)", n_labels, n_labels / max(1, len(records)))
-    log.info("Guide     : data/silver/ANNOTATION_GUIDE.md")
+    log.info("Guide     : doccano/ANNOTATION_GUIDE.md")
     log.info("─" * 60)
 
 

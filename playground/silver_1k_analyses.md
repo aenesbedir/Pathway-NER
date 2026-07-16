@@ -79,8 +79,6 @@ Most are real pathway mentions Recon simply has no name for (`kynurenine pathway
 | Booster (`booster`) | 172 | 90 |
 
 - Booster contributes 9% of spans; 63 of its surfaces appear from the booster only.
-- `maybe_partial` (booster picked a fragment out of an enumeration, e.g. `proline metabolism` inside `Arginine and proline metabolism`): **31 (2%)** — annotators should fix these boundaries.
-
 ## Variation richness — surface forms per pathway
 
 How many distinct ways one pathway gets written. This is the near-lookup problem measured per pathway: exact matching gives ~1 form per pathway by construction.

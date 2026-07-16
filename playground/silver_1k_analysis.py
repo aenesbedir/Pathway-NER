@@ -70,7 +70,6 @@ def main() -> None:
     mt = Counter(s["match_type"] for s in spans)
     src = Counter(s["source"] for s in spans)
     unmapped = [s for s in spans if s["canonical"] is None]
-    partial = [s for s in spans if s["maybe_partial"]]
 
     spans_per = Counter(len(r["spans"]) for r in recs)
     empty = spans_per[0]
@@ -168,9 +167,6 @@ def main() -> None:
     A("")
     A(f"- Booster contributes {100*src['booster']/len(spans):.0f}% of spans; "
       f"{len(booster_only - llm_only):,} of its surfaces appear from the booster only.")
-    A(f"- `maybe_partial` (booster picked a fragment out of an enumeration, e.g. "
-      f"`proline metabolism` inside `Arginine and proline metabolism`): "
-      f"**{len(partial):,} ({100*len(partial)/len(spans):.0f}%)** — annotators should fix these boundaries.\n")
 
     A("## Variation richness — surface forms per pathway\n")
     A("How many distinct ways one pathway gets written. This is the near-lookup problem "
