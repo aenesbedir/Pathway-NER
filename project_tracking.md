@@ -453,3 +453,147 @@ Eğitim epoch 13'e kadar çalıştı, sonra kullanıcı isteğiyle durduruldu. C
 | P2-8: Run 005 | `train.py` | ⚠️ Durduruldu | checkpoint'ler var, devam edilecek |
 
 **Sonraki adım (önce çözülmesi gereken):** Data leakage araştırması — `build_dataset.py`'de split stratejisi pathway bazlı, PMID bazlı değil. Aynı PMID'den gelen abstract ve full-text window'ları farklı split'lere düşebiliyor. Düzeltme: split'i **PMID bazlı** yapmak; tüm aynı PMID kayıtları aynı split'e gitsin, sonra Run 005'i yeniden başlat.
+
+---
+
+---
+
+# Phase 3 — LLM-Based Variation-Aware Silver Labeling
+
+**Motivation:** Distant supervision (exact matching) only captures ~37% of pathway
+mentions in dense review abstracts; the golden set showed ~63% are surface
+variations exact matching misses. Phase 3 replicates the golden-set annotation
+approach at scale with a local LLM to generate **variation-aware silver labels**
+for the whole corpus, then routes them through human review (doccano).
+
+**Design (user-approved):**
+- Guided prompt: full abstract in one call; hint the article's query pathway(s)
+  + optionally the 98 Recon vocabulary. LLM returns **surface strings only**.
+- **Canonical mapping done by us** (embedding + threshold), not the LLM.
+- **Precision measured first** on the golden set before any scaling.
+- Feasibility ladder: golden benchmark → 1k pilot → 10k full.
+- Silver kept strictly separate from gold (`data/silver/` vs `playground/golden_set/`).
+
+Related: `playground/golden_set/README.md`, `playground/exact_match_analysis.md`.
+
+## Phase 3 Steps
+
+### ✅ P3-0a — Silver data folder
+- Created `data/silver/` with `README.md` documenting silver-vs-gold separation and
+  span provenance (`source="llm_silver"`, `model`, `match_type`, `canonical`).
+
+### ✅ P3-0b — Guided extraction (`llm/prompts/pathway_extraction_guided.py`, `llm/extract_guided.py`)
+- Whole-abstract, single-call prompt hinting the article's query pathway(s) + optional
+  98-name vocab block. Model returns **surface strings only**; canonical mapping deferred.
+- `extract_guided()` grounds every surface to char offsets (verbatim, all occurrences),
+  drops non-verbatim (hallucination filter). `temperature=0, seed=42` → deterministic.
+
+### ✅ P3-0c — Precision baseline on golden set (`playground/golden_set/eval_llm_guided.py`)
+- Offset-based scoring vs `golden_set.json`: TP (overlaps a gold pathway), FP_neg
+  (overlaps a metabolite/out-of-vocab), UNLABELED (neither).
+- Model: `qwen2.5:7b` (only model installed). Two prompt variants compared.
+
+| Variant | Precision (distinct surface) | span:exact recall | span:variation recall | Verdict |
+|---|---|---|---|---|
+| no-vocab, **strict** rule | 0.82 / 0.90 | 11/11 (100%) | 2/6 (33%) | superseded |
+| **no-vocab, lenient rule** | 0.82 / 0.90 | 11/11 (100%) | **4/6 (67%)** | **chosen** |
+| with-vocab, strict rule | 1.00 | 11/11 (100%) | 0/6 (0%) | too conservative |
+| with-vocab, lenient rule | 1.00 | 11/11 (100%) | 1/6 (17%) | too conservative |
+
+Full 2×2 grid run (reports in `data/silver/eval_qwen7b_*.json`). The lenient rule lifts
+variation recall in both vocab settings, but the 98-name list is the dominant recall-killer
+(precision 1.00 at the cost of near-zero variation recall) — so no-vocab + lenient wins.
+
+**Chosen config baked as default** (`extract_guided(..., lenient=True)`, `vocab=None`,
+prompt "synonyms" wording): **no-vocab + lenient + synonyms**. Adding "synonyms (including a
+compound's alternative chemical name)" to the task line recovered span:synonym 0→1/1 and
+span:umbrella (conceptually right; the one synonym test case now passes); span-level catch
+15→17/19, precision flat. `eval_llm_guided.py` default is now this config; `--strict`
+reproduces the old baseline.
+
+**Determinism caveat:** ollama is NOT fully deterministic run-to-run even at
+`temperature=0, seed=42` (GPU batching). Same config varies by ±1-2 mentions between runs
+(e.g. span:umbrella flips 0/1↔1/1). Robust, large-margin conclusions hold (no-vocab ≫
+with-vocab; lenient > strict on variation); single-mention category deltas are run noise.
+The 5-abstract golden set is too small to arbitrate them — firm numbers need the 1k pilot
+or a larger golden set.
+
+- **Chosen: no-vocab + lenient rule.** The 98-name list makes the 7B model over-conservative
+  (recall collapses — same failure mode as the V3 few-shot regression). Query-pathway hints
+  alone give the best balance.
+- **Compound-name rule fix (user-spotted):** the strict rule "Do NOT return … metabolite or
+  compound names" was wrongly suppressing pathway phrases *built from* a compound name. The
+  lenient rule (`RULES_LENIENT`) keeps excluding a *bare* metabolite but explicitly keeps
+  "<compound> metabolism / biosynthesis / synthesis of <compound> / formation of <compound>".
+  Effect: **span:variation recall 33% → 67%** (now catches `formation of prostaglandin`,
+  `cholecalciferol metabolism`) with **no precision change** and **zero new false positives**.
+  Report: `data/silver/eval_qwen7b_novocab_lenient.json`.
+- Precision is high: of 21 distinct surfaces, only genuine miss is `oxidative stress and
+  inflammation`; the 2 FP_neg (`aminoacyl-tRNA biosynthesis`, `mitochondrial metabolism`)
+  are exactly the two terms we deliberately scoped out — scope disagreement, not hallucination.
+- **Remaining variation misses (2/6, after the lenient fix):** `arginine biosynthesis`
+  (model returns only the canonical `arginine and proline metabolism` in the same sentence —
+  a redundancy/dedup behaviour, not the compound rule) and `metabolism of androgens`
+  (word-order reversal). These need the Phase 1 recall booster: a deterministic
+  token-overlap / word-order fallback (cf. "Option B" in `pathway_extraction.py`) and/or a
+  per-query-pathway synonym pass using the old vocab-guided V1 prompt.
+- Reports: `data/silver/eval_qwen7b_novocab.json`, `data/silver/eval_qwen7b_vocab.json`.
+### ✅ P3-0d — Larger-model benchmark (`qwen2.5:14b` vs `qwen2.5:7b`)
+Pulled `qwen2.5:14b` (~9GB q4); ran the chosen config (no-vocab + lenient + synonyms) on
+the golden set. Fits VRAM well enough — ~7s/abstract (36s for 5), feasible at scale
+(1k ≈ 2h, 10k ≈ 20h). Report: `data/silver/eval_qwen14b_novocab_lenient.json`.
+
+| Metric | qwen2.5:7b | qwen2.5:14b |
+|---|---|---|
+| span:exact recall | 11/11 | 11/11 |
+| **span:variation recall** | **4/6 (67%)** | **4/6 (67%)** |
+| precision (lenient) | ~0.90–0.92 | **0.95** |
+| UNLABELED (borderline noise) | 9 | 3 |
+| total mentions | ~33 | ~22 |
+| run-to-run stability | noisy (±1–2) | very stable (identical) |
+
+- **The bigger model does NOT close the variation gap** — same 4/6 on the core metric. The
+  recall lever is the deterministic word-order/dedup fallback, needed regardless of model.
+- **14b is cleaner/more precise** (0.95 vs 0.90; UNLABELED 9→3): it does not emit borderline
+  terms like `oxidative stress and inflammation` or repeated `energy metabolism` → less noise
+  for human review. Also far more stable run-to-run.
+- **Decision: `qwen2.5:14b` chosen** for the pilot (cleaner silver → less doccano noise).
+
+---
+
+## Phase 3 / Faz 1 — 1k pilot
+Plan: `~/.claude/plans/eventual-imagining-hippo.md`. Steps 1a→1d, golden-gated.
+
+### ✅ P3-1a — Deterministic recall booster (`llm/booster.py`)
+Model-free fallback for the two variation types both 7b and 14b miss. For each Recon
+canonical it strips process words to get **content phrases**
+(`arginine and proline metabolism` → `[arginine, proline]`), then scans for:
+`<content> <process>` (→ `arginine biosynthesis`) and `<process> of <content>`
+(→ `metabolism of androgens`). Requiring an adjacent process word is what preserves
+precision — a bare metabolite (`...arginine, and aspartate levels`) never matches.
+
+- **Scans all 90 Recon names, not just the article's query pathways.** Measured reason:
+  PMID 11469814 mentions `metabolism of androgens` but was never retrieved by
+  `androgen and estrogen synthesis and metabolism` — that canonical is absent from its 21
+  query pathways, so a query-only scan structurally cannot find it. **Query pathways are an
+  incomplete hint.**
+- Refactor: `RECON_BLOCKLIST` / `RECON_SYNONYMS` extracted to **`preprocessing/recon_vocab.py`**
+  (dependency-free single source of truth) so `llm/booster.py` reuses them without pulling in
+  spacy. `match_exact.py` now imports from it — verified unchanged (`load_recon()` → 90).
+
+**Gate result (14b, golden, `--booster`):** recall up, precision flat → **passed**.
+
+| Metric | 14b | 14b + booster |
+|---|---|---|
+| **span:variation** | 4/6 (67%) | **5/6 (83%)** |
+| enum:variation | 1/6 (17%) | 4/6 (67%) |
+| precision (lenient) | 0.95 | 0.95 |
+| TP / FP_neg / UNLABELED | 18 / 1 / 3 | 20 / 1 / 3 |
+
+- **+2 TP, zero new false positives.** Report: `data/silver/eval_qwen14b_booster.json`.
+- **Remaining miss (1/6): `formation of prostaglandin` → `eicosanoid metabolism`.** The
+  booster structurally cannot bridge this: the canonical's content phrase is `eicosanoid`,
+  the text says `prostaglandin` — a biochemical hyponym, not a string relation (same class as
+  `cholecalciferol` = vitamin D3, which the LLM happened to catch). Closing it would mean
+  hand-adding `prostaglandin` to `RECON_SYNONYMS` **because we saw it in the golden set** —
+  i.e. fitting to the 5-abstract eval. Left open deliberately; see decision note below.

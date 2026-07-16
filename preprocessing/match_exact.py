@@ -32,55 +32,9 @@ OUTPUT_FILE   = Path("data/processed/exact_matches.jsonl")
 
 MIN_TERM_LEN  = 4   # skip terms shorter than this (characters)
 
-# Recon3D subsystem labels that are not meaningful pathway names in literature
-RECON_BLOCKLIST: set[str] = {
-    "miscellaneous",
-    "protein formation",
-    "intracellular demand",
-    "intracellular source/sink",
-    "r group synthesis",
-    "biomass and maintenance functions",
-    "exchange/demand reaction",
-    "dietary fiber binding",
-}
-
-# Additional surface forms for Recon pathways that are commonly written differently
-RECON_SYNONYMS: dict[str, list[str]] = {
-    "citric acid cycle": [
-        "TCA cycle", "tricarboxylic acid cycle", "Krebs cycle",
-    ],
-    "glycolysis/gluconeogenesis": [
-        "glycolysis", "gluconeogenesis", "Warburg effect",
-    ],
-    "pentose phosphate pathway": [
-        "PPP", "hexose monophosphate shunt", "pentose phosphate shunt",
-    ],
-    "fatty acid oxidation": [
-        "beta-oxidation", "β-oxidation", "FAO", "fatty acid β-oxidation",
-        "fatty acid beta-oxidation",
-    ],
-    "oxidative phosphorylation": [
-        "OXPHOS", "electron transport chain", "ETC",
-    ],
-    "fatty acid synthesis": [
-        "de novo lipogenesis", "DNL", "fatty acid biosynthesis",
-        "lipogenesis",
-    ],
-    "bile acid synthesis": [
-        "bile acid biosynthesis", "primary bile acid biosynthesis",
-        "bile acid production",
-    ],
-    "nad metabolism": [
-        "NAD+ metabolism", "NADH metabolism", "nicotinamide metabolism",
-        "NAD metabolism",
-    ],
-    "keratan sulfate degradation": [
-        "keratan-sulfate degradation",
-    ],
-    "vitamin b2 metabolism": [
-        "riboflavin metabolism",
-    ],
-}
+# Recon vocabulary (blocklist + literature surface forms) lives in one place so the
+# LLM-side code can reuse it without pulling in spacy.
+from recon_vocab import RECON_BLOCKLIST, RECON_SYNONYMS  # noqa: E402
 
 logging.basicConfig(
     level=logging.INFO,

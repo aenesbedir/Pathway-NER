@@ -1,0 +1,536 @@
+{
+  "description": "Human-curated variation-aware gold annotations for the 5 abstracts richest in distinct Recon pathways.",
+  "vocabulary": "unique_pathways_from_recon.json (98 canonical Recon subsystems)",
+  "source_text": "data/raw/articles.json (abstract field)",
+  "articles": [
+    {
+      "pmid": "11469814",
+      "title": "Steroid metabolism in metabolic syndrome X.",
+      "abstract": "Preceding chapters in this volume describe relatively rare conditions associated with qualitative rather than quantitative changes in enzymes involved in steroid synthesis and metabolism. In this chapter, several examples show how more subtle variations in activities of the same enzymes may be important in the pathophysiology of common diseases of complex aetiology. This chapter reviews evidence for deranged steroid metabolism in patients with the 'insulin resistance syndrome'. In summary, patients with essential hypertension may have subtle 11beta-hydroxylase or 11beta-hydroxysteroid dehydrogenase type 2 deficiency resulting in mild mineralocorticoid excess. Patients with obesity, and/or associated hirsutism or hyperglycaemia, have evidence of altered peripheral metabolism of androgens (increased 5alpha-reductase) and glucocorticoids (altered 11beta-hydroxysteroid dehydrogenase type 1, resulting in enhanced cortisol levels in adipose tissue). Some of these changes in steroid metabolism lend themselves to therapeutic manipulation which may provide novel strategies to reduce cardiovascular risk.",
+      "counts": {
+        "spans": 3,
+        "spans_exact": 2,
+        "spans_synonym": 0,
+        "spans_variation": 1,
+        "spans_umbrella": 0,
+        "shared_head_enumerations": 1,
+        "out_of_vocab_pathways": 0,
+        "metabolites_not_pathways": 2
+      },
+      "spans": [
+        {
+          "start": 412,
+          "end": 430,
+          "text": "steroid metabolism",
+          "canonical": "steroid metabolism",
+          "match_type": "exact",
+          "note": "'deranged steroid metabolism'"
+        },
+        {
+          "start": 983,
+          "end": 1001,
+          "text": "steroid metabolism",
+          "canonical": "steroid metabolism",
+          "match_type": "exact",
+          "note": "'changes in steroid metabolism'"
+        },
+        {
+          "start": 774,
+          "end": 797,
+          "text": "metabolism of androgens",
+          "canonical": "androgen and estrogen synthesis and metabolism",
+          "match_type": "variation",
+          "note": "word-order reversal of 'androgen metabolism'; also plural"
+        }
+      ],
+      "shared_head_enumerations": [
+        {
+          "start": 154,
+          "end": 186,
+          "text": "steroid synthesis and metabolism",
+          "note": "'enzymes involved in steroid synthesis and metabolism' — umbrella phrase",
+          "pathways": [
+            {
+              "canonical": "steroid metabolism",
+              "match_type": "variation",
+              "note": "synthesis+metabolism factored; core is steroid metabolism"
+            }
+          ]
+        }
+      ],
+      "out_of_vocab_pathways": [],
+      "metabolites_not_pathways": [
+        {
+          "start": 922,
+          "end": 930,
+          "text": "cortisol",
+          "note": "hormone, not a pathway"
+        },
+        {
+          "start": 831,
+          "end": 846,
+          "text": "glucocorticoids",
+          "note": "hormone class"
+        }
+      ]
+    },
+    {
+      "pmid": "39934780",
+      "title": "Distinct metabolic perturbations link liver steatosis and incident CVD in lean but not obese PWH.",
+      "abstract": "BACKGROUND: Metabolic dysfunction-associated steatotic liver disease (MASLD) is a key risk factor for cardiovascular disease (CVD), potentially driven by shared metabolic mechanisms. Metabolic perturbations associated with MASLD and CVD remain underexplored in people with HIV (PWH). METHODS: We used data from the longitudinal multicenter 2000HIV study comprising 1895 virally suppressed PWH, out of which 970 had available liver and carotid artery measurements. Transient elastography with controlled attenuation parameter (CAP) was performed for the assessment of liver steatosis (CAP > 263 dB/m) and fibrosis (LSM ≥ 7.0). Historic and future incident CVD within 2-year follow-up, defined as myocardial infarction, stroke, peripheral arterial disease, and angina pectoris, were extracted from the medical files, while atherosclerotic plaque(s) in the carotid arteries were assessed using ultrasonography. Metabolic perturbations were analyzed using mass spectrometry-based untargeted metabolomics (n = 500 metabolites) and nuclear magnetic resonance spectroscopy for targeted lipids and other metabolites (n = 246 metabolites). RESULTS: PWH with liver steatosis were more likely to have arterial plaques (47% vs. 36%; P value = 0.003) and CVD history (11% vs. 6.8%; P value = 0.021) than PWH without liver steatosis. These associations were only significant in lean PWH, in contrast to those with BMI ≥ 25 kg/m2. Metabolic pathways associated with liver steatosis and fibrosis primarily involved lipid and amino acid metabolism, and they were validated by targeted lipoproteomic measurements. Interestingly, metabolomic pathways and lipoproteomic signatures associated with MASLD were mostly distinct from those associated with CVD parameters. However, several metabolic pathways were shared, especially in lean PWH. These include arachidonic acid metabolism and formation of prostaglandin, purine metabolism, cholecalciferol metabolism, and glycine, serine, alanine, and threonine metabolism. CONCLUSION: Metabolic disturbances linked to liver steatosis and CVD diverge across BMI categories in PWH. Lean PWH, unlike their overweight/obese counterparts, show common metabolic perturbations between MASLD and CVD, particularly involving arachidonic acid metabolism. This suggests that lean PWH with liver steatosis may face a heightened risk of CVD due to shared metabolic pathways, potentially opening avenues for targeted interventions, such as aspirin therapy, to mitigate this risk.",
+      "counts": {
+        "spans": 5,
+        "spans_exact": 3,
+        "spans_synonym": 0,
+        "spans_variation": 2,
+        "spans_umbrella": 0,
+        "shared_head_enumerations": 2,
+        "out_of_vocab_pathways": 0,
+        "metabolites_not_pathways": 0
+      },
+      "spans": [
+        {
+          "start": 1834,
+          "end": 1861,
+          "text": "arachidonic acid metabolism",
+          "canonical": "arachidonic acid metabolism",
+          "match_type": "exact",
+          "note": "'These include arachidonic acid metabolism'"
+        },
+        {
+          "start": 2240,
+          "end": 2267,
+          "text": "arachidonic acid metabolism",
+          "canonical": "arachidonic acid metabolism",
+          "match_type": "exact",
+          "note": "'particularly involving arachidonic acid metabolism'"
+        },
+        {
+          "start": 1913,
+          "end": 1939,
+          "text": "cholecalciferol metabolism",
+          "canonical": "vitamin d metabolism",
+          "match_type": "variation",
+          "note": "cholecalciferol = vitamin D3; chemical-synonym of 'vitamin d metabolism'"
+        },
+        {
+          "start": 1945,
+          "end": 1995,
+          "text": "glycine, serine, alanine, and threonine metabolism",
+          "canonical": "glycine, serine, alanine, and threonine metabolism",
+          "match_type": "exact",
+          "note": "verbatim canonical Recon name"
+        },
+        {
+          "start": 1866,
+          "end": 1892,
+          "text": "formation of prostaglandin",
+          "canonical": "eicosanoid metabolism",
+          "match_type": "variation",
+          "note": "prostaglandins are eicosanoids; specific product-formation -> Recon 'eicosanoid metabolism'"
+        }
+      ],
+      "shared_head_enumerations": [
+        {
+          "start": 1499,
+          "end": 1530,
+          "text": "lipid and amino acid metabolism",
+          "note": "shared-head umbrella; both halves included as non-Recon metabolic processes",
+          "pathways": [
+            {
+              "canonical": "lipid metabolism",
+              "match_type": "umbrella",
+              "note": "umbrella category; no single Recon subsystem"
+            },
+            {
+              "canonical": "amino acid metabolism",
+              "match_type": "umbrella",
+              "note": "umbrella category; no single Recon subsystem"
+            }
+          ]
+        },
+        {
+          "start": 1894,
+          "end": 1911,
+          "text": "purine metabolism",
+          "note": "umbrella term spanning both Recon purine subsystems",
+          "pathways": [
+            {
+              "canonical": "purine synthesis",
+              "match_type": "variation",
+              "note": "umbrella 'purine metabolism' -> Recon child"
+            },
+            {
+              "canonical": "purine catabolism",
+              "match_type": "variation",
+              "note": "umbrella 'purine metabolism' -> Recon child"
+            }
+          ]
+        }
+      ],
+      "out_of_vocab_pathways": [],
+      "metabolites_not_pathways": []
+    },
+    {
+      "pmid": "40225847",
+      "title": "Discovery of biological markers for schizophrenia based on metabolomics: a systematic review.",
+      "abstract": "INTRODUCTION AND METHODS: To discover biomarkers for schizophrenia (SCZ) at the metabolomics level, we registered this systematic review (CRD42024572133 (https://www.crd.york.ac.uk/PROSPERO/home)) including 56 qualified articles, and we identified the characteristics of metabolites, metabolite combinations, and metabolic pathways associated with SCZ. RESULTS: Our findings showed that decreased arachidonic acid, arginine, and aspartate levels, and the increased levels of glucose 6-phosphate and glycylglycine were associated with the onset of SCZ. Metabolites such as carnitine and methionine sulfoxide not only helped to identify SCZ in Miao patients, but also were different between Miao patients and Han patients. The decrease in benzoic acid and betaine and the increase in creatine were the notable metabolic characteristics of first-episode schizophrenia (FESCZ). The metabolite combination formed by metabolites such as methylamine, dimethylamine and other metabolites had the best diagnostic effect. Arginine and proline metabolism and arginine biosynthesis had a clear advantage in identifying SCZ and acute SCZ. Butanoate metabolism played an important role in identifying SCZ, toxoplasma infection and SCZ comorbidity. Biosynthesis of unsaturated fatty acids was also significantly enriched in the diagnosis and treatment of SCZ. DISCUSSION: This study summarizes the current progress in clinical metabolomic research related to SCZ, deepens understanding of the pathogenesis of SCZ, and lays a foundation for subsequent research on SCZ-related metabolites. SYSTEMATIC REVIEW REGISTRATION: https://www.crd.york.ac.uk/PROSPERO/home, identifier CRD42024572133.",
+      "counts": {
+        "spans": 3,
+        "spans_exact": 2,
+        "spans_synonym": 0,
+        "spans_variation": 1,
+        "spans_umbrella": 0,
+        "shared_head_enumerations": 0,
+        "out_of_vocab_pathways": 1,
+        "metabolites_not_pathways": 5
+      },
+      "spans": [
+        {
+          "start": 1012,
+          "end": 1043,
+          "text": "Arginine and proline metabolism",
+          "canonical": "arginine and proline metabolism",
+          "match_type": "exact",
+          "note": "verbatim canonical (capitalized)"
+        },
+        {
+          "start": 1126,
+          "end": 1146,
+          "text": "Butanoate metabolism",
+          "canonical": "butanoate metabolism",
+          "match_type": "exact",
+          "note": "verbatim canonical (capitalized)"
+        },
+        {
+          "start": 1048,
+          "end": 1069,
+          "text": "arginine biosynthesis",
+          "canonical": "arginine and proline metabolism",
+          "match_type": "variation",
+          "note": "KEGG 'arginine biosynthesis'; Recon folds it into 'arginine and proline metabolism'"
+        }
+      ],
+      "shared_head_enumerations": [],
+      "out_of_vocab_pathways": [
+        {
+          "start": 1234,
+          "end": 1273,
+          "text": "Biosynthesis of unsaturated fatty acids",
+          "note": "excluded: subtype 'unsaturated' absent from Recon's generic 'fatty acid synthesis'"
+        }
+      ],
+      "metabolites_not_pathways": [
+        {
+          "start": 397,
+          "end": 413,
+          "text": "arachidonic acid",
+          "note": "metabolite (not 'arachidonic acid metabolism')"
+        },
+        {
+          "start": 415,
+          "end": 423,
+          "text": "arginine",
+          "note": "amino acid metabolite"
+        },
+        {
+          "start": 475,
+          "end": 494,
+          "text": "glucose 6-phosphate",
+          "note": "metabolite"
+        },
+        {
+          "start": 572,
+          "end": 581,
+          "text": "carnitine",
+          "note": "metabolite"
+        },
+        {
+          "start": 782,
+          "end": 790,
+          "text": "creatine",
+          "note": "metabolite"
+        }
+      ]
+    },
+    {
+      "pmid": "29615816",
+      "title": "Distinct Metabolic features differentiating FLT3-ITD AML from FLT3-WT childhood Acute Myeloid Leukemia.",
+      "abstract": "Acute myeloid leukemia (AML) is a heterogeneous disease with dismal response warranting the need for enhancing our understanding of AML biology. One prognostic feature associated with inferior response is the presence of activating mutations in FMS-like tyrosine kinase 3 (FLT3) especially occurrence of internal tandem duplication (FLT3-ITD). Although poorly understood, differential metabolic and signaling pathways associated with FLT3-ITD might contribute towards the observed poor prognosis. We performed a non-targeted global metabolic profiling of matched cell and plasma samples obtained at diagnosis to establish metabolic differences within FLT3-ITD and FLT3-WT pediatric AML. Metabolomic profiling by Ultra-High Performance-Liquid-Chromatography-Mass Spectrometry identified differential abundance of 21 known metabolites in plasma and 33 known metabolites in leukemic cells by FLT3 status. These metabolic features mapped to pathways of significant biological importance. Of interest were metabolites with roles in cancer, cell progression and involvement in purine metabolism and biosynthesis, cysteine/methionine metabolism, tryptophan metabolism, carnitine mediated fatty acid oxidation, and lysophospholipid metabolism. Although validation in a larger cohort is required, our results for the first time investigated global metabolic profile in FLT3-ITD AML.",
+      "counts": {
+        "spans": 4,
+        "spans_exact": 2,
+        "spans_synonym": 0,
+        "spans_variation": 2,
+        "spans_umbrella": 0,
+        "shared_head_enumerations": 1,
+        "out_of_vocab_pathways": 0,
+        "metabolites_not_pathways": 1
+      },
+      "spans": [
+        {
+          "start": 1139,
+          "end": 1160,
+          "text": "tryptophan metabolism",
+          "canonical": "tryptophan metabolism",
+          "match_type": "exact",
+          "note": "verbatim canonical"
+        },
+        {
+          "start": 1181,
+          "end": 1201,
+          "text": "fatty acid oxidation",
+          "canonical": "fatty acid oxidation",
+          "match_type": "exact",
+          "note": "core term inside 'carnitine mediated fatty acid oxidation'"
+        },
+        {
+          "start": 1107,
+          "end": 1137,
+          "text": "cysteine/methionine metabolism",
+          "canonical": "methionine and cysteine metabolism",
+          "match_type": "variation",
+          "note": "order swapped + '/' separator vs canonical 'methionine and cysteine metabolism'"
+        },
+        {
+          "start": 1207,
+          "end": 1234,
+          "text": "lysophospholipid metabolism",
+          "canonical": "glycerophospholipid metabolism",
+          "match_type": "variation",
+          "note": "specific lipid subtype -> Recon parent 'glycerophospholipid metabolism'"
+        }
+      ],
+      "shared_head_enumerations": [
+        {
+          "start": 1071,
+          "end": 1105,
+          "text": "purine metabolism and biosynthesis",
+          "note": "'involvement in purine metabolism and biosynthesis'",
+          "pathways": [
+            {
+              "canonical": "purine synthesis",
+              "match_type": "variation",
+              "note": "'purine metabolism' umbrella + 'purine biosynthesis' both cover purine synthesis"
+            },
+            {
+              "canonical": "purine catabolism",
+              "match_type": "variation",
+              "note": "'purine metabolism' umbrella also covers purine catabolism"
+            }
+          ]
+        }
+      ],
+      "out_of_vocab_pathways": [],
+      "metabolites_not_pathways": [
+        {
+          "start": 1162,
+          "end": 1171,
+          "text": "carnitine",
+          "note": "metabolite (modifier in 'carnitine mediated fatty acid oxidation')"
+        }
+      ]
+    },
+    {
+      "pmid": "36294866",
+      "title": "Metabolomic Signatures of Autism Spectrum Disorder.",
+      "abstract": "Autism Spectrum Disorder (ASD) is associated with many variations in metabolism, but the ex-act correlates of these metabolic disturbances with behavior and development and their links to other core metabolic disruptions are understudied. In this study, large-scale targeted LC-MS/MS metabolomic analysis was conducted on fasting morning plasma samples from 57 children with ASD (29 with neurodevelopmental regression, NDR) and 37 healthy controls of similar age and gender. Linear model determined the metabolic signatures of ASD with and without NDR, measures of behavior and neurodevelopment, as well as markers of oxidative stress, inflammation, redox, methylation, and mitochondrial metabolism. MetaboAnalyst ver 5.0 (the Wishart Research Group at the University of Alberta, Edmonton, Canada) identified the pathways associated with altered metabolic signatures. Differences in histidine and glutathione metabolism as well as aromatic amino acid (AAA) biosynthesis differentiated ASD from controls. NDR was associated with disruption in nicotinamide and energy metabolism. Sleep and neurodevelopment were associated with energy metabolism while neurodevelopment was also associated with purine metabolism and aminoacyl-tRNA biosynthesis. While behavior was as-sociated with some of the same pathways as neurodevelopment, it was also associated with alternations in neurotransmitter metabolism. Alterations in methylation was associated with aminoacyl-tRNA biosynthesis and branched chain amino acid (BCAA) and nicotinamide metabolism. Alterations in glutathione metabolism was associated with changes in glycine, serine and threonine, BCAA and AAA metabolism. Markers of oxidative stress and inflammation were as-sociated with energy metabolism and aminoacyl-tRNA biosynthesis. Alterations in mitochondrial metabolism was associated with alterations in energy metabolism and L-glutamine. Using behavioral and biochemical markers, this study finds convergent disturbances in specific metabolic pathways with ASD, particularly changes in energy, nicotinamide, neurotransmitters, and BCAA, as well as aminoacyl-tRNA biosynthesis.",
+      "counts": {
+        "spans": 4,
+        "spans_exact": 2,
+        "spans_synonym": 1,
+        "spans_variation": 0,
+        "spans_umbrella": 1,
+        "shared_head_enumerations": 6,
+        "out_of_vocab_pathways": 2,
+        "metabolites_not_pathways": 1
+      },
+      "spans": [
+        {
+          "start": 897,
+          "end": 919,
+          "text": "glutathione metabolism",
+          "canonical": "glutathione metabolism",
+          "match_type": "exact",
+          "note": "contiguous tail of 'histidine and glutathione metabolism'"
+        },
+        {
+          "start": 1555,
+          "end": 1577,
+          "text": "glutathione metabolism",
+          "canonical": "glutathione metabolism",
+          "match_type": "exact",
+          "note": "'Alterations in glutathione metabolism'"
+        },
+        {
+          "start": 1515,
+          "end": 1538,
+          "text": "nicotinamide metabolism",
+          "canonical": "nad metabolism",
+          "match_type": "synonym",
+          "note": "'BCAA and nicotinamide metabolism' — 'nicotinamide metabolism' is a current RECON_SYNONYM"
+        },
+        {
+          "start": 1370,
+          "end": 1397,
+          "text": "neurotransmitter metabolism",
+          "canonical": "neurotransmitter metabolism",
+          "match_type": "umbrella",
+          "note": "umbrella metabolic-process term; no single Recon subsystem"
+        }
+      ],
+      "shared_head_enumerations": [
+        {
+          "start": 883,
+          "end": 919,
+          "text": "histidine and glutathione metabolism",
+          "note": "'Differences in histidine and glutathione metabolism'",
+          "pathways": [
+            {
+              "canonical": "histidine metabolism",
+              "match_type": "variation",
+              "note": "head 'histidine' factored from shared 'metabolism' — exact-match misses"
+            },
+            {
+              "canonical": "glutathione metabolism",
+              "match_type": "exact",
+              "note": "contiguous; already a span"
+            }
+          ]
+        },
+        {
+          "start": 1042,
+          "end": 1076,
+          "text": "nicotinamide and energy metabolism",
+          "note": "'NDR was associated with disruption in nicotinamide and energy metabolism'",
+          "pathways": [
+            {
+              "canonical": "nad metabolism",
+              "match_type": "variation",
+              "note": "'nicotinamide' split from 'metabolism' by 'and energy' — synonym form broken by shared head"
+            },
+            {
+              "canonical": "energy metabolism",
+              "match_type": "umbrella",
+              "note": "umbrella metabolic-process term; no single Recon subsystem"
+            }
+          ]
+        },
+        {
+          "start": 1478,
+          "end": 1538,
+          "text": "branched chain amino acid (BCAA) and nicotinamide metabolism",
+          "note": "'BCAA and nicotinamide metabolism'",
+          "pathways": [
+            {
+              "canonical": "valine, leucine, and isoleucine metabolism",
+              "match_type": "variation",
+              "note": "BCAA = valine/leucine/isoleucine; 'BCAA metabolism' shared-head + abbreviation"
+            },
+            {
+              "canonical": "nad metabolism",
+              "match_type": "synonym",
+              "note": "'nicotinamide metabolism' contiguous; already a span"
+            }
+          ]
+        },
+        {
+          "start": 1609,
+          "end": 1663,
+          "text": "glycine, serine and threonine, BCAA and AAA metabolism",
+          "note": "'changes in glycine, serine and threonine, BCAA and AAA metabolism'",
+          "pathways": [
+            {
+              "canonical": "glycine, serine, alanine, and threonine metabolism",
+              "match_type": "variation",
+              "note": "subset (no alanine) + shared 'metabolism' factored across the list"
+            },
+            {
+              "canonical": "valine, leucine, and isoleucine metabolism",
+              "match_type": "variation",
+              "note": "'BCAA metabolism' via shared head"
+            },
+            {
+              "canonical": "phenylalanine metabolism",
+              "match_type": "variation",
+              "note": "'AAA metabolism' -> Recon child (aromatic aa)"
+            },
+            {
+              "canonical": "tyrosine metabolism",
+              "match_type": "variation",
+              "note": "'AAA metabolism' -> Recon child (aromatic aa)"
+            },
+            {
+              "canonical": "tryptophan metabolism",
+              "match_type": "variation",
+              "note": "'AAA metabolism' -> Recon child (aromatic aa)"
+            }
+          ]
+        },
+        {
+          "start": 931,
+          "end": 969,
+          "text": "aromatic amino acid (AAA) biosynthesis",
+          "note": "umbrella 'aromatic amino acid biosynthesis' -> three Recon aromatic-aa subsystems",
+          "pathways": [
+            {
+              "canonical": "phenylalanine metabolism",
+              "match_type": "variation",
+              "note": "AAA -> Recon child"
+            },
+            {
+              "canonical": "tyrosine metabolism",
+              "match_type": "variation",
+              "note": "AAA -> Recon child"
+            },
+            {
+              "canonical": "tryptophan metabolism",
+              "match_type": "variation",
+              "note": "AAA -> Recon child"
+            }
+          ]
+        },
+        {
+          "start": 1192,
+          "end": 1209,
+          "text": "purine metabolism",
+          "note": "umbrella term spanning both Recon purine subsystems",
+          "pathways": [
+            {
+              "canonical": "purine synthesis",
+              "match_type": "variation",
+              "note": "umbrella -> Recon child"
+            },
+            {
+              "canonical": "purine catabolism",
+              "match_type": "variation",
+              "note": "umbrella -> Recon child"
+            }
+          ]
+        }
+      ],
+      "out_of_vocab_pathways": [
+        {
+          "start": 1214,
+          "end": 1241,
+          "text": "aminoacyl-tRNA biosynthesis",
+          "note": "translation pathway; not a Recon metabolic subsystem"
+        },
+        {
+          "start": 674,
+          "end": 698,
+          "text": "mitochondrial metabolism",
+          "note": "compartment term, not a metabolic process"
+        }
+      ],
+      "metabolites_not_pathways": [
+        {
+          "start": 1880,
+          "end": 1891,
+          "text": "L-glutamine",
+          "note": "amino acid metabolite (not 'glutamate metabolism')"
+        }
+      ]
+    }
+  ]
+}
