@@ -38,7 +38,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "preprocessing"))
 
 from recon_vocab import RECON_SYNONYMS, load_recon_names  # noqa: E402
 
-from booster import PROCESS_WORDS, content_phrases  # noqa: E402
+from booster import PROCESS_WORDS, content_phrases, process_class  # noqa: E402
 
 _PROCESS_RE = "|".join(re.escape(p) for p in PROCESS_WORDS)
 _LEADING_PROCESS_OF = re.compile(rf"^(?:{_PROCESS_RE})\s+of\s+", re.IGNORECASE)
@@ -74,7 +74,8 @@ def _build_tables() -> tuple[dict[str, str], dict[str, str], list[tuple[str, set
             continue
         for f in forms:
             synonym[_norm(f)] = canonical
-    phrases = [(n, {_phrase_key(p) for p in content_phrases(n)}) for n in names]
+    phrases = [(n, {_phrase_key(p) for p in content_phrases(n)}, process_class(n))
+               for n in names]
     return exact, synonym, phrases
 
 
@@ -106,15 +107,21 @@ def canonicalize(surface: str) -> tuple[str | None, str]:
 
     # Best content-phrase overlap wins; require every surface phrase to be covered
     # so "arginine biosynthesis" maps but a broad umbrella term does not.
+    s_class = process_class(surface)
     best, best_score = None, 0.0
-    for canonical, cp in _PHRASES:
+    for canonical, cp, c_class in _PHRASES:
         if not cp:
+            continue
+        # Never map across directions: "purine biosynthesis" must not land on
+        # "purine catabolism". A neutral side ("... metabolism") matches either.
+        if s_class != "neutral" and c_class != "neutral" and s_class != c_class:
             continue
         shared = sp & cp
         if not shared or shared != sp:
             continue
-        # Prefer the canonical that the surface covers most tightly.
-        score = len(shared) / len(cp)
+        # Prefer the canonical that the surface covers most tightly; on a tie prefer
+        # the one whose direction actually agrees over a neutral one.
+        score = len(shared) / len(cp) + (0.01 if c_class == s_class else 0.0)
         if score > best_score:
             best, best_score = canonical, score
 

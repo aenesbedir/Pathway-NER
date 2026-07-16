@@ -612,8 +612,10 @@ word order) → `unmapped`. No embeddings (see plan rationale).
 | Coverage | 16/19 (84%) |
 | `unmapped` (abstained) | 3/19 (16%) |
 
-- **Failure mode is abstention, not error** — it never maps to a wrong canonical. A wrong
-  canonical would silently corrupt scope filtering; `unmapped` just routes to the human.
+- ~~**Failure mode is abstention, not error** — it never maps to a wrong canonical.~~
+  **⚠️ This claim was false — see the direction bug in P3-1e.** It held only because the
+  19 golden spans happen to contain no synthesis/catabolism pair. A textbook case of the
+  "5 abstracts cannot arbitrate" caveat.
 - The 3 abstentions are exactly the predicted string-unbridgeable classes: chemical synonym
   (`cholecalciferol metabolism` → vitamin d), biochemical hyponym (`formation of
   prostaglandin` → eicosanoid), lipid subtype (`lysophospholipid metabolism` →
@@ -666,3 +668,51 @@ cache (`data/raw/llm_cache_silver/`, gitignored).
   `mitochondrial metabolism`) are rejects.
 
 **Gate → 10k decision:** pending human review of a sample (real span precision).
+
+### ✅ P3-1e — Silver 1k analysis (`playground/silver_1k_analysis.py` → `playground/silver_1k_analyses.md`)
+
+Descriptive analysis of the pilot. **Not an evaluation** — no ground truth on these 1,000
+abstracts, so it says nothing about correctness; precision comes only from doccano.
+
+**Headline — the near-lookup problem is broken.** Both sides counted on the *same* 1,000
+abstracts, abstract-only (the 105-form figure in `exact_match_analysis.md` is corpus-wide
+incl. full text, so it is not a fair comparator):
+
+| | Exact matching | Silver (LLM + booster) |
+|---|---|---|
+| Spans | 1,343 | 1,996 |
+| **Unique surface forms** (case-folded) | **81** | **532 (6.6×)** |
+| Abstracts with ≥1 span | 840 | 915 |
+| Distinct Recon pathways named | 60 | 64 |
+
+- **457 surface forms (86% of the silver vocabulary) are new** — never produced by exact
+  matching on these abstracts. Only 6 exact-matching surfaces are missing from silver.
+- Per-pathway variation richness now visible, e.g. `fatty acid oxidation` appears as 9
+  distinct forms (`beta-oxidation`, `fao`, `fatty acid beta-oxidation`, …).
+
+#### 🐞 Direction bug found and fixed (canonicalizer + booster)
+The analysis surfaced semantically **opposite** mappings: `purine biosynthesis` →
+`purine catabolism`, `heme catabolism` → `heme synthesis`, `pyrimidine biosynthesis` →
+`pyrimidine catabolism`.
+
+- **Cause:** both `canonicalize.py` (layer 3) and `booster.py` strip the process word and
+  match on content phrases only. `purine biosynthesis` → `{purine}` ties against *both*
+  `purine synthesis` and `purine catabolism`; whichever came first in the vocabulary won.
+  Recon distinguishes the two — we were throwing that information away.
+- **Evidence it was in two places:** the same surface `purine biosynthesis` resolved to
+  `purine synthesis` via the LLM path but `purine catabolism` via the booster path.
+- **Fix:** `booster.process_class()` / `direction_ok()` classify a phrase as
+  anabolic / catabolic / neutral by its process word; a non-neutral surface may never match
+  a canonical of the opposite direction. Defined once in `booster.py` (which owns
+  `PROCESS_WORDS`) and imported by `canonicalize.py` — avoids a circular import.
+- **Impact:** **zero on training labels** (the canonical never enters a `0/1/2` label), so
+  the decision to deprioritize canonicalization stands. It corrupted the *analysis* and
+  would have been a serious error in the future pathway↔disease DB.
+- After the fix: `exact` 999→1,012, `variation` 251→238 (13 spans were mislabeled
+  `variation` while actually exact matches of a *different* canonical). Golden gates
+  re-run, no regression: canonicalizer 16/19, booster eval `span:variation` 5/6, precision 0.95.
+- **Lesson:** the 19-span golden set contains no synthesis/catabolism pair, so it certified
+  a canonicalizer that inverted meaning. Small golden sets certify what they contain.
+
+`llm/run_silver.py --recanonicalize` re-derives canonical/match_type over the cache with no
+LLM calls (the booster is re-run from scratch since its canonical is baked into the cache).

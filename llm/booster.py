@@ -60,6 +60,32 @@ _PROCESS_RE = "|".join(re.escape(p) for p in PROCESS_WORDS)
 _CONNECTORS = re.compile(r"\s+and\s+|\s*,\s*|\s*/\s*")
 _MIN_PHRASE_LEN = 4
 
+# The process word carries direction, and Recon distinguishes it ("purine synthesis"
+# vs "purine catabolism", "heme synthesis" vs "heme degradation"). Content phrases
+# alone are identical for both, so without this guard "purine biosynthesis" lands on
+# whichever canonical happens to come first in the vocabulary — the exact opposite
+# meaning half the time. Shared with llm/canonicalize.py.
+_ANABOLIC = ("biosynthesis", "synthesis", "formation", "production", "lipogenesis")
+_CATABOLIC = ("catabolism", "degradation", "breakdown", "oxidation", "lysis")
+
+
+def process_class(s: str) -> str:
+    """'anabolic' | 'catabolic' | 'neutral' — direction implied by the process word."""
+    t = s.lower()
+    ana = any(w in t for w in _ANABOLIC)
+    cat = any(w in t for w in _CATABOLIC)
+    if ana and not cat:
+        return "anabolic"
+    if cat and not ana:
+        return "catabolic"
+    return "neutral"  # "metabolism" / "cycle" / both present -> covers either direction
+
+
+def direction_ok(surface: str, canonical: str) -> bool:
+    """False when surface and canonical imply opposite directions."""
+    a, b = process_class(surface), process_class(canonical)
+    return a == "neutral" or b == "neutral" or a == b
+
 
 def content_phrases(canonical: str) -> list[str]:
     """Strip trailing process words off a canonical name, split into components.
@@ -118,6 +144,10 @@ def boost(text: str, vocab: list[str] | None = None) -> list[dict]:
             for pat in patterns:
                 for m in re.finditer(pat, text, flags=re.IGNORECASE):
                     key = (m.start(), m.end())
+                    # Never let an anabolic surface claim a catabolic canonical (or
+                    # vice versa): "purine biosynthesis" is not "purine catabolism".
+                    if not direction_ok(m.group(0), canonical):
+                        continue
                     # First canonical to claim a span wins; keeps output stable.
                     if key not in found:
                         found[key] = {

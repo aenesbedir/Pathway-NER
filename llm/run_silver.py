@@ -110,31 +110,57 @@ def select_sample(n: int, seed: int, qmap, abstracts, cats) -> list[str]:
     return sample[:n]
 
 
-def process_one(pmid: str, text: str, qps: list[str], model: str) -> dict:
-    cache = CACHE_DIR / f"{pmid}.json"
-    if cache.exists():
-        return json.loads(cache.read_text(encoding="utf-8"))
+def _annotate(spans: list[dict], text: str, pmid: str, model: str, qps: list[str]) -> dict:
+    """Derive canonical/match_type/maybe_partial from raw (surface, offset, source) spans.
 
-    llm_spans = extract_guided(text, qps, model=model)
-    merged = merge(llm_spans, boost(text))
-
-    spans = []
-    for s in merged:
+    Cheap and deterministic — kept separate from the LLM call so that a canonicalizer
+    change can be re-applied over the cache without paying for inference again
+    (see --recanonicalize).
+    """
+    out = []
+    for s in spans:
         if s.get("source") == "booster":
-            canonical = s["canonical"]
+            canonical = s["canonical"]          # the booster knows what it searched for
             mtype = match_type_for(s["surface"], canonical)
             source = "booster"
         else:
             canonical, mtype = canonicalize(s["surface"])
             source = "llm_silver"
         before = text[max(0, s["start"] - 8):s["start"]]
-        spans.append({
+        out.append({
             "start": s["start"], "end": s["end"], "text": s["surface"],
             "canonical": canonical, "match_type": mtype, "source": source,
             "maybe_partial": bool(source == "booster" and _LIST_CONTINUATION.search(before)),
         })
+    return {"pmid": pmid, "model": model, "query_pathways": qps, "spans": out}
 
-    rec = {"pmid": pmid, "model": model, "query_pathways": qps, "spans": spans}
+
+def _rebuild_from_cached(rec: dict, text: str) -> list[dict]:
+    """Rebuild raw spans from cache without an LLM call.
+
+    Only the LLM spans are recovered from cache — the booster is re-run from scratch
+    (pure regex, free) because its own canonical assignment is baked into the cached
+    record and must not survive a booster change. merge() is re-applied too.
+    """
+    llm_spans = [{"surface": s["text"], "start": s["start"], "end": s["end"]}
+                 for s in rec["spans"] if s["source"] == "llm_silver"]
+    return merge(llm_spans, boost(text))
+
+
+def process_one(pmid: str, text: str, qps: list[str], model: str,
+                recanonicalize: bool = False) -> dict:
+    cache = CACHE_DIR / f"{pmid}.json"
+    if cache.exists():
+        rec = json.loads(cache.read_text(encoding="utf-8"))
+        if not recanonicalize:
+            return rec
+        rec = _annotate(_rebuild_from_cached(rec, text), text, pmid, model, qps)
+        cache.write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
+        return rec
+
+    llm_spans = extract_guided(text, qps, model=model)
+    merged = merge(llm_spans, boost(text))
+    rec = _annotate(merged, text, pmid, model, qps)
     cache.write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
     return rec
 
@@ -147,6 +173,9 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--model", default=MODEL)
     ap.add_argument("--output", default=str(OUTPUT_FILE))
+    ap.add_argument("--recanonicalize", action="store_true",
+                    help="re-derive canonical/match_type over the cache, no LLM calls "
+                         "(use after changing llm/canonicalize.py)")
     args = ap.parse_args()
 
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -165,7 +194,8 @@ def main() -> None:
     t0 = time.time()
     for pmid in tqdm(sample, desc="Silver", unit="abstract"):
         was_cached = (CACHE_DIR / f"{pmid}.json").exists()
-        records.append(process_one(pmid, abstracts[pmid], qmap[pmid], args.model))
+        records.append(process_one(pmid, abstracts[pmid], qmap[pmid], args.model,
+                                   recanonicalize=args.recanonicalize))
         cached += was_cached
 
     elapsed = time.time() - t0
