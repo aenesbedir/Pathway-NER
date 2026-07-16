@@ -5,21 +5,30 @@ export_doccano.py
 Phase 3 / Faz 1d — turn silver span records (llm/run_silver.py) into a doccano
 sequence-labeling import file.
 
-Single label type: "Pathway". Reviewers accept / reject / fix the boundary of each
+Single label type: "PATHWAY". Reviewers accept / reject / fix the boundary of each
 span and may add missed ones; they do NOT assign canonical names. `canonical`,
-`match_type` and `source` ride along as metadata context only.
+`match_type` and `source` ride along in `meta` as context only.
 
 Reviewer instructions: doccano/ANNOTATION_GUIDE.md
 
-Format (verified against doccano's importer, `backend/data_import/pipeline/catalog.py`
-→ `ArgColumn` defaults `column_data="text"`, `column_label="label"`):
+Format (`label` verified against doccano's importer,
+`backend/data_import/pipeline/catalog.py` → `ArgColumn` defaults `column_data="text"`,
+`column_label="label"`):
 
-    {"text": "<abstract>", "label": [[start, end, "Pathway"], ...], ...extra}
+    {"text": "<abstract>", "label": [[start, end, "PATHWAY"], ...], "meta": {...}}
 
-`label` is **singular** on import. (doccano's *export* uses `labels` — a known
-asymmetry in their docs; do not copy the export shape here.) Every top-level key
-other than `text`/`label` is stored by doccano as example metadata, so the extras are
-kept flat rather than nested under a `meta` object.
+`label` is **singular** on import — doccano's *export* uses `labels`, an asymmetry in
+their own docs; do not copy the export shape back into an import file.
+
+`meta` is nested rather than flattened into top-level keys: the doccano workspace at
+/home/enes/annotations has imported 488 records in exactly this shape, so it is the
+proven one. The label string never reaches the model (train.py hardcodes
+`{"O", "B-Pathway", "I-Pathway"}`); it only has to match the label defined in the
+doccano project, and `PATHWAY` is what that workspace's guide already prescribes.
+
+This targets the **Phase 3** silver only. The Phase-1 pathway data (`all_matches.jsonl`,
+exported by /home/enes/annotations/scripts/export_to_doccano.py) is out of scope — the
+two datasets share just 3 PMIDs and the Phase-1 doccano project has zero review done.
 
 Input  : data/silver/pilot_1k.jsonl
 Output : doccano/pilot_1k_doccano.jsonl
@@ -39,7 +48,7 @@ SILVER_FILE = ROOT / "data/silver/pilot_1k.jsonl"
 ARTICLES_FILE = ROOT / "data/raw/articles.json"
 OUTPUT_FILE = ROOT / "doccano/pilot_1k_doccano.jsonl"
 
-LABEL = "Pathway"
+LABEL = "PATHWAY"
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s  %(levelname)-8s  %(message)s",
                     datefmt="%H:%M:%S")
@@ -64,14 +73,15 @@ def to_doccano(rec: dict, text: str) -> dict:
             "text": s["text"], "canonical": s["canonical"],
             "match_type": s["match_type"], "source": s["source"],
         })
-    # Keys other than text/label land in doccano's example metadata, so keep them flat.
     return {
         "text": text,
         "label": labels,
-        "pmid": rec["pmid"],
-        "model": rec["model"],
-        "query_pathways": rec["query_pathways"],
-        "span_info": span_info,
+        "meta": {
+            "pmid": rec["pmid"],
+            "model": rec["model"],
+            "query_pathways": rec["query_pathways"],
+            "spans": span_info,
+        },
     }
 
 

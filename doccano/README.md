@@ -5,7 +5,7 @@ annotators, and to get their corrections back out.
 
 | File | What it is |
 |---|---|
-| `pilot_1k_doccano.jsonl` | **The import file** — 1,000 abstracts, 1,996 pre-filled `Pathway` spans |
+| `pilot_1k_doccano.jsonl` | **The import file** — 1,000 abstracts, 1,996 pre-filled `PATHWAY` spans |
 | `ANNOTATION_GUIDE.md` | **Give this to the annotators.** Accept/reject/boundary rules |
 | `export_doccano.py` | Regenerates the import file from `data/silver/pilot_1k.jsonl` |
 | `preview.py` → `preview.html` | Static preview of the spans — check them **without** installing doccano |
@@ -31,28 +31,43 @@ Verified against doccano's importer (`backend/data_import/pipeline/catalog.py`, 
 `ArgColumn` defaults are `column_data="text"`, `column_label="label"`):
 
 ```json
-{"text": "<abstract>", "label": [[74, 90, "Pathway"]], "pmid": "10701848", "model": "qwen2.5:14b", "query_pathways": ["..."], "span_info": [{"text": "purine synthesis", "canonical": "purine synthesis", "match_type": "exact", "source": "llm_silver"}]}
+{"text": "<abstract>", "label": [[74, 90, "PATHWAY"]], "meta": {"pmid": "10701848", "model": "qwen2.5:14b", "query_pathways": ["..."], "spans": [{"text": "purine synthesis", "canonical": "purine synthesis", "match_type": "exact", "source": "llm_silver"}]}}
 ```
 
-- `label` is **singular** on import, and each entry is `[start_offset, end_offset, "Pathway"]`.
+- `label` is **singular** on import, and each entry is `[start_offset, end_offset, "PATHWAY"]`.
   doccano's *export* format uses `labels` (plural) — an asymmetry in their own docs. Do not
   copy the export shape back into an import file.
-- Every top-level key other than `text` / `label` is stored by doccano as example metadata,
-  so the extras are kept **flat** (not nested under a `meta` object).
+- `meta` is nested. The doccano workspace at `/home/enes/annotations` has imported 488
+  records in exactly this shape, so it is the proven one; a flattened variant is untested.
+- The label string never reaches the model — `train.py` hardcodes
+  `{"O", "B-Pathway", "I-Pathway"}` and `tag_bio.py` derives BIO from the spans, not from
+  this name. It only has to match the label defined in the doccano project. `PATHWAY` is
+  what `/home/enes/annotations/DOCCANO_GUIDE.md` already prescribes.
 - Offsets are character offsets into `text`. The exporter drops any span whose offsets do not
   reproduce its recorded surface exactly — the last run dropped **zero**.
 
 ## Import into doccano
 
-1. Install and start doccano (not installed in this repo — see
-   <https://doccano.github.io/doccano/>).
-2. Create a project with type **Sequence Labeling**.
-3. In **Labels**, add a single label named exactly `Pathway`. The import fails on any label
+doccano is already installed and runnable at `/home/enes/annotations` (its own venv +
+`doccano-home/db.sqlite3`); see that folder's `DOCCANO_GUIDE.md` §1–2 for start/stop.
+
+1. Start the server, log in at `http://localhost:8000`.
+2. **Create a new project**, type **Sequence Labeling**. Do not reuse the existing
+   *"Pathway-disease relation project"* — that one holds the 488-document **Phase 1**
+   import, which is out of scope here (see below).
+3. In **Labels**, add a single label named exactly `PATHWAY`. The import fails on any label
    the project does not define, and this file uses only that one.
 4. In **Datasets → Import**, choose file format **JSONL** and upload
-   `pilot_1k_doccano.jsonl`. Leave the column settings at their defaults
-   (`text` / `label`).
+   `pilot_1k_doccano.jsonl`. Leave the column settings at their defaults (`text` / `label`).
+   You should see 1,000 documents.
 5. Hand the annotators `ANNOTATION_GUIDE.md`.
+
+### Phase 1 is out of scope
+`/home/enes/annotations` also contains a Phase-1 pathway export (488 docs, from
+`all_matches.jsonl`) and its own `DOCCANO_GUIDE.md`, written before Phase 2/3 existed. That
+project has **zero human review done** (556 spans, all machine pre-fill; 0 documents marked
+complete), and it shares just **3 PMIDs** with this Phase 3 silver — different corpus,
+different vocabulary. Nothing is lost by leaving it alone.
 
 ## What the annotators do
 

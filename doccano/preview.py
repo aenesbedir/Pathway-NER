@@ -57,7 +57,7 @@ mark.boost { background:var(--boost); border-color:var(--boost-b); }
 
 def render_doc(rec: dict) -> str:
     text = rec["text"]
-    info = {(s["text"]): s for s in rec.get("span_info", [])}
+    info = {s["text"]: s for s in rec.get("meta", {}).get("spans", [])}
     spans = sorted(rec["label"], key=lambda x: x[0])
 
     out, cur = [], 0
@@ -78,7 +78,7 @@ def render_doc(rec: dict) -> str:
 
     body = "".join(out) if spans else f'<span class="none">{html.escape(text)}</span>'
     n = len(spans)
-    return (f'<div class="doc"><h2>PMID {rec["pmid"]}'
+    return (f'<div class="doc"><h2>PMID {rec["meta"]["pmid"]}'
             f'<span class="chip">{n} span</span></h2>'
             f'<div class="txt">{body}</div></div>')
 

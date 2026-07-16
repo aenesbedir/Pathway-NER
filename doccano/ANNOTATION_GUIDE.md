@@ -1,6 +1,6 @@
 # Annotation guide — Pathway span review (doccano)
 
-You are reviewing **machine-generated (silver)** pathway spans. One label type: `Pathway`.
+You are reviewing **machine-generated (silver)** pathway spans. One label type: `PATHWAY`.
 
 Your job per span: **accept**, **reject**, or **fix its boundary**. You may also **add** a
 pathway mention the machine missed. **You do not assign pathway names** — the `canonical`

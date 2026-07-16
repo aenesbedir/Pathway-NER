@@ -748,3 +748,41 @@ canonical name) as a boundary error.
 
 Also fixed: `load_query_pathways()` was leaking `pathway_id: null` rows from
 `exact_matches.jsonl` into prompt hints and export metadata (`"query_pathways": [null]`).
+
+#### P3-1f addendum — aligned with the existing doccano workspace
+An established doccano workspace already exists **outside this repo** at
+`/home/enes/annotations`: its own venv with doccano installed, a live `doccano-home/
+db.sqlite3`, `scripts/export_to_doccano.py` + `import_from_doccano.py` (+ relation
+variants), and a 15KB `DOCCANO_GUIDE.md`. It was not found when `doccano/` was first built
+here, so some of that work was reinvented.
+
+Reconciled against it:
+- **Label `Pathway` → `PATHWAY`** — what that workspace's guide and existing project use.
+  The string never reaches the model (`train.py` hardcodes `{"O", "B-Pathway", "I-Pathway"}`;
+  `tag_bio.py` derives BIO from spans) — it only has to match the label defined in the
+  doccano project.
+- **`meta` un-flattened back to nested.** The earlier flattening was reasoned from doccano's
+  source (extra columns → metadata) but the workspace's nested `meta` is the *proven* shape —
+  488 records imported with it. Untested theory should not override working precedent.
+
+Scope decisions (user):
+- **Annotators review Phase 3 silver only.** The Phase-1 export there (488 docs from
+  `all_matches.jsonl`) is ignored: it has **zero review done** (556 spans are all machine
+  pre-fill, 0 documents complete) and shares just **3 PMIDs** with Phase 3 — different
+  corpus (KEGG/Reactome reference articles vs the PubMed corpus), different vocabulary,
+  1.1 vs 2.0 spans/document.
+- **New doccano project** for Phase 3; the Phase-1 project is left untouched.
+- `meta` contents follow Phase 3 (`pmid`, `model`, `query_pathways`, `spans`), not the
+  Phase-1 shape. A silver round-trip script (the `import_from_doccano.py` equivalent) is
+  still needed — the existing one targets the Phase-1 `all_matches.jsonl` schema. Deferred
+  until after review.
+
+Related finding (analysis only, **not** actioned by user decision): 28 of the 353 distinct
+`unmapped` surfaces (62 spans) are verbatim **KEGG/Reactome** pathway names absent from
+Recon's 98 — e.g. `ascorbate and aldarate metabolism`, `pentose and glucuronate
+interconversions`, and `biosynthesis of unsaturated fatty acids`. Independent confirmation
+that the unmapped bucket holds real pathways rather than hallucinations, and evidence for
+the annotation guide's decision to accept non-Recon pathway names. Most of the rest are
+synonym/normalisation gaps against vocabularies we already have (`kynurenine pathway` ≈
+`tryptophan catabolism`; `alanine, aspartate, and glutamate metabolism` misses KEGG's entry
+on the Oxford comma alone) or umbrella terms. Left as-is: the canonical never enters a label.
