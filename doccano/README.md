@@ -6,7 +6,9 @@ annotators, and to get their corrections back out.
 | File | What it is |
 |---|---|
 | `pilot_1k_doccano.jsonl` | **The import file** — 1,000 abstracts, 1,996 pre-filled `PATHWAY` spans |
-| `ANNOTATION_GUIDE.md` | **Give this to the annotators.** Accept/reject/boundary rules |
+| `ANNOTATION_GUIDE.md` | **Give this to the annotators.** Accept/reject/boundary rules (EN) |
+| `ANNOTATOR_STEPS.md` | **Give this to the annotators.** Post-install doccano steps (TR) |
+| `split_batches.py` → `batches/` | Splits the import file into per-annotator batches |
 | `export_doccano.py` | Regenerates the import file from `data/silver/pilot_1k.jsonl` |
 | `preview.py` → `preview.html` | Static preview of the spans — check them **without** installing doccano |
 
@@ -61,6 +63,24 @@ doccano is already installed and runnable at `/home/enes/annotations` (its own v
    `pilot_1k_doccano.jsonl`. Leave the column settings at their defaults (`text` / `label`).
    You should see 1,000 documents.
 5. Hand the annotators `ANNOTATION_GUIDE.md`.
+
+## Splitting into per-annotator batches (local-install workflow)
+
+Annotators install doccano locally and each imports one slice. Split the import file:
+
+```bash
+venv310/bin/python3 doccano/split_batches.py            # 200 docs per batch → 5 files
+venv310/bin/python3 doccano/split_batches.py --size 100 # smaller batches
+```
+
+Output in `doccano/batches/`, named `pilot_1k_doccano_batch_NN_TOTAL.jsonl` (so it is
+always clear which file was split and which slice this is), e.g.
+`pilot_1k_doccano_batch_01_5.jsonl`. Each batch is a verbatim slice — self-contained and
+directly importable, exactly like the full file.
+
+Send each annotator **their batch file + `ANNOTATOR_STEPS.md` (TR, post-install steps) +
+`ANNOTATION_GUIDE.md` (the accept/reject rules)**. In `ANNOTATOR_STEPS.md` step 4 the doc
+count to expect is the batch size (200), not 1,000.
 
 ### Phase 1 is out of scope
 `/home/enes/annotations` also contains a Phase-1 pathway export (488 docs, from
