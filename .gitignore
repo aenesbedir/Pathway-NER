@@ -106,3 +106,6 @@ dmypy.json
 data/processed/bio_tags_v2.jsonl
 data/processed/phase2/
 logs/run005.log
+
+# doccano batch archives (regenerable via doccano/split_batches.py)
+doccano/batches.zip

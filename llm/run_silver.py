@@ -13,9 +13,8 @@ Silver is machine-labeled and noisy — it goes to doccano for human review befo
 is trusted for training. It is kept strictly apart from the gold set
 (playground/golden_set/).
 
-**The 5 golden PMIDs are excluded from the sample.** They are all present in the
-candidate pool; since silver becomes training data, including them would mean
-training on our own eval set.
+**The 10 golden PMIDs (v1: 5, v2: +5) are excluded from the sample.** Since silver
+becomes training data, including any gold PMID would mean training on our own eval set.
 
 Input  : data/processed/exact_matches.jsonl  (pmid -> query pathways)
          data/raw/articles.json              (abstracts)
@@ -56,7 +55,13 @@ CACHE_DIR = ROOT / "data/raw/llm_cache_silver"
 MODEL = "qwen2.5:14b"
 
 # Golden-set PMIDs — excluded so silver never trains on the eval set.
-GOLDEN_PMIDS = {"11469814", "29615816", "36294866", "39934780", "40225847"}
+# Keep in sync with playground/golden_set/build_golden_set.py (PMIDS_V1 + PMIDS_V2).
+GOLDEN_PMIDS = {
+    # v1
+    "11469814", "29615816", "36294866", "39934780", "40225847",
+    # v2
+    "34376485", "42299101", "28587170", "38669820", "37807318",
+}
 
 # NOTE: an earlier version carried a `maybe_partial` flag for booster spans clipped out
 # of an enumeration (`proline metabolism` inside `Arginine and proline metabolism`).

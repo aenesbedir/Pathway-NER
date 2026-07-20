@@ -100,5 +100,5 @@ design. The rules and the edge cases are in `ANNOTATION_GUIDE.md`.
 
 Export the annotated data from doccano (its export uses `labels`, plural) and treat it as
 the corrected silver set. It stays separate from the gold set
-(`playground/golden_set/`) — the 5 golden PMIDs are deliberately excluded from this file so
+(`playground/golden_set/`) — the 10 golden PMIDs are deliberately excluded from this file so
 that silver never trains on the evaluation set.

@@ -1,6 +1,6 @@
-# Golden Set — variation-aware pathway annotations
+# Golden Set (v2) — variation-aware pathway annotations
 
-Hand-curated over the 5 abstracts richest in distinct Recon pathways (most-distinct-pathway PMIDs from `data/processed/exact_matches.jsonl`). Abstract text from `data/raw/articles.json`. Vocabulary: the 98 canonical Recon subsystems (`unique_pathways_from_recon.json`).
+Hand-curated. **v1** = the 5 abstracts richest in distinct Recon pathways (most-distinct-pathway PMIDs from `data/processed/exact_matches.jsonl`). **v2** = +5 abstracts chosen for pathway-*type* diversity (energy/central-carbon, carbohydrate, nucleotide, urea cycle, vitamin/cofactor, bile acid, drug/xenobiotic) to balance v1's amino-acid/lipid skew. Abstract text from `data/raw/articles.json`. Vocabulary: the 98 canonical Recon subsystems (`unique_pathways_from_recon.json`).
 
 `match_type`: **exact**/**synonym** = exact matching already catches it; **variation** = a real in-vocab pathway mention exact matching MISSES (the whole point of this set).
 
@@ -152,3 +152,129 @@ Hand-curated over the 5 abstracts richest in distinct Recon pathways (most-disti
 ### Metabolite negatives (must NOT be tagged)
 
 - `L-glutamine` (1880–1891) — amino acid metabolite (not 'glutamate metabolism')
+
+## PMID 34376485 — Plasma Metabolic Phenotypes of HPV-Associated versus Smoking-Associated Head and Neck Cancer and Patient Survival.
+
+> BACKGROUND: Metabolic differences between human papillomavirus (HPV)-associated head and neck squamous cell carcinoma (HNSCC) and smoking-associated HNSCC may partially explain differences in prognosis. The former relies on mitochondrial oxidative phosphorylation (OXPHOS) while the latter relies on glycolysis. These differences have not been studied in blood. METHODS: We extracted metabolites using untargeted liquid chromatography high-resolution mass spectrometry from pretreatment plasma in a cohort of 55 HPV-associated and 82 smoking-associated HNSCC subjects. Metabolic pathway enrichment analysis of differentially expressed metabolites produced pathway-based signatures. Significant pathways (P < 0.05) were reduced via principal component analysis and assessed with overall survival via Cox models. We classified each subject as glycolytic or OXPHOS phenotype and assessed it with survival. RESULTS: Of 2,410 analyzed metabolites, 191 were differentially expressed. Relative to smoking-associated HNSCC, bile acid biosynthesis (P < 0.0001) and octadecatrienoic acid beta-oxidation (P = 0.01), were upregulated in HPV-associated HNSCC, while galactose metabolism (P = 0.001) and vitamin B6 metabolism (P = 0.01) were downregulated; the first two suggest an OXPHOS phenotype while the latter two suggest glycolytic. First principal components of bile acid biosynthesis [HR = 0.52 per SD; 95% confidence interval (CI), 0.38-0.72; P < 0.001] and octadecatrienoic acid beta-oxidation (HR = 0.54 per SD; 95% CI, 0.38-0.78; P < 0.001) were significantly associated with overall survival independent of HPV and smoking. The glycolytic versus OXPHOS phenotype was also independently associated with survival (HR = 3.17; 95% CI, 1.07-9.35; P = 0.04). CONCLUSIONS: Plasma metabolites related to glycolysis and mitochondrial OXPHOS may be biomarkers of HNSCC patient prognosis independent of HPV or smoking. Future investigations should determine whether they predict treatment efficacy. IMPACT: Blood metabolomics may be a useful marker to aid HNSCC patient prognosis.
+
+**Counts:** 9 spans (3 exact, 4 synonym, **2 variation**), 0 shared-head enumerations, 0 out-of-vocab, 0 metabolite negatives.
+
+### Contiguous spans
+
+| span text | offsets | canonical pathway | match_type | note |
+|---|---|---|---|---|
+| `oxidative phosphorylation` | 238–263 | oxidative phosphorylation | exact | verbatim canonical; 'mitochondrial oxidative phosphorylation (OXPHOS)' |
+| `OXPHOS` | 265–271 | oxidative phosphorylation | synonym | abbreviation; 'oxphos' is a current RECON_SYNONYM |
+| `glycolysis` | 300–310 | glycolysis/gluconeogenesis | synonym | 'glycolysis' is a current RECON_SYNONYM of 'glycolysis/gluconeogenesis' |
+| `bile acid biosynthesis` | 1016–1038 | bile acid synthesis | synonym | 'bile acid biosynthesis' is a current RECON_SYNONYM of 'bile acid synthesis' |
+| `bile acid biosynthesis` | 1356–1378 | bile acid synthesis | synonym | 'First principal components of bile acid biosynthesis' |
+| `octadecatrienoic acid beta-oxidation` | 1056–1092 | fatty acid oxidation | variation | specific fatty acid + 'beta-oxidation' -> Recon parent 'fatty acid oxidation' |
+| `octadecatrienoic acid beta-oxidation` | 1454–1490 | fatty acid oxidation | variation | second occurrence in survival analysis |
+| `galactose metabolism` | 1153–1173 | galactose metabolism | exact | verbatim canonical |
+| `vitamin B6 metabolism` | 1190–1211 | vitamin b6 metabolism | exact | verbatim canonical (capitalized B) |
+
+## PMID 42299101 — Posttranscriptional Regulation of Metabolism in Glioblastoma: A Multipathway Review.
+
+> Glioblastoma (GBM) is the most aggressive and lethal form of primary brain tumor. A hallmark of GBM metabolism is the Warburg effect, whereby tumor cells preferentially utilize aerobic glycolysis despite oxygen availability, producing ATP inefficiently but supporting anabolic processes. Concurrently, the pentose phosphate pathway (PPP), amino acid metabolism, lipid biosynthesis, and nucleotide synthesis are rewired to meet the energetic and biosynthetic demands of GBM cells. Recent discoveries underscore the role of microRNAs (miRNAs) as master regulators orchestrating these metabolic rewiring events. Acting posttranscriptionally, miRNAs target key transporters, enzymes, and signaling molecules involved in glycolysis, glutaminolysis, lipid biosynthesis, and oxidative metabolism. This review explores how miRNA networks modulate metabolic plasticity in GBM. Specific miRNAs, such as miR-153, miR-451, miR-940, and miR-200b, suppress glutamine metabolism, regulate glucose transporters (e.g., GLUT1/3), inhibit lactate dehydrogenase, and disrupt mitochondrial folate metabolism. Others, such as miR-29 and miR-183, control lipid and nucleotide metabolism via the SREBP1 and IDH2 pathways. Furthermore, regulatory interactions among miRNAs, long non-coding RNAs (lncRNAs), and circular RNAs (circRNAs), such as the XIST/miR-126 or circ-CREBBP/miR-375 axes, create complex feedback loops that fine-tune metabolic pathways and enhance tumor survival under stress. We also discuss therapeutic strategies targeting these miRNA-metabolism circuits, including nanoparticle delivery, dietary restriction, and combination therapies that re-sensitize tumors to temozolomide and radiation. Understanding and therapeutically exploiting these networks presents a powerful approach to overcoming GBM's metabolic resilience, thereby opening new avenues for precision oncology.
+
+**Counts:** 13 spans (1 exact, 3 synonym, **5 variation**), 1 shared-head enumerations, 0 out-of-vocab, 1 metabolite negatives.
+
+### Contiguous spans
+
+| span text | offsets | canonical pathway | match_type | note |
+|---|---|---|---|---|
+| `Warburg effect` | 118–132 | glycolysis/gluconeogenesis | synonym | 'warburg effect' is a current RECON_SYNONYM (aerobic glycolysis) |
+| `aerobic glycolysis` | 177–195 | glycolysis/gluconeogenesis | variation | 'aerobic' subtype modifier on glycolysis; exact-match misses the phrase |
+| `pentose phosphate pathway` | 306–331 | pentose phosphate pathway | exact | verbatim canonical |
+| `PPP` | 333–336 | pentose phosphate pathway | synonym | abbreviation; 'ppp' is a current RECON_SYNONYM |
+| `amino acid metabolism` | 339–360 | amino acid metabolism | umbrella | umbrella metabolic-process term; no single Recon subsystem |
+| `lipid biosynthesis` | 362–380 | lipid metabolism | umbrella | generic lipid umbrella; no single Recon subsystem |
+| `nucleotide synthesis` | 386–406 | nucleotide metabolism | variation | generic 'nucleotide synthesis' -> Recon parent 'nucleotide metabolism' |
+| `glycolysis` | 716–726 | glycolysis/gluconeogenesis | synonym | standalone 'glycolysis' in 'involved in glycolysis, glutaminolysis' |
+| `glutaminolysis` | 728–742 | glutamate metabolism | variation | glutamine catabolism to glutamate/a-KG; Recon folds into 'glutamate metabolism' |
+| `lipid biosynthesis` | 744–762 | lipid metabolism | umbrella | second occurrence; generic lipid umbrella |
+| `glutamine metabolism` | 943–963 | glutamate metabolism | variation | Recon has no 'glutamine metabolism'; folded into 'glutamate metabolism' |
+| `oxidative metabolism` | 768–788 | oxidative metabolism | umbrella | vague energy-related umbrella; no single Recon subsystem |
+| `mitochondrial folate metabolism` | 1055–1086 | folate metabolism | variation | compartment qualifier 'mitochondrial' on 'folate metabolism' |
+
+### Shared-head enumerations
+
+- **`lipid and nucleotide metabolism`** (1132–1163) — 'control lipid and nucleotide metabolism' — shared 'metabolism' head
+    - → `lipid metabolism` (umbrella): generic lipid umbrella; no single Recon subsystem
+    - → `nucleotide metabolism` (exact): verbatim canonical after shared-head split
+
+### Metabolite negatives (must NOT be tagged)
+
+- `ATP` (235–238) — energy metabolite, not a pathway
+
+## PMID 28587170 — The Combination of Arginine Deprivation and 5-Fluorouracil Improves Therapeutic Efficacy in Argininosuccinate Synthetase Negative Hepatocellular Carcinoma.
+
+> Argininosuccinate synthetase (ASS), a key enzyme to synthesize arginine is down regulated in many tumors including hepatocellular carcinoma (HCC). Similar to previous reports, we have found the decrease in ASS expression in poorly differentiated HCC. These ASS(-) tumors are auxotrophic for arginine. Pegylated arginine deiminase (ADI-PEG20), which degrades arginine, has shown activity in these tumors, but the antitumor effect is not robust and hence combination treatment is needed. Herein, we have elucidated the effectiveness of ADI-PEG20 combined with 5-Fluorouracil (5-FU) in ASS(-)HCC by targeting urea cycle and pyrimidine metabolism using four HCC cell lines as model. SNU398 and SNU387 express very low levels of ASS or ASS(-) while Huh-1, and HepG2 express high ASS similar to normal cells. Our results showed that the augmented cytotoxic effect of combination treatment only occurs in SNU398 and SNU387, and not in HepG2 and Huh-1 (ASS(+)) cells, and is partly due to reduced anti-apoptotic proteins X-linked inhibitor of apoptosis protein (XIAP), myeloid leukemia cell differentiation protein (Mcl-1) and B-cell lymphoma-2 (Bcl-2). Importantly, lack of ASS also influences essential enzymes in pyrimidine synthesis (carbamoyl-phosphate synthetase2, aspartate transcarbamylase and dihydrooratase (CAD) and thymidylate synthase (TS)) and malate dehydrogenase-1 (MDH-1) in TCA cycle. ADI-PEG20 treatment decreased these enzymes and made them more vulnerable to 5-FU. Transfection of ASS restored these enzymes and abolished the sensitivity to ADI-PEG20 and combination treatment. Overall, our data suggest that ASS influences multiple enzymes involved in 5-FU sensitivity. Combining ADI-PEG20 and 5-FU may be effective to treat ASS(-)hepatoma and warrants further clinical investigation.
+
+**Counts:** 3 spans (2 exact, 1 synonym, **0 variation**), 1 shared-head enumerations, 0 out-of-vocab, 1 metabolite negatives.
+
+### Contiguous spans
+
+| span text | offsets | canonical pathway | match_type | note |
+|---|---|---|---|---|
+| `urea cycle` | 606–616 | urea cycle | exact | verbatim canonical; 'targeting urea cycle and pyrimidine metabolism' |
+| `pyrimidine synthesis` | 1208–1228 | pyrimidine synthesis | exact | verbatim canonical; 'essential enzymes in pyrimidine synthesis' |
+| `TCA cycle` | 1384–1393 | citric acid cycle | synonym | 'tca cycle' is a current RECON_SYNONYM of 'citric acid cycle' |
+
+### Shared-head enumerations
+
+- **`pyrimidine metabolism`** (621–642) — umbrella term spanning both Recon pyrimidine subsystems
+    - → `pyrimidine synthesis` (variation): umbrella 'pyrimidine metabolism' -> Recon child
+    - → `pyrimidine catabolism` (variation): umbrella 'pyrimidine metabolism' -> Recon child
+
+### Metabolite negatives (must NOT be tagged)
+
+- `arginine` (63–71) — amino acid metabolite (deprivation-therapy target), not a pathway
+
+## PMID 38669820 — Primary goose kidney tubular epithelial cells for goose astrovirus genotype 2 infection: establishment and RNA sequencing analysis.
+
+> Goose astrovirus genotype 2 (GAstV-2) mainly causes gout in goslings; therefore, it is a major pathogen threatening to goose flocks. However, the mechanisms underlying host-GAstV-2 interactions remain unclear because host cells suitable for GAstV-2 replication have been unavailable. We previously noted that GAstV-2 is primarily located in goose renal epithelial cells, where it causes kidney damage. Therefore, here, we derived goose primary renal tubular epithelial (RTE) cells (GRTE cells) from the kidneys of goose embryos after collagenase I digestion. After culture in Dulbecco's modified Eagle medium/Nutrient mixture F-12 with 10% fetal bovine serum (FBS), the isolated cells had polygonal with roadstone-like morphology; they were identified to be epithelial cells based on the presence of cytokeratin 18 expression detected through immunofluorescence assay (IFA). GAstV-2 infection in GRTE cells led to no obvious cytopathic effects; the maximum amounts of infectious virions were observed 48 h post infection through IFA and quantitative PCR. Next, RNA-seq was performed to identify and map post-GAstV-2 infection differentially expressed genes. The downregulated pathways were mainly related to metabolism, including tryptophan metabolism, drug metabolism by cytochrome P450, xenobiotic metabolism by cytochrome P450, retinol metabolism, butanoate metabolism, starch and sucrose metabolism, ascorbate and aldarate metabolism, and drug metabolism by other enzymes and peroxisome. In contrast, the upregulated pathways were mostly related to the host cell defense and proliferation, including extracellular matrix-receptor interaction, complement and coagulation cascades, phagosome, PI3K-Akt signaling pathway, human T-lymphotropic virus 1 infection, lysosome, and tumor necrosis factor signaling pathway. In conclusion, we developed a GRTE cell line for GAstV-2 replication and analyzed the potential host-GAstV-2 interactions through RNA-seq; our results may aid in further investigating the pathogenic mechanisms underlying GAstV-2 infection and provide strategies for its prevention and control.
+
+**Counts:** 9 spans (5 exact, 0 synonym, **4 variation**), 0 shared-head enumerations, 2 out-of-vocab, 0 metabolite negatives.
+
+### Contiguous spans
+
+| span text | offsets | canonical pathway | match_type | note |
+|---|---|---|---|---|
+| `tryptophan metabolism` | 1230–1251 | tryptophan metabolism | exact | verbatim canonical |
+| `drug metabolism` | 1253–1268 | drug metabolism | exact | verbatim canonical core of 'drug metabolism by cytochrome P450' |
+| `cytochrome P450` | 1272–1287 | cytochrome metabolism | variation | 'cytochrome P450' -> Recon 'cytochrome metabolism' |
+| `xenobiotic metabolism` | 1289–1310 | drug metabolism | variation | xenobiotic = foreign-compound metabolism; Recon 'drug metabolism' |
+| `retinol metabolism` | 1331–1349 | vitamin a metabolism | variation | retinol = vitamin A; chemical-synonym of 'vitamin a metabolism' |
+| `butanoate metabolism` | 1351–1371 | butanoate metabolism | exact | verbatim canonical |
+| `starch and sucrose metabolism` | 1373–1402 | starch and sucrose metabolism | exact | verbatim canonical |
+| `ascorbate and aldarate metabolism` | 1404–1437 | vitamin c metabolism | variation | ascorbate = vitamin C -> 'vitamin c metabolism'; 'aldarate' has no Recon subsystem |
+| `drug metabolism` | 1443–1458 | drug metabolism | exact | 'drug metabolism by other enzymes' |
+
+### Out-of-vocab pathway mentions (not scored in-scope)
+
+- `PI3K-Akt signaling pathway` (1695–1721) — signaling pathway, not a metabolic process (contains 'pathway' — precision trap)
+- `peroxisome` (1480–1490) — organelle, not a metabolic pathway
+
+## PMID 37807318 — UHPLC-MS/MS-based central carbon metabolism unveils the biomarkers related to colon cancer.
+
+> Even though colon cancer ranks among the leading causes of cancer mortality, early detection dramatically increases survival rates. Many studies have been conducted to determine whether altered metabolite levels may serve as a potential biomarker of cancer that affects key metabolic pathways. The goal of the study was to detect metabolic biomarkers in patients with colon cancer using liquid chromatography-mass spectrometry (LC-MS). This study consisted of 30 patients with colon cancer. An analysis of the metabolomes of cancer samples and para-carcinoma tissues was conducted. We identified a series of important metabolic changes in colon cancer by analyzing metabolites in cancerous tissues compared to their normal counterparts. They are mainly involved in the pentose phosphate pathway, the TCA cycle, glycolysis, galactose metabolism, and butanoate metabolism. As well, we observed dysregulation of AMP, dTMP, fructose, and D-glucose in colon cancer. Additionally, the AUCs for AMP, dTMP, fructose, and D-glucose were greater than 0.7 for the diagnosis of colon cancer. In conclusion, AMP, dTMP, fructose, and D-glucose showed excellent diagnostic performance and could serve as novel disease biomarkers for colon cancer diagnosis.
+
+**Counts:** 5 spans (3 exact, 2 synonym, **0 variation**), 0 shared-head enumerations, 0 out-of-vocab, 4 metabolite negatives.
+
+### Contiguous spans
+
+| span text | offsets | canonical pathway | match_type | note |
+|---|---|---|---|---|
+| `pentose phosphate pathway` | 769–794 | pentose phosphate pathway | exact | verbatim canonical |
+| `TCA cycle` | 800–809 | citric acid cycle | synonym | 'tca cycle' is a current RECON_SYNONYM of 'citric acid cycle' |
+| `glycolysis` | 811–821 | glycolysis/gluconeogenesis | synonym | 'glycolysis' is a current RECON_SYNONYM of 'glycolysis/gluconeogenesis' |
+| `galactose metabolism` | 823–843 | galactose metabolism | exact | verbatim canonical |
+| `butanoate metabolism` | 849–869 | butanoate metabolism | exact | verbatim canonical |
+
+### Metabolite negatives (must NOT be tagged)
+
+- `AMP` (909–912) — nucleotide metabolite
+- `dTMP` (914–918) — nucleotide metabolite
+- `fructose` (920–928) — sugar metabolite (not 'fructose and mannose metabolism')
+- `D-glucose` (934–943) — sugar metabolite

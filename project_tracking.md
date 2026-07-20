@@ -807,3 +807,22 @@ doccano exports back into a corrected silver set (the existing
 `/home/enes/annotations/scripts/import_from_doccano.py` targets the Phase-1 `all_matches`
 schema, not this one). `ANNOTATION_GUIDE.md` is EN while `ANNOTATOR_STEPS.md` is TR — translate
 the former if annotators need Turkish.
+
+### ✅ Golden set v2 — pathway-type diversity (`playground/golden_set/build_golden_set.py`)
+Grew the gold set 5 → 10 abstracts. v1 was amino-acid/lipid heavy; v2 adds 5 abstracts
+picked for pathway-*type* coverage (ranked candidates by distinct under-represented Recon
+themes in `exact_matches.jsonl`): energy/central-carbon, carbohydrate, nucleotide, urea
+cycle, vitamin/cofactor, bile acid, drug/xenobiotic.
+- New PMIDs: 34376485 (HPV/smoking HNSCC — OXPHOS/glycolysis, bile acid, FA-oxidation,
+  galactose, vitamin B6), 42299101 (glioblastoma review — Warburg/glycolysis, PPP,
+  nucleotide, folate, glutamine; dense variations), 28587170 (arginine deprivation HCC —
+  **urea cycle**, pyrimidine, TCA), 38669820 (goose astrovirus — drug/cytochrome-P450,
+  retinol→vitamin A, ascorbate→vitamin C, carbohydrate), 37807318 (colon-cancer central
+  carbon — glycolysis, TCA, PPP, galactose, butanoate + clean sugar/nucleotide negatives).
+- Recon-resolvable mentions 38 → 76; exact-match catch rate 37% → 51% (added central-carbon
+  articles name pathways verbatim), still ~49% variations missed. Umbrella mentions 4 → 9.
+- All offsets recomputed from `(surface, occ)` and every match_type validated OK by the
+  build script. Same schema/consumers — `golden_set.json` now carries `version: "v2"`.
+- **Integrity:** the 5 new PMIDs are absent from silver/doccano (verified); updated the
+  hardcoded exclusion `GOLDEN_PMIDS` in `llm/run_silver.py` (5 → 10) so silver never trains
+  on them if regenerated. Doc counts updated (README, doccano guides).

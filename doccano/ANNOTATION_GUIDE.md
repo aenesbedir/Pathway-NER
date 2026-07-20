@@ -51,7 +51,7 @@ accept.
 
 ## Worked examples
 
-`playground/golden_set/golden_set.md` is 5 abstracts annotated by hand under this rule —
+`playground/golden_set/golden_set.md` is 10 abstracts annotated by hand under this rule —
 use it as the reference when a case is unclear.
 
 ## Note — one deliberate difference from the golden set

@@ -13,25 +13,35 @@ on that learns a near-lookup behavior: it tags what it literally saw and labels
 paraphrases as `O`. This set was built to **quantify and eventually close** that
 gap.
 
+## Versions
+
+- **v1** (5 abstracts): the abstracts richest in *distinct* Recon pathways
+  (most-distinct-pathway PMIDs from `exact_matches.jsonl`). Amino-acid/lipid heavy.
+- **v2** (+5 abstracts, 10 total): chosen for pathway-*type* diversity to balance
+  v1 — energy/central-carbon, carbohydrate, nucleotide, urea cycle, vitamin/cofactor,
+  bile acid, drug/xenobiotic. See the articles table below.
+
 ## Headline finding
 
-Hand-annotating every pathway mention in the 5 abstracts richest in distinct
-pathways, pooling contiguous spans + shared-head-enumeration parts (per mention;
-umbrella/abbreviation terms fan out to each Recon child they denote):
+Hand-annotating every pathway mention in the 10 abstracts, pooling contiguous
+spans + shared-head-enumeration parts (per mention; umbrella/abbreviation terms fan
+out to each Recon child they denote):
 
-| | Count | Share |
-|---|---|---|
-| Recon-resolvable pathway mentions (map to ≥1 of the 98 subsystems) | 38 | 100% |
-| Exact matching **catches** (canonical / synonym) | 14 | 37% |
-| Exact matching **misses** (variations) | **24** | **63%** |
+| | Count (v1) | Count (v2, 10 abstracts) | Share (v2) |
+|---|---|---|---|
+| Recon-resolvable pathway mentions (map to ≥1 of the 98 subsystems) | 38 | 76 | 100% |
+| Exact matching **catches** (canonical / synonym) | 14 | 39 | 51% |
+| Exact matching **misses** (variations) | **24** | **37** | **49%** |
 
-Plus **4 umbrella mentions** (`amino acid metabolism`, `lipid metabolism`,
-`energy metabolism`, `neurotransmitter metabolism`) — genuine metabolic-process
-mentions that don't resolve to any single Recon subsystem, positive for a binary
-tagger but not Recon-scored.
+Plus **9 umbrella mentions** (`amino acid metabolism`, `lipid metabolism`,
+`oxidative metabolism`, `energy metabolism`, `neurotransmitter metabolism`, …) —
+genuine metabolic-process mentions that don't resolve to any single Recon subsystem,
+positive for a binary tagger but not Recon-scored.
 
-**~63% of Recon-resolvable pathway mentions are invisible to exact matching** in
-dense review-style abstracts. Examples of what it misses:
+The catch rate rose from v1's 37% to 51% in v2: the added central-carbon articles
+use many pathway names verbatim (`glycolysis`, `TCA cycle`, `OXPHOS`, `PPP`,
+`galactose metabolism`), so exact matching catches more of them — while still
+missing ~half. Examples of what it misses:
 
 - `metabolism of androgens` → androgen … metabolism (word-order)
 - `cholecalciferol metabolism` → vitamin d metabolism (chemical synonym)
@@ -40,9 +50,10 @@ dense review-style abstracts. Examples of what it misses:
 - `BCAA … metabolism` → valine, leucine, and isoleucine metabolism (abbreviation)
 - `AAA metabolism` → phenylalanine / tyrosine / tryptophan metabolism (abbrev. → 3 children)
 - `purine metabolism` → purine synthesis + purine catabolism (umbrella → children)
-
-The miss rate rose from an earlier 44% once umbrella/abbreviation terms were mapped
-to their Recon children (all of which are variations exact matching misses).
+- `octadecatrienoic acid beta-oxidation` → fatty acid oxidation (specific FA → parent) *(v2)*
+- `retinol metabolism` → vitamin a metabolism (chemical synonym) *(v2)*
+- `mitochondrial folate metabolism` → folate metabolism (compartment qualifier) *(v2)*
+- `pyrimidine metabolism` → pyrimidine synthesis + pyrimidine catabolism (umbrella → children) *(v2)*
 
 ## Files
 
@@ -52,9 +63,12 @@ to their Recon children (all of which are variations exact matching misses).
 - `golden_set.json` — machine-readable annotations (the eval artifact).
 - `golden_set.md` — human review copy (abstract text + all annotations per PMID).
 
-## Articles (most distinct Recon pathways, by exact-match count)
+## Articles
 
-Per-mention (spans + enumeration parts), Recon-resolvable only:
+Per-mention (spans + enumeration parts), Recon-resolvable only. `themes` names the
+pathway families the article contributes.
+
+**v1** — most distinct Recon pathways, by exact-match count:
 
 | PMID | Title | catches | variations | umbrella |
 |---|---|---|---|---|
@@ -63,6 +77,16 @@ Per-mention (spans + enumeration parts), Recon-resolvable only:
 | 40225847 | Biomarkers for schizophrenia (metabolomics review) | 2 | 1 | 0 |
 | 29615816 | Metabolic features of FLT3-ITD AML | 2 | 4 | 0 |
 | 36294866 | Metabolomic signatures of ASD | 5 | 13 | 2 |
+
+**v2** — chosen for pathway-type diversity:
+
+| PMID | Title | catches | variations | umbrella | themes |
+|---|---|---|---|---|---|
+| 34376485 | HPV vs smoking HNSCC plasma phenotypes | 7 | 2 | 0 | energy (OXPHOS/glycolysis), bile acid, FA oxidation, galactose, vitamin B6 |
+| 42299101 | Posttranscriptional regulation in glioblastoma | 5 | 5 | 5 | Warburg/glycolysis, PPP, nucleotide, folate, glutamine |
+| 28587170 | Arginine deprivation + 5-FU in HCC | 3 | 2 | 0 | urea cycle, pyrimidine, TCA |
+| 38669820 | Goose astrovirus RNA-seq | 5 | 4 | 0 | drug/cytochrome-P450, vitamin A (retinol), vitamin C (ascorbate), carbohydrate |
+| 37807318 | Central-carbon biomarkers in colon cancer | 5 | 0 | 0 | glycolysis, TCA, PPP, galactose, butanoate |
 
 ## Annotation schema
 
@@ -95,11 +119,10 @@ excluded (`out_of_vocab_pathways`).
 
 ## Scope & caveats
 
-- **Abstract-level.** These 5 articles have 30–77k-char full texts; the abstracts
-  are annotated exhaustively and are trustworthy. Full-text annotation is a future
-  extension.
-- **Small by design.** A gold set is for measurement, not training. 5 abstracts /
-  38 Recon-resolvable mentions (+4 umbrella) is enough to detect a real
+- **Abstract-level.** These 10 articles have long full texts; only the abstracts are
+  annotated (exhaustively, and trustworthy). Full-text annotation is a future extension.
+- **Small by design.** A gold set is for measurement, not training. 10 abstracts /
+  76 Recon-resolvable mentions (+9 umbrella) is enough to detect a real
   generalization gap; it is not a statistically tight benchmark. Grow it before
   drawing fine-grained conclusions.
 - **Per-mention counting.** Umbrella/abbreviation terms fan out (`AAA metabolism` →

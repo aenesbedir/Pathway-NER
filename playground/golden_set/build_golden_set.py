@@ -68,7 +68,14 @@ HERE = Path(__file__).resolve().parent
 ARTICLES = ROOT / "data/raw/articles.json"
 RECON = ROOT / "unique_pathways_from_recon.json"
 
-PMIDS = ["11469814", "39934780", "40225847", "29615816", "36294866"]
+# v1 (2026-07-15): 5 abstracts richest in DISTINCT Recon pathways by exact-match count.
+# v2 (2026-07-20): +5 abstracts chosen for pathway-TYPE diversity — themes v1 barely
+#   touched (energy / central-carbon, carbohydrate, nucleotide, urea cycle,
+#   vitamin/cofactor, bile acid, drug/xenobiotic). v1 was amino-acid/lipid heavy.
+VERSION = "v2"
+PMIDS_V1 = ["11469814", "39934780", "40225847", "29615816", "36294866"]
+PMIDS_V2 = ["34376485", "42299101", "28587170", "38669820", "37807318"]
+PMIDS = PMIDS_V1 + PMIDS_V2
 
 # Surface forms exact matching already covers (canonical names are added
 # separately from the Recon vocab). Used only to sanity-check match_type labels.
@@ -240,6 +247,157 @@ ANN = {
             ("L-glutamine", 0, "amino acid metabolite (not 'glutamate metabolism')"),
         ],
     },
+
+    # ---- v2 additions (pathway-type diversity) --------------------------------
+
+    # Energy (OXPHOS/glycolysis) + bile acid + fatty-acid-oxidation variation +
+    # carbohydrate (galactose) + cofactor (vitamin B6).
+    "34376485": {
+        "spans": [
+            ("oxidative phosphorylation", 0, "oxidative phosphorylation", "exact",
+             "verbatim canonical; 'mitochondrial oxidative phosphorylation (OXPHOS)'"),
+            ("OXPHOS", 0, "oxidative phosphorylation", "synonym",
+             "abbreviation; 'oxphos' is a current RECON_SYNONYM"),
+            ("glycolysis", 0, "glycolysis/gluconeogenesis", "synonym",
+             "'glycolysis' is a current RECON_SYNONYM of 'glycolysis/gluconeogenesis'"),
+            ("bile acid biosynthesis", 0, "bile acid synthesis", "synonym",
+             "'bile acid biosynthesis' is a current RECON_SYNONYM of 'bile acid synthesis'"),
+            ("bile acid biosynthesis", 1, "bile acid synthesis", "synonym",
+             "'First principal components of bile acid biosynthesis'"),
+            ("octadecatrienoic acid beta-oxidation", 0, "fatty acid oxidation", "variation",
+             "specific fatty acid + 'beta-oxidation' -> Recon parent 'fatty acid oxidation'"),
+            ("octadecatrienoic acid beta-oxidation", 1, "fatty acid oxidation", "variation",
+             "second occurrence in survival analysis"),
+            ("galactose metabolism", 0, "galactose metabolism", "exact",
+             "verbatim canonical"),
+            ("vitamin B6 metabolism", 0, "vitamin b6 metabolism", "exact",
+             "verbatim canonical (capitalized B)"),
+        ],
+        "shared_head_enumerations": [],
+        "out_of_vocab_pathways": [],
+        "metabolites_not_pathways": [],
+    },
+
+    # Dense review: Warburg/glycolysis, PPP, nucleotide, folate, glutamine +
+    # several umbrella terms. Richest v2 article for surface variation.
+    "42299101": {
+        "spans": [
+            ("Warburg effect", 0, "glycolysis/gluconeogenesis", "synonym",
+             "'warburg effect' is a current RECON_SYNONYM (aerobic glycolysis)"),
+            ("aerobic glycolysis", 0, "glycolysis/gluconeogenesis", "variation",
+             "'aerobic' subtype modifier on glycolysis; exact-match misses the phrase"),
+            ("pentose phosphate pathway", 0, "pentose phosphate pathway", "exact",
+             "verbatim canonical"),
+            ("PPP", 0, "pentose phosphate pathway", "synonym",
+             "abbreviation; 'ppp' is a current RECON_SYNONYM"),
+            ("amino acid metabolism", 0, "amino acid metabolism", "umbrella",
+             "umbrella metabolic-process term; no single Recon subsystem"),
+            ("lipid biosynthesis", 0, "lipid metabolism", "umbrella",
+             "generic lipid umbrella; no single Recon subsystem"),
+            ("nucleotide synthesis", 0, "nucleotide metabolism", "variation",
+             "generic 'nucleotide synthesis' -> Recon parent 'nucleotide metabolism'"),
+            ("glycolysis", 1, "glycolysis/gluconeogenesis", "synonym",
+             "standalone 'glycolysis' in 'involved in glycolysis, glutaminolysis'"),
+            ("glutaminolysis", 0, "glutamate metabolism", "variation",
+             "glutamine catabolism to glutamate/a-KG; Recon folds into 'glutamate metabolism'"),
+            ("lipid biosynthesis", 1, "lipid metabolism", "umbrella",
+             "second occurrence; generic lipid umbrella"),
+            ("glutamine metabolism", 0, "glutamate metabolism", "variation",
+             "Recon has no 'glutamine metabolism'; folded into 'glutamate metabolism'"),
+            ("oxidative metabolism", 0, "oxidative metabolism", "umbrella",
+             "vague energy-related umbrella; no single Recon subsystem"),
+            ("mitochondrial folate metabolism", 0, "folate metabolism", "variation",
+             "compartment qualifier 'mitochondrial' on 'folate metabolism'"),
+        ],
+        "shared_head_enumerations": [
+            ("lipid and nucleotide metabolism",
+             [("lipid metabolism", "umbrella", "generic lipid umbrella; no single Recon subsystem"),
+              ("nucleotide metabolism", "exact", "verbatim canonical after shared-head split")],
+             "'control lipid and nucleotide metabolism' — shared 'metabolism' head"),
+        ],
+        "out_of_vocab_pathways": [],
+        "metabolites_not_pathways": [
+            ("ATP", 0, "energy metabolite, not a pathway"),
+        ],
+    },
+
+    # Urea cycle (unique to the set) + pyrimidine + TCA.
+    "28587170": {
+        "spans": [
+            ("urea cycle", 0, "urea cycle", "exact",
+             "verbatim canonical; 'targeting urea cycle and pyrimidine metabolism'"),
+            ("pyrimidine synthesis", 0, "pyrimidine synthesis", "exact",
+             "verbatim canonical; 'essential enzymes in pyrimidine synthesis'"),
+            ("TCA cycle", 0, "citric acid cycle", "synonym",
+             "'tca cycle' is a current RECON_SYNONYM of 'citric acid cycle'"),
+        ],
+        "shared_head_enumerations": [
+            ("pyrimidine metabolism",
+             [("pyrimidine synthesis", "variation", "umbrella 'pyrimidine metabolism' -> Recon child"),
+              ("pyrimidine catabolism", "variation", "umbrella 'pyrimidine metabolism' -> Recon child")],
+             "umbrella term spanning both Recon pyrimidine subsystems"),
+        ],
+        "out_of_vocab_pathways": [],
+        "metabolites_not_pathways": [
+            ("arginine", 0, "amino acid metabolite (deprivation-therapy target), not a pathway"),
+        ],
+    },
+
+    # Drug/xenobiotic (cytochrome P450) + vitamin A (retinol) + vitamin C
+    # (ascorbate) + carbohydrate; plus non-metabolic 'pathway' negatives.
+    "38669820": {
+        "spans": [
+            ("tryptophan metabolism", 0, "tryptophan metabolism", "exact",
+             "verbatim canonical"),
+            ("drug metabolism", 0, "drug metabolism", "exact",
+             "verbatim canonical core of 'drug metabolism by cytochrome P450'"),
+            ("cytochrome P450", 0, "cytochrome metabolism", "variation",
+             "'cytochrome P450' -> Recon 'cytochrome metabolism'"),
+            ("xenobiotic metabolism", 0, "drug metabolism", "variation",
+             "xenobiotic = foreign-compound metabolism; Recon 'drug metabolism'"),
+            ("retinol metabolism", 0, "vitamin a metabolism", "variation",
+             "retinol = vitamin A; chemical-synonym of 'vitamin a metabolism'"),
+            ("butanoate metabolism", 0, "butanoate metabolism", "exact",
+             "verbatim canonical"),
+            ("starch and sucrose metabolism", 0, "starch and sucrose metabolism", "exact",
+             "verbatim canonical"),
+            ("ascorbate and aldarate metabolism", 0, "vitamin c metabolism", "variation",
+             "ascorbate = vitamin C -> 'vitamin c metabolism'; 'aldarate' has no Recon subsystem"),
+            ("drug metabolism", 1, "drug metabolism", "exact",
+             "'drug metabolism by other enzymes'"),
+        ],
+        "shared_head_enumerations": [],
+        "out_of_vocab_pathways": [
+            ("PI3K-Akt signaling pathway", 0,
+             "signaling pathway, not a metabolic process (contains 'pathway' — precision trap)"),
+            ("peroxisome", 0, "organelle, not a metabolic pathway"),
+        ],
+        "metabolites_not_pathways": [],
+    },
+
+    # Central-carbon panel + clean sugar/nucleotide metabolite negatives.
+    "37807318": {
+        "spans": [
+            ("pentose phosphate pathway", 0, "pentose phosphate pathway", "exact",
+             "verbatim canonical"),
+            ("TCA cycle", 0, "citric acid cycle", "synonym",
+             "'tca cycle' is a current RECON_SYNONYM of 'citric acid cycle'"),
+            ("glycolysis", 0, "glycolysis/gluconeogenesis", "synonym",
+             "'glycolysis' is a current RECON_SYNONYM of 'glycolysis/gluconeogenesis'"),
+            ("galactose metabolism", 0, "galactose metabolism", "exact",
+             "verbatim canonical"),
+            ("butanoate metabolism", 0, "butanoate metabolism", "exact",
+             "verbatim canonical"),
+        ],
+        "shared_head_enumerations": [],
+        "out_of_vocab_pathways": [],
+        "metabolites_not_pathways": [
+            ("AMP", 0, "nucleotide metabolite"),
+            ("dTMP", 0, "nucleotide metabolite"),
+            ("fructose", 0, "sugar metabolite (not 'fructose and mannose metabolism')"),
+            ("D-glucose", 0, "sugar metabolite"),
+        ],
+    },
 }
 
 
@@ -260,10 +418,13 @@ def resolve(text, surface, occ):
 
 
 def write_markdown(out):
-    L = ["# Golden Set — variation-aware pathway annotations",
+    L = [f"# Golden Set ({VERSION}) — variation-aware pathway annotations",
          "",
-         "Hand-curated over the 5 abstracts richest in distinct Recon pathways "
+         "Hand-curated. **v1** = the 5 abstracts richest in distinct Recon pathways "
          "(most-distinct-pathway PMIDs from `data/processed/exact_matches.jsonl`). "
+         "**v2** = +5 abstracts chosen for pathway-*type* diversity (energy/central-carbon, "
+         "carbohydrate, nucleotide, urea cycle, vitamin/cofactor, bile acid, drug/xenobiotic) "
+         "to balance v1's amino-acid/lipid skew. "
          "Abstract text from `data/raw/articles.json`. Vocabulary: the 98 canonical "
          "Recon subsystems (`unique_pathways_from_recon.json`).",
          "",
@@ -374,8 +535,11 @@ def main():
         })
 
     payload = {
-        "description": "Human-curated variation-aware gold annotations for the 5 "
-                       "abstracts richest in distinct Recon pathways.",
+        "version": VERSION,
+        "description": "Human-curated variation-aware gold annotations. v1: 5 abstracts "
+                       "richest in distinct Recon pathways. v2: +5 abstracts chosen for "
+                       "pathway-type diversity (energy/central-carbon, carbohydrate, "
+                       "nucleotide, urea cycle, vitamin/cofactor, bile acid, drug/xenobiotic).",
         "vocabulary": "unique_pathways_from_recon.json (98 canonical Recon subsystems)",
         "source_text": "data/raw/articles.json (abstract field)",
         "articles": out,
