@@ -786,3 +786,24 @@ the annotation guide's decision to accept non-Recon pathway names. Most of the r
 synonym/normalisation gaps against vocabularies we already have (`kynurenine pathway` ≈
 `tryptophan catabolism`; `alanine, aspartate, and glutamate metabolism` misses KEGG's entry
 on the Oxford comma alone) or umbrella terms. Left as-is: the canonical never enters a label.
+
+### ✅ P3-1g — Per-annotator batch split + Turkish annotator steps
+Local-install annotation workflow: each annotator installs doccano and imports one slice.
+- `doccano/split_batches.py` splits `pilot_1k_doccano.jsonl` into fixed-size batches (default
+  200) → `doccano/batches/pilot_1k_doccano_batch_NN_TOTAL.jsonl`. Each batch is a verbatim
+  slice — self-contained and directly importable, same format as the full file. Verified: 5
+  batches × 200 docs preserve all 1,000 docs / 1,996 spans (378–430 spans per batch).
+- `doccano/ANNOTATOR_STEPS.md` (**Turkish**) — post-install steps: new Sequence Labeling
+  project → add label `PATHWAY` → import batch JSONL → annotate per `ANNOTATION_GUIDE.md` →
+  export. Assumes doccano already installed.
+- Per annotator, send: their batch file + `ANNOTATOR_STEPS.md` (TR) + `ANNOTATION_GUIDE.md`
+  (accept/reject rules, currently EN).
+- Annotation model of record: **Qwen2.5-14B-Instruct, Q4_K_M (4-bit)** via Ollama, tag
+  `qwen2.5:14b` (14.8B params) — recorded in every silver record's `model` field — plus the
+  rule-based booster (`llm/booster.py`, ~9% of spans; not a model).
+
+**Still open (deferred until review returns):** a round-trip script to merge the annotators'
+doccano exports back into a corrected silver set (the existing
+`/home/enes/annotations/scripts/import_from_doccano.py` targets the Phase-1 `all_matches`
+schema, not this one). `ANNOTATION_GUIDE.md` is EN while `ANNOTATOR_STEPS.md` is TR — translate
+the former if annotators need Turkish.
