@@ -12,6 +12,8 @@ surfaces; we map them to the 98 Recon names downstream (Phase 1+).
 Reusable entry point:
     extract_guided(text, query_pathways, vocab=None, model="qwen2.5:7b")
         -> [{"surface": str, "start": int, "end": int}, ...]
+        raises LLMCallError if the call did not come back usable — an empty result
+        therefore always means "the model found nothing", never "the call broke".
 
 Run as a module:
     venv310/bin/python3 -m llm.extract_guided   # smoke test on one golden abstract
@@ -35,6 +37,17 @@ DEFAULT_MODEL = "qwen2.5:7b"
 MAX_CHARS = 3000
 
 
+class LLMCallError(RuntimeError):
+    """The LLM call did not produce a usable answer.
+
+    Raised instead of returning an empty list, so a timeout, a transport error or a
+    malformed (non-JSON) response can never be mistaken for the model genuinely
+    finding no mentions. That distinction matters because callers persist results:
+    a silently-empty failure written to a resumable cache is baked in permanently
+    (see llm/run_silver.py, which must not cache on this).
+    """
+
+
 def build_prompt(
     text: str,
     query_pathways: list[str],
@@ -56,7 +69,11 @@ def build_prompt(
 
 
 def call_llm(prompt: str, model: str = DEFAULT_MODEL, timeout: int = 120) -> list[str]:
-    """Return the raw list of surface strings the model proposed (unverified)."""
+    """Return the raw list of surface strings the model proposed (unverified).
+
+    An empty list means one thing only: the model answered `{"mentions": []}`, i.e.
+    it genuinely found nothing. Every failure mode raises LLMCallError.
+    """
     try:
         resp = requests.post(
             OLLAMA_URL,
@@ -70,13 +87,21 @@ def call_llm(prompt: str, model: str = DEFAULT_MODEL, timeout: int = 120) -> lis
         )
         resp.raise_for_status()
         raw = resp.json().get("response", "").strip()
-        m = re.search(r"\{.*\}", raw, re.DOTALL)
-        if not m:
-            return []
+    except Exception as exc:
+        raise LLMCallError(f"{model}: request failed — {type(exc).__name__}: {exc}") from exc
+
+    m = re.search(r"\{.*\}", raw, re.DOTALL)
+    if not m:
+        raise LLMCallError(f"{model}: no JSON object in response — {raw[:150]!r}")
+    try:
         parsed = json.loads(m.group())
-        return [s.strip() for s in parsed.get("mentions", []) if isinstance(s, str) and s.strip()]
-    except Exception:
-        return []
+    except json.JSONDecodeError as exc:
+        raise LLMCallError(f"{model}: malformed JSON — {exc}") from exc
+
+    mentions = parsed.get("mentions", [])
+    if not isinstance(mentions, list):
+        raise LLMCallError(f"{model}: `mentions` is {type(mentions).__name__}, not a list")
+    return [s.strip() for s in mentions if isinstance(s, str) and s.strip()]
 
 
 def find_offsets(text: str, surface: str) -> list[tuple[int, int]]:

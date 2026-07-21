@@ -21,6 +21,10 @@ Input  : data/processed/exact_matches.jsonl  (pmid -> query pathways)
          data/raw/pathway_disease_pairs.json (disease category, for stratification)
 Output : data/silver/pilot_1k.jsonl
 Cache  : data/raw/llm_cache_silver/{pmid}.json  (resumable — the full run is ~2h)
+         A failed LLM call is never cached: its empty result is indistinguishable
+         from "no pathway mentioned" and the cache is the resume key, so caching it
+         would lose the abstract for good. Such pmids are dropped from the output
+         and reported — re-run to retry just them.
 
 Run from repo root:
     venv310/bin/python3 llm/run_silver.py --limit 20      # throughput check
@@ -36,6 +40,7 @@ import sys
 import time
 from collections import Counter, defaultdict
 from pathlib import Path
+from typing import Optional
 
 from tqdm import tqdm
 
@@ -44,7 +49,7 @@ sys.path.insert(0, str(ROOT / "llm"))
 
 from booster import boost, merge  # noqa: E402
 from canonicalize import canonicalize, match_type_for  # noqa: E402
-from extract_guided import extract_guided  # noqa: E402
+from extract_guided import LLMCallError, extract_guided  # noqa: E402
 
 MATCHES_FILE = ROOT / "data/processed/exact_matches.jsonl"
 ARTICLES_FILE = ROOT / "data/raw/articles.json"
@@ -163,7 +168,15 @@ def _rebuild_from_cached(rec: dict, text: str) -> list[dict]:
 
 
 def process_one(pmid: str, text: str, qps: list[str], model: str,
-                recanonicalize: bool = False) -> dict:
+                recanonicalize: bool = False) -> Optional[dict]:
+    """Silver record for one abstract, or None if the LLM call failed.
+
+    A failed call is deliberately **not** cached. Its empty result is
+    indistinguishable from "this abstract mentions no pathway", and since the cache
+    file is the resume key, caching it would bake the loss in permanently — every
+    later run would skip the pmid. Returning None leaves it unprocessed so a re-run
+    retries it.
+    """
     cache = CACHE_DIR / f"{pmid}.json"
     if cache.exists():
         rec = json.loads(cache.read_text(encoding="utf-8"))
@@ -173,7 +186,11 @@ def process_one(pmid: str, text: str, qps: list[str], model: str,
         cache.write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
         return rec
 
-    llm_spans = extract_guided(text, qps, model=model)
+    try:
+        llm_spans = extract_guided(text, qps, model=model)
+    except LLMCallError as exc:
+        log.warning("%s — LLM call failed, not cached (re-run to retry): %s", pmid, exc)
+        return None
     merged = merge(llm_spans, boost(text))
     rec = _annotate(merged, text, pmid, model, qps)
     cache.write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
@@ -199,18 +216,23 @@ def main() -> None:
     qmap = load_query_pathways()
     abstracts = load_abstracts()
     cats = load_categories()
+
     sample = select_sample(args.n, args.seed, qmap, abstracts, cats)
     if args.limit:
         sample = sample[:args.limit]
 
     log.info("Sample: %d pmids (golden excluded) | model=%s", len(sample), args.model)
 
-    records, cached = [], 0
+    records, cached, failed = [], 0, 0
     t0 = time.time()
     for pmid in tqdm(sample, desc="Silver", unit="abstract"):
         was_cached = (CACHE_DIR / f"{pmid}.json").exists()
-        records.append(process_one(pmid, abstracts[pmid], qmap[pmid], args.model,
-                                   recanonicalize=args.recanonicalize))
+        rec = process_one(pmid, abstracts[pmid], qmap[pmid], args.model,
+                          recanonicalize=args.recanonicalize)
+        if rec is None:          # failed call — omitted, not cached, retried next run
+            failed += 1
+            continue
+        records.append(rec)
         cached += was_cached
 
     elapsed = time.time() - t0
@@ -223,16 +245,20 @@ def main() -> None:
     src = Counter(s["source"] for s in spans)
     mt = Counter(s["match_type"] for s in spans)
     unmapped = sum(1 for s in spans if s["canonical"] is None)
-    fresh = len(sample) - cached
+    fresh = len(sample) - cached - failed
 
     log.info("─" * 60)
     log.info("Output           : %s", args.output)
-    log.info("Abstracts        : %d  (fresh %d, cached %d)", len(sample), fresh, cached)
+    log.info("Abstracts        : %d/%d  (fresh %d, cached %d)",
+             len(records), len(sample), fresh, cached)
+    if failed:
+        log.warning("LLM FAILURES     : %d — OUTPUT IS INCOMPLETE. These pmids were not "
+                    "cached; re-run to retry them (the rest comes from cache).", failed)
     if fresh:
         log.info("Throughput       : %.1fs/abstract  -> 1k ≈ %.1f h",
                  elapsed / fresh, elapsed / fresh * 1000 / 3600)
     log.info("Spans            : %d  (%.1f per abstract)", len(spans),
-             len(spans) / max(1, len(sample)))
+             len(spans) / max(1, len(records)))
     log.info("  by source      : %s", dict(src))
     log.info("  by match_type  : %s", dict(mt))
     log.info("  unmapped       : %d (%.0f%%)  [golden baseline 16%%]",

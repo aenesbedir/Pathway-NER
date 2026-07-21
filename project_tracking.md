@@ -826,3 +826,25 @@ cycle, vitamin/cofactor, bile acid, drug/xenobiotic.
 - **Integrity:** the 5 new PMIDs are absent from silver/doccano (verified); updated the
   hardcoded exclusion `GOLDEN_PMIDS` in `llm/run_silver.py` (5 → 10) so silver never trains
   on them if regenerated. Doc counts updated (README, doccano guides).
+
+### 🐞 Silent LLM failures could be cached forever (`llm/extract_guided.py`, `llm/run_silver.py`)
+`call_llm` swallowed every exception into `return []`, so a timeout, a dropped connection or
+a non-JSON reply was indistinguishable from "the model found no pathway". `run_silver.py`
+then wrote that empty result to the per-pmid cache — and since the cache file *is* the resume
+key, the abstract was lost for good: no later run would ever retry it.
+
+- `call_llm` now raises `LLMCallError` on transport failure, HTTP error, missing/malformed
+  JSON, or a non-list `mentions`. An empty list means one thing only: the model genuinely
+  found nothing. `extract_guided()` propagates it (an eval that dies loudly beats one that
+  scores a broken run).
+- `process_one()` returns `None` on `LLMCallError`: **no cache write**, pmid dropped from the
+  output, warning logged. A re-run retries exactly those pmids. Summary gained an
+  `LLM FAILURES / OUTPUT IS INCOMPLETE` line.
+- **Audited the existing pilot** — all 91 zero-LLM-span records re-queried: **0 call errors**,
+  87/91 identical, 4 differed from run-to-run nondeterminism (not recovery). The 39-min
+  runtime already implied this: one 120 s timeout would eat 5% of it. Of the 8 spans the
+  re-query produced, 6 were bare metabolites/proteins/enzymes that `RULES_LENIENT` explicitly
+  forbids (`cAMP`, `BDNF`, `GSK-3β`, `glutathione-converting enzymes`) — so the refill was
+  reverted from backup and `pilot_1k.jsonl` is byte-identical to before. Conclusion: no silent
+  loss ever occurred; the fix is insurance for the slower models Phase 3+ may use, where the
+  120 s margin (now 1.9–2.4 s/abstract) closes.
