@@ -876,3 +876,27 @@ Sample selection is now either frozen or sampled, never both:
 `temperature=0, seed=42` (measured again here: 4/91 re-queried abstracts changed). Everything
 else in the pipeline — `booster.py`, `canonicalize.py`, `ground()`, `merge()` — is pure. So the
 single stochastic step is pinned by the cache, and the sample by the pmid file.
+
+### 📄 Model & hardware research (`reports/llm_selection_and_hardware_2026-07.md`)
+Literature/web survey (July 2026) answering "is there a better annotator than qwen2.5:14b,
+and is the hardware the limit?" Headline findings:
+
+- **Medical-domain LLMs are a trap for this task.** Biomedically fine-tuned models do not beat
+  general ones at information extraction and often lose (`Llama-3-8B-UltraMedical`, `PMC-Llama
+  13B` < base `Llama-3.1-8B`); MedGemma's technical report carries no NER/IE benchmark at all.
+  The task needs instruction-following + verbatim spans + JSON, not medical knowledge — the
+  query pathways are already in the prompt and canonicalisation is ours.
+- **Highest-ROI alternative is not an LLM: `GLiNER-BioMed`** (434M encoder, MIT). Zero-shot
+  59.8 F1, **50-shot 76.0** — matching our data scale. Selects spans instead of generating
+  them, so hallucination is structurally impossible; runs in minutes on 8 GB. Different error
+  profile from a decoder → a third annotation source next to LLM + booster.
+- **`qwen2.5` is two generations old** — Qwen3.5 (Feb–Mar 2026) and Gemma 4 (Apr 2026, Apache
+  2.0) shipped. `qwen3.5:9b` fits VRAM fully, unlike the current 9.0 GB 14b which already runs
+  partly CPU-offloaded on this 8 GB card.
+- **Hardware is not the bottleneck; the eval set is.** 15 GB system RAM binds harder than the
+  8 GB VRAM, and a ~$130 SO-DIMM upgrade unlocks CPU-offloaded MoE models — but 7b → 14b never
+  moved `span:variation` (4/6 → 4/6), so buy evidence before hardware: a few dollars of cloud
+  GPU or frontier API measures the ceiling first. Full 10k corpus via API ≈ $3–15.
+- **Blocking caveat (§7):** the golden set is 10 abstracts / 76 mentions and the deciding
+  metric rests on **6 cases**. Model comparisons cannot be arbitrated at that size — carve a
+  ~150-abstract hold-out from the human-reviewed doccano 1k before spending on model choice.
