@@ -26,9 +26,28 @@ Cache  : data/raw/llm_cache_silver/{pmid}.json  (resumable — the full run is ~
          would lose the abstract for good. Such pmids are dropped from the output
          and reported — re-run to retry just them.
 
+Sample selection is either **frozen** (--pmids: run exactly the pmids in the given
+file(s)) or **sampled** (--number-of-articles, stratified by disease category, minus
+--exclude files and always minus GOLDEN_PMIDS). The two are mutually exclusive.
+
+Freezing exists because the sampler is not stable across vocabulary changes: widening
+GOLDEN_PMIDS from 5 to 10 re-proportioned every category and re-walked the RNG, shifting
+the 1k draw by 49% even at the same seed. data/silver/pilot_1k_pmids.txt pins the sample
+the doccano batches were built from, so a model swap re-labels *those* abstracts rather
+than a different thousand.
+
 Run from repo root:
-    venv310/bin/python3 llm/run_silver.py --limit 20      # throughput check
-    venv310/bin/python3 llm/run_silver.py                 # full 1k pilot
+    venv310/bin/python3 llm/run_silver.py --limit 20            # throughput check
+    venv310/bin/python3 llm/run_silver.py                       # sample a fresh 1k
+
+    # reproduce the doccano pilot exactly (e.g. to re-label it with another model)
+    venv310/bin/python3 llm/run_silver.py \\
+        --pmids data/silver/pilot_1k_pmids.txt
+
+    # 2000 new abstracts, touching neither the golden set nor the pilot
+    venv310/bin/python3 llm/run_silver.py --number-of-articles 2000 \\
+        --exclude playground/golden_set/golden_pmids.txt \\
+                  data/silver/pilot_1k_pmids.txt
 """
 
 import argparse
@@ -113,10 +132,44 @@ def load_abstracts() -> dict[str, str]:
     return {str(a["pmid"]): (a.get("abstract") or "").strip() for a in arts}
 
 
-def select_sample(n: int, seed: int, qmap, abstracts, cats) -> list[str]:
-    """Stratified by disease category, proportional to the pool, fixed seed."""
+def load_pmid_file(path: str) -> list[str]:
+    """PMIDs from a one-per-line text file; `#` comments and blank lines ignored."""
+    out: list[str] = []
+    for line in Path(path).read_text(encoding="utf-8").splitlines():
+        pmid = line.split("#", 1)[0].strip()
+        if pmid:
+            out.append(pmid)
+    return out
+
+
+def load_pmid_files(paths: list[str]) -> list[str]:
+    """Union of several pmid files, de-duplicated, first-seen order preserved.
+
+    Order matters for --pmids: keeping the file's order makes a re-run of a frozen
+    sample line-comparable with the output it was frozen from.
+    """
+    out, seen = [], set()
+    for path in paths:
+        for pmid in load_pmid_file(path):
+            if pmid not in seen:
+                seen.add(pmid)
+                out.append(pmid)
+    return out
+
+
+def select_sample(n: int, seed: int, qmap, abstracts, cats,
+                  exclude: set[str] = frozenset()) -> list[str]:
+    """Stratified by disease category, proportional to the pool, fixed seed.
+
+    `exclude` is dropped from the pool on top of GOLDEN_PMIDS (which is never
+    sampleable). Note the draw is only reproducible for a *fixed* pool: changing
+    what is excluded re-proportions every category and re-walks the RNG, so the
+    sample shifts wholesale. Freeze a sample to a file and pass it back via
+    --pmids when it has to survive that.
+    """
+    blocked = GOLDEN_PMIDS | set(exclude)
     pool = [p for p in qmap
-            if p not in GOLDEN_PMIDS and len(abstracts.get(p, "")) > 100]
+            if p not in blocked and len(abstracts.get(p, "")) > 100]
     by_cat: dict[str, list[str]] = defaultdict(list)
     for p in pool:
         by_cat[cats.get(p, "unknown")].append(p)
@@ -199,7 +252,14 @@ def process_one(pmid: str, text: str, qps: list[str], model: str,
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--n", type=int, default=1000, help="sample size")
+    ap.add_argument("--number-of-articles", "--n", dest="n", type=int, default=1000,
+                    metavar="N", help="how many articles to sample (ignored with --pmids)")
+    ap.add_argument("--pmids", nargs="+", metavar="FILE",
+                    help="run exactly the pmids in these file(s) — no sampling. Use to "
+                         "reproduce a frozen sample, e.g. data/silver/pilot_1k_pmids.txt")
+    ap.add_argument("--exclude", nargs="+", metavar="FILE", default=[],
+                    help="never sample the pmids in these file(s); golden is excluded "
+                         "unconditionally either way")
     ap.add_argument("--limit", type=int, default=None,
                     help="process only the first N of the sample (throughput check)")
     ap.add_argument("--seed", type=int, default=42)
@@ -209,6 +269,9 @@ def main() -> None:
                     help="re-derive canonical/match_type over the cache, no LLM calls "
                          "(use after changing llm/canonicalize.py)")
     args = ap.parse_args()
+    if args.pmids and args.exclude:
+        ap.error("--exclude is meaningless with --pmids, which runs an explicit list "
+                 "rather than sampling")
 
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
@@ -217,11 +280,32 @@ def main() -> None:
     abstracts = load_abstracts()
     cats = load_categories()
 
-    sample = select_sample(args.n, args.seed, qmap, abstracts, cats)
+    if args.pmids:
+        sample = load_pmid_files(args.pmids)
+        # A golden pmid in an explicit list would put eval data into training data —
+        # drop it here too, not just in the sampler.
+        leaked = [p for p in sample if p in GOLDEN_PMIDS]
+        if leaked:
+            log.warning("Dropped %d GOLDEN pmid(s) from --pmids (never allowed in "
+                        "silver): %s", len(leaked), ", ".join(leaked))
+        missing = [p for p in sample
+                   if p not in leaked and (p not in abstracts or p not in qmap)]
+        if missing:
+            log.warning("Dropped %d pmid(s) with no abstract/query-pathway data: %s%s",
+                        len(missing), ", ".join(missing[:10]),
+                        " …" if len(missing) > 10 else "")
+        drop = set(leaked) | set(missing)
+        sample = [p for p in sample if p not in drop]
+        log.info("Sample: %d pmids from %d frozen file(s) — no sampling | model=%s",
+                 len(sample), len(args.pmids), args.model)
+    else:
+        excluded = set(load_pmid_files(args.exclude))
+        sample = select_sample(args.n, args.seed, qmap, abstracts, cats, exclude=excluded)
+        log.info("Sample: %d pmids (golden + %d excluded, seed=%d) | model=%s",
+                 len(sample), len(excluded), args.seed, args.model)
+
     if args.limit:
         sample = sample[:args.limit]
-
-    log.info("Sample: %d pmids (golden excluded) | model=%s", len(sample), args.model)
 
     records, cached, failed = [], 0, 0
     t0 = time.time()

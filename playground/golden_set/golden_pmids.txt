@@ -1,0 +1,20 @@
+# Golden-set PMIDs — human-curated evaluation data.
+# These must NEVER enter silver: silver becomes training data, so
+# including them would mean training on our own eval set.
+# Keep in sync with build_golden_set.py (PMIDS_V1 + PMIDS_V2) and
+# run_silver.py GOLDEN_PMIDS, which excludes them unconditionally.
+# One pmid per line. Blank lines and # comments are ignored.
+
+# v1 — most-distinct-pathway abstracts
+11469814
+29615816
+36294866
+39934780
+40225847
+
+# v2 — pathway-type diversity
+34376485
+42299101
+28587170
+38669820
+37807318
