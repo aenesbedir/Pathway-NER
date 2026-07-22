@@ -1,5 +1,7 @@
 # Virtual environment
 .venv/
+# Symlink so the venv310/bin/python3 paths in every docstring resolve
+venv310
 
 # Model checkpoints (large binary files)
 models/

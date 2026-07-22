@@ -32,6 +32,11 @@ from prompts.pathway_extraction_guided import (
     VOCAB_BLOCK,
 )
 
+try:                                    # run from repo root / llm on sys.path
+    from models import resolve
+except ImportError:                     # imported as `llm.extract_guided`
+    from llm.models import resolve
+
 OLLAMA_URL = "http://localhost:11434/api/generate"
 DEFAULT_MODEL = "qwen2.5:7b"
 MAX_CHARS = 3000
@@ -73,18 +78,14 @@ def call_llm(prompt: str, model: str = DEFAULT_MODEL, timeout: int = 120) -> lis
 
     An empty list means one thing only: the model answered `{"mentions": []}`, i.e.
     it genuinely found nothing. Every failure mode raises LLMCallError.
+
+    Sampling settings and per-family flags (thinking off for reasoning models) come
+    from llm/models.py, so the call site never has to know which family it is talking
+    to. An unregistered tag falls back to greedy decoding.
     """
+    spec = resolve(model)
     try:
-        resp = requests.post(
-            OLLAMA_URL,
-            json={
-                "model": model,
-                "prompt": prompt,
-                "stream": False,
-                "options": {"temperature": 0, "seed": 42},
-            },
-            timeout=timeout,
-        )
+        resp = requests.post(OLLAMA_URL, json=spec.request_body(prompt), timeout=timeout)
         resp.raise_for_status()
         raw = resp.json().get("response", "").strip()
     except Exception as exc:
