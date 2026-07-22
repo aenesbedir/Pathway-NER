@@ -900,3 +900,176 @@ and is the hardware the limit?" Headline findings:
 - **Blocking caveat (§7):** the golden set is 10 abstracts / 76 mentions and the deciding
   metric rests on **6 cases**. Model comparisons cannot be arbitrated at that size — carve a
   ~150-abstract hold-out from the human-reviewed doccano 1k before spending on model choice.
+
+### ✅ Batch 05 review — all 200 docs (`analysis/batch_05_5_review.json`)
+`doccano/batches/pilot_1k_doccano_batch_05_5.jsonl` scored against `ANNOTATION_GUIDE.md`.
+Two provenances in one file: **docs 1–50** are the human annotator's doccano export
+(`admin.jsonl`) with 16 assistant-applied corrections, so its final labels are the gold
+standard there; **docs 51–200** are the assistant's own review.
+Every span classified TP / FP / FN; boundary errors recorded as an FP + a corrected FN so
+span-exact metrics stay honest. All offsets machine-verified (`text[start:end]` matches),
+so the FN entries are directly importable as doccano labels.
+
+- **All 200 docs: 378 machine spans → 337 TP, 41 FP, 146 FN. Precision 0.892, recall 0.698,
+  F1 0.783.** Split by half: docs 1–50 (human) P 0.854 / R 0.800 / F1 0.826; docs 51–200
+  (assistant) P 0.906 / R 0.668 / F1 0.769. The recall gap is a sweep-depth difference, not a
+  model difference — the assistant half counted umbrella terms and repeat mentions the human
+  half largely left alone.
+  Precision is close to the 0.90 the pilot assumed; recall is the real gap.
+- **Human-half corrections applied to `admin.jsonl`** (backup `admin.jsonl.bak`): removed
+  signalling/cell-death pathways the guide excludes (`PPARα/PGC-1α signaling pathway`,
+  `sphingolipid signaling pathway`, `necroptosis pathway`), an enzyme-inhibition phrase
+  (`nicotinamide phosphoribosyltransferase inhibition`), a compartment term
+  (`mitochondrial oxidative pathway`), a disease pathway (`lipid and atherosclerosis`), a
+  transport term (`cholesterol efflux`), a non-enzymatic damage term (`Lipid peroxidation`)
+  and two broken/adjectival spans (`lipid metabolic`, `glycolytic function`); added
+  `polyol pathway`, `glucose metabolism`, `lipogenesis`, `NAD salvage pathway`; merged
+  `linoleic acid` + `glycerophospholipid metabolism` into one coordination span. Left as
+  annotated by explicit decision: `degradation of fructose` / `production of fructose` stay
+  rejected in doc 17, `cholesterol homeostasis` stays accepted in doc 8.
+- **FP classes:** bare metabolites (`TCA intermediates`, `pyrimidine pools`, `thiamine`),
+  disease names (`urea cycle disorders`, `inborn errors of metabolism`), signalling pathways
+  (`calcium signaling pathways`, `sphingolipid signaling pathway`), the guide's own named
+  reject (`aminoacyl-tRNA biosynthesis`), and boundary slips (`cell glycolysis`, dropped
+  `de novo`, two pathways in one span).
+- **FN classes:** umbrella terms are the dominant miss (`lipid/energy/glucose/carbohydrate
+  metabolism`), then the spelled-out first mention when an abbreviation is caught later
+  (`nicotinamide adenine dinucleotide (NAD) metabolism`), then whole zero-span documents
+  that do contain a mention (docs 102, 141).
+
+**Conventions applied that the guide does not state.** Recorded in the JSON's `conventions`
+field only — **deliberately not added to `ANNOTATION_GUIDE.md`**: these are edge cases, and
+annotators are trusted to judge them from the guide's existing rules.
+1. Shared-head coordination (`calcium and vitamin D metabolism`) is one span. Test: delete the
+   other conjunct — if what remains is not a pathway name on its own, do not split. A list of
+   distinct heads (`glycolysis and the pentose phosphate pathway`) must be split.
+2. If a coordination is only partly marked, the narrow span stays a TP **and** the full string
+   is recorded as an FN carrying the correct boundary (10 such FNs added, docs 64, 107, 111,
+   134, 144, 149, 151 ×2, 168, 187; 2 existing FNs widened, docs 83, 169).
+3. A trailing `pathway`/`pathways` may stay inside the span; a trailing `metabolites`,
+   `intermediates`, `genes` or `disorders` changes the referent and must be excluded.
+4. When a disease phrase embeds a nameable pathway, span the pathway part
+   (`urea cycle disorder` → `urea cycle`).
+
+**Cross-check against an independent Gemini pass** (which covered docs 51–159): 16 of 26 FPs
+corroborated verbatim, 6 genuine conflicts — all resolvable from the guide's own text and
+kept as reviewed here. Gemini also mislabelled an FN as TP (doc 136), silently widened two
+machine spans instead of flagging the boundary (docs 134, 155), and reported one span that
+does not exist in the labels (doc 157).
+
+**Open — non-English abstract bodies.** Some records carry a translated abstract after the
+English one (doc 92 Chinese `糖酵解`/`氧化磷酸化`, doc 157 Russian `глутатионового обмена`).
+Neither the silver model nor this review annotated them. Decide the policy and state it in
+`ANNOTATION_GUIDE.md`; if they are in scope, the FN lists for those two documents grow.
+
+### ✅ Model registry + per-model cache + frozen sample (`llm/models.py`)
+Groundwork for swapping the annotator model, done before any swap so the comparison is
+measurable rather than assumed.
+
+- **`llm/models.py` — one `ModelSpec` per model**, carrying the ollama tag, sampling
+  options, top-level payload keys and a cache slug. `resolve()` accepts a registry key
+  or any raw tag (unregistered tags still run, on greedy defaults, with a cache of their
+  own). `extract_guided.call_llm()` now builds its request body from the spec, so the
+  call site no longer hardcodes `{"temperature": 0, "seed": 42}`.
+  Registered: `qwen2.5:14b` (default), `qwen2.5:7b`, `qwen3.5:9b`, `qwen3.5:4b`.
+- **Thinking mode is a per-model flag.** Qwen3+ emits a chain of thought that costs
+  latency and can push the JSON object out of the response; the 3.5 entries carry
+  `think: false` (verified accepted by ollama 0.30.10, and ignored harmlessly by models
+  without the mode). This was the concrete blocker to trying Qwen3.5 at all.
+- **🐞 The silver cache was keyed on pmid alone.** Swapping the model would have replayed
+  the previous model's cached answers for every abstract already seen — a run that looks
+  successful, changes nothing, and cannot re-label the pilot. Cache is now
+  `data/raw/llm_cache_silver/<model slug>/<pmid>.json`; the existing 1,000 files were
+  moved to `qwen2.5_14b/`. Verified: re-running batch 05 reproduces 378 spans from cache,
+  0 LLM calls.
+- **`--pmids` freezing is now automatic.** Every run writes `<output stem>_pmids.txt` —
+  the *effective* sample in output order, after golden leaks, abstract-less pmids and
+  failed calls are dropped. Skipped for `--limit` (a partial head of the sample, freezing
+  it would pin a list nobody meant to draw) and for `--no-freeze`.
+- `venv310` is a symlink to the existing `.venv`, so the paths in every docstring resolve.
+
+### ✅ Annotator A/B harness (`analysis/score_against_review.py`)
+Scores any silver run against `analysis/batch_05_5_review.json` — 200 abstracts, 483 gold
+spans. This replaces the golden set as the model-selection metric: §7 of the model report
+flagged that 10 abstracts / 76 mentions cannot arbitrate a model choice when the deciding
+metric rests on 6 cases.
+
+- Reports span-exact and lenient (overlap) P/R/F1, split by the human half (docs 1–50) and
+  the assistant half (51–200), plus the top FP/FN strings.
+- Absolute recall is pessimistic by construction — the reference sweep counts umbrella and
+  repeat mentions the guided prompt never targeted — but equally so for every model, which
+  is what an A/B needs.
+- **Baseline `qwen2.5:14b` reproduces the review exactly**: 378 spans → 337 TP / 41 FP /
+  146 FN, P 0.892 R 0.698 F1 0.783 (lenient 0.934 / 0.748 / 0.831). Human half P 0.854
+  R 0.800; assistant half P 0.905 R 0.668.
+- The 200 evaluation pmids are frozen at `data/silver/batch05_eval_pmids.txt`.
+
+### 📊 A/B result — `qwen3.5:9b` does not replace `qwen2.5:14b`
+First use of the batch-05 harness. 200 abstracts, 483 gold spans.
+
+| run | spans | P | R | F1 | lenient P/R/F1 |
+|---|---|---|---|---|---|
+| `qwen2.5:14b` | 378 | 0.892 | 0.698 | **0.783** | 0.934 / 0.748 / **0.831** |
+| `qwen3.5:9b` | 398 | 0.791 | 0.652 | 0.715 | 0.889 / 0.752 / 0.815 |
+
+- **Recall is a wash** (lenient 0.752 vs 0.748); the whole gap is precision. Qwen3.5 emits
+  more spans (398 vs 378) and more of them are wrong.
+- **Read span-exact with suspicion — the gold is seeded by qwen2.5.** For docs 51–200 the
+  gold TPs *are* qwen2.5's spans that the review accepted, so qwen2.5 has a home-field
+  advantage on exact boundaries. Boundary-only FPs (right region, wrong edges) are 39/83
+  for qwen3.5 against 16/41 for qwen2.5 — e.g. `inositol phosphate metabolism pathway`
+  (×5) and `pentose phosphate pathway` (×2), both arguably *better* spans than the
+  recorded gold. Lenient scoring is the fairer read, and qwen2.5 still wins there.
+- Genuine content FPs (no overlap with any gold span): 44 for qwen3.5 vs 25 for qwen2.5.
+  Its characteristic errors are the guide's named rejects — `mitochondrial metabolism`
+  (×3), `mitochondrial respiration` (×2), `glucose turnover` (×3).
+- Unmapped spans (no Recon canonical) rise 25% → 30%.
+- **Qwen3.5 is ~4× faster**: 1.8 s/abstract measured, so a 1k run is ~0.5 h against the
+  documented ~2 h. It fits the 8 GB card fully; qwen2.5:14b is CPU-offloaded.
+- **🐞 `think: false` is not sufficient.** On PMID 42121260 qwen3.5 deterministically
+  breaks the JSON contract by reasoning *inside* the array:
+  `"fatty acid synthesis" (implied by context but exact phrase check: wait, looking at
+  text...`. Disabling the thinking channel does not stop inline chain-of-thought, and at
+  `temperature=0, seed=42` the failure repeats on every retry. 1/200 abstracts lost.
+
+#### Follow-up: structured output fixes the format, not the judgement
+Probed on the failing abstract plus a working control, then re-run over all 200.
+
+| variant | latency | JSON |
+|---|---|---|
+| `think: False` (as measured above) | 78 s on the failing abstract, 1.8 s on the control | 1/2 parse |
+| `think: True` | 78–82 s | **0/2** — `response` empty, all ~14k chars go to `thinking` |
+| `format: "json"` | 1.3 s | 2/2 |
+| `format: <schema>` | 1.2 s | 2/2 |
+
+- **`think: True` is unusable**: ~45× slower and it never emits a final answer.
+- **The schema is a free win for robustness**: over the 200, 200/200 abstracts complete
+  (was 199/200) at 1.3 s/abstract (was 1.8) — the rambling was the slow part.
+- **It changes qwen3.5's scores by nothing at all**: F1 0.715 → 0.715 span-exact,
+  0.815 → 0.814 lenient, 398 → 401 spans, 315 → 316 TP. So qwen3.5's precision deficit is
+  a judgement difference, not a formatting artefact — worth knowing, because a
+  malformed-JSON model could otherwise look unfairly penalised.
+- **On `qwen2.5:14b` the schema is a strict no-op.** Re-run over the same 200 with the
+  schema on: identical scores, and the span output is byte-identical — 0 of 200 abstracts
+  differ by a single offset. Kept in `llm/models.py` for every entry: it costs nothing and
+  makes the "reasoning inside the JSON array" failure class structurally impossible.
+  Measured 2.5 s/abstract (1k ≈ 0.7 h), well under the ~2 h the docstring assumed — though
+  there is no like-for-like schema-off timing on this machine to attribute the difference.
+- **Cache hygiene for that re-run**: the 200 eval pmids were deleted from
+  `llm_cache_silver/qwen2.5_14b/` (leaving the pilot's other 800 intact) and regenerated
+  under the schema, so the directory now mixes pre- and post-change records. Proven
+  harmless: regenerating the whole pilot from that mixed cache reproduces
+  `data/silver/pilot_1k.jsonl` **byte-for-byte**, 1000/1000 from cache, 0 LLM calls.
+- The prompt was never the problem: it already says *"Return ONLY a JSON object … Do not
+  explain. Do not add text outside the JSON."* The model read that and violated it anyway.
+  This belongs at the decoding layer.
+
+**Decision: keep `qwen2.5:14b` for the wave-2 1k.** Same recall, cleaner output, and the
+annotator workflow is accept/reject — extra false positives are annotator burden with no
+upside. Qwen3.5's only real edge is speed (0.4 h/1k vs ~2 h).
+
+**Known sharp edge, deliberately not fixed:** the cache slug derives from the model tag
+only, so it does not notice a changed request shape *or a changed prompt*. Editing
+`llm/prompts/pathway_extraction_guided.py` today would silently replay the old prompt's
+answers for every cached abstract. Until that changes, altering a model's request shape or
+the prompt means deleting that model's cache directory by hand.
