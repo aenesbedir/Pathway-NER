@@ -384,3 +384,91 @@ Train runtime ~164 s on RTX 4060 Laptop.
 ### What to try next
 - More reviewed data (wave-3) — now the dominant lever.
 - Error analysis on gold-003 test FPs to confirm what is left.
+
+## Run gold-004 — Unfreeze all layers (biggest lever so far)
+
+**Path:** `models/pathway-ner-gold-004/`
+
+**Date:** 2026-07-27
+
+**Change from gold-003:** `--frozen-layers 9` → **`0`** (train the whole network,
+embeddings included). Weights `0.5 / 1.5 / 1.0`, epochs 40, patience 8 unchanged.
+`--frozen-layers` is now a CLI arg.
+
+### Results
+| Metric | gold-003 (9 frozen) | gold-004 (0 frozen) | Δ |
+|---|---|---|---|
+| Test F1 | 0.7437 | **0.8154** | +0.072 |
+| Test Precision | 0.6799 | **0.7881** | +0.108 |
+| Test Recall | 0.8207 | **0.8446** | +0.024 |
+
+Best val F1 0.8229 (epoch 23); early stopping fired ~epoch 31. Train runtime
+~452 s on RTX 4060 Laptop (all params trainable → slower).
+
+### Notes
+- **Freezing was the dominant lever, not class weights.** Full fine-tuning jumped
+  F1 +7 pts and precision +11 pts over the best frozen run.
+- Now close to teacher qwen2.5:14b (F1 0.864 vs 0.815) — the distilled student
+  nearly matches the LLM at a fraction of inference cost.
+- Precision and recall both balanced (~0.79 / 0.84); no obvious over/under-tagging.
+- gold-004 is the current best model.
+
+### What to try next
+- Inference post-processing (merge adjacent spans, repair `I`-without-`B`) for a
+  cheap precision bump.
+- More reviewed data (wave-3) to close the last gap to the teacher.
+
+## Runs gold-005 … gold-008 — Seed variance and learning-rate sweep
+
+**Paths:** `models/pathway-ner-gold-005` … `-008`
+
+**Date:** 2026-07-27
+
+**Why:** every gold run so far was a single run at HF's default `seed=42`, on a
+109-document test split. Before trusting gold-004's 0.815 or tuning further, we
+needed (a) the seed noise band and (b) whether the hardcoded `3e-5` was right now
+that all layers train. `--lr` and `--seed` are now CLI args (`set_seed()` is called
+before model init so the classifier head is reproducible). The data split is
+untouched — `--seed` only affects head init, batch shuffling and dropout.
+
+All runs use the gold-004 recipe: `--class-weights 0.5 1.5 1.0 --epochs 40
+--patience 8 --frozen-layers 0`.
+
+### Seed variance (lr 3e-5)
+| Run | Seed | Test F1 | Test P | Test R | Best epoch |
+|---|---|---|---|---|---|
+| gold-004 | 42 | 0.8154 | 0.7881 | 0.8446 | 23 |
+| gold-005 | 1 | 0.8008 | 0.7645 | 0.8406 | 30 |
+| gold-006 | 7 | 0.8135 | 0.8103 | 0.8167 | 21 |
+| **mean ± std** | | **0.810 ± 0.007** | 0.788 ± 0.019 | 0.834 ± 0.012 | |
+
+- F1 noise band is small (±0.007, full range 0.801–0.815). The gold-003 → gold-004
+  jump (+0.072) is **far outside** the noise — unfreezing is a real effect.
+- Precision is the noisier metric (±0.019); precision-only comparisons below
+  ~0.04 should not be trusted from a single seed.
+
+### Learning-rate sweep (seed 42)
+| Run | lr | Test F1 | Test P | Test R | Best epoch |
+|---|---|---|---|---|---|
+| gold-007 | 2e-5 | 0.7865 | 0.7420 | 0.8367 | 15 |
+| gold-004 | 3e-5 | 0.8154 | 0.7881 | 0.8446 | 23 |
+| gold-008 | 5e-5 | **0.8197** | 0.7826 | **0.8606** | 21 |
+
+- 2e-5 is clearly worse (−0.029 F1, outside the noise band) — the hypothesis that
+  full fine-tuning wanted a *lower* lr was wrong.
+- 5e-5 edges out 3e-5 by +0.004 F1, which is **inside** the ±0.007 seed band —
+  not a distinguishable difference on one seed. Recall is higher (+0.016),
+  precision marginally lower.
+
+### Conclusion
+- **Current best: gold-008 (lr 5e-5, F1 0.8197)**, but statistically tied with
+  gold-004; treat 3e-5 and 5e-5 as equivalent and prefer 5e-5 for the recall edge.
+- lr tuning is exhausted: the 2e-5→5e-5 span moves F1 by ~0.03, and the top half of
+  that range is flat.
+- Teacher qwen2.5:14b remains ahead (F1 0.864 vs 0.820), gap now ~0.044.
+- Any future comparison smaller than ~0.015 F1 needs multi-seed averaging to mean
+  anything.
+
+### What to try next
+- More reviewed data (wave-3) — the only lever left with real headroom.
+- Inference post-processing (BIO repair, adjacent-span merge) for cheap precision.

@@ -36,6 +36,7 @@ from transformers import (
     EarlyStoppingCallback,
     Trainer,
     TrainingArguments,
+    set_seed,
 )
 
 # ---------------------------------------------------------------------------
@@ -65,6 +66,14 @@ def parse_args():
                         help="Max training epochs (default: 20)")
     parser.add_argument("--patience", type=int, default=5,
                         help="Early-stopping patience in epochs (default: 5)")
+    parser.add_argument("--frozen-layers", type=int, default=9,
+                        help="Freeze embeddings + this many bottom encoder layers "
+                             "(0 = train everything; default: 9)")
+    parser.add_argument("--lr", type=float, default=3e-5,
+                        help="Learning rate (default: 3e-5)")
+    parser.add_argument("--seed", type=int, default=42,
+                        help="Training seed: head init, shuffling, dropout "
+                             "(default: 42; does not affect the data split)")
     return parser.parse_args()
 
 logging.basicConfig(
@@ -148,9 +157,13 @@ def main() -> None:
         global CLASS_WEIGHTS
         CLASS_WEIGHTS = args.class_weights
 
+    set_seed(args.seed)
+
     log.info("Data dir     : %s", data_dir)
     log.info("Output dir   : %s", output_dir)
     log.info("Class weights: %s", CLASS_WEIGHTS)
+    log.info("Learning rate: %s", args.lr)
+    log.info("Seed         : %s", args.seed)
 
     log.info("Loading datasets …")
     train_dataset = load_dataset(data_dir / "train.jsonl")
@@ -167,13 +180,18 @@ def main() -> None:
         label2id=LABEL2ID,
     )
 
-    # Freeze bottom 6 BERT layers (embeddings + layers 0-5)
-    for name, param in model.named_parameters():
-        if "embeddings" in name or any(f"encoder.layer.{i}." in name for i in range(9)):
-            param.requires_grad = False
+    # Freeze embeddings + the bottom `--frozen-layers` encoder layers
+    # (0 = train everything). Same domain as pre-training, so freezing is optional.
+    if args.frozen_layers > 0:
+        frozen_layer_ids = range(args.frozen_layers)
+        for name, param in model.named_parameters():
+            if "embeddings" in name or any(f"encoder.layer.{i}." in name
+                                           for i in frozen_layer_ids):
+                param.requires_grad = False
     frozen = sum(1 for p in model.parameters() if not p.requires_grad)
     total = sum(1 for p in model.parameters())
-    log.info("Frozen params: %d / %d", frozen, total)
+    log.info("Frozen bottom layers: %d  (params %d / %d)",
+             args.frozen_layers, frozen, total)
 
     data_collator = DataCollatorForTokenClassification(tokenizer=tokenizer, padding=True)
 
@@ -182,8 +200,9 @@ def main() -> None:
         num_train_epochs=args.epochs,
         per_device_train_batch_size=16,
         per_device_eval_batch_size=32,
-        learning_rate=3e-5,
+        learning_rate=args.lr,
         weight_decay=0.01,
+        seed=args.seed,
         warmup_steps=50,
         eval_strategy="epoch",
         save_strategy="epoch",
