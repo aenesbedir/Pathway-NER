@@ -20,7 +20,8 @@ data/silver/wave2_1k.jsonl                         raw machine output (SILVER)
             └─ review (drop FP, add FN) → analysis/wave2_batchNN_review.json
                  └─ doccano/build_gold_from_review.py → doccano/wave2_1k_gold.jsonl   (GOLD = tp+fn)
 pilot: analysis/batch_05_5_review.json               → doccano/pilot_1k_batch05_gold.jsonl
-                 └─ (gold → matches + articles) → preprocessing/tag_bio.py → bio_tags.jsonl
+                 └─ preprocessing/gold_to_matches.py → matches.jsonl + articles.jsonl
+                      └─ preprocessing/tag_bio.py → bio_tags.jsonl
                       └─ preprocessing/build_dataset.py → {train,val,test}.jsonl
 ```
 
@@ -46,27 +47,9 @@ Split is PMID-stratified, seed 42.
 venv310/bin/python3 doccano/build_gold_from_review.py
 
 # 2. gold → matches + articles (both sources, into data/processed/gold/)
-python3 - <<'PY'
-import json
-from pathlib import Path
-srcs = ["doccano/wave2_1k_gold.jsonl", "doccano/pilot_1k_batch05_gold.jsonl"]
-matches, articles, seen = [], [], set()
-for s in srcs:
-    for line in open(s, encoding="utf-8"):
-        if not line.strip():
-            continue
-        r = json.loads(line); pmid = str(r["meta"]["pmid"])
-        assert pmid not in seen, f"duplicate pmid {pmid}"
-        seen.add(pmid)
-        articles.append({"pmid": pmid, "abstract": r["text"], "full_text": ""})
-        spans = [{"start": a, "end": b, "source": "abstract"} for a, b, _ in r["label"]]
-        if spans:
-            matches.append({"pmid": pmid, "pathway_id": "gold", "spans": spans})
-Path("data/processed/gold/matches.jsonl").write_text(
-    "".join(json.dumps(m, ensure_ascii=False) + "\n" for m in matches), encoding="utf-8")
-Path("data/processed/gold/articles.jsonl").write_text(
-    "".join(json.dumps(a, ensure_ascii=False) + "\n" for a in articles), encoding="utf-8")
-PY
+venv310/bin/python3 preprocessing/gold_to_matches.py \
+    --sources doccano/wave2_1k_gold.jsonl doccano/pilot_1k_batch05_gold.jsonl \
+    --outdir  data/processed/gold
 
 # 3. matches + articles → BIO tags (needs transformers; model cached)
 HF_HUB_OFFLINE=1 venv310/bin/python3 preprocessing/tag_bio.py \
