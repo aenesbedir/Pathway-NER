@@ -111,3 +111,12 @@ logs/run005.log
 
 # doccano batch archives (regenerable via doccano/split_batches.py)
 doccano/batches.zip
+
+# wave-2 review-to-gold pipeline: all derived outputs (regenerable from
+# data/silver/wave2_1k.jsonl + analysis/wave2_batch*_review.json via the
+# scripts in data/processed/gold/README.md). Only silver + reviews are tracked.
+doccano/wave2_1k_doccano.jsonl
+doccano/wave2_1k_gold.jsonl
+doccano/pilot_1k_batch05_gold.jsonl
+doccano/batches/wave2_1k_doccano_batch_*_5.jsonl
+data/processed/gold/*.jsonl
