@@ -57,6 +57,14 @@ def parse_args():
                         help="Directory containing train/val/test.jsonl")
     parser.add_argument("--output-dir", default="models/pathway-ner-005",
                         help="Output directory for best checkpoint")
+    parser.add_argument("--class-weights", nargs=3, type=float,
+                        metavar=("O", "B", "I"), default=None,
+                        help="CrossEntropy class weights for O / B-Pathway / "
+                             "I-Pathway (default: 0.1 5.0 3.0)")
+    parser.add_argument("--epochs", type=int, default=20,
+                        help="Max training epochs (default: 20)")
+    parser.add_argument("--patience", type=int, default=5,
+                        help="Early-stopping patience in epochs (default: 5)")
     return parser.parse_args()
 
 logging.basicConfig(
@@ -136,8 +144,13 @@ def main() -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    log.info("Data dir   : %s", data_dir)
-    log.info("Output dir : %s", output_dir)
+    if args.class_weights is not None:
+        global CLASS_WEIGHTS
+        CLASS_WEIGHTS = args.class_weights
+
+    log.info("Data dir     : %s", data_dir)
+    log.info("Output dir   : %s", output_dir)
+    log.info("Class weights: %s", CLASS_WEIGHTS)
 
     log.info("Loading datasets …")
     train_dataset = load_dataset(data_dir / "train.jsonl")
@@ -166,7 +179,7 @@ def main() -> None:
 
     training_args = TrainingArguments(
         output_dir=str(output_dir),
-        num_train_epochs=20,
+        num_train_epochs=args.epochs,
         per_device_train_batch_size=16,
         per_device_eval_batch_size=32,
         learning_rate=3e-5,
@@ -190,7 +203,7 @@ def main() -> None:
         eval_dataset=val_dataset,
         data_collator=data_collator,
         compute_metrics=compute_metrics,
-        callbacks=[EarlyStoppingCallback(early_stopping_patience=5)],
+        callbacks=[EarlyStoppingCallback(early_stopping_patience=args.patience)],
     )
 
     log.info("Starting training …")

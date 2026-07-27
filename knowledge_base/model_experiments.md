@@ -267,3 +267,120 @@ Span text recovered by slicing source text via `offset_mapping` (fixes tokenizer
 - Conclusion: improving the annotation pipeline will have more impact than further hyperparameter tuning
 
 ---
+
+## Run gold-001 — First model on review-corrected gold data
+
+**Path:** `models/pathway-ner-gold-001/`
+
+**Date:** 2026-07-27
+
+**Change from prior runs:** New dataset. Trained on the review-corrected **gold**
+labels (`data/processed/gold/`, see `data/processed/gold/README.md`) instead of
+Phase-1/2 distant-supervision silver. Gold spans = reviewed `tp + fn` from
+wave-2 silver (qwen2.5:14b) + pilot-1k batch 05. Architecture/hyperparameters
+identical to Run 001.
+
+### Training Data
+| Split | PMIDs | Records | Positive tokens (B+I) |
+|---|---|---|---|
+| Train | 860 | 860 | 5,943 |
+| Val | 107 | 107 | 673 |
+| Test | 109 | 109 | 709 |
+
+*1200 gold docs → 1083 with ≥1 span → 1076 with B/I tokens after 512-token
+truncation → PMID-stratified 80/10/10 split (seed 42).*
+
+### Hyperparameters
+Same as Run 001 (frozen embeddings + encoder layers 0–8 → 149/199 params frozen;
+lr 3e-5; batch 16; 20 epochs; warmup 50; weight decay 0.01; class weights
+`0.1 / 5.0 / 3.0`; early stopping patience 5; fp16).
+
+### Results
+| Metric | Val (best, epoch 8) | Test |
+|---|---|---|
+| F1 | 0.6965 | 0.6734 |
+| Precision | — | 0.5809 |
+| Recall | — | 0.8008 |
+
+Early stopping triggered at epoch 13. Train runtime ~125 s on RTX 4060 Laptop.
+
+### Notes
+- Large jump over Phase-1/2 silver models (test F1 0.37–0.46 → **0.67**): cleaner
+  labels dominate, as expected.
+- Not comparable to Run 005 (F1 0.98) — that was a different, exact-match test set
+  with trivial string-match leakage.
+- Precision (0.58) is the weakness; recall (0.80) is strong → model over-tags.
+  Likely driven by umbrella/coordination gold spans (`lipid metabolism`, long
+  coordinated names) that push aggressive tagging.
+- Teacher (qwen2.5:14b) span-exact on the same guide-gold: P 0.906 / R 0.825 /
+  F1 0.864. Student underperforms on 860 abstracts — precision is the gap.
+
+### What to try next
+- Raise O weight / lower B/I weights to curb over-tagging (precision lever).
+- Error analysis on gold test FPs (`analysis/error_analysis.py`).
+- More reviewed data (wave-3) — biggest lever.
+
+## Run gold-002 — Precision tuning via class weights
+
+**Path:** `models/pathway-ner-gold-002/`
+
+**Date:** 2026-07-27
+
+**Change from gold-001:** Class weights `0.1 / 5.0 / 3.0` → **`0.3 / 2.0 / 1.5`**.
+Raise the O weight (penalise entity over-prediction) and lower B/I to curb the
+over-tagging seen in gold-001. Everything else identical. Class weights are now a
+CLI arg (`train.py --class-weights O B I`).
+
+### Results
+| Metric | gold-001 | gold-002 | Δ |
+|---|---|---|---|
+| Test F1 | 0.6734 | **0.7227** | +0.049 |
+| Test Precision | 0.5809 | **0.6558** | +0.075 |
+| Test Recall | 0.8008 | 0.8048 | +0.004 |
+
+Best val F1 0.7625 (epoch 18). Ran the full 20 epochs — early stopping did **not**
+trigger (val F1 still climbing), so the run may be epoch-limited. Train runtime
+~193 s on RTX 4060 Laptop.
+
+### Notes
+- Precision lever worked as intended: +7.5 pts precision, recall held → +5 pts F1.
+- Contrast with Run 002 (Phase-1 silver), where lowering B/I weights *hurt*
+  precision — on clean gold the weight lever behaves as expected.
+- Teacher (qwen2.5:14b) still ahead: P 0.906 / R 0.825 / F1 0.864.
+
+### What to try next
+- More epochs (val F1 not yet plateaued at 20) or higher early-stopping patience.
+- Push O weight further (e.g. `0.5 / 1.5 / 1.0`) to trade a little recall for more
+  precision.
+- Error analysis on remaining gold-test FPs.
+
+## Run gold-003 — More epochs + balanced weights
+
+**Path:** `models/pathway-ner-gold-003/`
+
+**Date:** 2026-07-27
+
+**Change from gold-002:** Class weights `0.3 / 2.0 / 1.5` → **`0.5 / 1.5 / 1.0`**
+(push O further, flatten B/I); max epochs 20 → **40**, early-stopping patience
+5 → **8**. `--epochs` and `--patience` are now CLI args.
+
+### Results
+| Metric | gold-001 | gold-002 | gold-003 |
+|---|---|---|---|
+| Test F1 | 0.6734 | 0.7227 | **0.7437** |
+| Test Precision | 0.5809 | 0.6558 | **0.6799** |
+| Test Recall | 0.8008 | 0.8048 | **0.8207** |
+
+Best val F1 0.7713. Early stopping fired (~epoch 25); best checkpoint epoch 17.
+Train runtime ~164 s on RTX 4060 Laptop.
+
+### Notes
+- Both precision (+2.4) and recall (+1.6) rose over gold-002 — no trade-off this
+  time; the extra epochs let the balanced weights fit better.
+- Cumulative gain over gold-001: F1 +0.070, precision +0.099.
+- Still below teacher qwen2.5:14b (F1 0.864). Remaining gap is mostly the small
+  training set (860 abstracts); weight/epoch tuning looks near its ceiling.
+
+### What to try next
+- More reviewed data (wave-3) — now the dominant lever.
+- Error analysis on gold-003 test FPs to confirm what is left.
