@@ -1,0 +1,512 @@
+{
+  "model": "qwen2.5:14b",
+  "variant": "no-vocab+lenient",
+  "totals": {
+    "n": 61,
+    "tp": 50,
+    "fp_neg": 1,
+    "unlabeled": 10,
+    "precision_strict": 0.819672131147541,
+    "precision_lenient": 0.9803921568627451
+  },
+  "recall": {
+    "span:exact": [
+      22,
+      25
+    ],
+    "span:variation": [
+      13,
+      17
+    ],
+    "enum:variation": [
+      3,
+      7
+    ],
+    "enum:umbrella": [
+      0,
+      1
+    ],
+    "span:synonym": [
+      9,
+      11
+    ],
+    "span:umbrella": [
+      4,
+      5
+    ],
+    "enum:exact+variation": [
+      1,
+      1
+    ],
+    "enum:umbrella+variation": [
+      0,
+      1
+    ],
+    "enum:synonym+variation": [
+      1,
+      1
+    ],
+    "enum:exact+umbrella": [
+      1,
+      1
+    ]
+  },
+  "articles": [
+    {
+      "pmid": "11469814",
+      "n_mentions": 2,
+      "tp": 2,
+      "fp_neg": 0,
+      "unlabeled": 0,
+      "mentions": [
+        {
+          "surface": "steroid metabolism",
+          "start": 412,
+          "end": 430,
+          "class": "TP"
+        },
+        {
+          "surface": "steroid metabolism",
+          "start": 983,
+          "end": 1001,
+          "class": "TP"
+        }
+      ]
+    },
+    {
+      "pmid": "39934780",
+      "n_mentions": 5,
+      "tp": 5,
+      "fp_neg": 0,
+      "unlabeled": 0,
+      "mentions": [
+        {
+          "surface": "arachidonic acid metabolism",
+          "start": 1834,
+          "end": 1861,
+          "class": "TP"
+        },
+        {
+          "surface": "purine metabolism",
+          "start": 1894,
+          "end": 1911,
+          "class": "TP"
+        },
+        {
+          "surface": "cholecalciferol metabolism",
+          "start": 1913,
+          "end": 1939,
+          "class": "TP"
+        },
+        {
+          "surface": "glycine, serine, alanine, and threonine metabolism",
+          "start": 1945,
+          "end": 1995,
+          "class": "TP"
+        },
+        {
+          "surface": "arachidonic acid metabolism",
+          "start": 2240,
+          "end": 2267,
+          "class": "TP"
+        }
+      ]
+    },
+    {
+      "pmid": "40225847",
+      "n_mentions": 3,
+      "tp": 3,
+      "fp_neg": 0,
+      "unlabeled": 0,
+      "mentions": [
+        {
+          "surface": "Arginine and proline metabolism",
+          "start": 1012,
+          "end": 1043,
+          "class": "TP"
+        },
+        {
+          "surface": "arginine biosynthesis",
+          "start": 1048,
+          "end": 1069,
+          "class": "TP"
+        },
+        {
+          "surface": "Butanoate metabolism",
+          "start": 1126,
+          "end": 1146,
+          "class": "TP"
+        }
+      ]
+    },
+    {
+      "pmid": "29615816",
+      "n_mentions": 5,
+      "tp": 5,
+      "fp_neg": 0,
+      "unlabeled": 0,
+      "mentions": [
+        {
+          "surface": "purine metabolism",
+          "start": 1071,
+          "end": 1088,
+          "class": "TP"
+        },
+        {
+          "surface": "cysteine/methionine metabolism",
+          "start": 1107,
+          "end": 1137,
+          "class": "TP"
+        },
+        {
+          "surface": "tryptophan metabolism",
+          "start": 1139,
+          "end": 1160,
+          "class": "TP"
+        },
+        {
+          "surface": "fatty acid oxidation",
+          "start": 1181,
+          "end": 1201,
+          "class": "TP"
+        },
+        {
+          "surface": "lysophospholipid metabolism",
+          "start": 1207,
+          "end": 1234,
+          "class": "TP"
+        }
+      ]
+    },
+    {
+      "pmid": "36294866",
+      "n_mentions": 7,
+      "tp": 3,
+      "fp_neg": 1,
+      "unlabeled": 3,
+      "mentions": [
+        {
+          "surface": "glutathione metabolism",
+          "start": 897,
+          "end": 919,
+          "class": "TP"
+        },
+        {
+          "surface": "aminoacyl-tRNA biosynthesis",
+          "start": 1214,
+          "end": 1241,
+          "class": "FP_neg"
+        },
+        {
+          "surface": "aminoacyl-tRNA biosynthesis",
+          "start": 1446,
+          "end": 1473,
+          "class": "UNLABELED"
+        },
+        {
+          "surface": "nicotinamide metabolism",
+          "start": 1515,
+          "end": 1538,
+          "class": "TP"
+        },
+        {
+          "surface": "glutathione metabolism",
+          "start": 1555,
+          "end": 1577,
+          "class": "TP"
+        },
+        {
+          "surface": "aminoacyl-tRNA biosynthesis",
+          "start": 1754,
+          "end": 1781,
+          "class": "UNLABELED"
+        },
+        {
+          "surface": "aminoacyl-tRNA biosynthesis",
+          "start": 2103,
+          "end": 2130,
+          "class": "UNLABELED"
+        }
+      ]
+    },
+    {
+      "pmid": "34376485",
+      "n_mentions": 14,
+      "tp": 7,
+      "fp_neg": 0,
+      "unlabeled": 7,
+      "mentions": [
+        {
+          "surface": "OXPHOS",
+          "start": 265,
+          "end": 271,
+          "class": "TP"
+        },
+        {
+          "surface": "glycolytic",
+          "start": 841,
+          "end": 851,
+          "class": "UNLABELED"
+        },
+        {
+          "surface": "OXPHOS",
+          "start": 855,
+          "end": 861,
+          "class": "UNLABELED"
+        },
+        {
+          "surface": "bile acid biosynthesis",
+          "start": 1016,
+          "end": 1038,
+          "class": "TP"
+        },
+        {
+          "surface": "octadecatrienoic acid beta-oxidation",
+          "start": 1056,
+          "end": 1092,
+          "class": "TP"
+        },
+        {
+          "surface": "galactose metabolism",
+          "start": 1153,
+          "end": 1173,
+          "class": "TP"
+        },
+        {
+          "surface": "vitamin B6 metabolism",
+          "start": 1190,
+          "end": 1211,
+          "class": "TP"
+        },
+        {
+          "surface": "OXPHOS",
+          "start": 1268,
+          "end": 1274,
+          "class": "UNLABELED"
+        },
+        {
+          "surface": "glycolytic",
+          "start": 1314,
+          "end": 1324,
+          "class": "UNLABELED"
+        },
+        {
+          "surface": "bile acid biosynthesis",
+          "start": 1356,
+          "end": 1378,
+          "class": "TP"
+        },
+        {
+          "surface": "octadecatrienoic acid beta-oxidation",
+          "start": 1454,
+          "end": 1490,
+          "class": "TP"
+        },
+        {
+          "surface": "glycolytic",
+          "start": 1628,
+          "end": 1638,
+          "class": "UNLABELED"
+        },
+        {
+          "surface": "OXPHOS",
+          "start": 1646,
+          "end": 1652,
+          "class": "UNLABELED"
+        },
+        {
+          "surface": "OXPHOS",
+          "start": 1825,
+          "end": 1831,
+          "class": "UNLABELED"
+        }
+      ]
+    },
+    {
+      "pmid": "42299101",
+      "n_mentions": 11,
+      "tp": 11,
+      "fp_neg": 0,
+      "unlabeled": 0,
+      "mentions": [
+        {
+          "surface": "Warburg effect",
+          "start": 118,
+          "end": 132,
+          "class": "TP"
+        },
+        {
+          "surface": "glycolysis",
+          "start": 185,
+          "end": 195,
+          "class": "TP"
+        },
+        {
+          "surface": "pentose phosphate pathway (PPP)",
+          "start": 306,
+          "end": 337,
+          "class": "TP"
+        },
+        {
+          "surface": "amino acid metabolism",
+          "start": 339,
+          "end": 360,
+          "class": "TP"
+        },
+        {
+          "surface": "lipid biosynthesis",
+          "start": 362,
+          "end": 380,
+          "class": "TP"
+        },
+        {
+          "surface": "glycolysis",
+          "start": 716,
+          "end": 726,
+          "class": "TP"
+        },
+        {
+          "surface": "glutaminolysis",
+          "start": 728,
+          "end": 742,
+          "class": "TP"
+        },
+        {
+          "surface": "lipid biosynthesis",
+          "start": 744,
+          "end": 762,
+          "class": "TP"
+        },
+        {
+          "surface": "oxidative metabolism",
+          "start": 768,
+          "end": 788,
+          "class": "TP"
+        },
+        {
+          "surface": "folate metabolism",
+          "start": 1069,
+          "end": 1086,
+          "class": "TP"
+        },
+        {
+          "surface": "nucleotide metabolism",
+          "start": 1142,
+          "end": 1163,
+          "class": "TP"
+        }
+      ]
+    },
+    {
+      "pmid": "28587170",
+      "n_mentions": 2,
+      "tp": 2,
+      "fp_neg": 0,
+      "unlabeled": 0,
+      "mentions": [
+        {
+          "surface": "urea cycle",
+          "start": 606,
+          "end": 616,
+          "class": "TP"
+        },
+        {
+          "surface": "pyrimidine metabolism",
+          "start": 621,
+          "end": 642,
+          "class": "TP"
+        }
+      ]
+    },
+    {
+      "pmid": "38669820",
+      "n_mentions": 7,
+      "tp": 7,
+      "fp_neg": 0,
+      "unlabeled": 0,
+      "mentions": [
+        {
+          "surface": "tryptophan metabolism",
+          "start": 1230,
+          "end": 1251,
+          "class": "TP"
+        },
+        {
+          "surface": "drug metabolism by cytochrome P450",
+          "start": 1253,
+          "end": 1287,
+          "class": "TP"
+        },
+        {
+          "surface": "xenobiotic metabolism by cytochrome P450",
+          "start": 1289,
+          "end": 1329,
+          "class": "TP"
+        },
+        {
+          "surface": "retinol metabolism",
+          "start": 1331,
+          "end": 1349,
+          "class": "TP"
+        },
+        {
+          "surface": "butanoate metabolism",
+          "start": 1351,
+          "end": 1371,
+          "class": "TP"
+        },
+        {
+          "surface": "starch and sucrose metabolism",
+          "start": 1373,
+          "end": 1402,
+          "class": "TP"
+        },
+        {
+          "surface": "ascorbate and aldarate metabolism",
+          "start": 1404,
+          "end": 1437,
+          "class": "TP"
+        }
+      ]
+    },
+    {
+      "pmid": "37807318",
+      "n_mentions": 5,
+      "tp": 5,
+      "fp_neg": 0,
+      "unlabeled": 0,
+      "mentions": [
+        {
+          "surface": "pentose phosphate pathway",
+          "start": 769,
+          "end": 794,
+          "class": "TP"
+        },
+        {
+          "surface": "TCA cycle",
+          "start": 800,
+          "end": 809,
+          "class": "TP"
+        },
+        {
+          "surface": "glycolysis",
+          "start": 811,
+          "end": 821,
+          "class": "TP"
+        },
+        {
+          "surface": "galactose metabolism",
+          "start": 823,
+          "end": 843,
+          "class": "TP"
+        },
+        {
+          "surface": "butanoate metabolism",
+          "start": 849,
+          "end": 869,
+          "class": "TP"
+        }
+      ]
+    }
+  ]
+}
