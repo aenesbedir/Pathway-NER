@@ -1073,3 +1073,193 @@ only, so it does not notice a changed request shape *or a changed prompt*. Editi
 `llm/prompts/pathway_extraction_guided.py` today would silently replay the old prompt's
 answers for every cached abstract. Until that changes, altering a model's request shape or
 the prompt means deleting that model's cache directory by hand.
+
+---
+
+# Phase 4 — Base-encoder survey
+
+Started 2026-07-29. Motivation: hyperparameter tuning plateaued at **gold-008**
+(test F1 0.8197), teacher `qwen2.5:14b` sits at 0.864, and the remaining levers
+are more reviewed data (wave-3) or a different base encoder. This phase is the
+encoder axis; the annotator-LLM axis is Phase 3 and independent.
+
+## Research — `reports/base_model_expansion_analysis_2026-07.md`
+
+Widened the earlier five-candidate note (`base_model_survey_2026-07.md`) to every
+usable encoder family, with the papers' own numbers rather than assumptions.
+
+**The headline is negative and worth stating plainly.** The whole BLURB NER column
+spans 86.13 (our current base) to 86.89 (the leaderboard's best) — 0.76 points,
+averaged over six corpora with thousands of training documents each. A 2026 paper
+(arXiv 2605.12438) measures a 396M 8192-context bio-ModernBERT at **parity with
+110M PubMedBERT** on BC5CDR / JNLPBA / NCBI / AnatEM. Realistic gain from an
+encoder swap: **+0.005 … +0.02 F1**, against a measured seed band of ±0.007.
+
+Two candidates were dropped on evidence rather than intuition:
+- **BioClinical-ModernBERT**, which the earlier note ranked second, is 1.0–4.1
+  points *below* 110M PubMedBERT on literature NER. Its SOTA is on clinical notes
+  (DEID, Social History); our corpus is PubMed abstracts.
+- Decoder LLMs with a token-classification head — the teacher is already an LLM;
+  a distilled student exists to be cheap.
+
+Two candidates emerged that the earlier note missed, and they are the only ones
+whose expected gain exceeds the noise band:
+- **GLiNER-biomed** (arXiv 2504.00676) — LLM annotation ability distilled into a
+  span-scoring model, structurally the same idea as this project at a scale we
+  cannot reach. 10-shot 70.4 → 50-shot 76.0 → full-supervision ~84.9 F1. Our 860
+  documents sit inside that curve.
+- **Task-adaptive pretraining** (OpenMed NER, arXiv 2508.01630) — SOTA on 10 of 12
+  biomedical NER benchmarks from ordinary backbones plus DAPT and LoRA, under 12
+  GPU-hours. We already hold a large unlabelled on-topic corpus in `data/raw/`.
+
+## Tier 0 — comparison harness (done)
+
+Infrastructure only; details and measurements in
+`knowledge_base/model_experiments.md` § *Tier 0*.
+
+Three defects would have made every cross-encoder number meaningless:
+1. **The split was tokenizer-dependent.** `build_dataset.py` dropped label-free
+   records *after* tokenization (1083 → 1076 under BiomedBERT, 7 lost to 512-token
+   truncation) and then shuffled the survivors. A ModernBERT at 8192 tokens loses
+   none of the 7 and would shuffle a different-length list into an unrelated
+   train/val/test assignment — every encoder scored on a different test set, with
+   every log line still reading "Test: 109".
+2. The model name was hardcoded in two files with no link between the `input_ids`
+   on disk and the model consuming them. Vocabularies overlap in range, so a
+   mismatch trains silently on nonsense.
+3. `train.py` could only load `BertForTokenClassification`, and used fp16 — a
+   known NaN source for ModernBERT.
+
+New: `encoders.py` (registry, shaped like `llm/models.py`),
+`preprocessing/make_splits.py`, `preprocessing/check_alignment.py`,
+`scripts/run_matrix.py`, `scripts/aggregate_runs.py`, and
+`data/processed/gold/splits.json` — the frozen split, tracked in git.
+
+**Gate: the regenerated dataset is byte-identical to the one gold-001…008 used**,
+and the gold-008 recipe re-run under bf16 and transformers 5.10.2 gives **F1
+0.8199** against the recorded 0.8197. The historical series is continuous.
+
+### The most important number produced by Tier 0
+
+Three seeds of the gold-008 recipe on the frozen split: 0.7947 / 0.8199 / 0.8282
+→ **0.8143 ± 0.0175**.
+
+The ±0.007 noise band that every earlier conclusion leaned on was measured at
+**lr 3e-5** (gold-004/005/006). At 5e-5 the band is **2.5x wider**. So:
+
+- **gold-008's 0.8197 was a lucky seed** — the recipe's mean is 0.8143, and
+  gold-004's 0.8154 at 3e-5 is indistinguishable from it. "5e-5 beats 3e-5 by
+  +0.004" compared two single seeds and means nothing.
+- **5 seeds is not enough to run the survey.** At σ = 0.0175, two 5-seed
+  configurations separate only at ≈0.022 F1 — the very top of what an encoder swap
+  is predicted to give. Resolving 0.015 needs **11 seeds** (~7.3 GPU-hours for five
+  configurations; an overnight run on the 4060, so this is affordable, not
+  blocking).
+- Worth one cheap check first: if 3e-5 really is the quieter setting, running the
+  whole sweep there buys statistical power for free.
+
+### Measurements that contradicted the plan's assumptions
+
+- **ModernBERT's 50k vocabulary fragments biomedical terms *more*, not less** —
+  14.8% continuation subwords against BiomedBERT's 7.4%. Its vocabulary is
+  general-domain; BiomedBERT's 30k WordPiece was built on PubMed. Whatever a
+  ModernBERT wins here, it will not be through tokenization.
+- **`trim_offsets: true` does not exclude the leading space.** `Ġfatty` reports
+  offsets covering `' fatty'`. The old per-character label lookup would have
+  silently dropped those spans; alignment now tests the token's whole range.
+- **Long context is not free.** Bio-ModernBERT-*base* (150M) OOMs at batch 16 on
+  the 8 GB card, because an 8192-token model pads a batch to its longest document
+  (~2750 tokens here) rather than to 512. It needs batch 2 × grad-accum 8.
+- **Four candidates share one vocabulary** — BioLinkBERT base/large,
+  BiomedBERT-large-abstract and BioELECTRA ship byte-identical 28895-token
+  PubMedBERT `vocab.txt` files. BiomedBERT-*base*'s own 30522-token vocabulary is
+  a *different* vocabulary of a similar size, which is exactly the pairing that
+  fails silently. The guard compares vocabulary fingerprints, not model ids.
+
+### Findings handed to wave-3 review
+
+`analysis/alignment_*.json`, both tokenizer-independent:
+- **83 nested span pairs** — shared-head enumerations annotated twice
+  (`cholesterol and fatty acid synthesis` *and* `fatty acid synthesis`). Flat BIO
+  cannot represent nesting; the inner span's start opens a new `B` and truncates
+  the outer mention. Plausibly feeds the boundary errors in
+  `analysis/error_analysis.json`.
+- **12 boundary-error spans** — 6 starting mid-word (`biopterin metabolism` inside
+  `tetrahydrobiopterin metabolism`), 6 dropping a plural. The mid-word starts
+  produce a dangling `I` with no `B`.
+
+## Phase 4b — first-stage grid (paused 2026-07-31)
+
+Five encoders chosen for the first stage, picked for the widest expected spread at
+the lowest cost; the other twelve stay in reserve with datasets already built and
+validated, so any of them joins a later sweep with no preparation.
+
+| model | role | why it is in the first five |
+|---|---|---|
+| `biomedbert-base` | anchor | the baseline every other number is read against |
+| `bert-base` | domain floor | BLURB NER 82.99 vs 86.13 — the widest gap in the grid |
+| `bio-clinicalbert` | domain mismatch | brackets the baseline from the opposite side |
+| `bioelectra-base` | objective | best BLURB NER per parameter (86.67), byte-identical vocabulary to the PubMedBERT group, so the contrast is RTD vs MLM alone |
+| `bio-modernbert-base` | architecture | the only architecture, tokenizer and 8192-context change in the set |
+
+Grid: 5 models × 2 learning rates × 3 seeds = 30 cells, fixed gold-004+ recipe.
+
+### Completed (`runs/summary.jsonl`, 7 cells)
+
+| model | lr | seed 42 | seed 1 | seed 7 | mean |
+|---|---|---|---|---|---|
+| `biomedbert-base` | 5e-05 | 0.8199 | 0.7947 | 0.8282 | 0.8143 |
+| `biomedbert-base` | 3e-05 | 0.8191 | 0.8125 | 0.8053 | 0.8123 |
+| `bio-modernbert-base` | 5e-05 | 0.7857 | — | — | — |
+
+The `biomedbert-base` lr 5e-05 row reproduces the recorded 0.8143 ± 0.0175 exactly
+— a regression test on the harness, not a new result. The two learning rates are
+0.002 apart against σ = 0.0175, i.e. indistinguishable at three seeds.
+
+### Why 18 cells failed, and the fix
+
+`bert-base`, `bio-clinicalbert` and `bioelectra-base` aborted immediately:
+
+```
+OSError: google-bert/bert-base-uncased does not appear to have a file named
+pytorch_model.bin or model.safetensors.
+```
+
+Dataset preparation only ever pulls tokenizer and config, so the weights were
+never in the cache, and `HF_HUB_OFFLINE=1` turned the miss into a hard failure
+instead of a download. **Resolved** — all three sets of weights are now cached,
+load into `AutoModelForTokenClassification`, and their vocabulary fingerprints
+still match the datasets built earlier. `bio-clinicalbert` still tokenizes
+`Alzheimer` whole, so the casing fix survived the re-download.
+
+**Ten of the seventeen registry models still have no weights cached**, all of them
+in reserve: `modernbert-bio-base`, `scibert`, `biobert`, `biomed-roberta`,
+`modernbert-base`, `bioclinical-modernbert-base`, `bio-modernbert-large`,
+`modernbert-bio-large`. Check before launching a sweep that includes them — disk
+is at 89% with 15 GB free.
+
+### Resuming
+
+`scripts/run_matrix.py` skips any cell that already holds `test_results.json`, so
+the same command picks up the 23 remaining cells (~4 hours):
+
+```bash
+HF_HUB_OFFLINE=1 venv310/bin/python3 scripts/run_matrix.py --seeds 42 1 7 --models \
+  biomedbert-base bert-base bio-clinicalbert bioelectra-base bio-modernbert-base
+```
+
+The interrupted `bio-modernbert-base` lr 5e-05 seed 1 cell left a 1.7 GB
+checkpoint behind; it has been deleted, and that cell restarts from scratch.
+
+## Next
+
+- **Tier 1** (local, ~7.3 GPU-hours): `bioelectra-base`, `biolinkbert-base`,
+  `bio-modernbert-base`, `modernbert-bio-base` against the baseline, **11 seeds
+  each** per the variance measurement above. Answers cheaply whether the encoder
+  family matters at all on 860 documents.
+- **Tier 2** (TRUBA): the 340–396M candidates, only if Tier 1 separates. bf16 rules
+  out `akya-cuda` (V100) for ModernBERT.
+- **Tier 3** (highest expected value): fine-tune GLiNER-biomed on the same 860
+  documents; TAPT on the unlabelled pathway corpus.
+- Wave-3 review remains the dominant lever — an encoder swap is a complement to
+  more data, not a substitute.

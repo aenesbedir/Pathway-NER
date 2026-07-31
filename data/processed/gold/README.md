@@ -20,25 +20,47 @@ data/silver/wave2_1k.jsonl                         raw machine output (SILVER)
             └─ review (drop FP, add FN) → analysis/wave2_batchNN_review.json
                  └─ doccano/build_gold_from_review.py → doccano/wave2_1k_gold.jsonl   (GOLD = tp+fn)
 pilot: analysis/batch_05_5_review.json               → doccano/pilot_1k_batch05_gold.jsonl
-                 └─ preprocessing/gold_to_matches.py → matches.jsonl + articles.jsonl
-                      └─ preprocessing/tag_bio.py → bio_tags.jsonl
-                      └─ preprocessing/build_dataset.py → {train,val,test}.jsonl
+                 └─ preprocessing/gold_to_matches.py → matches.jsonl + articles.jsonl   ← canonical, model-free
+                      ├─ preprocessing/make_splits.py  → splits.json                    ← frozen contract
+                      └─ preprocessing/tag_bio.py --model X → gold-<slug>/bio_tags.jsonl
+                           └─ build_dataset.py --splits → gold-<slug>/{train,val,test}.jsonl
 ```
 
 ## Files
 
+This directory holds only what is **tokenizer-independent**. Anything containing
+`input_ids` lives in a per-model directory, `data/processed/gold-<slug>/`.
+
 | file | rows | note |
 |------|------|------|
-| `matches.jsonl` | 1083 | gold spans as `tag_bio` input (`source="abstract"`, `pathway_id="gold"`); docs with ≥1 span only |
+| `matches.jsonl` | 1083 | gold spans as character offsets (`source="abstract"`, `pathway_id="gold"`); docs with ≥1 span only |
 | `articles.jsonl` | 1200 | pmid → abstract text (all docs, incl. span-free) |
-| `bio_tags.jsonl` | 1083 | BIO-tagged, BiomedBERT tokenizer |
-| `train.jsonl` | 860 pmids / 5943 pos tokens | 80% |
-| `val.jsonl` | 107 pmids / 673 pos tokens | 10% |
-| `test.jsonl` | 109 pmids / 709 pos tokens | 10% |
+| `splits.json` | 1076 pmids | frozen train/val/test assignment — **tracked in git** |
 
-`build_dataset.py` drops docs with no positive labels: 1200 docs → 1083 with spans
-→ 1076 with B/I tokens after tokenization (7 lost to 512-token truncation) → split.
-Split is PMID-stratified, seed 42.
+Per model, e.g. `data/processed/gold-biomedbert-base/`:
+
+| file | rows | note |
+|------|------|------|
+| `bio_tags.jsonl` | 1083 | BIO-tagged with that model's tokenizer |
+| `meta.json` | — | which tokenizer wrote the `input_ids`; `train.py` refuses a mismatch |
+| `train.jsonl` | 860 pmids / 5943 pos tokens | |
+| `val.jsonl` | 107 pmids / 673 pos tokens | |
+| `test.jsonl` | 109 pmids / 709 pos tokens | |
+
+## Why the split is frozen
+
+`build_dataset.py` drops docs with no positive labels *after* tokenization:
+1200 → 1083 with spans → 1076 with B/I tokens under BiomedBERT (7 lost to
+512-token truncation). It used to shuffle the survivors at `seed=42` — which made
+the split depend on the tokenizer, since a ModernBERT at 8192 tokens loses none
+of the 7 and would shuffle a 1083-element list into an entirely different
+assignment. Every encoder would then be scored on a different test set with
+nothing in the logs to show it.
+
+`splits.json` snapshots the assignment gold-001…008 were trained and scored on,
+so historical numbers stay comparable. The 7 truncated documents are therefore
+excluded for every model, including long-context ones — worth reporting as a
+separate measurement rather than worth invalidating eight runs over.
 
 ## Regenerate
 
@@ -51,15 +73,26 @@ venv310/bin/python3 preprocessing/gold_to_matches.py \
     --sources doccano/wave2_1k_gold.jsonl doccano/pilot_1k_batch05_gold.jsonl \
     --outdir  data/processed/gold
 
-# 3. matches + articles → BIO tags (needs transformers; model cached)
-HF_HUB_OFFLINE=1 venv310/bin/python3 preprocessing/tag_bio.py \
+# 3. freeze the split (already done and committed; only re-run if the corpus grows)
+venv310/bin/python3 preprocessing/make_splits.py
+
+# 4. matches + articles → BIO tags, per encoder (see `python3 encoders.py`)
+MODEL=biomedbert-base
+DIR=data/processed/gold-$MODEL
+mkdir -p $DIR
+venv310/bin/python3 preprocessing/tag_bio.py \
     --matches  data/processed/gold/matches.jsonl \
     --articles data/processed/gold/articles.jsonl \
-    --output   data/processed/gold/bio_tags.jsonl \
-    --db ""
+    --output   $DIR/bio_tags.jsonl \
+    --db "" --model $MODEL
 
-# 4. BIO tags → train/val/test
+# 5. BIO tags → train/val/test, against the frozen split
 venv310/bin/python3 preprocessing/build_dataset.py \
-    --input  data/processed/gold/bio_tags.jsonl \
-    --outdir data/processed/gold
+    --input  $DIR/bio_tags.jsonl --outdir $DIR \
+    --splits data/processed/gold/splits.json
+
+# 6. verify the alignment survived this tokenizer (exit 1 on unexplained loss)
+venv310/bin/python3 preprocessing/check_alignment.py \
+    --data-dir $DIR --model $MODEL \
+    --report analysis/alignment_$MODEL.json
 ```

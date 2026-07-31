@@ -39,7 +39,6 @@ from transformers import AutoModelForTokenClassification, AutoTokenizer
 ROOT = Path(__file__).resolve().parents[2]
 GOLDEN = ROOT / "playground/golden_set/golden_set.json"
 
-MAX_TOKENS = 512
 ID2LABEL = {0: "O", 1: "B-Pathway", 2: "I-Pathway"}
 
 
@@ -64,9 +63,9 @@ def gold_intervals(article: dict):
     return pos, neg
 
 
-def predict_spans(text: str, tokenizer, model, device) -> list[dict]:
+def predict_spans(text: str, tokenizer, model, device, max_tokens: int) -> list[dict]:
     """Run the model and BIO-decode into character spans."""
-    enc = tokenizer(text, max_length=MAX_TOKENS, truncation=True,
+    enc = tokenizer(text, max_length=max_tokens, truncation=True,
                     return_offsets_mapping=True, return_tensors="pt")
     offsets = enc.pop("offset_mapping")[0].tolist()
     enc = {k: v.to(device) for k, v in enc.items()}
@@ -121,8 +120,14 @@ def main() -> None:
     model = AutoModelForTokenClassification.from_pretrained(args.model_dir)
     model.to(device).eval()
 
+    # Take the truncation length from the checkpoint rather than assuming 512 —
+    # a ModernBERT-based checkpoint reads 8192 and would otherwise be evaluated
+    # on a fraction of each abstract.
+    max_tokens = min(getattr(model.config, "max_position_embeddings", 512),
+                     getattr(tokenizer, "model_max_length", 512) or 512)
+
     name = Path(args.model_dir).name
-    print(f"Model: {name}   Device: {device}\n" + "=" * 64)
+    print(f"Model: {name}   Device: {device}   Max tokens: {max_tokens}\n" + "=" * 64)
 
     tot_tp = tot_fp = tot_unl = 0
     recall_hit: dict[str, int] = {}
@@ -132,7 +137,7 @@ def main() -> None:
     for art in gold["articles"]:
         pmid, text = art["pmid"], art["abstract"]
         pos, neg = gold_intervals(art)
-        mentions = predict_spans(text, tokenizer, model, device)
+        mentions = predict_spans(text, tokenizer, model, device, max_tokens)
 
         tp = fp = unl = 0
         detail = []

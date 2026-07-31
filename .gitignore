@@ -120,3 +120,13 @@ doccano/wave2_1k_gold.jsonl
 doccano/pilot_1k_batch05_gold.jsonl
 doccano/batches/wave2_1k_doccano_batch_*_5.jsonl
 data/processed/gold/*.jsonl
+
+# Per-tokenizer datasets: regenerable from data/processed/gold/{matches,articles}
+# .jsonl + splits.json via preprocessing/tag_bio.py --model X. splits.json itself
+# is tracked — it is the contract that makes two encoders comparable.
+data/processed/gold-*/
+
+# Sweep outputs. summary.jsonl is the aggregated result and is kept; the
+# per-run directories hold logs and prediction dumps and are regenerable.
+runs/*/
+!runs/summary.jsonl
