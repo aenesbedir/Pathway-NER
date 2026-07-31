@@ -1238,6 +1238,47 @@ in reserve: `modernbert-bio-base`, `scibert`, `biobert`, `biomed-roberta`,
 `modernbert-bio-large`. Check before launching a sweep that includes them — disk
 is at 89% with 15 GB free.
 
+### Training is not reproducible at a fixed seed
+
+Re-running the oldest cell (`biomedbert-base`, lr 5e-05, seed 42) twice did not
+reproduce its recorded 0.8199:
+
+| run | test F1 | test P | test R | best val F1 | best epoch | epochs run | seconds |
+|---|---|---|---|---|---|---|---|
+| 29 Jul (recorded) | 0.8199 | 0.7897 | 0.8526 | — | — | — | 549 |
+| replicate 1 | 0.7662 | 0.6984 | 0.8486 | 0.8080 | 7 | 15 | 292 |
+| replicate 2 | 0.7736 | 0.7348 | 0.8167 | 0.8223 | 16 | 24 | 469 |
+
+The two replicates differ from each other as well as from the original, so the
+pipeline is nondeterministic at a fixed seed. Every field in `test_results.json`
+was compared: `lr`, `seed`, `class_weights`, `epochs`, `patience`,
+`frozen_layers`, `precision_mode`, `batch_size`, `grad_accum`, `n_train`,
+`n_val`, `n_test_effective`, `data_dir` and `hf_id` are identical; the only
+differences are schema fields absent from the older file. The dataset has not
+changed since 29 July (`train.jsonl` mtime 23:19, before the run), and
+torch 2.12.0 / transformers 5.10.2 have been installed since 7 June.
+
+`set_seed` is called but `torch.use_deterministic_algorithms` is not, so cuDNN
+kernel selection and atomic accumulation order vary between runs. Early stopping
+turns those small numeric differences into a discrete decision — which epoch is
+best — and the trajectories then diverge: replicate 1 peaked at epoch 7,
+replicate 2 at epoch 16.
+
+**Consequences.** The σ = 0.0175 recorded as *seed* variance is really seed plus
+run-to-run noise, so the grid resolves less than planned. The assumption that
+retraining a best configuration reproduces its swept number is false — Phase 5
+(`models/encoders/`) needs a different rule for which checkpoint is authoritative.
+
+**Unresolved.** Both replicates fall below all three recorded lr 5e-05 runs
+(0.7947 / 0.8199 / 0.8282). Two samples cannot separate an unlucky draw from a
+systematic shift. Against a shift: the three lr 3e-05 cells ran on 31 July under
+the *current* code and produced 0.8191 / 0.8125 / 0.8053, which are not depressed.
+The only cells predating the 31 July 11:03 `train.py` edit are the three at
+lr 5e-05, and that edit was the `tokenizer_kwargs` work, which is a no-op for
+`biomedbert-base` (empty kwargs, uncased model).
+
+Replicates live in `runs/_recheck/` and are excluded from `summary.jsonl`.
+
 ### Resuming
 
 `scripts/run_matrix.py` skips any cell that already holds `test_results.json`, so
