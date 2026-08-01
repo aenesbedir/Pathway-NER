@@ -1,0 +1,178 @@
+{
+  "claims": {
+    "clm-exact-match-surface-forms": {
+      "assessment": "accepted",
+      "confidence": "high",
+      "evidence": [
+        {
+          "locator": "Unique Surface Forms (256 raw / 105 case-folded)",
+          "relation": "supports",
+          "source_id": "src-b15c6daead7737f71853"
+        }
+      ],
+      "location": {
+        "anchor": "The near-lookup problem",
+        "path": "wiki/concepts/distant-supervision.md"
+      },
+      "notes": "Full-corpus computation, not a sample.",
+      "reviewed_at": "2026-08-01",
+      "risk": "normal",
+      "text": "Exact matching over the Phase-2 corpus produces 73,096 spans that reduce to 256 raw / 105 case-folded unique surface forms."
+    },
+    "clm-freezing-hurts": {
+      "assessment": "accepted",
+      "confidence": "high",
+      "evidence": [
+        {
+          "locator": "Run gold-004 - Unfreeze all layers",
+          "relation": "supports",
+          "source_id": "src-0fcb43400674f25eb568"
+        }
+      ],
+      "location": {
+        "anchor": null,
+        "path": "wiki/decisions/unfreeze-all-encoder-layers.md"
+      },
+      "notes": "Corroborated independently in Phase 1 (runs 003 and 004) and on gold data; the effect is far outside the seed band.",
+      "reviewed_at": "2026-08-01",
+      "risk": "normal",
+      "text": "Freezing lower encoder layers reduces F1 on this task; unfreezing all layers moved gold-003 to gold-004 by +0.072 F1 and +0.108 precision."
+    },
+    "clm-gold008-seed-band": {
+      "assessment": "accepted",
+      "confidence": "high",
+      "evidence": [
+        {
+          "locator": "Tier 0 - The seed band at lr 5e-5 is 2.5x wider than assumed",
+          "relation": "supports",
+          "source_id": "src-0fcb43400674f25eb568"
+        },
+        {
+          "locator": "The most important number produced by Tier 0",
+          "relation": "supports",
+          "source_id": "src-4471671790a397df0a1c"
+        }
+      ],
+      "location": {
+        "anchor": "The conclusion that was later revised",
+        "path": "wiki/experiments/model-runs/gold-005-008-seed-and-lr-sweep.md"
+      },
+      "notes": "Supersedes the earlier +-0.007 band measured at lr 3e-5.",
+      "reviewed_at": "2026-08-01",
+      "risk": "normal",
+      "text": "The gold-008 recipe has a three-seed mean of 0.8143 +/- 0.0175 test F1, so its recorded single-seed 0.8197 is not a distinguishable result."
+    },
+    "clm-pmid-split-leakage": {
+      "assessment": "accepted",
+      "confidence": "high",
+      "evidence": [
+        {
+          "locator": "Root Cause",
+          "relation": "supports",
+          "source_id": "src-da413691a5e6efa2f669"
+        },
+        {
+          "locator": "Run 005 - Phase 2 Only",
+          "relation": "supports",
+          "source_id": "src-4471671790a397df0a1c"
+        }
+      ],
+      "location": {
+        "anchor": "Data leakage from the split strategy",
+        "path": "wiki/lessons/data-leakage-from-split-strategy.md"
+      },
+      "notes": "Two write-ups of the same incident inside one repository; they share an independence key, so this is not two-source corroboration.",
+      "reviewed_at": "2026-08-01",
+      "risk": "normal",
+      "text": "Splitting the Phase-2 dataset by pathway instead of by PMID leaked text between splits and inflated validation F1 to 0.980."
+    },
+    "clm-silver-variation-share": {
+      "assessment": "accepted",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "locator": "P3-1c - 1k pilot run",
+          "relation": "supports",
+          "source_id": "src-4471671790a397df0a1c"
+        },
+        {
+          "locator": "Headline - did we break the near-lookup problem?",
+          "relation": "context",
+          "source_id": "src-8d99d61b6775bd25b302"
+        }
+      ],
+      "location": {
+        "anchor": "The 1k pilot",
+        "path": "wiki/pipelines/phase-3-silver-labeling.md"
+      },
+      "notes": "Counts predate the direction-bug fix, which moved exact 999->1012 and variation 251->238.",
+      "reviewed_at": "2026-08-01",
+      "risk": "normal",
+      "text": "In the 1k silver pilot, variation and synonym spans together are 425 of 1,996 spans (21%) - mentions exact matching would miss."
+    },
+    "clm-student-vs-teacher-recall": {
+      "assessment": "accepted",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "locator": "Head-to-head",
+          "relation": "supports",
+          "source_id": "src-3227d25b455894403925"
+        }
+      ],
+      "location": {
+        "anchor": "gold-008 vs the teacher LLM",
+        "path": "wiki/evaluation/gold-008-vs-teacher-llm.md"
+      },
+      "notes": "Overlap-based scoring on 10 abstracts; the teacher leads on span-exact scoring against the guide-based gold, which is a different question.",
+      "reviewed_at": "2026-08-01",
+      "risk": "normal",
+      "text": "On the 10-abstract golden set with overlap scoring, gold-008 recalls 69/70 gold targets against the qwen2.5:14b teacher's 58/70."
+    },
+    "clm-teacher-span-exact-lead": {
+      "assessment": "contested",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "locator": "Run gold-001 - Notes",
+          "relation": "supports",
+          "source_id": "src-0fcb43400674f25eb568"
+        },
+        {
+          "locator": "Headline",
+          "relation": "contradicts",
+          "source_id": "src-3227d25b455894403925"
+        }
+      ],
+      "location": {
+        "anchor": "Quality ceiling",
+        "path": "wiki/concepts/gold-labels.md"
+      },
+      "notes": "Kept contested on purpose: the two sources measure different questions (boundary-exact vs mention-found) and neither replaces the other.",
+      "reviewed_at": "2026-08-01",
+      "risk": "normal",
+      "text": "Measured span-exact against the guide-based gold, the qwen2.5:14b teacher scores F1 0.864 while the best student sits near 0.82."
+    },
+    "clm-training-nondeterminism": {
+      "assessment": "provisional",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "locator": "Training is not reproducible at a fixed seed",
+          "relation": "supports",
+          "source_id": "src-4471671790a397df0a1c"
+        }
+      ],
+      "location": {
+        "anchor": "Training is not reproducible at a fixed seed",
+        "path": "wiki/lessons/training-is-not-reproducible-at-a-fixed-seed.md"
+      },
+      "notes": "Two replicates cannot separate an unlucky draw from a systematic shift; the cause of the level difference is unresolved.",
+      "reviewed_at": "2026-08-01",
+      "risk": "high",
+      "text": "Training does not reproduce a recorded result at a fixed seed: the biomedbert-base lr 5e-05 seed 42 cell recorded 0.8199 and two replicates gave 0.7662 and 0.7736."
+    }
+  },
+  "generated_at": "2026-08-01T19:20:00Z",
+  "schema": "claude-obsidian.claim-ledger.v1"
+}

@@ -1,0 +1,519 @@
+# Documentation migration map — Pathway-NER -> doc_vault
+#
+# One record per Markdown file tracked in the repository, excluding doc_vault/ itself.
+# Inventory taken with:
+#   rg --files -g '*.md' -g '*.mdx' -g '*.markdown' -g '!doc_vault/**'
+#
+# action values:
+#   KEEP      stays where it is, next to the code it documents
+#   INGEST    captured as a source; synthesis notes are created in the vault
+#   SPLIT     operational half stays in the repo, knowledge half moves to vault notes
+#   GENERATED script output; never moved, only referenced
+#   ARCHIVE   historical handoff or superseded document
+
+schema: pathway-ner.documentation-migration-map.v1
+generated_at: 2026-08-01
+source_repo: aenesbedir/Pathway-NER
+source_branch: annotator-model-registry
+source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+vault: doc_vault/
+
+documents:
+  - source_path: project_tracking.md
+    document_type: project journal (history + architecture + status + decisions + lessons)
+    audience: maintainer
+    code_coupling: low
+    update_frequency: every working session
+    action: SPLIT
+    canonical_location: repo (chronological journal) + vault (knowledge-level synthesis)
+    target_notes:
+      - wiki/projects/pathway-ner/index.md
+      - wiki/projects/pathway-ner/architecture.md
+      - wiki/projects/pathway-ner/current-status.md
+      - wiki/pipelines/phase-1-original-corpus.md
+      - wiki/pipelines/phase-2-pubmed-corpus.md
+      - wiki/pipelines/phase-3-silver-labeling.md
+      - wiki/pipelines/phase-4-base-encoder-survey.md
+      - wiki/decisions/*
+      - wiki/lessons/*
+    related_code:
+      - preprocessing/
+      - llm/
+      - train.py
+      - scripts/run_matrix.py
+    related_data:
+      - data/processed/
+      - data/silver/
+      - runs/summary.jsonl
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: >
+      Not modified in this migration. The file stays the canonical chronological
+      record; the vault holds only the durable synthesis. Sections P2-6, P2-7 and
+      Run 005 are written in Turkish; the derived notes are English.
+
+  - source_path: knowledge_base/model_experiments.md
+    document_type: experiment log
+    audience: maintainer
+    code_coupling: medium
+    update_frequency: per training run
+    action: INGEST
+    canonical_location: repo (per-run hyperparameters and tables)
+    target_notes:
+      - wiki/experiments/index.md
+      - wiki/experiments/model-runs/*
+      - wiki/experiments/error-analysis-run-001.md
+    related_code:
+      - train.py
+      - encoders.py
+      - scripts/run_matrix.py
+    related_data:
+      - runs/summary.jsonl
+      - models/
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: >
+      Contains 14 documented run sections. Vault notes carry purpose, outcome and
+      consequence per run and quote the reported metrics verbatim; they do not
+      restate the full hyperparameter tables, and per CLAUDE.md they are not a
+      second result table — runs/summary.jsonl remains the source of truth.
+
+  - source_path: knowledge_base/nlp_concepts.md
+    document_type: glossary
+    audience: maintainer / newcomer
+    code_coupling: low
+    update_frequency: rare
+    action: INGEST
+    canonical_location: vault
+    target_notes:
+      - wiki/concepts/span.md
+      - wiki/concepts/tokenization.md
+      - wiki/concepts/bio-labeling.md
+    related_code:
+      - preprocessing/tag_bio.py
+      - preprocessing/check_alignment.py
+    related_data:
+      - data/processed/gold/
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: >
+      The repo file is left in place; the vault notes are the linked versions and
+      add the project-specific measurements the glossary does not carry.
+
+  - source_path: lessons_learned/challenges.md
+    document_type: lessons learned
+    audience: maintainer
+    code_coupling: low
+    update_frequency: rare
+    action: INGEST
+    canonical_location: vault
+    target_notes:
+      - wiki/lessons/data-leakage-from-split-strategy.md
+      - wiki/decisions/use-pmid-based-dataset-splitting.md
+    related_code:
+      - preprocessing/build_dataset.py
+    related_data:
+      - data/processed/phase2/
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: Single-entry file; the vault splits the incident from the decision it produced.
+
+  - source_path: reports/base_model_survey_2026-07.md
+    document_type: research report
+    audience: maintainer
+    code_coupling: low
+    update_frequency: superseded
+    action: INGEST
+    canonical_location: repo (full report) + vault (synthesis)
+    target_notes:
+      - wiki/research/base-encoder-candidates.md
+    related_code:
+      - encoders.py
+    related_data: []
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: >
+      Superseded by reports/base_model_expansion_analysis_2026-07.md, which drops
+      two of its candidates on evidence. Both are captured; the contradiction is
+      preserved in the vault note rather than resolved.
+
+  - source_path: reports/base_model_expansion_analysis_2026-07.md
+    document_type: research report
+    audience: maintainer
+    code_coupling: low
+    update_frequency: rare
+    action: INGEST
+    canonical_location: repo (full report) + vault (synthesis)
+    target_notes:
+      - wiki/research/base-encoder-candidates.md
+      - wiki/pipelines/phase-4-base-encoder-survey.md
+    related_code:
+      - encoders.py
+      - scripts/run_matrix.py
+    related_data:
+      - runs/summary.jsonl
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: Carries the paper-level numbers behind the encoder-swap expectation.
+
+  - source_path: reports/llm_selection_and_hardware_2026-07.md
+    document_type: research report (Turkish)
+    audience: maintainer
+    code_coupling: low
+    update_frequency: rare
+    action: INGEST
+    canonical_location: repo (full report) + vault (synthesis)
+    target_notes:
+      - wiki/research/annotator-llm-and-hardware.md
+    related_code:
+      - llm/models.py
+    related_data: []
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: Written in Turkish; the vault synthesis is English.
+
+  - source_path: reports/golden_set_gold-008_results.md
+    document_type: evaluation report
+    audience: maintainer
+    code_coupling: medium
+    update_frequency: per evaluation
+    action: INGEST
+    canonical_location: repo (full result tables and reproduce commands)
+    target_notes:
+      - wiki/evaluation/gold-008-vs-teacher-llm.md
+      - wiki/evaluation/golden-set.md
+    related_code:
+      - playground/golden_set/eval_bert_model.py
+      - playground/golden_set/eval_llm_guided.py
+    related_data:
+      - analysis/golden_set_gold-008.json
+      - playground/golden_set/golden_set.json
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: >
+      Its student-vs-teacher numbers (overlap scoring) must not be read against the
+      held-out span-exact F1; the vault note keeps both framings side by side.
+
+  - source_path: analysis/data_summary.md
+    document_type: dataset statistics
+    audience: maintainer
+    code_coupling: high
+    update_frequency: per corpus rebuild
+    action: INGEST
+    canonical_location: repo
+    target_notes:
+      - wiki/pipelines/phase-1-original-corpus.md
+      - wiki/pipelines/phase-2-pubmed-corpus.md
+    related_code:
+      - pubmed_api/
+      - preprocessing/
+    related_data:
+      - data/raw/
+      - data/processed/
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: Counts stay canonical here; the vault cites them, it does not maintain them.
+
+  - source_path: analysis/pubmed_year_distribution.md
+    document_type: dataset statistics
+    audience: maintainer
+    code_coupling: high
+    update_frequency: per corpus rebuild
+    action: INGEST
+    canonical_location: repo
+    target_notes:
+      - wiki/pipelines/phase-1-original-corpus.md
+    related_code:
+      - preprocessing/fetch_pubmed.py
+    related_data:
+      - data/raw/abstracts.jsonl
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: Captured for provenance; only the corpus-shape conclusion is carried into a note.
+
+  - source_path: annotation_handoff.md
+    document_type: session handoff
+    audience: annotator (historical)
+    code_coupling: low
+    update_frequency: none
+    action: ARCHIVE
+    canonical_location: repo (historical record)
+    target_notes:
+      - wiki/evaluation/annotation-strategy.md
+    related_code:
+      - doccano/
+    related_data:
+      - data/processed/all_matches.jsonl
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: >
+      Describes the Phase-1 doccano round, which project_tracking.md P3-1f later
+      declares out of scope. Kept as history; the live workflow is doccano/.
+      Contains absolute local paths — the vault notes use repo-relative paths instead.
+
+  - source_path: CLAUDE.md
+    document_type: agent instructions
+    audience: coding agent
+    code_coupling: high
+    update_frequency: as rules change
+    action: KEEP
+    canonical_location: repo
+    target_notes: []
+    related_code:
+      - train.py
+      - scripts/run_matrix.py
+      - .gitignore
+    related_data:
+      - runs/summary.jsonl
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: not_ingested
+    notes: >
+      Deliberately not ingested as a knowledge note. Its rules were read and applied
+      to this migration — in particular "results have one source of truth", which is
+      why no vault note maintains a results table.
+
+  - source_path: pubmed_api/PIPELINE.md
+    document_type: runbook
+    audience: operator
+    code_coupling: high
+    update_frequency: per script change
+    action: KEEP
+    canonical_location: repo
+    target_notes:
+      - wiki/pipelines/phase-2-pubmed-corpus.md
+    related_code:
+      - pubmed_api/
+    related_data:
+      - data/raw/articles.json
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: referenced_only
+    notes: >
+      Commands and run order must change in the same commit as the scripts.
+      Referenced from the Phase 2 note, not copied. Documents NCBI_API_KEY as an
+      env var with a hardcoded fallback in each script — see the review notes.
+
+  - source_path: pubmed_api/STATS.md
+    document_type: generated statistics
+    audience: maintainer
+    code_coupling: high
+    update_frequency: per pipeline run
+    action: GENERATED
+    canonical_location: repo
+    target_notes:
+      - wiki/pipelines/phase-2-pubmed-corpus.md
+    related_code:
+      - pubmed_api/
+    related_data:
+      - data/raw/pathway_disease_pairs.json
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: referenced_only
+    notes: Script output; referenced by locator only so it can never drift in the vault.
+
+  - source_path: doccano/README.md
+    document_type: runbook
+    audience: operator
+    code_coupling: high
+    update_frequency: per format change
+    action: KEEP
+    canonical_location: repo
+    target_notes:
+      - wiki/evaluation/annotation-strategy.md
+    related_code:
+      - doccano/export_doccano.py
+      - doccano/split_batches.py
+    related_data:
+      - doccano/batches/
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: referenced_only
+    notes: Import steps and the format spec stay with the scripts they describe.
+
+  - source_path: doccano/ANNOTATION_GUIDE.md
+    document_type: annotation policy
+    audience: annotator
+    code_coupling: low
+    update_frequency: rare
+    action: KEEP
+    canonical_location: repo
+    target_notes:
+      - wiki/evaluation/annotation-strategy.md
+      - wiki/concepts/silver-labels.md
+    related_code:
+      - doccano/
+    related_data:
+      - doccano/batches/
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: referenced_only
+    notes: >
+      The operative accept/reject rules must ship with the batches annotators
+      receive. The vault note explains the rule's rationale and its one deliberate
+      divergence from the golden set; it does not restate the tables.
+
+  - source_path: doccano/ANNOTATOR_STEPS.md
+    document_type: runbook (Turkish)
+    audience: annotator
+    code_coupling: medium
+    update_frequency: per doccano version
+    action: KEEP
+    canonical_location: repo
+    target_notes:
+      - wiki/evaluation/annotation-strategy.md
+    related_code:
+      - doccano/split_batches.py
+    related_data:
+      - doccano/batches/
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: referenced_only
+    notes: Turkish, by design — it is sent to annotators with their batch file.
+
+  - source_path: data/silver/README.md
+    document_type: dataset README
+    audience: maintainer
+    code_coupling: high
+    update_frequency: per phase output
+    action: KEEP
+    canonical_location: repo
+    target_notes:
+      - wiki/concepts/silver-labels.md
+    related_code:
+      - llm/run_silver.py
+    related_data:
+      - data/silver/
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: referenced_only
+    notes: Dataset folder READMEs stay with their data per the canonical-source policy.
+
+  - source_path: data/processed/gold/README.md
+    document_type: dataset README + runbook
+    audience: maintainer
+    code_coupling: high
+    update_frequency: per corpus or encoder change
+    action: KEEP
+    canonical_location: repo
+    target_notes:
+      - wiki/concepts/gold-labels.md
+      - wiki/decisions/freeze-the-gold-split.md
+    related_code:
+      - preprocessing/make_splits.py
+      - preprocessing/tag_bio.py
+      - preprocessing/build_dataset.py
+    related_data:
+      - data/processed/gold/splits.json
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: referenced_only
+    notes: >
+      Holds the provenance chain and the six regeneration commands; both must move
+      with the code. The vault carries why the split is frozen, not how to rebuild it.
+
+  - source_path: playground/golden_set/README.md
+    document_type: evaluation-set documentation
+    audience: maintainer
+    code_coupling: medium
+    update_frequency: per golden-set version
+    action: SPLIT
+    canonical_location: repo (schema, article table, reproduce) + vault (what it measures)
+    target_notes:
+      - wiki/evaluation/golden-set.md
+      - wiki/concepts/gold-labels.md
+    related_code:
+      - playground/golden_set/build_golden_set.py
+    related_data:
+      - playground/golden_set/golden_set.json
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: referenced_only
+    notes: Contains an absolute interpreter path in its reproduce block.
+
+  - source_path: playground/golden_set/golden_set.md
+    document_type: annotation data (human review copy)
+    audience: annotator
+    code_coupling: high
+    update_frequency: per golden-set rebuild
+    action: GENERATED
+    canonical_location: repo
+    target_notes:
+      - wiki/evaluation/golden-set.md
+    related_code:
+      - playground/golden_set/build_golden_set.py
+    related_data:
+      - playground/golden_set/golden_set.json
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: not_ingested
+    notes: >
+      Regenerated by build_golden_set.py and it is annotation data, not knowledge.
+      Not captured; referenced as the worked-example reference for annotators.
+
+  - source_path: playground/exact_match_analysis.md
+    document_type: analysis report
+    audience: maintainer
+    code_coupling: medium
+    update_frequency: per corpus rebuild
+    action: INGEST
+    canonical_location: repo (full tables) + vault (the conclusion)
+    target_notes:
+      - wiki/concepts/distant-supervision.md
+      - wiki/pipelines/phase-2-pubmed-corpus.md
+    related_code:
+      - preprocessing/match_exact.py
+      - playground/phase_2_label_coverage.py
+    related_data:
+      - data/processed/exact_matches.jsonl
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: >
+      The 256-raw / 105-case-folded surface-form measurement is the evidence base
+      for the whole of Phase 3.
+
+  - source_path: playground/silver_1k_analyses.md
+    document_type: analysis report
+    audience: maintainer
+    code_coupling: medium
+    update_frequency: per silver run
+    action: INGEST
+    canonical_location: repo (full tables) + vault (the conclusion)
+    target_notes:
+      - wiki/pipelines/phase-3-silver-labeling.md
+      - wiki/lessons/small-golden-sets-certify-what-they-contain.md
+    related_code:
+      - playground/silver_1k_analysis.py
+      - llm/canonicalize.py
+      - llm/booster.py
+    related_data:
+      - data/silver/pilot_1k.jsonl
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: ingested
+    notes: >
+      Descriptive only — the file states plainly that it is not an evaluation.
+      The vault note repeats that qualification.
+
+  - source_path: playground/model_005_analysis/README.md
+    document_type: analysis README
+    audience: maintainer
+    code_coupling: high
+    update_frequency: none
+    action: KEEP
+    canonical_location: repo
+    target_notes:
+      - wiki/experiments/model-runs/run-005-phase-2-data.md
+    related_code:
+      - playground/model_005_analysis/
+    related_data:
+      - models/pathway-ner-005/
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: referenced_only
+    notes: Script-coupled analysis of a superseded model; referenced, not ingested.
+
+  - source_path: playground/model_005_ground_truth_compare/README.md
+    document_type: analysis README
+    audience: maintainer
+    code_coupling: high
+    update_frequency: none
+    action: KEEP
+    canonical_location: repo
+    target_notes:
+      - wiki/experiments/model-runs/run-005-phase-2-data.md
+    related_code:
+      - playground/model_005_ground_truth_compare/
+    related_data:
+      - models/pathway-ner-005/
+    source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+    migration_status: referenced_only
+    notes: Contains an absolute interpreter path in its reproduce block.

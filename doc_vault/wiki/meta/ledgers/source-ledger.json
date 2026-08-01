@@ -1,0 +1,269 @@
+{
+  "generated_at": "2026-08-01T19:20:00Z",
+  "schema": "claude-obsidian.source-ledger.v1",
+  "sources": {
+    "src-0fcb43400674f25eb568": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "edf53a2d3683a0aea2e9419205909b5674a4e1acf67488acfc6c16c33dbd04d3",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:knowledge_base/model_experiments.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/edf53a2d3683a0aea2e9419205909b5674a4e1acf67488acfc6c16c33dbd04d3.md"
+      },
+      "pages": [
+        "wiki/experiments/experiments-index.md",
+        "wiki/experiments/model-runs/gold-004-unfreeze-all-layers.md",
+        "wiki/experiments/model-runs/run-001-baseline.md",
+        "wiki/experiments/model-runs/tier-0-comparison-harness.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "Model experiments log"
+    },
+    "src-287addc71f5435c4bcf5": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "a52bc42d7c5528110b484fd835e39e59699c22283829914600f633febcd98054",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:reports/base_model_expansion_analysis_2026-07.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/a52bc42d7c5528110b484fd835e39e59699c22283829914600f633febcd98054.md"
+      },
+      "pages": [
+        "wiki/pipelines/phase-4-base-encoder-survey.md",
+        "wiki/research/base-encoder-candidates.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "Base-encoder expansion analysis (July 2026)"
+    },
+    "src-3227d25b455894403925": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "f7b74018e30a3feb99aaf8319bc4aa7021d20eef49b6c838e5939ded8f1db8b4",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:reports/golden_set_gold-008_results.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/f7b74018e30a3feb99aaf8319bc4aa7021d20eef49b6c838e5939ded8f1db8b4.md"
+      },
+      "pages": [
+        "wiki/evaluation/gold-008-vs-teacher-llm.md",
+        "wiki/evaluation/golden-set.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "gold-008 vs the guided LLM on the golden set"
+    },
+    "src-4471671790a397df0a1c": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "e4abe9ee8d63a6b69e454f25282a730b4f9f2f3415acafa9280d68b1405203e8",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:project_tracking.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/e4abe9ee8d63a6b69e454f25282a730b4f9f2f3415acafa9280d68b1405203e8.md"
+      },
+      "pages": [
+        "wiki/pipelines/phase-1-original-corpus.md",
+        "wiki/pipelines/phase-2-pubmed-corpus.md",
+        "wiki/pipelines/phase-3-silver-labeling.md",
+        "wiki/pipelines/phase-4-base-encoder-survey.md",
+        "wiki/projects/pathway-ner/architecture.md",
+        "wiki/projects/pathway-ner/current-status.md",
+        "wiki/projects/pathway-ner/pathway-ner.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "Pathway-NER project tracking"
+    },
+    "src-6737ff2724fff08b7b86": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "ec31493a12c11990fe3fbce2297435677a25ecbcbdf344482edfe770b37bec03",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:analysis/data_summary.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/ec31493a12c11990fe3fbce2297435677a25ecbcbdf344482edfe770b37bec03.md"
+      },
+      "pages": [
+        "wiki/pipelines/phase-1-original-corpus.md",
+        "wiki/pipelines/phase-2-pubmed-corpus.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "Corpus data summary"
+    },
+    "src-79713b63997ef8c5b7b2": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "947c8850f12ff79d06f798904867fe24deb8e974eeb83c83ca895ed76fbc5d67",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:reports/llm_selection_and_hardware_2026-07.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/947c8850f12ff79d06f798904867fe24deb8e974eeb83c83ca895ed76fbc5d67.md"
+      },
+      "pages": [
+        "wiki/research/annotator-llm-and-hardware.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "LLM selection and hardware scenarios (July 2026)"
+    },
+    "src-8d99d61b6775bd25b302": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "649c7f3ec6a6913e06edba62358f85f3c4ed54ea5ebd2f91b764a795c5712cee",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:playground/silver_1k_analyses.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/649c7f3ec6a6913e06edba62358f85f3c4ed54ea5ebd2f91b764a795c5712cee.md"
+      },
+      "pages": [
+        "wiki/lessons/small-golden-sets-certify-what-they-contain.md",
+        "wiki/pipelines/phase-3-silver-labeling.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "Silver 1k pilot descriptive analysis"
+    },
+    "src-8f28612de46d25fac6d2": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "1b2ce80494e6428230d7531569ad1e8d50fcadccc8ab897168ad39a86f10212d",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:annotation_handoff.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/1b2ce80494e6428230d7531569ad1e8d50fcadccc8ab897168ad39a86f10212d.md"
+      },
+      "pages": [
+        "wiki/evaluation/annotation-strategy.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "Annotation handoff (doccano session, historical)"
+    },
+    "src-a649459f1bf3a0877af2": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "191718882fe10e428103146eaa2d3b63c51131f569bec510bbf5dc2058cbffeb",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:knowledge_base/nlp_concepts.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/191718882fe10e428103146eaa2d3b63c51131f569bec510bbf5dc2058cbffeb.md"
+      },
+      "pages": [
+        "wiki/concepts/bio-labeling.md",
+        "wiki/concepts/span.md",
+        "wiki/concepts/tokenization.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "NLP concepts glossary"
+    },
+    "src-a89f4415b6fb2ec07b80": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "3e6812c7cb04a396f878dbd5f1afc6f5e2faee921edc6dc072586cfbe17038cb",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:reports/base_model_survey_2026-07.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/3e6812c7cb04a396f878dbd5f1afc6f5e2faee921edc6dc072586cfbe17038cb.md"
+      },
+      "pages": [
+        "wiki/research/base-encoder-candidates.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "Base-model survey (July 2026)"
+    },
+    "src-b15c6daead7737f71853": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "cdf42695e2a3b4f54344a0130d71b244593175e772ea7b72f4d25f7f171192f7",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:playground/exact_match_analysis.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/cdf42695e2a3b4f54344a0130d71b244593175e772ea7b72f4d25f7f171192f7.md"
+      },
+      "pages": [
+        "wiki/concepts/distant-supervision.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "Exact match quality analysis"
+    },
+    "src-c94f151d0af43fe0cab7": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "d60fc46a5ac62f63bb81b215a2c1bfebb566dd98d1ac0568c38a4ba16b1df4d6",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:analysis/pubmed_year_distribution.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/d60fc46a5ac62f63bb81b215a2c1bfebb566dd98d1ac0568c38a4ba16b1df4d6.md"
+      },
+      "pages": [
+        "wiki/pipelines/phase-1-original-corpus.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "PubMed article year distribution"
+    },
+    "src-da413691a5e6efa2f669": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "28a645ae38880e7aa1415ac15afddf5c702f389dc74efbf965af6c61f05ec0ec",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:lessons_learned/challenges.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/28a645ae38880e7aa1415ac15afddf5c702f389dc74efbf965af6c61f05ec0ec.md"
+      },
+      "pages": [
+        "wiki/decisions/use-pmid-based-dataset-splitting.md",
+        "wiki/lessons/data-leakage-from-split-strategy.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "title": "Challenges and lessons learned"
+    }
+  }
+}

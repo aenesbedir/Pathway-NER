@@ -1,0 +1,21 @@
+# Vault-local runtime and recovery state may contain note text or source URLs.
+.vault-meta/
+
+# Local MCP launch configuration may contain commands or credentials. Share a
+# reviewed `.mcp.example.json` instead of committing the live file.
+.mcp.json
+
+# Obsidian and operating-system session state.
+.obsidian/workspace*.json
+.trash/
+
+# Settings Obsidian writes when a subfolder is opened as its own vault. Only
+# this directory is a vault; such nested state is an accident, never shared.
+wiki/.obsidian/
+
+# Intake is staging. Once captured, the durable copy is the content-addressed
+# one under `.raw/captured/`, which is what the source ledger locates.
+inbox/*
+!inbox/.gitkeep
+.DS_Store
+Thumbs.db
