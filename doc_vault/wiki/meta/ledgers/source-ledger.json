@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-01T19:20:00Z",
+  "generated_at": "2026-08-01T21:30:00Z",
   "schema": "claude-obsidian.source-ledger.v1",
   "sources": {
     "src-0fcb43400674f25eb568": {
@@ -8,7 +8,7 @@
       "content_sha256": "edf53a2d3683a0aea2e9419205909b5674a4e1acf67488acfc6c16c33dbd04d3",
       "independence_key": "aenesbedir/Pathway-NER",
       "ingested_at": "2026-08-01",
-      "notes": "aenesbedir/Pathway-NER:knowledge_base/model_experiments.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:knowledge_base/model_experiments.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); superseded 2026-08-01 by src-6bf518c4ded3fb54fd9e, retained because it records detail the later revision drops",
       "origin": {
         "kind": "file",
         "locator": ".raw/captured/edf53a2d3683a0aea2e9419205909b5674a4e1acf67488acfc6c16c33dbd04d3.md"
@@ -21,7 +21,7 @@
       ],
       "refresh_due": "2027-02-01",
       "retrieved_at": "2026-08-01",
-      "review_status": "active",
+      "review_status": "superseded",
       "title": "Model experiments log"
     },
     "src-287addc71f5435c4bcf5": {
@@ -43,6 +43,33 @@
       "retrieved_at": "2026-08-01",
       "review_status": "active",
       "title": "Base-encoder expansion analysis (July 2026)"
+    },
+    "src-310ea86a12ece1f9e7e5": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "41e463849265d12cb8ff5d9c697ea4270798f2a403813433fe18f3c5468931e0",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:project_tracking.md @ 0ddf4f344f423b71999f2d3e0fd7ebd2325fb090 (branch master); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/41e463849265d12cb8ff5d9c697ea4270798f2a403813433fe18f3c5468931e0.md"
+      },
+      "pages": [
+        "wiki/experiments/model-runs/phase-4b-first-stage-grid.md",
+        "wiki/pipelines/phase-1-original-corpus.md",
+        "wiki/pipelines/phase-2-pubmed-corpus.md",
+        "wiki/pipelines/phase-3-silver-labeling.md",
+        "wiki/pipelines/phase-4-base-encoder-survey.md",
+        "wiki/projects/pathway-ner/architecture.md",
+        "wiki/projects/pathway-ner/current-status.md",
+        "wiki/projects/pathway-ner/pathway-ner.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "supersedes": "src-4471671790a397df0a1c",
+      "title": "Pathway-NER project tracking"
     },
     "src-3227d25b455894403925": {
       "authority": "primary",
@@ -70,7 +97,7 @@
       "content_sha256": "e4abe9ee8d63a6b69e454f25282a730b4f9f2f3415acafa9280d68b1405203e8",
       "independence_key": "aenesbedir/Pathway-NER",
       "ingested_at": "2026-08-01",
-      "notes": "aenesbedir/Pathway-NER:project_tracking.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); reviewed 2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:project_tracking.md @ 5e7e3f1145d7625855ce8c4fd120a0baba1184a3 (branch annotator-model-registry); superseded 2026-08-01 by src-310ea86a12ece1f9e7e5, retained because it records detail the later revision drops",
       "origin": {
         "kind": "file",
         "locator": ".raw/captured/e4abe9ee8d63a6b69e454f25282a730b4f9f2f3415acafa9280d68b1405203e8.md"
@@ -86,7 +113,7 @@
       ],
       "refresh_due": "2027-02-01",
       "retrieved_at": "2026-08-01",
-      "review_status": "active",
+      "review_status": "superseded",
       "title": "Pathway-NER project tracking"
     },
     "src-6737ff2724fff08b7b86": {
@@ -108,6 +135,30 @@
       "retrieved_at": "2026-08-01",
       "review_status": "active",
       "title": "Corpus data summary"
+    },
+    "src-6bf518c4ded3fb54fd9e": {
+      "authority": "primary",
+      "content_kind": "document",
+      "content_sha256": "586100c50c3738b23f3c1ade19f41f46c8130ef2ba7e4f4802cd1909f5451f7a",
+      "independence_key": "aenesbedir/Pathway-NER",
+      "ingested_at": "2026-08-01",
+      "notes": "aenesbedir/Pathway-NER:knowledge_base/model_experiments.md @ 0ddf4f344f423b71999f2d3e0fd7ebd2325fb090 (branch master); reviewed 2026-08-01",
+      "origin": {
+        "kind": "file",
+        "locator": ".raw/captured/586100c50c3738b23f3c1ade19f41f46c8130ef2ba7e4f4802cd1909f5451f7a.md"
+      },
+      "pages": [
+        "wiki/experiments/experiments-index.md",
+        "wiki/experiments/model-runs/gold-004-unfreeze-all-layers.md",
+        "wiki/experiments/model-runs/phase-4b-first-stage-grid.md",
+        "wiki/experiments/model-runs/run-001-baseline.md",
+        "wiki/experiments/model-runs/tier-0-comparison-harness.md"
+      ],
+      "refresh_due": "2027-02-01",
+      "retrieved_at": "2026-08-01",
+      "review_status": "active",
+      "supersedes": "src-0fcb43400674f25eb568",
+      "title": "Model experiments log"
     },
     "src-79713b63997ef8c5b7b2": {
       "authority": "primary",

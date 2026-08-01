@@ -9,8 +9,8 @@ tags:
   - pipeline
 project: pathway-ner
 source_repo: aenesbedir/Pathway-NER
-source_branch: annotator-model-registry
-source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+source_branch: master
+source_commit: 0ddf4f344f423b71999f2d3e0fd7ebd2325fb090
 source_paths:
   - project_tracking.md
   - reports/base_model_expansion_analysis_2026-07.md
@@ -52,12 +52,19 @@ Three seeds of the `gold-008` recipe: 0.7947 / 0.8199 / 0.8282 →
 measured at lr 3e-5; at 5e-5 it is 2.5× wider. Consequences: `gold-008`'s 0.8197
 was a lucky seed, and resolving a 0.015 difference needs **11 seeds**, not 5.
 
-## Where it stopped
+## How it ended
 
-[[phase-4b-first-stage-grid|Phase 4b]] paused on 2026-07-31 with 7 of 30 cells
-recorded, and with an unresolved finding that outranks the grid itself:
+[[phase-4b-first-stage-grid|Phase 4b]] completed on 2026-08-01: **30 of 30
+cells, 0 failures**, run from a clean tree at `5e7e3f1`. The answer is negative
+and useful — the preplanned BiomedBERT-vs-BERT contrast gives delta −0.0051 with
+a 95% CI of [−0.0354, +0.0275], so the encoder axis is **below this experiment's
+resolution** at 860 training documents. The predicted +0.005…+0.02 was always
+inside the noise band; the grid measured that rather than arguing it.
+
+One finding outranks the ranking itself and stays open:
 [[training-is-not-reproducible-at-a-fixed-seed|training is not reproducible at a
-fixed seed]].
+fixed seed]], which is why Phase 5 must define what counts as an authoritative
+checkpoint before it trains one.
 
 Two annotation problems surfaced while building the harness and were handed to
 the next review wave: **83 nested span pairs** and **12 boundary-error spans**,

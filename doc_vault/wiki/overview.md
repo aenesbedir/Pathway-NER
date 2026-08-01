@@ -47,8 +47,9 @@ fixing first.
 ## What is true now
 
 Best model F1 ~0.82 on a 109-document held-out split; the teacher LLM sits at
-0.864 span-exact. The encoder grid is paused on an unresolved reproducibility
-problem. More reviewed data remains the dominant lever. See
-[[current-status|Current status]].
+0.864 span-exact. The encoder grid has **finished with a null result** — at this
+data size the choice of base encoder is below the experiment's resolution — so
+more reviewed data is not merely the dominant lever, it is the only one with
+measured headroom. See [[current-status|Current status]].
 
 Start at [[index|the index]].

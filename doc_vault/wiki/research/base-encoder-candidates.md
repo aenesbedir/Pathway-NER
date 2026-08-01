@@ -57,6 +57,18 @@ the reading of what a leaderboard difference buys on 860 documents.
   12 biomedical NER benchmarks from ordinary backbones plus DAPT and LoRA, under
   12 GPU-hours. A large unlabelled on-topic corpus already exists in `data/raw/`.
 
+## Measured outcome (2026-08-01)
+
+The first stage of this survey has now run and **confirmed the negative
+prediction**: 30 cells over five encoders, and the preplanned
+BiomedBERT-vs-BERT contrast lands at delta −0.0051 with a 95% CI of
+[−0.0354, +0.0275]. See [[phase-4b-first-stage-grid|Phase 4b]].
+
+That does not falsify the two candidates above — neither GLiNER-biomed nor
+task-adaptive pretraining was in the grid, and both are different *kinds* of
+change rather than another backbone swap. What it does settle is the ranking
+question: widening the leaderboard at 860 documents is not worth the compute.
+
 ## Standing caveat
 
 Every conclusion here is a paper number on other corpora. The project's own

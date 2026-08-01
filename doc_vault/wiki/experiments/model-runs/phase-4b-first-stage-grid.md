@@ -1,7 +1,7 @@
 ---
 type: concept
 title: Phase 4b — first-stage grid
-status: provisional
+status: evergreen
 created: 2026-08-01
 updated: 2026-08-01
 tags:
@@ -9,53 +9,78 @@ tags:
   - experiment
 project: pathway-ner
 source_repo: aenesbedir/Pathway-NER
-source_branch: annotator-model-registry
-source_commit: 5e7e3f1145d7625855ce8c4fd120a0baba1184a3
+source_branch: master
+source_commit: 0ddf4f344f423b71999f2d3e0fd7ebd2325fb090
 source_paths:
   - project_tracking.md
+  - knowledge_base/model_experiments.md
 last_reviewed: 2026-08-01
 ---
 
 # Phase 4b — first-stage grid
 
-Paused 2026-07-31. Five encoders × 2 learning rates × 3 seeds = 30 cells on the
-fixed gold-004+ recipe. The five were picked for the widest expected spread at
-the lowest cost:
+Completed 2026-08-01. Five encoders × 2 registry learning rates × 3 seeds = **30
+cells, 0 failures**, on the fixed gold-004+ recipe. The five were picked for the
+widest expected spread at the lowest cost:
 
 | model | role |
 |---|---|
 | `biomedbert-base` | anchor — every other number is read against it |
-| `bert-base` | domain floor (BLURB NER 82.99 vs 86.13) |
+| `bert-base` | domain floor |
 | `bio-clinicalbert` | domain mismatch from the opposite side |
 | `bioelectra-base` | objective contrast: RTD vs MLM on a byte-identical vocabulary |
 | `bio-modernbert-base` | the only architecture / tokenizer / 8192-context change |
 
-The other twelve registry encoders stay in reserve with datasets already built
-and validated.
+## Run hygiene
 
-## What was recorded — 7 cells
+The retained grid was run from a **clean tree at commit `5e7e3f1`**, per the
+repository rule that a kept number must name a code snapshot. Seven provisional
+rows — three of which predated the pipeline commit — were moved to
+`runs/_precommit/` before the clean restart, and the two fixed-seed
+reproducibility replicates stay in `runs/_recheck/`. Neither archive enters
+`runs/summary.jsonl`, which now holds exactly 30 unique model/LR/seed keys, all
+stamped with the same SHA.
 
-`biomedbert-base` at lr 5e-05 gives 0.8199 / 0.7947 / 0.8282 (mean 0.8143) and at
-3e-05 gives 0.8191 / 0.8125 / 0.8053 (mean 0.8123). The first row reproduces the
-[[tier-0-comparison-harness|Tier 0]] measurement exactly — a regression test on
-the harness, not a new result. The two learning rates are 0.002 apart against
-σ = 0.0175, i.e. indistinguishable at three seeds. `bio-modernbert-base` has one
-cell at 0.7857.
+Result tables are **generated, never hand-maintained** — reproduce them with
+`scripts/aggregate_runs.py`, including `--by domain objective arch` and
+`--compare biomedbert-base bert-base`.
 
-## Why 18 cells failed
+## What the grid resolved
 
-`bert-base`, `bio-clinicalbert` and `bioelectra-base` aborted immediately:
-dataset preparation only ever pulls tokenizer and config, so the weights were
-never cached, and `HF_HUB_OFFLINE=1` turned the miss into a hard failure instead
-of a download. Resolved — all three are cached and their vocabulary fingerprints
-still match the datasets built earlier.
+- The descriptive leader is `bioelectra-base` at lr 3e-05, **0.8156 ± 0.0175**
+  test F1. This is a recipe ranking, not evidence that BioELECTRA is superior —
+  no paired BioELECTRA-versus-anchor test was specified.
+- The **preplanned** contrast: `biomedbert-base` 0.8033 vs `bert-base` 0.7982.
+  Paired document bootstrap gives delta (BERT − BiomedBERT) **−0.0051**, 95% CI
+  **[−0.0354, +0.0275]**, `P(delta > 0) = 0.382`. The interval contains zero and
+  is far wider than the difference: **indistinguishable**.
+- Grouped means by domain, objective or architecture differ by a few
+  thousandths — descriptive only, because each axis is confounded with model
+  identity and run variance exceeds the gaps.
+- `bio-clinicalbert` scores 108 effective test documents rather than 109 after
+  tokenizer-dependent truncation, so the full ranking is not a common-document
+  comparison. Only BiomedBERT vs BERT is scored as one.
 
-## The finding that outranks the grid
+## The negative result is the finding
 
-Re-running the oldest cell twice did not reproduce it:
-[[training-is-not-reproducible-at-a-fixed-seed|training is not reproducible at a
-fixed seed]]. Until that is understood, the grid resolves less than planned.
+At 860 training and 109 test documents, the base-encoder axis sits **below this
+experiment's resolution**. That is evidence against spending the next block of
+compute on a wider ranking at the same data size. The learning-curve design and
+wave-3 review test whether *supervision*, not encoder identity, is the limiting
+variable — and are therefore more informative.
 
-Resuming is a no-op-safe re-run: `scripts/run_matrix.py` skips any cell that
-already holds `test_results.json`, leaving 23 cells (~4 hours). The exact command
-stays canonical in `project_tracking.md`.
+This confirms the prediction in [[base-encoder-candidates|the encoder research]]
+from the opposite direction: the literature's +0.005…+0.02 was always inside the
+noise band [[tier-0-comparison-harness|Tier 0]] measured, and the grid now shows
+it empirically rather than by argument.
+
+## Phase 5 handoff
+
+The sweep ran with `--no-save-model`, so it produced metrics and predictions but
+**no deployable checkpoint**. If Phase 5 picks the descriptive leader, it must
+save a fresh retrain and treat that artifact plus its own evaluation as
+authoritative; a swept mean selects a *recipe* and cannot be assigned to a later
+checkpoint. Retaining BiomedBERT is the alternative that keeps continuity without
+claiming a significant improvement. That policy decision comes before
+`models/encoders/` is populated — and it is forced by
+[[training-is-not-reproducible-at-a-fixed-seed|fixed-seed nondeterminism]].

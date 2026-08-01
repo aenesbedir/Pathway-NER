@@ -1,5 +1,29 @@
 {
   "claims": {
+    "clm-encoder-axis-unresolved": {
+      "assessment": "accepted",
+      "confidence": "high",
+      "evidence": [
+        {
+          "locator": "Phase 4b - What the grid resolved",
+          "relation": "supports",
+          "source_id": "src-310ea86a12ece1f9e7e5"
+        },
+        {
+          "locator": "Phase 4b - clean five-encoder grid - Findings",
+          "relation": "supports",
+          "source_id": "src-6bf518c4ded3fb54fd9e"
+        }
+      ],
+      "location": {
+        "anchor": "What the grid resolved",
+        "path": "wiki/experiments/model-runs/phase-4b-first-stage-grid.md"
+      },
+      "notes": "30/30 cells from a clean tree at 5e7e3f1. Only the BiomedBERT/BERT contrast is a paired common-document test; the descriptive leader bioelectra-base received no paired test of its own.",
+      "reviewed_at": "2026-08-01",
+      "risk": "normal",
+      "text": "On the frozen 109-document split the base-encoder axis carries no resolved signal: the preplanned BiomedBERT-versus-BERT paired document bootstrap gives delta -0.0051 with 95% CI [-0.0354, +0.0275] and P(delta > 0) = 0.382."
+    },
     "clm-exact-match-surface-forms": {
       "assessment": "accepted",
       "confidence": "high",
@@ -26,7 +50,7 @@
         {
           "locator": "Run gold-004 - Unfreeze all layers",
           "relation": "supports",
-          "source_id": "src-0fcb43400674f25eb568"
+          "source_id": "src-6bf518c4ded3fb54fd9e"
         }
       ],
       "location": {
@@ -45,12 +69,12 @@
         {
           "locator": "Tier 0 - The seed band at lr 5e-5 is 2.5x wider than assumed",
           "relation": "supports",
-          "source_id": "src-0fcb43400674f25eb568"
+          "source_id": "src-6bf518c4ded3fb54fd9e"
         },
         {
           "locator": "The most important number produced by Tier 0",
           "relation": "supports",
-          "source_id": "src-4471671790a397df0a1c"
+          "source_id": "src-310ea86a12ece1f9e7e5"
         }
       ],
       "location": {
@@ -74,7 +98,7 @@
         {
           "locator": "Run 005 - Phase 2 Only",
           "relation": "supports",
-          "source_id": "src-4471671790a397df0a1c"
+          "source_id": "src-310ea86a12ece1f9e7e5"
         }
       ],
       "location": {
@@ -93,7 +117,7 @@
         {
           "locator": "P3-1c - 1k pilot run",
           "relation": "supports",
-          "source_id": "src-4471671790a397df0a1c"
+          "source_id": "src-310ea86a12ece1f9e7e5"
         },
         {
           "locator": "Headline - did we break the near-lookup problem?",
@@ -167,12 +191,12 @@
         "anchor": "Training is not reproducible at a fixed seed",
         "path": "wiki/lessons/training-is-not-reproducible-at-a-fixed-seed.md"
       },
-      "notes": "Two replicates cannot separate an unlucky draw from a systematic shift; the cause of the level difference is unresolved.",
+      "notes": "Two replicates cannot separate an unlucky draw from a systematic shift; the cause of the level difference is unresolved. The replicate table is absent from the current master revision; the evidence remains the superseded 2026-08-01 capture.",
       "reviewed_at": "2026-08-01",
       "risk": "high",
       "text": "Training does not reproduce a recorded result at a fixed seed: the biomedbert-base lr 5e-05 seed 42 cell recorded 0.8199 and two replicates gave 0.7662 and 0.7736."
     }
   },
-  "generated_at": "2026-08-01T19:20:00Z",
+  "generated_at": "2026-08-01T21:30:00Z",
   "schema": "claude-obsidian.claim-ledger.v1"
 }

@@ -13,6 +13,27 @@ tags:
 
 Newest completed operations appear first.
 
+## 2026-08-01 — `ingest-encoder-grid-20260801` (ingest)
+
+Re-ingest after `master` advanced to
+`0ddf4f344f423b71999f2d3e0fd7ebd2325fb090` (merge of
+`annotator-model-registry`, then `docs: record completed encoder grid`).
+
+- **Sources**: new revisions of `project_tracking.md` and
+  `knowledge_base/model_experiments.md`, captured create-only by operation
+  `capture-encoder-grid`. The earlier revisions are retained and their ledger
+  records marked `superseded`.
+- **Pages updated**: [[phase-4b-first-stage-grid|Phase 4b]] (paused at 7 cells →
+  completed 30/30 with a null result), [[current-status|current status]],
+  [[phase-4-base-encoder-survey|Phase 4]],
+  [[base-encoder-candidates|encoder research]],
+  [[training-is-not-reproducible-at-a-fixed-seed|reproducibility lesson]],
+  overview and hot cache.
+- **Outcome**: the grid's conclusion is negative — the preplanned contrast gives
+  delta −0.0051, 95% CI [−0.0354, +0.0275]. Recorded as a result, not a failure.
+  The replicate table that the new `project_tracking.md` no longer prints
+  survives in this vault's captured copy of the earlier revision.
+
 ## 2026-08-01 — `ingest-pathway-ner-docs-20260801` (ingest)
 
 Initial documentation migration for `aenesbedir/Pathway-NER`

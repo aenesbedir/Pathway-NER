@@ -24,6 +24,13 @@ content-addressed copy under `.raw/captured/` and a record in
 `wiki/meta/ledgers/source-ledger.json` carrying its SHA-256, locator and review
 state.
 
+On **2026-08-01**, `project_tracking.md` and
+`knowledge_base/model_experiments.md` were re-captured from `master`
+@ `0ddf4f344f423b71999f2d3e0fd7ebd2325fb090`. Captures are create-only, so both
+revisions now exist: the earlier records are `superseded` and the new ones are
+`active`. This is what preserves detail the newer file dropped — the fixed-seed
+replicate table, for instance, is only in the 2026-08-01 copy.
+
 | Repository path | Feeds |
 |---|---|
 | `project_tracking.md` | project, pipelines, decisions, lessons |

@@ -56,6 +56,22 @@ and the only intervening `train.py` edit is a no-op for this uncased model. The
 question is open; the replicates live in `runs/_recheck/` and are excluded from
 `summary.jsonl`.
 
+## What it forces on Phase 5
+
+The completed [[phase-4b-first-stage-grid|grid]] ran with `--no-save-model`, so
+it holds metrics and predictions but no deployable checkpoint. Combined with this
+finding, that produces a standing rule: **a swept mean selects a recipe and can
+never be assigned to a later retrain**. If Phase 5 adopts the descriptive leader,
+the saved retrain and its own evaluation become the authoritative artifact.
+
+## Provenance note
+
+The replicate table above was recorded in `project_tracking.md` at commit
+`5e7e3f1`. The current `master` text condenses that section into
+*"Reproducibility and the Phase 5 checkpoint decision"* and no longer prints the
+individual replicate numbers. They survive in this vault's captured copy of the
+earlier file — which is what content-addressed capture is for.
+
 ## The rule it produced
 
 This incident is the reason `CLAUDE.md` requires a clean working tree before any
