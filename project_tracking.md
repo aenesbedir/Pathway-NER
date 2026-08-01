@@ -900,3 +900,366 @@ and is the hardware the limit?" Headline findings:
 - **Blocking caveat (§7):** the golden set is 10 abstracts / 76 mentions and the deciding
   metric rests on **6 cases**. Model comparisons cannot be arbitrated at that size — carve a
   ~150-abstract hold-out from the human-reviewed doccano 1k before spending on model choice.
+
+### ✅ Batch 05 review — all 200 docs (`analysis/batch_05_5_review.json`)
+`doccano/batches/pilot_1k_doccano_batch_05_5.jsonl` scored against `ANNOTATION_GUIDE.md`.
+Two provenances in one file: **docs 1–50** are the human annotator's doccano export
+(`admin.jsonl`) with 16 assistant-applied corrections, so its final labels are the gold
+standard there; **docs 51–200** are the assistant's own review.
+Every span classified TP / FP / FN; boundary errors recorded as an FP + a corrected FN so
+span-exact metrics stay honest. All offsets machine-verified (`text[start:end]` matches),
+so the FN entries are directly importable as doccano labels.
+
+- **All 200 docs: 378 machine spans → 337 TP, 41 FP, 146 FN. Precision 0.892, recall 0.698,
+  F1 0.783.** Split by half: docs 1–50 (human) P 0.854 / R 0.800 / F1 0.826; docs 51–200
+  (assistant) P 0.906 / R 0.668 / F1 0.769. The recall gap is a sweep-depth difference, not a
+  model difference — the assistant half counted umbrella terms and repeat mentions the human
+  half largely left alone.
+  Precision is close to the 0.90 the pilot assumed; recall is the real gap.
+- **Human-half corrections applied to `admin.jsonl`** (backup `admin.jsonl.bak`): removed
+  signalling/cell-death pathways the guide excludes (`PPARα/PGC-1α signaling pathway`,
+  `sphingolipid signaling pathway`, `necroptosis pathway`), an enzyme-inhibition phrase
+  (`nicotinamide phosphoribosyltransferase inhibition`), a compartment term
+  (`mitochondrial oxidative pathway`), a disease pathway (`lipid and atherosclerosis`), a
+  transport term (`cholesterol efflux`), a non-enzymatic damage term (`Lipid peroxidation`)
+  and two broken/adjectival spans (`lipid metabolic`, `glycolytic function`); added
+  `polyol pathway`, `glucose metabolism`, `lipogenesis`, `NAD salvage pathway`; merged
+  `linoleic acid` + `glycerophospholipid metabolism` into one coordination span. Left as
+  annotated by explicit decision: `degradation of fructose` / `production of fructose` stay
+  rejected in doc 17, `cholesterol homeostasis` stays accepted in doc 8.
+- **FP classes:** bare metabolites (`TCA intermediates`, `pyrimidine pools`, `thiamine`),
+  disease names (`urea cycle disorders`, `inborn errors of metabolism`), signalling pathways
+  (`calcium signaling pathways`, `sphingolipid signaling pathway`), the guide's own named
+  reject (`aminoacyl-tRNA biosynthesis`), and boundary slips (`cell glycolysis`, dropped
+  `de novo`, two pathways in one span).
+- **FN classes:** umbrella terms are the dominant miss (`lipid/energy/glucose/carbohydrate
+  metabolism`), then the spelled-out first mention when an abbreviation is caught later
+  (`nicotinamide adenine dinucleotide (NAD) metabolism`), then whole zero-span documents
+  that do contain a mention (docs 102, 141).
+
+**Conventions applied that the guide does not state.** Recorded in the JSON's `conventions`
+field only — **deliberately not added to `ANNOTATION_GUIDE.md`**: these are edge cases, and
+annotators are trusted to judge them from the guide's existing rules.
+1. Shared-head coordination (`calcium and vitamin D metabolism`) is one span. Test: delete the
+   other conjunct — if what remains is not a pathway name on its own, do not split. A list of
+   distinct heads (`glycolysis and the pentose phosphate pathway`) must be split.
+2. If a coordination is only partly marked, the narrow span stays a TP **and** the full string
+   is recorded as an FN carrying the correct boundary (10 such FNs added, docs 64, 107, 111,
+   134, 144, 149, 151 ×2, 168, 187; 2 existing FNs widened, docs 83, 169).
+3. A trailing `pathway`/`pathways` may stay inside the span; a trailing `metabolites`,
+   `intermediates`, `genes` or `disorders` changes the referent and must be excluded.
+4. When a disease phrase embeds a nameable pathway, span the pathway part
+   (`urea cycle disorder` → `urea cycle`).
+
+**Cross-check against an independent Gemini pass** (which covered docs 51–159): 16 of 26 FPs
+corroborated verbatim, 6 genuine conflicts — all resolvable from the guide's own text and
+kept as reviewed here. Gemini also mislabelled an FN as TP (doc 136), silently widened two
+machine spans instead of flagging the boundary (docs 134, 155), and reported one span that
+does not exist in the labels (doc 157).
+
+**Open — non-English abstract bodies.** Some records carry a translated abstract after the
+English one (doc 92 Chinese `糖酵解`/`氧化磷酸化`, doc 157 Russian `глутатионового обмена`).
+Neither the silver model nor this review annotated them. Decide the policy and state it in
+`ANNOTATION_GUIDE.md`; if they are in scope, the FN lists for those two documents grow.
+
+### ✅ Model registry + per-model cache + frozen sample (`llm/models.py`)
+Groundwork for swapping the annotator model, done before any swap so the comparison is
+measurable rather than assumed.
+
+- **`llm/models.py` — one `ModelSpec` per model**, carrying the ollama tag, sampling
+  options, top-level payload keys and a cache slug. `resolve()` accepts a registry key
+  or any raw tag (unregistered tags still run, on greedy defaults, with a cache of their
+  own). `extract_guided.call_llm()` now builds its request body from the spec, so the
+  call site no longer hardcodes `{"temperature": 0, "seed": 42}`.
+  Registered: `qwen2.5:14b` (default), `qwen2.5:7b`, `qwen3.5:9b`, `qwen3.5:4b`.
+- **Thinking mode is a per-model flag.** Qwen3+ emits a chain of thought that costs
+  latency and can push the JSON object out of the response; the 3.5 entries carry
+  `think: false` (verified accepted by ollama 0.30.10, and ignored harmlessly by models
+  without the mode). This was the concrete blocker to trying Qwen3.5 at all.
+- **🐞 The silver cache was keyed on pmid alone.** Swapping the model would have replayed
+  the previous model's cached answers for every abstract already seen — a run that looks
+  successful, changes nothing, and cannot re-label the pilot. Cache is now
+  `data/raw/llm_cache_silver/<model slug>/<pmid>.json`; the existing 1,000 files were
+  moved to `qwen2.5_14b/`. Verified: re-running batch 05 reproduces 378 spans from cache,
+  0 LLM calls.
+- **`--pmids` freezing is now automatic.** Every run writes `<output stem>_pmids.txt` —
+  the *effective* sample in output order, after golden leaks, abstract-less pmids and
+  failed calls are dropped. Skipped for `--limit` (a partial head of the sample, freezing
+  it would pin a list nobody meant to draw) and for `--no-freeze`.
+- `venv310` is a symlink to the existing `.venv`, so the paths in every docstring resolve.
+
+### ✅ Annotator A/B harness (`analysis/score_against_review.py`)
+Scores any silver run against `analysis/batch_05_5_review.json` — 200 abstracts, 483 gold
+spans. This replaces the golden set as the model-selection metric: §7 of the model report
+flagged that 10 abstracts / 76 mentions cannot arbitrate a model choice when the deciding
+metric rests on 6 cases.
+
+- Reports span-exact and lenient (overlap) P/R/F1, split by the human half (docs 1–50) and
+  the assistant half (51–200), plus the top FP/FN strings.
+- Absolute recall is pessimistic by construction — the reference sweep counts umbrella and
+  repeat mentions the guided prompt never targeted — but equally so for every model, which
+  is what an A/B needs.
+- **Baseline `qwen2.5:14b` reproduces the review exactly**: 378 spans → 337 TP / 41 FP /
+  146 FN, P 0.892 R 0.698 F1 0.783 (lenient 0.934 / 0.748 / 0.831). Human half P 0.854
+  R 0.800; assistant half P 0.905 R 0.668.
+- The 200 evaluation pmids are frozen at `data/silver/batch05_eval_pmids.txt`.
+
+### 📊 A/B result — `qwen3.5:9b` does not replace `qwen2.5:14b`
+First use of the batch-05 harness. 200 abstracts, 483 gold spans.
+
+| run | spans | P | R | F1 | lenient P/R/F1 |
+|---|---|---|---|---|---|
+| `qwen2.5:14b` | 378 | 0.892 | 0.698 | **0.783** | 0.934 / 0.748 / **0.831** |
+| `qwen3.5:9b` | 398 | 0.791 | 0.652 | 0.715 | 0.889 / 0.752 / 0.815 |
+
+- **Recall is a wash** (lenient 0.752 vs 0.748); the whole gap is precision. Qwen3.5 emits
+  more spans (398 vs 378) and more of them are wrong.
+- **Read span-exact with suspicion — the gold is seeded by qwen2.5.** For docs 51–200 the
+  gold TPs *are* qwen2.5's spans that the review accepted, so qwen2.5 has a home-field
+  advantage on exact boundaries. Boundary-only FPs (right region, wrong edges) are 39/83
+  for qwen3.5 against 16/41 for qwen2.5 — e.g. `inositol phosphate metabolism pathway`
+  (×5) and `pentose phosphate pathway` (×2), both arguably *better* spans than the
+  recorded gold. Lenient scoring is the fairer read, and qwen2.5 still wins there.
+- Genuine content FPs (no overlap with any gold span): 44 for qwen3.5 vs 25 for qwen2.5.
+  Its characteristic errors are the guide's named rejects — `mitochondrial metabolism`
+  (×3), `mitochondrial respiration` (×2), `glucose turnover` (×3).
+- Unmapped spans (no Recon canonical) rise 25% → 30%.
+- **Qwen3.5 is ~4× faster**: 1.8 s/abstract measured, so a 1k run is ~0.5 h against the
+  documented ~2 h. It fits the 8 GB card fully; qwen2.5:14b is CPU-offloaded.
+- **🐞 `think: false` is not sufficient.** On PMID 42121260 qwen3.5 deterministically
+  breaks the JSON contract by reasoning *inside* the array:
+  `"fatty acid synthesis" (implied by context but exact phrase check: wait, looking at
+  text...`. Disabling the thinking channel does not stop inline chain-of-thought, and at
+  `temperature=0, seed=42` the failure repeats on every retry. 1/200 abstracts lost.
+
+#### Follow-up: structured output fixes the format, not the judgement
+Probed on the failing abstract plus a working control, then re-run over all 200.
+
+| variant | latency | JSON |
+|---|---|---|
+| `think: False` (as measured above) | 78 s on the failing abstract, 1.8 s on the control | 1/2 parse |
+| `think: True` | 78–82 s | **0/2** — `response` empty, all ~14k chars go to `thinking` |
+| `format: "json"` | 1.3 s | 2/2 |
+| `format: <schema>` | 1.2 s | 2/2 |
+
+- **`think: True` is unusable**: ~45× slower and it never emits a final answer.
+- **The schema is a free win for robustness**: over the 200, 200/200 abstracts complete
+  (was 199/200) at 1.3 s/abstract (was 1.8) — the rambling was the slow part.
+- **It changes qwen3.5's scores by nothing at all**: F1 0.715 → 0.715 span-exact,
+  0.815 → 0.814 lenient, 398 → 401 spans, 315 → 316 TP. So qwen3.5's precision deficit is
+  a judgement difference, not a formatting artefact — worth knowing, because a
+  malformed-JSON model could otherwise look unfairly penalised.
+- **On `qwen2.5:14b` the schema is a strict no-op.** Re-run over the same 200 with the
+  schema on: identical scores, and the span output is byte-identical — 0 of 200 abstracts
+  differ by a single offset. Kept in `llm/models.py` for every entry: it costs nothing and
+  makes the "reasoning inside the JSON array" failure class structurally impossible.
+  Measured 2.5 s/abstract (1k ≈ 0.7 h), well under the ~2 h the docstring assumed — though
+  there is no like-for-like schema-off timing on this machine to attribute the difference.
+- **Cache hygiene for that re-run**: the 200 eval pmids were deleted from
+  `llm_cache_silver/qwen2.5_14b/` (leaving the pilot's other 800 intact) and regenerated
+  under the schema, so the directory now mixes pre- and post-change records. Proven
+  harmless: regenerating the whole pilot from that mixed cache reproduces
+  `data/silver/pilot_1k.jsonl` **byte-for-byte**, 1000/1000 from cache, 0 LLM calls.
+- The prompt was never the problem: it already says *"Return ONLY a JSON object … Do not
+  explain. Do not add text outside the JSON."* The model read that and violated it anyway.
+  This belongs at the decoding layer.
+
+**Decision: keep `qwen2.5:14b` for the wave-2 1k.** Same recall, cleaner output, and the
+annotator workflow is accept/reject — extra false positives are annotator burden with no
+upside. Qwen3.5's only real edge is speed (0.4 h/1k vs ~2 h).
+
+**Known sharp edge, deliberately not fixed:** the cache slug derives from the model tag
+only, so it does not notice a changed request shape *or a changed prompt*. Editing
+`llm/prompts/pathway_extraction_guided.py` today would silently replay the old prompt's
+answers for every cached abstract. Until that changes, altering a model's request shape or
+the prompt means deleting that model's cache directory by hand.
+
+---
+
+# Phase 4 — Base-encoder survey
+
+Started 2026-07-29. Motivation: hyperparameter tuning plateaued at **gold-008**
+(test F1 0.8197), teacher `qwen2.5:14b` sits at 0.864, and the remaining levers
+are more reviewed data (wave-3) or a different base encoder. This phase is the
+encoder axis; the annotator-LLM axis is Phase 3 and independent.
+
+## Research — `reports/base_model_expansion_analysis_2026-07.md`
+
+Widened the earlier five-candidate note (`base_model_survey_2026-07.md`) to every
+usable encoder family, with the papers' own numbers rather than assumptions.
+
+**The headline is negative and worth stating plainly.** The whole BLURB NER column
+spans 86.13 (our current base) to 86.89 (the leaderboard's best) — 0.76 points,
+averaged over six corpora with thousands of training documents each. A 2026 paper
+(arXiv 2605.12438) measures a 396M 8192-context bio-ModernBERT at **parity with
+110M PubMedBERT** on BC5CDR / JNLPBA / NCBI / AnatEM. Realistic gain from an
+encoder swap: **+0.005 … +0.02 F1**, against a measured seed band of ±0.007.
+
+Two candidates were dropped on evidence rather than intuition:
+- **BioClinical-ModernBERT**, which the earlier note ranked second, is 1.0–4.1
+  points *below* 110M PubMedBERT on literature NER. Its SOTA is on clinical notes
+  (DEID, Social History); our corpus is PubMed abstracts.
+- Decoder LLMs with a token-classification head — the teacher is already an LLM;
+  a distilled student exists to be cheap.
+
+Two candidates emerged that the earlier note missed, and they are the only ones
+whose expected gain exceeds the noise band:
+- **GLiNER-biomed** (arXiv 2504.00676) — LLM annotation ability distilled into a
+  span-scoring model, structurally the same idea as this project at a scale we
+  cannot reach. 10-shot 70.4 → 50-shot 76.0 → full-supervision ~84.9 F1. Our 860
+  documents sit inside that curve.
+- **Task-adaptive pretraining** (OpenMed NER, arXiv 2508.01630) — SOTA on 10 of 12
+  biomedical NER benchmarks from ordinary backbones plus DAPT and LoRA, under 12
+  GPU-hours. We already hold a large unlabelled on-topic corpus in `data/raw/`.
+
+## Tier 0 — comparison harness (done)
+
+Infrastructure only; details and measurements in
+`knowledge_base/model_experiments.md` § *Tier 0*.
+
+Three defects would have made every cross-encoder number meaningless:
+1. **The split was tokenizer-dependent.** `build_dataset.py` dropped label-free
+   records *after* tokenization (1083 → 1076 under BiomedBERT, 7 lost to 512-token
+   truncation) and then shuffled the survivors. A ModernBERT at 8192 tokens loses
+   none of the 7 and would shuffle a different-length list into an unrelated
+   train/val/test assignment — every encoder scored on a different test set, with
+   every log line still reading "Test: 109".
+2. The model name was hardcoded in two files with no link between the `input_ids`
+   on disk and the model consuming them. Vocabularies overlap in range, so a
+   mismatch trains silently on nonsense.
+3. `train.py` could only load `BertForTokenClassification`, and used fp16 — a
+   known NaN source for ModernBERT.
+
+New: `encoders.py` (registry, shaped like `llm/models.py`),
+`preprocessing/make_splits.py`, `preprocessing/check_alignment.py`,
+`scripts/run_matrix.py`, `scripts/aggregate_runs.py`, and
+`data/processed/gold/splits.json` — the frozen split, tracked in git.
+
+**Gate: the regenerated dataset is byte-identical to the one gold-001…008 used**,
+and the gold-008 recipe re-run under bf16 and transformers 5.10.2 gives **F1
+0.8199** against the recorded 0.8197. The historical series is continuous.
+
+### The most important number produced by Tier 0
+
+Three seeds of the gold-008 recipe on the frozen split: 0.7947 / 0.8199 / 0.8282
+→ **0.8143 ± 0.0175**.
+
+The ±0.007 noise band that every earlier conclusion leaned on was measured at
+**lr 3e-5** (gold-004/005/006). At 5e-5 the band is **2.5x wider**. So:
+
+- **gold-008's 0.8197 was a lucky seed** — the recipe's mean is 0.8143, and
+  gold-004's 0.8154 at 3e-5 is indistinguishable from it. "5e-5 beats 3e-5 by
+  +0.004" compared two single seeds and means nothing.
+- **5 seeds is not enough to run the survey.** At σ = 0.0175, two 5-seed
+  configurations separate only at ≈0.022 F1 — the very top of what an encoder swap
+  is predicted to give. Resolving 0.015 needs **11 seeds** (~7.3 GPU-hours for five
+  configurations; an overnight run on the 4060, so this is affordable, not
+  blocking).
+- Worth one cheap check first: if 3e-5 really is the quieter setting, running the
+  whole sweep there buys statistical power for free.
+
+### Measurements that contradicted the plan's assumptions
+
+- **ModernBERT's 50k vocabulary fragments biomedical terms *more*, not less** —
+  14.8% continuation subwords against BiomedBERT's 7.4%. Its vocabulary is
+  general-domain; BiomedBERT's 30k WordPiece was built on PubMed. Whatever a
+  ModernBERT wins here, it will not be through tokenization.
+- **`trim_offsets: true` does not exclude the leading space.** `Ġfatty` reports
+  offsets covering `' fatty'`. The old per-character label lookup would have
+  silently dropped those spans; alignment now tests the token's whole range.
+- **Long context is not free.** Bio-ModernBERT-*base* (150M) OOMs at batch 16 on
+  the 8 GB card, because an 8192-token model pads a batch to its longest document
+  (~2750 tokens here) rather than to 512. It needs batch 2 × grad-accum 8.
+- **Four candidates share one vocabulary** — BioLinkBERT base/large,
+  BiomedBERT-large-abstract and BioELECTRA ship byte-identical 28895-token
+  PubMedBERT `vocab.txt` files. BiomedBERT-*base*'s own 30522-token vocabulary is
+  a *different* vocabulary of a similar size, which is exactly the pairing that
+  fails silently. The guard compares vocabulary fingerprints, not model ids.
+
+### Findings handed to wave-3 review
+
+`analysis/alignment_*.json`, both tokenizer-independent:
+- **83 nested span pairs** — shared-head enumerations annotated twice
+  (`cholesterol and fatty acid synthesis` *and* `fatty acid synthesis`). Flat BIO
+  cannot represent nesting; the inner span's start opens a new `B` and truncates
+  the outer mention. Plausibly feeds the boundary errors in
+  `analysis/error_analysis.json`.
+- **12 boundary-error spans** — 6 starting mid-word (`biopterin metabolism` inside
+  `tetrahydrobiopterin metabolism`), 6 dropping a plural. The mid-word starts
+  produce a dangling `I` with no `B`.
+
+## Phase 4b — first-stage grid (completed 2026-08-01)
+
+The first stage tested `biomedbert-base`, `bert-base`, `bio-clinicalbert`,
+`bioelectra-base` and `bio-modernbert-base`: five models, two registry learning
+rates and three seeds, for 30 cells under the fixed gold-004+ recipe.
+
+The retained grid was run from a clean tree at commit `5e7e3f1`. Seven provisional
+rows were moved to `runs/_precommit/` before the clean restart because three of
+them predated the pipeline commit. The two fixed-seed reproducibility checks remain
+in `runs/_recheck/`; neither archive is included in `runs/summary.jsonl`.
+
+### Result record and regeneration
+
+The clean run finished with **30/30 successful cells and 0 failures**. The current
+summary contains exactly 30 unique model/LR/seed keys, every row is stamped
+`5e7e3f1`, every row points to a canonical `test_results.json`, and no completed
+run retains a stale checkpoint.
+
+Do not copy the generated table into this file. Reproduce every per-configuration
+mean, grouped view and formal comparison from the tracked summary:
+
+```bash
+venv310/bin/python3 scripts/aggregate_runs.py
+venv310/bin/python3 scripts/aggregate_runs.py --by domain objective arch
+venv310/bin/python3 scripts/aggregate_runs.py \
+  --compare biomedbert-base bert-base
+```
+
+### What the grid resolved
+
+- The descriptive leader is `bioelectra-base` at lr 3e-05: **0.8156 ± 0.0175**
+  test F1. This is a recipe ranking, not evidence that BioELECTRA is superior;
+  that comparison did not receive its own paired test.
+- The planned high-information contrast selected lr 3e-05 for both models.
+  `biomedbert-base` scored 0.8033 and `bert-base` 0.7982. The paired document
+  bootstrap gives delta (BERT - BiomedBERT) **-0.0051**, 95% CI
+  **[-0.0354, +0.0275]**, and `P(delta > 0) = 0.382`: **indistinguishable**.
+- Grouped means are also descriptive: RTD/electra leads MLM/BERT/ModernBERT by
+  only a few thousandths, inside the observed run variance. Architecture,
+  objective and domain are confounded with the individual registry models.
+- `bio-clinicalbert` has 108 effective test documents while the paired anchor
+  contrast has 109, so the complete ranking is not a common-example statistical
+  comparison.
+
+The negative result is useful: with 860 training documents and 109 test documents,
+the encoder axis carries no resolved signal at the effect size this grid was built
+to detect. Expanding the ranking to reserve encoders is not justified by these
+data alone; more reviewed examples remain the stronger lever.
+
+### Reproducibility and the Phase 5 checkpoint decision
+
+The earlier fixed-seed rechecks remain relevant. Identical configurations at seed
+42 produced materially different trajectories because deterministic CUDA
+algorithms are not enforced and early stopping amplifies small numeric changes.
+The observed standard deviation therefore combines seed variance with run-to-run
+noise; a swept score is not reproducible by simply retraining its recipe.
+
+`run_matrix.py` used `--no-save-model`, so Phase 4b retained metrics and
+predictions but no deployable checkpoint. Phase 5 must define authority before
+training `models/encoders/`: if the descriptive leader is selected, the saved
+deployment retrain and its own evaluation must be the authoritative artifact.
+The Phase 4b mean selects a recipe; it cannot be assigned to a later checkpoint.
+
+## Next
+
+- Decide whether Phase 5 should use the descriptive leader
+  (`bioelectra-base`, lr 3e-05) or retain the BiomedBERT anchor for continuity,
+  then record the saved retrain as a new measured artifact.
+- Prioritize wave-3 review or the existing 25/50/75/100% learning-curve design
+  over a wider encoder leaderboard; those experiments can reveal whether more
+  supervision opens a measurable encoder gap.
+- Keep the large-model/TRUBA tier conditional on evidence that the encoder axis
+  separates. The completed base grid does not provide that evidence.
+- GLiNER-biomed and task-adaptive pretraining remain higher-upside modelling
+  directions than another base-encoder ranking on the same 860 documents.

@@ -1,5 +1,7 @@
 # Virtual environment
 .venv/
+# Symlink so the venv310/bin/python3 paths in every docstring resolve
+venv310
 
 # Model checkpoints (large binary files)
 models/
@@ -24,6 +26,9 @@ data/raw/articles.json
 # OS
 .DS_Store
 Thumbs.db
+
+# Tool-managed scratch worktrees
+.claude/worktrees/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -105,7 +110,30 @@ dmypy.json
 # Phase 2 generated data & logs (regenerable from scripts)
 data/processed/bio_tags_v2.jsonl
 data/processed/phase2/
-logs/run005.log
+
+# Generated diagnostics and logs
+analysis/alignment_*.json
+logs/*.log
+runs/*.log
 
 # doccano batch archives (regenerable via doccano/split_batches.py)
 doccano/batches.zip
+
+# wave-2 review-to-gold pipeline: all derived outputs (regenerable from
+# data/silver/wave2_1k.jsonl + analysis/wave2_batch*_review.json via the
+# scripts in data/processed/gold/README.md). Only silver + reviews are tracked.
+doccano/wave2_1k_doccano.jsonl
+doccano/wave2_1k_gold.jsonl
+doccano/pilot_1k_batch05_gold.jsonl
+doccano/batches/wave2_1k_doccano_batch_*_5.jsonl
+data/processed/gold/*.jsonl
+
+# Per-tokenizer datasets: regenerable from data/processed/gold/{matches,articles}
+# .jsonl + splits.json via preprocessing/tag_bio.py --model X. splits.json itself
+# is tracked — it is the contract that makes two encoders comparable.
+data/processed/gold-*/
+
+# Sweep outputs. summary.jsonl is the aggregated result and is kept; the
+# per-run directories hold logs and prediction dumps and are regenerable.
+runs/*/
+!runs/summary.jsonl

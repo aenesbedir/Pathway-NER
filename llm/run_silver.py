@@ -20,7 +20,14 @@ Input  : data/processed/exact_matches.jsonl  (pmid -> query pathways)
          data/raw/articles.json              (abstracts)
          data/raw/pathway_disease_pairs.json (disease category, for stratification)
 Output : data/silver/pilot_1k.jsonl
-Cache  : data/raw/llm_cache_silver/{pmid}.json  (resumable — the full run is ~2h)
+         plus <output stem>_pmids.txt — the effective sample, in output order, ready
+         to feed back as --pmids. Written every run except --limit (a partial head of
+         the sample) and --no-freeze.
+Cache  : data/raw/llm_cache_silver/{model}/{pmid}.json  (resumable — a 1k run is ~2h)
+         Scoped per model on purpose: keyed on pmid alone, swapping the model replayed
+         the previous model's answers for every abstract already seen, so a re-label
+         run looked successful and changed nothing. Config per model lives in
+         llm/models.py.
          A failed LLM call is never cached: its empty result is indistinguishable
          from "no pathway mentioned" and the cache is the resume key, so caching it
          would lose the abstract for good. Such pmids are dropped from the output
@@ -69,14 +76,15 @@ sys.path.insert(0, str(ROOT / "llm"))
 from booster import boost, merge  # noqa: E402
 from canonicalize import canonicalize, match_type_for  # noqa: E402
 from extract_guided import LLMCallError, extract_guided  # noqa: E402
+from models import DEFAULT, ModelSpec, resolve  # noqa: E402
 
 MATCHES_FILE = ROOT / "data/processed/exact_matches.jsonl"
 ARTICLES_FILE = ROOT / "data/raw/articles.json"
 PAIRS_FILE = ROOT / "data/raw/pathway_disease_pairs.json"
 OUTPUT_FILE = ROOT / "data/silver/pilot_1k.jsonl"
-CACHE_DIR = ROOT / "data/raw/llm_cache_silver"
+CACHE_ROOT = ROOT / "data/raw/llm_cache_silver"
 
-MODEL = "qwen2.5:14b"
+MODEL = DEFAULT
 
 # Golden-set PMIDs — excluded so silver never trains on the eval set.
 # Keep in sync with playground/golden_set/build_golden_set.py (PMIDS_V1 + PMIDS_V2).
@@ -220,7 +228,39 @@ def _rebuild_from_cached(rec: dict, text: str) -> list[dict]:
     return merge(llm_spans, boost(text))
 
 
-def process_one(pmid: str, text: str, qps: list[str], model: str,
+def cache_dir_for(spec: ModelSpec) -> Path:
+    return CACHE_ROOT / spec.cache_slug
+
+
+def freeze_pmids(records: list[dict], output: Path, spec: ModelSpec, seed: int,
+                 sampled: bool) -> Path:
+    """Write the effective sample to `<output stem>_pmids.txt`, in output order.
+
+    "Effective" is the point: it lists the pmids that actually produced a record, so
+    golden leaks, pmids with no abstract and failed LLM calls are already gone. Feed
+    it back with --pmids to reproduce this exact run.
+
+    Written on every run rather than behind a flag — the stratified sampler is not
+    stable across vocabulary changes (widening GOLDEN_PMIDS v1->v2 moved the 1k draw
+    by 49% at the same seed), so an unfrozen sample is unreproducible the moment
+    anything upstream shifts.
+    """
+    path = output.with_name(output.stem + "_pmids.txt")
+    how = (f"# Sampled: n={len(records)}, seed={seed}, stratified by disease category."
+           if sampled else "# Frozen input: run from an explicit --pmids list.")
+    path.write_text(
+        f"# Frozen PMID list for {output.name}.\n"
+        f"{how}\n"
+        f"# Model: {spec.tag}. Written in output order — this is the *effective*\n"
+        f"# sample: golden pmids, pmids without an abstract and failed LLM calls are\n"
+        f"# already excluded, so re-running to retry failures can grow this list.\n"
+        f"# Feed to run_silver.py --pmids to reproduce this run.\n"
+        + "".join(r["pmid"] + "\n" for r in records),
+        encoding="utf-8")
+    return path
+
+
+def process_one(pmid: str, text: str, qps: list[str], spec: ModelSpec,
                 recanonicalize: bool = False) -> Optional[dict]:
     """Silver record for one abstract, or None if the LLM call failed.
 
@@ -229,8 +269,13 @@ def process_one(pmid: str, text: str, qps: list[str], model: str,
     file is the resume key, caching it would bake the loss in permanently — every
     later run would skip the pmid. Returning None leaves it unprocessed so a re-run
     retries it.
+
+    The cache is scoped per model (`<cache root>/<model slug>/<pmid>.json`). Keying
+    on pmid alone would make a model swap replay the previous model's answers for
+    every abstract already seen — a successful-looking run that cannot re-label.
     """
-    cache = CACHE_DIR / f"{pmid}.json"
+    model = spec.tag
+    cache = cache_dir_for(spec) / f"{pmid}.json"
     if cache.exists():
         rec = json.loads(cache.read_text(encoding="utf-8"))
         if not recanonicalize:
@@ -268,12 +313,16 @@ def main() -> None:
     ap.add_argument("--recanonicalize", action="store_true",
                     help="re-derive canonical/match_type over the cache, no LLM calls "
                          "(use after changing llm/canonicalize.py)")
+    ap.add_argument("--no-freeze", action="store_true",
+                    help="skip writing <output stem>_pmids.txt")
     args = ap.parse_args()
     if args.pmids and args.exclude:
         ap.error("--exclude is meaningless with --pmids, which runs an explicit list "
                  "rather than sampling")
 
-    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    spec = resolve(args.model)
+    cache_dir = cache_dir_for(spec)
+    cache_dir.mkdir(parents=True, exist_ok=True)
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
 
     qmap = load_query_pathways()
@@ -297,12 +346,13 @@ def main() -> None:
         drop = set(leaked) | set(missing)
         sample = [p for p in sample if p not in drop]
         log.info("Sample: %d pmids from %d frozen file(s) — no sampling | model=%s",
-                 len(sample), len(args.pmids), args.model)
+                 len(sample), len(args.pmids), spec.tag)
     else:
         excluded = set(load_pmid_files(args.exclude))
         sample = select_sample(args.n, args.seed, qmap, abstracts, cats, exclude=excluded)
         log.info("Sample: %d pmids (golden + %d excluded, seed=%d) | model=%s",
-                 len(sample), len(excluded), args.seed, args.model)
+                 len(sample), len(excluded), args.seed, spec.tag)
+    log.info("Cache : %s", cache_dir)
 
     if args.limit:
         sample = sample[:args.limit]
@@ -310,8 +360,8 @@ def main() -> None:
     records, cached, failed = [], 0, 0
     t0 = time.time()
     for pmid in tqdm(sample, desc="Silver", unit="abstract"):
-        was_cached = (CACHE_DIR / f"{pmid}.json").exists()
-        rec = process_one(pmid, abstracts[pmid], qmap[pmid], args.model,
+        was_cached = (cache_dir / f"{pmid}.json").exists()
+        rec = process_one(pmid, abstracts[pmid], qmap[pmid], spec,
                           recanonicalize=args.recanonicalize)
         if rec is None:          # failed call — omitted, not cached, retried next run
             failed += 1
@@ -324,6 +374,18 @@ def main() -> None:
         for r in records:
             fh.write(json.dumps(r, ensure_ascii=False) + "\n")
 
+    # A --limit run is a throughput probe over the head of the sample, so freezing it
+    # would pin a list that is not the sample anyone meant to draw.
+    frozen = None
+    if args.no_freeze:
+        pass
+    elif args.limit:
+        log.warning("Not freezing pmids: --limit %d makes this a partial sample.",
+                    args.limit)
+    else:
+        frozen = freeze_pmids(records, Path(args.output), spec, args.seed,
+                              sampled=not args.pmids)
+
     # ---- stats ----------------------------------------------------------------
     spans = [s for r in records for s in r["spans"]]
     src = Counter(s["source"] for s in spans)
@@ -333,6 +395,9 @@ def main() -> None:
 
     log.info("─" * 60)
     log.info("Output           : %s", args.output)
+    if frozen:
+        log.info("Frozen pmids     : %s", frozen)
+    log.info("Model / cache    : %s  ->  %s", spec.tag, cache_dir)
     log.info("Abstracts        : %d/%d  (fresh %d, cached %d)",
              len(records), len(sample), fresh, cached)
     if failed:

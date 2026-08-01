@@ -3,10 +3,11 @@
 tag_bio.py — Step 4
 
 Tokenizes text and aligns character-level spans from a matches JSONL file
-to per-token BIO labels using BiomedBERT's fast tokenizer.
+to per-token BIO labels, using the fast tokenizer of whichever base encoder
+`--model` names (see `encoders.py`).
 
 Strategy:
-  - Abstract spans  : tokenize the full abstract (fits within 512 tokens)
+  - Abstract spans  : tokenize the full abstract (one record per document)
   - Full-text spans : extract a ±WINDOW_CHARS window around the span,
                       merging nearby spans into the same window
 
@@ -16,14 +17,39 @@ Label scheme:
   O         = 0  (outside)
   -100           (special tokens and subword continuations — ignored by loss)
 
-Phase 1 (default):
-  python3 preprocessing/tag_bio.py
+Alignment
+---------
+A word-initial token carries a label; every continuation subword is -100. The
+label comes from the token's character **range**, not from a single character
+of it:
 
-Phase 2:
-  python3 preprocessing/tag_bio.py \\
-      --matches  data/processed/exact_matches.jsonl \\
-      --articles data/raw/articles.json \\
-      --output   data/processed/bio_tags_v2.jsonl
+    B  if some span s has  token.start <= s.start < token.end
+    I  elif some span s overlaps the token
+    O  otherwise
+
+The range test matters because `offset_mapping[i][0]` is not portable. Measured
+on Bio-ModernBERT, the token `Ġfatty` reports offsets `(10, 16)` covering
+`' fatty'` — the leading space is inside the token, despite `trim_offsets: true`
+in its `tokenizer.json` (that flag governs the post-processor, not the ByteLevel
+pre-tokenizer). A point lookup at character 10 reads the space, labels the token
+`O`, and the span disappears with nothing raised. The range test asks whether the
+span *begins anywhere inside* the token instead, which is true regardless.
+
+WordPiece offsets do start at the word, so this is a measured no-op there: 0 of
+1083 records change against the previous point-lookup output.
+
+The `<=` in the B test is what preserves nested spans. The gold data annotates
+shared-head enumerations twice — `cholesterol and fatty acid synthesis` and
+`fatty acid synthesis` — and flat BIO cannot represent that. Opening a new `B`
+wherever an inner span starts is the behaviour gold-001…008 trained on; changing
+it is a modelling decision, not a tokenizer fix.
+
+Default (gold data):
+  venv310/bin/python3 preprocessing/tag_bio.py \\
+      --matches  data/processed/gold/matches.jsonl \\
+      --articles data/processed/gold/articles.jsonl \\
+      --output   data/processed/gold-biomedbert-base/bio_tags.jsonl \\
+      --db "" --model biomedbert-base
 
 Articles file can be JSONL (one record per line) or a JSON array.
 """
@@ -31,13 +57,13 @@ Articles file can be JSONL (one record per line) or a JSON array.
 import argparse
 import json
 import logging
+import sys
 from collections import defaultdict
 from pathlib import Path
 
-from transformers import AutoTokenizer
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from encoders import resolve, vocab_fingerprint  # noqa: E402
 
-MODEL = "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext"
-MAX_TOKENS = 512
 WINDOW_CHARS = 500
 
 logging.basicConfig(
@@ -86,28 +112,34 @@ def load_articles(articles_path: Path, db_path: Path | None = None) -> dict[str,
 # BIO label helpers
 # ---------------------------------------------------------------------------
 
-def build_char_labels(text: str, spans: list[tuple[int, int]]) -> list[int]:
-    """Return a char-level array: 0=O, 1=B, 2=I."""
-    labels = [0] * len(text)
+def usable_spans(text: str, spans: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    """Drop spans that fall outside the text — offsets can come from a longer source."""
+    return [(s, e) for s, e in spans if s < len(text) and e <= len(text)]
+
+
+def label_for_token(a: int, b: int, spans: list[tuple[int, int]]) -> int:
+    """BIO label for the token covering characters [a, b). See module docstring."""
+    label = 0
     for start, end in spans:
-        if start < len(text) and end <= len(text):
-            labels[start] = 1
-            for j in range(start + 1, end):
-                labels[j] = 2
-    return labels
+        if a < end and start < b:          # overlaps this span
+            if a <= start < b:             # ... and contains where it begins
+                return 1                   # B — wins over any I
+            label = 2                      # I — keep looking for a B
+    return label
 
 
 def tokenize_and_align(
     tokenizer,
     text: str,
-    char_labels: list[int],
+    spans: list[tuple[int, int]],
     pathway_ids: list[str],
     pmid: str,
     chunk: int,
+    max_tokens: int,
 ) -> dict | None:
     encoding = tokenizer(
         text,
-        max_length=MAX_TOKENS,
+        max_length=max_tokens,
         truncation=True,
         return_offsets_mapping=True,
         return_attention_mask=True,
@@ -120,14 +152,11 @@ def tokenize_and_align(
     prev_word_id = None
 
     for i, word_id in enumerate(word_ids):
-        if word_id is None:
-            token_labels.append(-100)
-        elif word_id == prev_word_id:
+        if word_id is None or word_id == prev_word_id:
             token_labels.append(-100)
         else:
-            token_start = offset_mapping[i][0]
-            cl = char_labels[token_start] if token_start < len(char_labels) else 0
-            token_labels.append(cl)
+            a, b = offset_mapping[i]
+            token_labels.append(label_for_token(a, b, spans))
         prev_word_id = word_id
 
     return {
@@ -144,15 +173,15 @@ def tokenize_and_align(
 # Per-source processing
 # ---------------------------------------------------------------------------
 
-def process_abstract(tokenizer, pmid, article, spans, pathway_ids):
+def process_abstract(tokenizer, pmid, article, spans, pathway_ids, max_tokens):
     text = (article.get("abstract") or "").strip()
     if not text:
         return None
-    char_labels = build_char_labels(text, [(s["start"], s["end"]) for s in spans])
-    return tokenize_and_align(tokenizer, text, char_labels, pathway_ids, pmid, 0)
+    usable = usable_spans(text, [(s["start"], s["end"]) for s in spans])
+    return tokenize_and_align(tokenizer, text, usable, pathway_ids, pmid, 0, max_tokens)
 
 
-def process_fulltext(tokenizer, pmid, article, spans, pathway_ids):
+def process_fulltext(tokenizer, pmid, article, spans, pathway_ids, max_tokens):
     full_text = (article.get("full_text") or "").strip()
     if not full_text:
         return []
@@ -178,10 +207,10 @@ def process_fulltext(tokenizer, pmid, article, spans, pathway_ids):
 
         text_window = full_text[win_start:win_end]
         adj = [(s["start"] - win_start, s["end"] - win_start) for s in window_spans]
-        char_labels = build_char_labels(text_window, adj)
 
         rec = tokenize_and_align(
-            tokenizer, text_window, char_labels, pathway_ids, pmid, len(results)
+            tokenizer, text_window, usable_spans(text_window, adj),
+            pathway_ids, pmid, len(results), max_tokens,
         )
         if rec:
             results.append(rec)
@@ -215,7 +244,15 @@ def main() -> None:
         default="data/processed/db_with_extracted_pathways.json",
         help="Optional DB supplement for Phase 1 recon3d records",
     )
+    parser.add_argument(
+        "--model",
+        default=None,
+        help="Encoder registry key or HF id (see `python3 encoders.py`); "
+             "decides the tokenizer and the truncation length",
+    )
     args = parser.parse_args()
+
+    spec = resolve(args.model)
 
     matches_path = Path(args.matches)
     articles_path = Path(args.articles)
@@ -225,9 +262,13 @@ def main() -> None:
     log.info("Matches  : %s", matches_path)
     log.info("Articles : %s", articles_path)
     log.info("Output   : %s", output_path)
+    log.info("Model    : %s  (ctx %d)", spec.hf_id, spec.max_tokens)
 
-    log.info("Loading tokenizer: %s", MODEL)
-    tokenizer = AutoTokenizer.from_pretrained(MODEL)
+    log.info("Loading tokenizer: %s", spec.tokenizer_id)
+    tokenizer = spec.load_tokenizer()
+    if not tokenizer.is_fast:
+        raise SystemExit(f"{spec.tokenizer_id} has no fast tokenizer — "
+                         "offset_mapping and word_ids are required for alignment")
 
     log.info("Loading articles...")
     articles = load_articles(articles_path, db_path)
@@ -268,7 +309,8 @@ def main() -> None:
 
             if data["abstract_spans"]:
                 rec = process_abstract(
-                    tokenizer, pmid, article, data["abstract_spans"], pathway_ids
+                    tokenizer, pmid, article, data["abstract_spans"], pathway_ids,
+                    spec.max_tokens,
                 )
                 if rec:
                     out.write(json.dumps(rec, ensure_ascii=False) + "\n")
@@ -276,17 +318,38 @@ def main() -> None:
                     abs_written += 1
 
             for rec in process_fulltext(
-                tokenizer, pmid, article, data["fulltext_spans"], pathway_ids
+                tokenizer, pmid, article, data["fulltext_spans"], pathway_ids,
+                spec.max_tokens,
             ):
                 out.write(json.dumps(rec, ensure_ascii=False) + "\n")
                 written += 1
                 ft_written += 1
+
+    # meta.json travels with the input_ids so train.py can refuse a mismatched
+    # model. Vocabularies overlap in range, so a wrong pairing raises nothing
+    # on its own — it just trains a worse model.
+    import transformers
+
+    meta = {
+        "model_key": args.model or "biomedbert-base",
+        "hf_id": spec.hf_id,
+        "tokenizer_id": spec.tokenizer_id,
+        "tokenizer_class": type(tokenizer).__name__,
+        "vocab_size": tokenizer.vocab_size,
+        "vocab_fingerprint": vocab_fingerprint(tokenizer),
+        "max_tokens": spec.max_tokens,
+        "transformers_version": transformers.__version__,
+        "n_records": written,
+    }
+    meta_path = output_path.parent / "meta.json"
+    meta_path.write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
 
     log.info("─" * 60)
     log.info("Total records       : %d", written)
     log.info("  — from abstract   : %d", abs_written)
     log.info("  — from full-text  : %d", ft_written)
     log.info("─" * 60)
+    log.info("Wrote %s", meta_path)
 
 
 if __name__ == "__main__":
