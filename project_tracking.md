@@ -1188,119 +1188,78 @@ The ±0.007 noise band that every earlier conclusion leaned on was measured at
   `tetrahydrobiopterin metabolism`), 6 dropping a plural. The mid-word starts
   produce a dangling `I` with no `B`.
 
-## Phase 4b — first-stage grid (paused 2026-07-31)
+## Phase 4b — first-stage grid (completed 2026-08-01)
 
-Five encoders chosen for the first stage, picked for the widest expected spread at
-the lowest cost; the other twelve stay in reserve with datasets already built and
-validated, so any of them joins a later sweep with no preparation.
+The first stage tested `biomedbert-base`, `bert-base`, `bio-clinicalbert`,
+`bioelectra-base` and `bio-modernbert-base`: five models, two registry learning
+rates and three seeds, for 30 cells under the fixed gold-004+ recipe.
 
-| model | role | why it is in the first five |
-|---|---|---|
-| `biomedbert-base` | anchor | the baseline every other number is read against |
-| `bert-base` | domain floor | BLURB NER 82.99 vs 86.13 — the widest gap in the grid |
-| `bio-clinicalbert` | domain mismatch | brackets the baseline from the opposite side |
-| `bioelectra-base` | objective | best BLURB NER per parameter (86.67), byte-identical vocabulary to the PubMedBERT group, so the contrast is RTD vs MLM alone |
-| `bio-modernbert-base` | architecture | the only architecture, tokenizer and 8192-context change in the set |
+The retained grid was run from a clean tree at commit `5e7e3f1`. Seven provisional
+rows were moved to `runs/_precommit/` before the clean restart because three of
+them predated the pipeline commit. The two fixed-seed reproducibility checks remain
+in `runs/_recheck/`; neither archive is included in `runs/summary.jsonl`.
 
-Grid: 5 models × 2 learning rates × 3 seeds = 30 cells, fixed gold-004+ recipe.
+### Result record and regeneration
 
-### Completed (`runs/summary.jsonl`, 7 cells)
+The clean run finished with **30/30 successful cells and 0 failures**. The current
+summary contains exactly 30 unique model/LR/seed keys, every row is stamped
+`5e7e3f1`, every row points to a canonical `test_results.json`, and no completed
+run retains a stale checkpoint.
 
-| model | lr | seed 42 | seed 1 | seed 7 | mean |
-|---|---|---|---|---|---|
-| `biomedbert-base` | 5e-05 | 0.8199 | 0.7947 | 0.8282 | 0.8143 |
-| `biomedbert-base` | 3e-05 | 0.8191 | 0.8125 | 0.8053 | 0.8123 |
-| `bio-modernbert-base` | 5e-05 | 0.7857 | — | — | — |
-
-The `biomedbert-base` lr 5e-05 row reproduces the recorded 0.8143 ± 0.0175 exactly
-— a regression test on the harness, not a new result. The two learning rates are
-0.002 apart against σ = 0.0175, i.e. indistinguishable at three seeds.
-
-### Why 18 cells failed, and the fix
-
-`bert-base`, `bio-clinicalbert` and `bioelectra-base` aborted immediately:
-
-```
-OSError: google-bert/bert-base-uncased does not appear to have a file named
-pytorch_model.bin or model.safetensors.
-```
-
-Dataset preparation only ever pulls tokenizer and config, so the weights were
-never in the cache, and `HF_HUB_OFFLINE=1` turned the miss into a hard failure
-instead of a download. **Resolved** — all three sets of weights are now cached,
-load into `AutoModelForTokenClassification`, and their vocabulary fingerprints
-still match the datasets built earlier. `bio-clinicalbert` still tokenizes
-`Alzheimer` whole, so the casing fix survived the re-download.
-
-**Ten of the seventeen registry models still have no weights cached**, all of them
-in reserve: `modernbert-bio-base`, `scibert`, `biobert`, `biomed-roberta`,
-`modernbert-base`, `bioclinical-modernbert-base`, `bio-modernbert-large`,
-`modernbert-bio-large`. Check before launching a sweep that includes them — disk
-is at 89% with 15 GB free.
-
-### Training is not reproducible at a fixed seed
-
-Re-running the oldest cell (`biomedbert-base`, lr 5e-05, seed 42) twice did not
-reproduce its recorded 0.8199:
-
-| run | test F1 | test P | test R | best val F1 | best epoch | epochs run | seconds |
-|---|---|---|---|---|---|---|---|
-| 29 Jul (recorded) | 0.8199 | 0.7897 | 0.8526 | — | — | — | 549 |
-| replicate 1 | 0.7662 | 0.6984 | 0.8486 | 0.8080 | 7 | 15 | 292 |
-| replicate 2 | 0.7736 | 0.7348 | 0.8167 | 0.8223 | 16 | 24 | 469 |
-
-The two replicates differ from each other as well as from the original, so the
-pipeline is nondeterministic at a fixed seed. Every field in `test_results.json`
-was compared: `lr`, `seed`, `class_weights`, `epochs`, `patience`,
-`frozen_layers`, `precision_mode`, `batch_size`, `grad_accum`, `n_train`,
-`n_val`, `n_test_effective`, `data_dir` and `hf_id` are identical; the only
-differences are schema fields absent from the older file. The dataset has not
-changed since 29 July (`train.jsonl` mtime 23:19, before the run), and
-torch 2.12.0 / transformers 5.10.2 have been installed since 7 June.
-
-`set_seed` is called but `torch.use_deterministic_algorithms` is not, so cuDNN
-kernel selection and atomic accumulation order vary between runs. Early stopping
-turns those small numeric differences into a discrete decision — which epoch is
-best — and the trajectories then diverge: replicate 1 peaked at epoch 7,
-replicate 2 at epoch 16.
-
-**Consequences.** The σ = 0.0175 recorded as *seed* variance is really seed plus
-run-to-run noise, so the grid resolves less than planned. The assumption that
-retraining a best configuration reproduces its swept number is false — Phase 5
-(`models/encoders/`) needs a different rule for which checkpoint is authoritative.
-
-**Unresolved.** Both replicates fall below all three recorded lr 5e-05 runs
-(0.7947 / 0.8199 / 0.8282). Two samples cannot separate an unlucky draw from a
-systematic shift. Against a shift: the three lr 3e-05 cells ran on 31 July under
-the *current* code and produced 0.8191 / 0.8125 / 0.8053, which are not depressed.
-The only cells predating the 31 July 11:03 `train.py` edit are the three at
-lr 5e-05, and that edit was the `tokenizer_kwargs` work, which is a no-op for
-`biomedbert-base` (empty kwargs, uncased model).
-
-Replicates live in `runs/_recheck/` and are excluded from `summary.jsonl`.
-
-### Resuming
-
-`scripts/run_matrix.py` skips any cell that already holds `test_results.json`, so
-the same command picks up the 23 remaining cells (~4 hours):
+Do not copy the generated table into this file. Reproduce every per-configuration
+mean, grouped view and formal comparison from the tracked summary:
 
 ```bash
-HF_HUB_OFFLINE=1 venv310/bin/python3 scripts/run_matrix.py --seeds 42 1 7 --models \
-  biomedbert-base bert-base bio-clinicalbert bioelectra-base bio-modernbert-base
+venv310/bin/python3 scripts/aggregate_runs.py
+venv310/bin/python3 scripts/aggregate_runs.py --by domain objective arch
+venv310/bin/python3 scripts/aggregate_runs.py \
+  --compare biomedbert-base bert-base
 ```
 
-The interrupted `bio-modernbert-base` lr 5e-05 seed 1 cell left a 1.7 GB
-checkpoint behind; it has been deleted, and that cell restarts from scratch.
+### What the grid resolved
+
+- The descriptive leader is `bioelectra-base` at lr 3e-05: **0.8156 ± 0.0175**
+  test F1. This is a recipe ranking, not evidence that BioELECTRA is superior;
+  that comparison did not receive its own paired test.
+- The planned high-information contrast selected lr 3e-05 for both models.
+  `biomedbert-base` scored 0.8033 and `bert-base` 0.7982. The paired document
+  bootstrap gives delta (BERT - BiomedBERT) **-0.0051**, 95% CI
+  **[-0.0354, +0.0275]**, and `P(delta > 0) = 0.382`: **indistinguishable**.
+- Grouped means are also descriptive: RTD/electra leads MLM/BERT/ModernBERT by
+  only a few thousandths, inside the observed run variance. Architecture,
+  objective and domain are confounded with the individual registry models.
+- `bio-clinicalbert` has 108 effective test documents while the paired anchor
+  contrast has 109, so the complete ranking is not a common-example statistical
+  comparison.
+
+The negative result is useful: with 860 training documents and 109 test documents,
+the encoder axis carries no resolved signal at the effect size this grid was built
+to detect. Expanding the ranking to reserve encoders is not justified by these
+data alone; more reviewed examples remain the stronger lever.
+
+### Reproducibility and the Phase 5 checkpoint decision
+
+The earlier fixed-seed rechecks remain relevant. Identical configurations at seed
+42 produced materially different trajectories because deterministic CUDA
+algorithms are not enforced and early stopping amplifies small numeric changes.
+The observed standard deviation therefore combines seed variance with run-to-run
+noise; a swept score is not reproducible by simply retraining its recipe.
+
+`run_matrix.py` used `--no-save-model`, so Phase 4b retained metrics and
+predictions but no deployable checkpoint. Phase 5 must define authority before
+training `models/encoders/`: if the descriptive leader is selected, the saved
+deployment retrain and its own evaluation must be the authoritative artifact.
+The Phase 4b mean selects a recipe; it cannot be assigned to a later checkpoint.
 
 ## Next
 
-- **Tier 1** (local, ~7.3 GPU-hours): `bioelectra-base`, `biolinkbert-base`,
-  `bio-modernbert-base`, `modernbert-bio-base` against the baseline, **11 seeds
-  each** per the variance measurement above. Answers cheaply whether the encoder
-  family matters at all on 860 documents.
-- **Tier 2** (TRUBA): the 340–396M candidates, only if Tier 1 separates. bf16 rules
-  out `akya-cuda` (V100) for ModernBERT.
-- **Tier 3** (highest expected value): fine-tune GLiNER-biomed on the same 860
-  documents; TAPT on the unlabelled pathway corpus.
-- Wave-3 review remains the dominant lever — an encoder swap is a complement to
-  more data, not a substitute.
+- Decide whether Phase 5 should use the descriptive leader
+  (`bioelectra-base`, lr 3e-05) or retain the BiomedBERT anchor for continuity,
+  then record the saved retrain as a new measured artifact.
+- Prioritize wave-3 review or the existing 25/50/75/100% learning-curve design
+  over a wider encoder leaderboard; those experiments can reveal whether more
+  supervision opens a measurable encoder gap.
+- Keep the large-model/TRUBA tier conditional on evidence that the encoder axis
+  separates. The completed base grid does not provide that evidence.
+- GLiNER-biomed and task-adaptive pretraining remain higher-upside modelling
+  directions than another base-encoder ranking on the same 860 documents.

@@ -700,3 +700,71 @@ document and therefore truncates more gold spans:
 A general-domain tokenizer costs ~4x the truncation of a domain one. This is a
 confound to name in any write-up: part of the domain effect measured on a
 512-token budget is tokenizer efficiency, not representation quality.
+
+---
+
+## Phase 4b — clean five-encoder grid
+
+**Date completed:** 2026-08-01
+
+**Pipeline snapshot:** `5e7e3f1`
+
+**Design:** 5 encoders × 2 registry learning rates × 3 seeds = 30 cells
+
+The clean grid completed all 30 cells with no failures. The earlier seven-row
+partial table is archived under `runs/_precommit/`, and the two reproducibility
+replicates remain isolated under `runs/_recheck/`. The retained
+`runs/summary.jsonl` has one unique row per cell, all stamped with the same Git
+SHA and backed by a canonical `test_results.json` in the ignored run directories.
+
+### Reproduce the results
+
+The result table is generated, not maintained by hand:
+
+```bash
+venv310/bin/python3 scripts/aggregate_runs.py
+venv310/bin/python3 scripts/aggregate_runs.py --by domain objective arch
+venv310/bin/python3 scripts/aggregate_runs.py \
+  --compare biomedbert-base bert-base
+```
+
+### Findings
+
+- `bioelectra-base` at lr 3e-05 has the highest descriptive mean,
+  **0.8156 ± 0.0175** test F1. No paired BioELECTRA-versus-anchor test was
+  specified, so this is not a statistically established win.
+- The preplanned anchor contrast compares each model's best mean-LR group:
+  BiomedBERT 0.8033 versus general BERT 0.7982. The paired document bootstrap
+  estimates delta (BERT - BiomedBERT) at **-0.0051**, with 95% CI
+  **[-0.0354, +0.0275]** and `P(delta > 0) = 0.382`.
+- The interval includes zero and is much wider than the observed difference.
+  The encoder-domain contrast is therefore **indistinguishable** on this split.
+- Grouping the same runs by domain, pretraining objective or architecture yields
+  differences of only a few thousandths. Those summaries are descriptive because
+  each axis is confounded with model identity and the run variance is larger than
+  the gaps.
+- BioClinicalBERT evaluates 108 effective test documents rather than 109 after
+  tokenizer-dependent truncation. Only the BiomedBERT/BERT comparison is scored
+  as a paired common-document contrast here.
+
+### Interpretation
+
+The grid answered its intended first question: at 860 training documents, the
+base-encoder axis is below the current experiment's resolution. This is not a
+failed sweep. It is evidence against spending the next block of compute on a
+wider ranking at the same data size. The learning-curve design and wave-3 review
+are more informative because they test whether supervision, rather than encoder
+identity, is the limiting variable.
+
+The fixed-seed rechecks also showed that CUDA nondeterminism plus early stopping
+changes the selected trajectory. Reported standard deviations combine seed and
+run-to-run variation; a future retrain must never inherit a swept F1 by name.
+
+### Phase 5 handoff
+
+The sweep ran with `--no-save-model`, so it produced no deployable checkpoint.
+If Phase 5 chooses the descriptive leader (`bioelectra-base`, lr 3e-05), it must
+save a new retrain and treat that concrete artifact and its own evaluation as
+authoritative. Alternatively, retaining BiomedBERT preserves continuity without
+claiming the grid found a significant improvement. That policy decision belongs
+before `models/encoders/` is populated.

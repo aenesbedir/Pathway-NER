@@ -27,6 +27,9 @@ data/raw/articles.json
 .DS_Store
 Thumbs.db
 
+# Tool-managed scratch worktrees
+.claude/worktrees/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -107,7 +110,11 @@ dmypy.json
 # Phase 2 generated data & logs (regenerable from scripts)
 data/processed/bio_tags_v2.jsonl
 data/processed/phase2/
-logs/run005.log
+
+# Generated diagnostics and logs
+analysis/alignment_*.json
+logs/*.log
+runs/*.log
 
 # doccano batch archives (regenerable via doccano/split_batches.py)
 doccano/batches.zip
