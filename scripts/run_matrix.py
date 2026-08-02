@@ -42,6 +42,7 @@ Examples:
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -52,7 +53,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from encoders import resolve  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-PYTHON = str(ROOT / "venv310" / "bin" / "python3")
+
+# The interpreter each cell runs under. `venv310` is this machine's; on a cluster
+# the environment lives in a container and the path comes from the job script, so
+# it is overridable rather than assumed.
+PYTHON = os.environ.get("NER_PYTHON", str(ROOT / "venv310" / "bin" / "python3"))
 
 # The gold-004+ recipe. Changing these changes what the sweep measures, so they
 # are explicit rather than inherited from train.py's defaults.
