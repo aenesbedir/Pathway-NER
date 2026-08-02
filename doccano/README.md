@@ -3,6 +3,10 @@
 Everything needed to get the LLM-generated (silver) pathway spans in front of human
 annotators, and to get their corrections back out.
 
+Wave-3 and wave-4 review is complete. Their final canonical training annotations
+are tracked as `wave3_1k_gold.jsonl` and `wave4_1k_gold.jsonl`; detailed review JSONs
+remain local audit material.
+
 | File | What it is |
 |---|---|
 | `pilot_1k_doccano.jsonl` | **The import file** — 1,000 abstracts, 1,996 pre-filled `PATHWAY` spans |
@@ -98,7 +102,12 @@ design. The rules and the edge cases are in `ANNOTATION_GUIDE.md`.
 
 ## After review
 
-Export the annotated data from doccano (its export uses `labels`, plural) and treat it as
-the corrected silver set. It stays separate from the gold set
-(`playground/golden_set/`) — the 10 golden PMIDs are deliberately excluded from this file so
-that silver never trains on the evaluation set.
+Export the annotated data from doccano (its export uses `labels`, plural) and convert
+the corrections into reviewed training gold with `build_gold_from_review.py`. This
+training gold remains separate from the external golden set under
+`playground/golden_set/`: its 10 PMIDs are deliberately excluded so evaluation data
+never enters training.
+
+The default converter rebuilds only sources whose review inputs are tracked. On the
+machine holding the local wave-3/4 review audit files, pass
+`--include-local-reviews` to rebuild their tracked canonical gold JSONL files.

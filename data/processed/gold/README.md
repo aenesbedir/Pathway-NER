@@ -1,15 +1,25 @@
 # Gold dataset (review-corrected)
 
-Training dataset built from the **reviewed** silver labels — not raw silver. Each
-span is the silver output with review corrections applied: false positives dropped,
-false negatives added, true positives kept (gold = `tp + fn` per document).
+Training data is built from **reviewed** silver labels, never raw silver. Each span
+is the silver output with review corrections applied: false positives dropped,
+false negatives added, and true positives kept (gold = `tp + fn` per document).
 
-Two sources feed this dataset (no PMID overlap):
+Four non-overlapping gold sources are now available:
 
-| source | reviewed labels | docs |
-|--------|-----------------|------|
-| wave-2 silver (qwen2.5:14b) | `analysis/wave2_batch0[1-5]_review.json` | 1000 |
-| pilot-1k batch 05 | `analysis/batch_05_5_review.json` (docs 1–50 human, 51–200 assistant review) | 200 |
+| source | canonical labels | docs | positive docs | spans |
+|--------|------------------|-----:|--------------:|------:|
+| wave-2 silver (qwen2.5:14b) | `analysis/wave2_batch0[1-5]_review.json` (assistant-reviewed) | 1000 | 901 | 2334 |
+| pilot-1k batch 05 | `analysis/batch_05_5_review.json` (docs 1–50 human, 51–200 assistant-reviewed) | 200 | 182 | 483 |
+| wave-3 silver (qwen2.5:14b) | `doccano/wave3_1k_gold.jsonl` (human-reviewed) | 1000 | 901 | 2339 |
+| wave-4 silver (qwen2.5:14b) | `doccano/wave4_1k_gold.jsonl` (human-reviewed) | 1000 | 903 | 2306 |
+| **total** | — | **3200** | **2887** | **7462** |
+
+Wave-3/4 review JSONs remain local audit material and are intentionally not
+tracked. Their final gold JSONL files are therefore the tracked canonical records.
+The processed `data/processed/gold/` snapshot still represents only wave-2 plus
+pilot batch 05; it must remain untouched because its frozen split underlies the
+gold-001…008 and Phase 4b results. The expanded corpus will use a separate,
+versioned processed-data namespace and split contract.
 
 ## Provenance chain
 
@@ -24,12 +34,17 @@ pilot: analysis/batch_05_5_review.json               → doccano/pilot_1k_batch0
                       ├─ preprocessing/make_splits.py  → splits.json                    ← frozen contract
                       └─ preprocessing/tag_bio.py --model X → gold-<slug>/bio_tags.jsonl
                            └─ build_dataset.py --splits → gold-<slug>/{train,val,test}.jsonl
+
+data/silver/wave3_1k.jsonl / wave4_1k.jsonl          raw machine output (SILVER)
+  └─ local human-review audit JSONs
+       └─ doccano/wave3_1k_gold.jsonl / wave4_1k_gold.jsonl   ← tracked canonical gold
 ```
 
 ## Files
 
-This directory holds only what is **tokenizer-independent**. Anything containing
-`input_ids` lives in a per-model directory, `data/processed/gold-<slug>/`.
+This directory is the historical, tokenizer-independent Phase 4b snapshot.
+Anything containing `input_ids` lives in a per-model directory,
+`data/processed/gold-<slug>/`.
 
 | file | rows | note |
 |------|------|------|
@@ -64,9 +79,16 @@ separate measurement rather than worth invalidating eight runs over.
 
 ## Regenerate
 
+These commands reproduce the historical wave-2 + pilot snapshot. They deliberately
+do not overwrite it with wave-3/4; the expanded corpus requires its own output
+directory and frozen split.
+
 ```bash
 # 1. reviews → doccano gold
 venv310/bin/python3 doccano/build_gold_from_review.py
+
+# Optional local audit rebuild of the tracked wave-3/4 canonical gold files
+venv310/bin/python3 doccano/build_gold_from_review.py --include-local-reviews
 
 # 2. gold → matches + articles (both sources, into data/processed/gold/)
 venv310/bin/python3 preprocessing/gold_to_matches.py \
