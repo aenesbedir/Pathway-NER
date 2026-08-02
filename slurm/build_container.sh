@@ -42,10 +42,18 @@ python -m pip install --no-cache-dir \
     --index-url https://download.pytorch.org/whl/cu126 \
     --extra-index-url https://pypi.org/simple \
     "torch==2.8.0"
-# numpy is held below 2.0: the spaCy/scispaCy chain the preprocessing side uses
-# breaks on 2.x, and pinning here keeps one environment valid for both.
+# Pinned, not floating: an unpinned rebuild three months from now resolves to
+# different versions and the TRUBA table stops being reproducible against itself.
+# These exact versions were resolved against torch 2.8.0+cu126 and import cleanly
+# together, Trainer included.
+# numpy is held below 2.0 because the spaCy/scispaCy chain breaks on 2.x, which
+# keeps one environment valid for the preprocessing side too.
 python -m pip install --no-cache-dir \
-    "numpy<2" transformers datasets accelerate seqeval
+    "numpy==1.26.4" \
+    "transformers==5.14.1" \
+    "datasets==5.0.1" \
+    "accelerate==1.14.0" \
+    "seqeval==1.2.2"
 EOF
 
 apptainer exec --writable --fakeroot nerenv bash "$WORK/install.sh"
