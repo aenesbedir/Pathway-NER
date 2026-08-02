@@ -6,14 +6,14 @@
 # so a from_pretrained call there can only succeed from this cache. Downloading
 # is I/O, not compute, so it does not violate the "no heavy work on arf-ui" rule.
 #
-#     bash /arf/home/$USER/NER-pipeline/slurm/prefetch_models.sh biomedbert-base bioelectra-base
+#     bash /arf/scratch/$USER/NER-pipeline/slurm/prefetch_models.sh biomedbert-base bioelectra-base
 #
 # The cache lives on scratch because it is large and regenerable. Scratch is
 # wiped after 30 days; re-running this script restores it.
 
 set -euo pipefail
 
-REPO=/arf/home/$USER/NER-pipeline
+REPO=/arf/scratch/$USER/NER-pipeline
 SIF=/arf/home/$USER/container-user/nerenv.sif
 
 export HF_HOME=/arf/scratch/$USER/hf

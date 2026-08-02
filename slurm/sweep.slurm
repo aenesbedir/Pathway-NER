@@ -11,7 +11,9 @@
 # (all 16 nodes allocated, ~128 pending jobs), and the backfill scheduler can only
 # slot a job into a gap it fits in. An honest, short limit starts sooner.
 #
-# Submit from the repo root with a clean working tree:
+# Submit from the repo root with a clean working tree. The repo lives on scratch
+# because the site's job_submit plugin refuses jobs launched from /arf/home:
+#     cd /arf/scratch/$USER/NER-pipeline
 #     git status --porcelain          # must print nothing
 #     sbatch slurm/sweep.slurm
 #
@@ -28,7 +30,7 @@
 
 set -euo pipefail
 
-REPO=/arf/home/$USER/NER-pipeline
+REPO=/arf/scratch/$USER/NER-pipeline
 SIF=/arf/home/$USER/container-user/nerenv.sif
 
 cd "$REPO"

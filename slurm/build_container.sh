@@ -3,11 +3,20 @@
 #
 # Run this from an interactive debug allocation, never on arf-ui — compiling and
 # installing on the login nodes is against the usage policy. A CPU node is enough;
-# nothing here needs a GPU:
+# nothing here needs a GPU.
 #
+# Submit from a directory under /arf/scratch. The site's job_submit plugin rejects
+# anything launched from /arf/home outright:
+#     "Lutfen islerinizi /arf/scratch/ dizini altinda calistiriniz!"
+#
+#     cd /arf/scratch/$USER
 #     srun -p debug -C barbun -N 1 -n 1 -c 20 -A $USER -J build \
 #          --time=2:00:00 --pty /usr/bin/bash -i
-#     bash /arf/home/$USER/NER-pipeline/slurm/build_container.sh
+#     bash /arf/scratch/$USER/NER-pipeline/slurm/build_container.sh
+#
+# The .sif itself stays in /arf/home: scratch is wiped after 30 days and the image
+# is one inode, which is exactly what the inode policy asks for. Only the working
+# directory has to be on scratch.
 #
 # Why a container and not a venv: /arf is a Lustre filesystem with a 500K inode
 # quota per user, and site policy forbids conda/pip installs on it — a venv is
