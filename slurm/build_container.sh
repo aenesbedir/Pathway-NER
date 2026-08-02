@@ -40,9 +40,14 @@ mkdir -p "$WORK"
 cd "$WORK"
 
 cp -n "$BASE" ./miniconda3-container.sif
-apptainer build --sandbox nerenv miniconda3-container.sif
+# --force so a re-run after a failed install starts from the clean base image
+# instead of stopping on the sandbox left behind by the previous attempt.
+apptainer build --force --sandbox nerenv miniconda3-container.sif
 
-cat > "$WORK/install.sh" <<'EOF'
+# Piped through stdin with `bash -s`, not written to a file the container reads:
+# under --writable --fakeroot apptainer does not bind the host filesystem, so a
+# path under /arf/home does not exist inside the sandbox.
+apptainer exec --writable --fakeroot nerenv bash -s <<'EOF'
 set -euo pipefail
 # --extra-index-url is not optional: the pytorch index does not carry torch's own
 # dependencies (typing-extensions and friends), so --index-url alone fails to
@@ -65,9 +70,7 @@ python -m pip install --no-cache-dir \
     "seqeval==1.2.2"
 EOF
 
-apptainer exec --writable --fakeroot nerenv bash "$WORK/install.sh"
-
-apptainer build nerenv.sif nerenv
+apptainer build --force nerenv.sif nerenv
 
 # Cheap check that the pieces agree before a GPU node is ever waited for.
 apptainer exec nerenv.sif python -c "
