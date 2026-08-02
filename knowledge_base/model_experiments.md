@@ -781,10 +781,13 @@ contain 2000 documents and 4645 pathway spans; together with wave-2 and pilot ba
 spans. The detailed wave-3/4 review JSONs remain local audit material, so the final
 gold JSONL files are the Git-tracked annotation records.
 
-The historical Phase 4b dataset remains frozen. Its 107 validation and 109 test
-PMIDs will be reused unchanged; all 1804 new positive wave-3/4 documents will be
-assigned to the expanded training split. This isolates the supervision change and
-keeps every new score comparable with the completed grid.
+The historical Phase 4b dataset remains frozen. The expanded snapshot is built
+under `data/processed/gold-wave4/`: its 107 validation and 109 test PMIDs are reused
+unchanged, and all 1804 new positive wave-3/4 documents are assigned to training.
+The five tokenizer-specific validation/test files are byte-identical to their
+Phase 4b counterparts, and alignment validation reports zero unexplained span
+losses. This isolates the supervision change and keeps every new score comparable
+with the completed grid.
 
 The follow-up does not repeat learning-rate selection. It carries forward each
 model's best Phase 4b mean-LR group and repeats it at seeds 42, 1 and 7:
@@ -800,5 +803,5 @@ model's best Phase 4b mean-LR group and repeats it at seeds 42, 1 and 7:
 The resulting 15 cells measure how the previously selected recipes respond to
 roughly three times as much positive training supervision. They do not establish
 that those learning rates remain optimal on the expanded corpus. The run has not
-started: a versioned dataset, a separate summary namespace and explicit per-model
-learning-rate support in `run_matrix.py` are still required first.
+started: a separate summary namespace and explicit per-model learning-rate and
+versioned-data support in `run_matrix.py` are still required first.

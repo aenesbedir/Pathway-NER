@@ -1267,10 +1267,12 @@ positive documents and 4645 pathway spans:
 | **combined** | **3200** | **2887** | **7462** |
 
 The historical `data/processed/gold/` snapshot and its 860/107/109 split remain
-frozen. The expanded corpus will use a new processed-data namespace: the existing
-107 validation and 109 test PMIDs stay fixed, while the 1804 new positive PMIDs
-are assigned to training. This preserves a common evaluation set and prevents the
-Phase 4b results from being overwritten.
+frozen. The expanded corpus is built under `data/processed/gold-wave4/`: the
+existing 107 validation and 109 test PMIDs stay fixed, while the 1804 new positive
+PMIDs are assigned to training. The model-independent split assigns 2664/107/109
+PMIDs to train/validation/test. All five tokenizer-specific datasets pass alignment
+validation with zero unexplained span losses, and their validation/test JSONL files
+are byte-identical to the corresponding Phase 4b files.
 
 The agreed follow-up carries each base encoder's best mean-LR configuration from
 Phase 4b onto the expanded training set, at seeds 42, 1 and 7:
@@ -1291,8 +1293,6 @@ the sweep starts.
 
 ## Next
 
-- Build the versioned expanded split and per-tokenizer datasets without modifying
-  the historical Phase 4b data.
 - Adapt `run_matrix.py` for the 15-cell carry-forward experiment and write its
   results to a separate summary.
 - Select and save an authoritative deployment checkpoint only after the expanded

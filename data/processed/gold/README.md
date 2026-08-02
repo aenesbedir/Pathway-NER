@@ -18,8 +18,9 @@ Wave-3/4 review JSONs remain local audit material and are intentionally not
 tracked. Their final gold JSONL files are therefore the tracked canonical records.
 The processed `data/processed/gold/` snapshot still represents only wave-2 plus
 pilot batch 05; it must remain untouched because its frozen split underlies the
-gold-001…008 and Phase 4b results. The expanded corpus will use a separate,
-versioned processed-data namespace and split contract.
+gold-001…008 and Phase 4b results. The expanded corpus is built separately under
+`data/processed/gold-wave4/`; see `../gold-wave4/README.md` for its frozen split,
+effective per-tokenizer counts and regeneration commands.
 
 ## Provenance chain
 
@@ -80,8 +81,8 @@ separate measurement rather than worth invalidating eight runs over.
 ## Regenerate
 
 These commands reproduce the historical wave-2 + pilot snapshot. They deliberately
-do not overwrite it with wave-3/4; the expanded corpus requires its own output
-directory and frozen split.
+do not overwrite it with wave-3/4; the expanded corpus has its own output directory
+and frozen split under `data/processed/gold-wave4/`.
 
 ```bash
 # 1. reviews → doccano gold

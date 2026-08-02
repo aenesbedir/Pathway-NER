@@ -143,6 +143,12 @@ data/processed/gold/*.jsonl
 # is tracked — it is the contract that makes two encoders comparable.
 data/processed/gold-*/
 
+# gold-wave4 is a model-independent, versioned corpus root. Keep its README and
+# frozen split; matches/articles and all gold-wave4-<tokenizer>/ directories are
+# regenerable and remain ignored by the rule above.
+!data/processed/gold-wave4/
+data/processed/gold-wave4/*.jsonl
+
 # Sweep outputs. summary.jsonl is the aggregated result and is kept; the
 # per-run directories hold logs and prediction dumps and are regenerable.
 runs/*/
