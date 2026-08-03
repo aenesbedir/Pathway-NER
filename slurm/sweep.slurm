@@ -1,23 +1,29 @@
 #!/bin/bash
-# Encoder sweep on TRUBA / ARF, one Slurm job running run_matrix.py sequentially.
+# Encoder sweep on TRUBA / ARF as a job array: one array task per model, each
+# running run_matrix.py over that model's seeds.
 #
-# Why one job and not a job array: a cell takes ~10 minutes, so a 30-cell grid is
-# about 5 hours — well inside the 3-day limit. A single job pays the queue wait
-# once instead of thirty times, and every cell lands on the same node, which is
-# what keeps the table comparable. An array can scatter cells across node types
-# and split one table across two GPUs.
+# Why an array and not one long job. akya-cuda is saturated — all 16 nodes
+# allocated, ~128 pending — so a submitted job waits on priority, not resources.
+# Slurm fills the gaps left by large jobs with small ones that fit, and a 4h task
+# fits gaps a 12h job never will. Measured: the single 12h job queued at 26 hours.
 #
-# --time is deliberately well under the 3-day maximum. akya-cuda is saturated (all
-# 16 nodes allocated, ~128 pending jobs), and the backfill scheduler can only slot
-# a job into a gap it fits in. An honest, short limit starts sooner.
+# What makes splitting safe here is that the partition is fixed. Every akya node
+# is the same 4x V100, so scattering tasks across nodes does not scatter the table
+# across hardware. Splitting across *partitions* would, which is why the sweep
+# never spans akya-cuda and barbun-cuda.
 #
-# 12h for 15 cells on gold-wave4: measured on the 4060, a gold cell averages 449 s
-# and wave4 trains on 2659 documents instead of 860, so a cell is ~23 minutes and
-# the grid ~6 hours. The margin covers a slower card, not a different plan.
+# Each task writes its own summary file. run_matrix.py appends a line per cell,
+# and concurrent appends to one file on Lustre are not guaranteed atomic — an
+# interleaved write would leave a corrupt JSON line that stops aggregate_runs.py.
+# Merge them once the array finishes:
 #
-# Hitting the wall is recoverable rather than fatal: run_matrix.py skips any cell
-# whose test_results.json already exists, so re-submitting the same script
-# continues where the timeout stopped. Only the cell in flight is lost.
+#     cat runs-truba/summary-*.jsonl > runs-truba/summary.jsonl
+#     venv310/bin/python3 scripts/aggregate_runs.py --summary runs-truba/summary.jsonl
+#
+# 4h per task: a gold cell averages 449 s on the 4060 and wave4 trains on 2659
+# documents instead of 860, so a cell is ~23 minutes and five seeds ~2 hours. A
+# task that hits the wall is resumable — run_matrix.py skips cells whose
+# test_results.json exists, so re-submitting continues where it stopped.
 #
 # Submit from the repo root with a clean working tree. The repo lives on scratch
 # because the site's job_submit plugin refuses jobs launched from /arf/home:
@@ -28,18 +34,22 @@
 #SBATCH --partition=akya-cuda
 #SBATCH --account=abedir
 #SBATCH --job-name=ner-sweep
-#SBATCH --output=logs/sweep-%j.out
-#SBATCH --error=logs/sweep-%j.err
+#SBATCH --output=logs/sweep-%A_%a.out
+#SBATCH --error=logs/sweep-%A_%a.err
+#SBATCH --array=0-2
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --gres=gpu:1
-#SBATCH --time=12:00:00
+#SBATCH --time=04:00:00
 
 set -euo pipefail
 
 REPO=/arf/scratch/$USER/NER-pipeline
 SIF=/arf/home/$USER/container-user/nerenv.sif
+
+MODELS=(biomedbert-base bioelectra-base biolinkbert-base)
+MODEL=${MODELS[$SLURM_ARRAY_TASK_ID]}
 
 cd "$REPO"
 mkdir -p logs
@@ -62,6 +72,7 @@ mkdir -p "$TMPDIR"
 # Inside the container `python3` is the container's interpreter, not venv310's.
 export NER_PYTHON=python3
 
+echo "task $SLURM_ARRAY_TASK_ID -> $MODEL on $(hostname)"
 nvidia-smi
 
 apptainer exec --nv \
@@ -69,7 +80,8 @@ apptainer exec --nv \
     "$SIF" \
     python3 scripts/run_matrix.py \
         --runs-dir runs-truba \
+        --summary "runs-truba/summary-${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}.jsonl" \
         --dataset gold-wave4 \
-        --models biomedbert-base bioelectra-base biolinkbert-base \
+        --models "$MODEL" \
         --lrs 5e-5 \
         --seeds 42 1 7 13 21
