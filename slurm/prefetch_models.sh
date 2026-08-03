@@ -35,7 +35,7 @@ for key in sys.argv[1:]:
     # Through spec.tokenizer(), not AutoTokenizer directly: the tokenizer id can
     # differ from the model id and some repos need tokenizer_kwargs, and
     # encoders.py is the one place that knows both.
-    spec.tokenizer()
+    spec.load_tokenizer()
     AutoModelForTokenClassification.from_pretrained(spec.hf_id, num_labels=3)
 print("cache ready:", __import__("os").environ["HF_HOME"])
 EOF
