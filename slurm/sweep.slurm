@@ -7,9 +7,17 @@
 # what keeps the table comparable. An array can scatter cells across node types
 # and split one table across two GPUs.
 #
-# --time is deliberately 8h rather than the 3-day maximum. akya-cuda is saturated
-# (all 16 nodes allocated, ~128 pending jobs), and the backfill scheduler can only
-# slot a job into a gap it fits in. An honest, short limit starts sooner.
+# --time is deliberately well under the 3-day maximum. akya-cuda is saturated (all
+# 16 nodes allocated, ~128 pending jobs), and the backfill scheduler can only slot
+# a job into a gap it fits in. An honest, short limit starts sooner.
+#
+# 12h for 15 cells on gold-wave4: measured on the 4060, a gold cell averages 449 s
+# and wave4 trains on 2659 documents instead of 860, so a cell is ~23 minutes and
+# the grid ~6 hours. The margin covers a slower card, not a different plan.
+#
+# Hitting the wall is recoverable rather than fatal: run_matrix.py skips any cell
+# whose test_results.json already exists, so re-submitting the same script
+# continues where the timeout stopped. Only the cell in flight is lost.
 #
 # Submit from the repo root with a clean working tree. The repo lives on scratch
 # because the site's job_submit plugin refuses jobs launched from /arf/home:
@@ -26,7 +34,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --gres=gpu:1
-#SBATCH --time=08:00:00
+#SBATCH --time=12:00:00
 
 set -euo pipefail
 
@@ -61,6 +69,7 @@ apptainer exec --nv \
     "$SIF" \
     python3 scripts/run_matrix.py \
         --runs-dir runs-truba \
+        --dataset gold-wave4 \
         --models biomedbert-base bioelectra-base biolinkbert-base \
         --lrs 5e-5 \
         --seeds 42 1 7 13 21
