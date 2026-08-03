@@ -1251,15 +1251,53 @@ training `models/encoders/`: if the descriptive leader is selected, the saved
 deployment retrain and its own evaluation must be the authoritative artifact.
 The Phase 4b mean selects a recipe; it cannot be assigned to a later checkpoint.
 
+## Phase 4c — expanded human-reviewed corpus (prepared 2026-08-02)
+
+Wave-3 and wave-4 human review is complete. Their final tracked canonical files
+are `doccano/wave3_1k_gold.jsonl` and `doccano/wave4_1k_gold.jsonl`; the detailed
+review JSONs remain local audit material. The two waves add 2000 documents, 1804
+positive documents and 4645 pathway spans:
+
+| source | documents | positive documents | gold spans |
+|---|---:|---:|---:|
+| pilot batch 05 | 200 | 182 | 483 |
+| wave-2 | 1000 | 901 | 2334 |
+| wave-3 | 1000 | 901 | 2339 |
+| wave-4 | 1000 | 903 | 2306 |
+| **combined** | **3200** | **2887** | **7462** |
+
+The historical `data/processed/gold/` snapshot and its 860/107/109 split remain
+frozen. The expanded corpus is built under `data/processed/gold-wave4/`: the
+existing 107 validation and 109 test PMIDs stay fixed, while the 1804 new positive
+PMIDs are assigned to training. The model-independent split assigns 2664/107/109
+PMIDs to train/validation/test. All five tokenizer-specific datasets pass alignment
+validation with zero unexplained span losses, and their validation/test JSONL files
+are byte-identical to the corresponding Phase 4b files.
+
+The agreed follow-up carries each base encoder's best mean-LR configuration from
+Phase 4b onto the expanded training set, at seeds 42, 1 and 7:
+
+| model | learning rate |
+|---|---:|
+| `biomedbert-base` | 3e-05 |
+| `bert-base` | 3e-05 |
+| `bio-clinicalbert` | 5e-05 |
+| `bioelectra-base` | 3e-05 |
+| `bio-modernbert-base` | 8e-05 |
+
+This is a 15-cell carry-forward experiment, not a new learning-rate selection.
+Re-selecting the optimum learning rate on the expanded corpus would require the
+full 30-cell grid. The new runs must use a separate run namespace and summary;
+`run_matrix.py` still needs explicit versioned-data and per-model-LR support before
+the sweep starts.
+
 ## Next
 
-- Decide whether Phase 5 should use the descriptive leader
-  (`bioelectra-base`, lr 3e-05) or retain the BiomedBERT anchor for continuity,
-  then record the saved retrain as a new measured artifact.
-- Prioritize wave-3 review or the existing 25/50/75/100% learning-curve design
-  over a wider encoder leaderboard; those experiments can reveal whether more
-  supervision opens a measurable encoder gap.
+- Adapt `run_matrix.py` for the 15-cell carry-forward experiment and write its
+  results to a separate summary.
+- Select and save an authoritative deployment checkpoint only after the expanded
+  experiment is evaluated; no swept mean belongs to a later retrain.
 - Keep the large-model/TRUBA tier conditional on evidence that the encoder axis
   separates. The completed base grid does not provide that evidence.
 - GLiNER-biomed and task-adaptive pretraining remain higher-upside modelling
-  directions than another base-encoder ranking on the same 860 documents.
+  directions if the expanded base-encoder comparison remains unresolved.

@@ -37,6 +37,7 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.nn as nn
+import transformers
 from datasets import Dataset
 from seqeval.metrics import f1_score, precision_score, recall_score
 from transformers import (
@@ -423,6 +424,14 @@ def main() -> None:
         "patience": args.patience,
         "frozen_layers": args.frozen_layers,
         "precision_mode": "bf16" if use_bf16 else "fp16" if use_fp16 else "fp32",
+        # What the run actually executed on. `precision_mode` alone does not
+        # identify it — a V100 and a P100 both report fp16, and the same fp16
+        # recipe is a different computation on each. These are read from the
+        # process rather than passed in, so a run cannot mislabel itself the way
+        # a `--site truba` flag could when someone forgets to pass it.
+        "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
+        "torch_version": torch.__version__,
+        "transformers_version": transformers.__version__,
         "batch_size": batch_size,
         "grad_accum": grad_accum,
         "n_train": len(train_dataset),

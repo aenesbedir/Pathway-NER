@@ -42,6 +42,7 @@ Examples:
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -52,7 +53,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from encoders import resolve  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-PYTHON = str(ROOT / "venv310" / "bin" / "python3")
+
+# The interpreter each cell runs under. `venv310` is this machine's; on a cluster
+# the environment lives in a container and the path comes from the job script, so
+# it is overridable rather than assumed.
+PYTHON = os.environ.get("NER_PYTHON", str(ROOT / "venv310" / "bin" / "python3"))
 
 # The gold-004+ recipe. Changing these changes what the sweep measures, so they
 # are explicit rather than inherited from train.py's defaults.
@@ -79,6 +84,12 @@ def main() -> None:
                     help="Fractions of the training set to sweep, e.g. 0.25 0.5 "
                          "0.75 1.0 for a learning curve. Subsets are nested and "
                          "identical across models")
+    ap.add_argument("--dataset", default="gold",
+                    help="Corpus root under data/processed. `gold` is the 860-doc "
+                         "Phase 4b set; `gold-wave4` is the 2664-doc expansion "
+                         "sharing its validation and test PMIDs. Each model reads "
+                         "<dataset>-<slug>/ and every model in one sweep reads the "
+                         "same split file")
     ap.add_argument("--runs-dir", default="runs")
     ap.add_argument("--summary", default=None,
                     help="Default: <runs-dir>/summary.jsonl")
@@ -106,10 +117,18 @@ def main() -> None:
     for i, (model, spec, lr, seed, fraction) in enumerate(cells, 1):
         # Full-data runs keep the original path so earlier sweeps stay resumable.
         frac_dir = "" if fraction >= 1.0 else f"frac{fraction:g}/"
-        out = runs_dir / model / f"lr{lr:g}" / f"{frac_dir}seed{seed}"
+        # `gold` keeps the original layout for the same reason; a corpus change is
+        # not comparable with what sits next to it, so it gets its own subtree
+        # rather than overwriting a cell that answers a different question.
+        data_dir_prefix = "" if args.dataset == "gold" else f"{args.dataset}/"
+        out = runs_dir / f"{data_dir_prefix}{model}" / f"lr{lr:g}" / f"{frac_dir}seed{seed}"
         results_path = out / "test_results.json"
 
+        data_dir = Path("data/processed") / f"{args.dataset}-{spec.data_slug}"
+        splits = Path("data/processed") / args.dataset / "splits.json"
+
         cmd = [PYTHON, "train.py", "--model", model, "--output-dir", str(out),
+               "--data-dir", str(data_dir), "--splits", str(splits),
                "--lr", f"{lr:g}", "--seed", str(seed), *RECIPE]
         if fraction < 1.0:
             cmd += ["--train-fraction", f"{fraction:g}"]

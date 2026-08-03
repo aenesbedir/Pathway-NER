@@ -14,9 +14,11 @@ Output shape (doccano importer, label singular):
 
     {"text": "<abstract>", "label": [[start, end, "PATHWAY"], ...], "meta": {...}}
 
-Two sources, two files (no PMID overlap between them):
+Four sources, four files (no PMID overlap between them):
 
     wave2         5 batch reviews  -> doccano/wave2_1k_gold.jsonl
+    wave3         5 batch reviews  -> doccano/wave3_1k_gold.jsonl
+    wave4         5 batch reviews  -> doccano/wave4_1k_gold.jsonl
     pilot batch05 1 review          -> doccano/pilot_1k_batch05_gold.jsonl
 
 Text comes from the doccano batch files the reviews were built against; spans are
@@ -46,11 +48,36 @@ SOURCES = {
          f"doccano/batches/wave2_1k_doccano_batch_{n:02d}_5.jsonl")
         for n in range(1, 6)
     ],
+    "wave3_1k_gold.jsonl": [
+        (f"analysis/wave3_batch{n:02d}_review.json",
+         f"doccano/batches/wave3_1k_doccano_batch_{n:02d}_5.jsonl")
+        for n in range(1, 6)
+    ],
+    "wave4_1k_gold.jsonl": [
+        (f"analysis/wave4_batch{n:02d}_review.json",
+         f"doccano/batches/wave4_1k_doccano_batch_{n:02d}_5.jsonl")
+        for n in range(1, 6)
+    ],
     "pilot_1k_batch05_gold.jsonl": [
         ("analysis/batch_05_5_review.json",
          "doccano/batches/pilot_1k_doccano_batch_05_5.jsonl"),
     ],
 }
+
+PROVENANCE = {
+    "wave2_1k_gold.jsonl": "tp+fn (assistant-reviewed against ANNOTATION_GUIDE.md)",
+    "wave3_1k_gold.jsonl": "tp+fn (human-reviewed against ANNOTATION_GUIDE.md)",
+    "wave4_1k_gold.jsonl": "tp+fn (human-reviewed against ANNOTATION_GUIDE.md)",
+    "pilot_1k_batch05_gold.jsonl": (
+        "tp+fn (mixed human and assistant review against ANNOTATION_GUIDE.md)"
+    ),
+}
+
+# Wave-3/4 final gold files are tracked because their detailed review JSONs are
+# local audit material. The default remains fully reproducible from a clean clone;
+# use --include-local-reviews only where those audit files and batch intermediates
+# are present.
+DEFAULT_SOURCES = ("wave2_1k_gold.jsonl", "pilot_1k_batch05_gold.jsonl")
 
 
 def load_texts(batch_path: Path) -> dict[str, str]:
@@ -62,7 +89,7 @@ def load_texts(batch_path: Path) -> dict[str, str]:
     return texts
 
 
-def build_source(pairs, out_path: Path) -> None:
+def build_source(pairs, out_path: Path, provenance: str) -> None:
     rows, n_docs, n_spans, errs = [], 0, 0, 0
     for review_rel, batch_rel in pairs:
         review = json.loads((ROOT / review_rel).read_text(encoding="utf-8"))
@@ -87,7 +114,7 @@ def build_source(pairs, out_path: Path) -> None:
                 "meta": {
                     "pmid": pmid,
                     "source": review_rel,
-                    "gold": "tp+fn (assistant review vs ANNOTATION_GUIDE.md)",
+                    "gold": provenance,
                 },
             })
             n_docs += 1
@@ -106,11 +133,19 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--outdir", default="doccano",
                     help="output directory (default: doccano)")
+    ap.add_argument(
+        "--include-local-reviews",
+        action="store_true",
+        help="also rebuild wave-3/4 from untracked local review audit files",
+    )
     args = ap.parse_args()
     outdir = ROOT / args.outdir
     outdir.mkdir(parents=True, exist_ok=True)
-    for name, pairs in SOURCES.items():
-        build_source(pairs, outdir / name)
+    selected = SOURCES if args.include_local_reviews else {
+        name: SOURCES[name] for name in DEFAULT_SOURCES
+    }
+    for name, pairs in selected.items():
+        build_source(pairs, outdir / name, PROVENANCE[name])
 
 
 if __name__ == "__main__":
