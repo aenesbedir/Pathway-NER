@@ -7,6 +7,12 @@ Wave-3 and wave-4 review is complete. Their final canonical training annotations
 are tracked as `wave3_1k_gold.jsonl` and `wave4_1k_gold.jsonl`; detailed review JSONs
 remain local audit material.
 
+Pilot batch 04 is also reviewed. Its final labels are tracked as
+`pilot_1k_batch04_gold.jsonl`: the 200 documents of
+`batches/pilot_1k_doccano_batch_04_5.jsonl` after review, changing the spans of 81
+documents and taking the batch from 413 to 508 spans. Unlike batch 05, it has no
+separate review JSON — this file is the only record of those corrections.
+
 | File | What it is |
 |---|---|
 | `pilot_1k_doccano.jsonl` | **The import file** — 1,000 abstracts, 1,996 pre-filled `PATHWAY` spans |
