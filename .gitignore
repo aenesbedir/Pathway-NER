@@ -115,6 +115,7 @@ data/processed/phase2/
 analysis/alignment_*.json
 logs/*.log
 runs/*.log
+data/silver/*.log
 
 # doccano batch archives (regenerable via doccano/split_batches.py)
 doccano/batches.zip
