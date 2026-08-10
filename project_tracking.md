@@ -1291,6 +1291,67 @@ full 30-cell grid. The new runs must use a separate run namespace and summary;
 `run_matrix.py` still needs explicit versioned-data and per-model-LR support before
 the sweep starts.
 
+## Disease NER extraction (completed 2026-08-05)
+
+Integrated the off-the-shelf `pruas/BENT-PubMedBERT-NER-Disease` token
+classification model as the disease side of the planned pathway↔disease pipeline.
+The model is loaded entirely from the local Hugging Face cache snapshot at
+`/home/enes/.cache/huggingface/hub/models--pruas--BENT-PubMedBERT-NER-Disease`.
+
+### Extraction script and corpus output
+
+- Added `scripts/extract_disease_spans.py`, with an explicit `--model` argument
+  that accepts either a normal Hugging Face model reference, a snapshot directory,
+  or a `models--owner--model` cache root.
+- Long abstracts are processed in overlapping token windows. Probabilities for
+  duplicate tokens are averaged before global BIO decoding, preventing duplicate
+  entities and window-boundary artifacts.
+- The output preserves character offsets, source text hashes, model revision,
+  scores, and documents with no predicted entities. Partial output is resumable
+  only when its model, revision, text hash, and postprocessing mode match.
+- Input: `data/processed/gold-wave4/articles.jsonl` (3200 abstracts).
+- Raw output: `data/processed/disease-ner/disease_spans.jsonl` — 36,386 spans,
+  3152 documents with at least one span, and 48 empty documents.
+
+### BENT span postprocessing
+
+Added `--postprocess bent` to reproduce the disease-relevant part of BENT's
+`correct_tokens` behavior. Consecutive spans are merged when they touch or have
+one intervening character; the source separator is retained, component scores are
+averaged, and remaining one-character disease entities are removed. This repairs
+common WordPiece fragmentation such as `KIR` + `C`, `PM` + `DD`, and
+`hyper` + `ammon` + `emia`.
+
+- Postprocessed output:
+  `data/processed/disease-ner/disease_spans_bent.jsonl`.
+- Final result: 30,305 spans, including 4389 spans assembled from two or more raw
+  components; 1078 documents changed relative to the raw representation.
+- Integrity checks: 3200/3200 records retained, PMID order and text hashes match
+  the source corpus, all extracted text matches its offsets, and no one-character
+  entity remains.
+- Known limitation: the one-character-gap rule can over-merge group or sample
+  notation, for example `PDAC T` and `LBD-hDLB`. This behavior should be separated
+  from the model's semantic errors in later analysis.
+
+### Manual 50-article span evaluation
+
+Evaluated the same 50 articles selected by `random.Random(42)` before and after
+postprocessing. The manual reference contains 509 disease mentions. A prediction
+is a true positive only when both character boundaries exactly match a manual
+gold span; symptoms, signs, phenotype adjectives, and non-disease biomedical
+terms are excluded from the gold set.
+
+| Representation | Predictions | TP | FP | FN | Precision | Recall | F1 | Perfect articles |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Raw model spans | 698 | 385 | 313 | 124 | 0.5516 | 0.7564 | 0.6379 | 15/50 |
+| BENT-postprocessed spans | 530 | 469 | 61 | 40 | **0.8849** | **0.9214** | **0.9028** | **24/50** |
+
+Document-cluster bootstrap 95% intervals for the postprocessed evaluation are
+0.8398–0.9289 precision, 0.8652–0.9739 recall, and 0.8701–0.9367 F1. The
+large improvement primarily reflects repaired entity boundaries and removal of
+fragment false positives; the 50-article result is a focused manual audit, not a
+full-corpus accuracy estimate.
+
 ## Next
 
 - Adapt `run_matrix.py` for the 15-cell carry-forward experiment and write its
