@@ -87,7 +87,8 @@ def main() -> None:
     ap.add_argument("--dataset", default="gold",
                     help="Corpus root under data/processed. `gold` is the 860-doc "
                          "Phase 4b set; `gold-wave4` is the 2664-doc expansion "
-                         "sharing its validation and test PMIDs. Each model reads "
+                         "and `gold-pilot1k` applies the fully reviewed pilot; "
+                         "both share its validation and test PMIDs. Each model reads "
                          "<dataset>-<slug>/ and every model in one sweep reads the "
                          "same split file")
     ap.add_argument("--runs-dir", default="runs")

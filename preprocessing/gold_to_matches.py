@@ -17,8 +17,9 @@ merging two label sets.
 
 Run from repo root:
     venv310/bin/python3 preprocessing/gold_to_matches.py \\
-        --sources doccano/wave2_1k_gold.jsonl doccano/pilot_1k_batch05_gold.jsonl \\
-        --outdir  data/processed/gold
+        --sources doccano/wave2_1k_gold.jsonl doccano/pilot_1k_gold.jsonl \\
+                  doccano/wave3_1k_gold.jsonl doccano/wave4_1k_gold.jsonl \\
+        --outdir  data/processed/gold-pilot1k
 """
 
 import argparse

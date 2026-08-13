@@ -155,6 +155,11 @@ data/processed/gold-*/
 !data/processed/gold-wave4/
 data/processed/gold-wave4/*.jsonl
 
+# Full reviewed pilot expansion. Keep its provenance and frozen split; the
+# model-independent JSONLs are regenerated from the canonical doccano gold files.
+!data/processed/gold-pilot1k/
+data/processed/gold-pilot1k/*.jsonl
+
 # Sweep outputs. summary.jsonl is the aggregated result and is kept; the
 # per-run directories hold logs and prediction dumps and are regenerable.
 runs/*/

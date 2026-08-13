@@ -1,4 +1,36 @@
-# Annotation guide — Pathway span review (doccano)
+# Annotation guide — Disease and pathway span review (doccano)
+
+## Disease spans
+
+For `DISEASE`, ask one question:
+
+> Does the exact span directly name a disease or diagnosed medical condition in this
+> local context?
+
+If yes, accept it. Apply the following corpus-specific rules:
+
+- Accept named diseases and their established abbreviations. An abbreviation still names
+  the disease when it modifies patients, tissues, or cells; for example, `LUAD patients`
+  and `LUAD cells` do not make `LUAD` a cell-line name.
+- Accept `inflammation` and explicit forms such as `chronic inflammation` and
+  `neuroinflammation` as `DISEASE` for this project.
+- Reject `insulin resistance` and its abbreviation when it denotes insulin resistance.
+- Reject `toxicity`, `toxicities`, `neurotoxicity`, `excitotoxicity`, and adjectival forms
+  such as `toxic` and `neurotoxic`.
+- Reject symptoms, signs, outcomes, generic phenotypes, generic cellular or organ
+  dysfunction/damage, and phenotype adjectives. For example, `obesity`, `diabetes`,
+  `ischemia`, and `leukemia` can name diseases, while `obese`, `diabetic`, `ischemic`, and
+  `leukemic` do not.
+- Reject people or patient-group descriptions, cell lines, experimental models, genes,
+  proteins, procedures, assays, and treatments when the exact span names one of those
+  things rather than a disease.
+- Resolve abbreviations from the document context. For example, `MS` is a disease when it
+  means multiple sclerosis, but not when it means mass spectrometry.
+
+The decision applies to the exact candidate boundary. Do not accept extra words merely
+because a valid disease name occurs inside an otherwise invalid span.
+
+## Pathway spans
 
 You are reviewing **machine-generated (silver)** pathway spans. One label type: `PATHWAY`.
 
@@ -35,6 +67,12 @@ applied to the cases that actually come up.
 | **Non-metabolic** process | `aminoacyl-tRNA biosynthesis` | that is translation, not metabolism |
 | Compartment / location term | `mitochondrial metabolism` | names where, not which process |
 | Disease / phenotype | `insulin resistance syndrome` | not a pathway |
+| Electron-transport process (current project scope) | `electron transport chain`, `electron transport system` | transport processes are currently out of scope |
+
+As a temporary project-scope rule, reject `electron transport chain`, `electron
+transport system`, and their respiratory, mitochondrial, or spelling variants.
+Although these terms participate in energy metabolism, the current annotation phase
+does not include transport processes.
 
 The metabolite case is the most common machine error — a compound name alone is always a
 reject, but the same compound **with a process word** (`arachidonic acid metabolism`) is an

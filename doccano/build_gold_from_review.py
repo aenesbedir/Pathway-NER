@@ -14,12 +14,17 @@ Output shape (doccano importer, label singular):
 
     {"text": "<abstract>", "label": [[start, end, "PATHWAY"], ...], "meta": {...}}
 
-Four sources, four files (no PMID overlap between them):
+Review sources are converted to one gold file per corpus or pilot batch:
 
     wave2         5 batch reviews  -> doccano/wave2_1k_gold.jsonl
     wave3         5 batch reviews  -> doccano/wave3_1k_gold.jsonl
     wave4         5 batch reviews  -> doccano/wave4_1k_gold.jsonl
+    pilot batches 01-03             -> doccano/pilot_1k_batchNN_gold.jsonl
     pilot batch05 1 review          -> doccano/pilot_1k_batch05_gold.jsonl
+
+The five reviewed pilot batch gold files are also combined into
+``doccano/pilot_1k_gold.jsonl``. Pilot batch 04 has no separate review JSON; its
+tracked gold file is its review record and is preserved as-is.
 
 Text comes from the doccano batch files the reviews were built against; spans are
 validated against that text (review offsets must reproduce the recorded string).
@@ -43,6 +48,13 @@ log = logging.getLogger(__name__)
 
 # (review json, batch jsonl the review scored) pairs per source.
 SOURCES = {
+    **{
+        f"pilot_1k_batch{n:02d}_gold.jsonl": [
+            (f"analysis/pilot_batch{n:02d}_review.json",
+             f"doccano/batches/pilot_1k_doccano_batch_{n:02d}_5.jsonl"),
+        ]
+        for n in range(1, 4)
+    },
     "wave2_1k_gold.jsonl": [
         (f"analysis/wave2_batch{n:02d}_review.json",
          f"doccano/batches/wave2_1k_doccano_batch_{n:02d}_5.jsonl")
@@ -65,6 +77,12 @@ SOURCES = {
 }
 
 PROVENANCE = {
+    **{
+        f"pilot_1k_batch{n:02d}_gold.jsonl": (
+            "tp+fn (assistant-reviewed against ANNOTATION_GUIDE.md)"
+        )
+        for n in range(1, 4)
+    },
     "wave2_1k_gold.jsonl": "tp+fn (assistant-reviewed against ANNOTATION_GUIDE.md)",
     "wave3_1k_gold.jsonl": "tp+fn (human-reviewed against ANNOTATION_GUIDE.md)",
     "wave4_1k_gold.jsonl": "tp+fn (human-reviewed against ANNOTATION_GUIDE.md)",
@@ -77,7 +95,17 @@ PROVENANCE = {
 # local audit material. The default remains fully reproducible from a clean clone;
 # use --include-local-reviews only where those audit files and batch intermediates
 # are present.
-DEFAULT_SOURCES = ("wave2_1k_gold.jsonl", "pilot_1k_batch05_gold.jsonl")
+DEFAULT_SOURCES = (
+    "wave2_1k_gold.jsonl",
+    "pilot_1k_batch01_gold.jsonl",
+    "pilot_1k_batch02_gold.jsonl",
+    "pilot_1k_batch03_gold.jsonl",
+    "pilot_1k_batch05_gold.jsonl",
+)
+
+PILOT_GOLD_PARTS = tuple(
+    f"pilot_1k_batch{n:02d}_gold.jsonl" for n in range(1, 6)
+)
 
 
 def load_texts(batch_path: Path) -> dict[str, str]:
@@ -129,6 +157,40 @@ def build_source(pairs, out_path: Path, provenance: str) -> None:
     log.info("%s: %d docs, %d gold spans", out_path.name, n_docs, n_spans)
 
 
+def build_full_pilot(outdir: Path) -> None:
+    rows = []
+    pmids = set()
+    span_count = 0
+    for name in PILOT_GOLD_PARTS:
+        path = outdir / name
+        if name == "pilot_1k_batch04_gold.jsonl" and not path.exists():
+            path = ROOT / "doccano" / name
+        if not path.exists():
+            raise SystemExit(f"missing reviewed pilot part: {path}")
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            pmid = str(row["meta"]["pmid"])
+            if pmid in pmids:
+                raise SystemExit(f"duplicate pilot PMID while combining gold: {pmid}")
+            pmids.add(pmid)
+            for start, end, _label in row["label"]:
+                if not (0 <= start < end <= len(row["text"])):
+                    raise SystemExit(f"invalid pilot gold offset: {pmid} [{start}:{end}]")
+            span_count += len(row["label"])
+            rows.append(row)
+
+    if len(rows) != 1000:
+        raise SystemExit(f"expected 1000 reviewed pilot documents, found {len(rows)}")
+
+    out_path = outdir / "pilot_1k_gold.jsonl"
+    with out_path.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+    log.info("%s: %d docs, %d gold spans", out_path.name, len(rows), span_count)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--outdir", default="doccano",
@@ -146,6 +208,7 @@ def main() -> None:
     }
     for name, pairs in selected.items():
         build_source(pairs, outdir / name, PROVENANCE[name])
+    build_full_pilot(outdir)
 
 
 if __name__ == "__main__":
