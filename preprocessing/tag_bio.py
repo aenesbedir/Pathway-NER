@@ -55,6 +55,7 @@ Articles file can be JSONL (one record per line) or a JSON array.
 """
 
 import argparse
+import hashlib
 import json
 import logging
 import sys
@@ -74,6 +75,14 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 
 
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 # ---------------------------------------------------------------------------
 # Data loading
 # ---------------------------------------------------------------------------
@@ -81,12 +90,16 @@ log = logging.getLogger(__name__)
 def load_articles(articles_path: Path, db_path: Path | None = None) -> dict[str, dict]:
     """Load articles from a JSONL or JSON-array file, keyed by str(pmid)."""
     articles: dict[str, dict] = {}
-    raw = articles_path.read_text(encoding="utf-8").strip()
-
-    if raw.startswith("["):
-        records = json.loads(raw)
-    else:
-        records = [json.loads(line) for line in raw.splitlines() if line.strip()]
+    with articles_path.open(encoding="utf-8") as source:
+        prefix = source.read(4096).lstrip()
+        source.seek(0)
+        if prefix.startswith("["):
+            records = json.load(source)
+        else:
+            # Iterate physical JSONL records. ``str.splitlines()`` also splits
+            # Unicode line-separator characters that are valid inside JSON
+            # strings, corrupting abstracts that contain them.
+            records = [json.loads(line) for line in source if line.strip()]
 
     for r in records:
         pmid = str(r.get("pmid", ""))
@@ -352,6 +365,11 @@ def main() -> None:
         "vocab_fingerprint": vocab_fingerprint(tokenizer),
         "max_tokens": spec.max_tokens,
         "transformers_version": transformers.__version__,
+        "matches": str(matches_path),
+        "matches_sha256": file_sha256(matches_path),
+        "articles": str(articles_path),
+        "articles_sha256": file_sha256(articles_path),
+        "include_span_free": args.include_span_free,
         "n_records": written,
     }
     meta_path = output_path.parent / "meta.json"

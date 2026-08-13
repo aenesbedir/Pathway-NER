@@ -161,10 +161,17 @@ data/processed/gold-wave4/*.jsonl
 !data/processed/gold-pilot1k/
 data/processed/gold-pilot1k/*.jsonl
 
+# Mixed-curation 10k pathway experiment. The frozen split is tracked; the
+# model-independent JSONLs and tokenizer-specific datasets are transferred to
+# TRUBA separately because they are generated from the local Doccano export.
+data/processed/pathway-10k/*.jsonl
+data/processed/pathway-10k-*/
+
 # Sweep outputs. summary.jsonl is the aggregated result and is kept; the
 # per-run directories hold logs and prediction dumps and are regenerable.
 runs/*/
 !runs/summary.jsonl
+runs-truba*/
 
 # remaining_6125 disease/pathway review batch. Only the PMID list that defines
 # the corpus slice and the review summary are tracked; every other artefact in

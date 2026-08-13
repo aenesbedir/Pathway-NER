@@ -9,8 +9,10 @@ Bridge between the doccano gold files (doccano/build_gold_from_review.py) and
                      "spans": [{"start", "end", "source": "abstract"}, ...]}
     articles.jsonl  {"pmid", "abstract": <text>, "full_text": ""}
 
-``matches`` holds only docs with ≥1 span (``tag_bio`` skips span-free lines
-anyway); ``articles`` holds every doc so the text is always available.
+``matches`` holds only docs with at least one selected span (``tag_bio`` skips
+span-free lines anyway); ``articles`` holds every doc so the text is always
+available. ``--label`` selects one entity type from a mixed Doccano export, for
+example ``--label PATHWAY`` for the combined disease/pathway corpus.
 
 Sources must not share a PMID — a duplicate aborts the run rather than silently
 merging two label sets.
@@ -39,28 +41,35 @@ def main() -> None:
                     help="doccano gold jsonl file(s)")
     ap.add_argument("--outdir", default="data/processed/gold",
                     help="output directory (default: data/processed/gold)")
+    ap.add_argument("--label", default=None,
+                    help="Optional Doccano label to retain, e.g. PATHWAY. "
+                         "Without it, retain every span for backward compatibility.")
     args = ap.parse_args()
 
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
 
     matches, articles, seen = [], [], set()
-    n_spans = 0
+    n_spans = n_other_labels = 0
     for src in args.sources:
-        for line in Path(src).read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            r = json.loads(line)
-            pmid = str(r["meta"]["pmid"])
-            if pmid in seen:
-                raise SystemExit(f"duplicate pmid {pmid} across sources; aborting")
-            seen.add(pmid)
-            articles.append({"pmid": pmid, "abstract": r["text"], "full_text": ""})
-            spans = [{"start": a, "end": b, "source": "abstract"}
-                     for a, b, _ in r["label"]]
-            if spans:
-                matches.append({"pmid": pmid, "pathway_id": "gold", "spans": spans})
-                n_spans += len(spans)
+        with Path(src).open(encoding="utf-8") as source:
+            for line in source:
+                if not line.strip():
+                    continue
+                r = json.loads(line)
+                pmid = str(r["meta"]["pmid"])
+                if pmid in seen:
+                    raise SystemExit(f"duplicate pmid {pmid} across sources; aborting")
+                seen.add(pmid)
+                articles.append({"pmid": pmid, "abstract": r["text"], "full_text": ""})
+                selected = [label for label in r["label"]
+                            if args.label is None or label[2] == args.label]
+                n_other_labels += len(r["label"]) - len(selected)
+                spans = [{"start": start, "end": end, "source": "abstract"}
+                         for start, end, _ in selected]
+                if spans:
+                    matches.append({"pmid": pmid, "pathway_id": "gold", "spans": spans})
+                    n_spans += len(spans)
 
     (outdir / "matches.jsonl").write_text(
         "".join(json.dumps(m, ensure_ascii=False) + "\n" for m in matches),
@@ -69,8 +78,11 @@ def main() -> None:
         "".join(json.dumps(a, ensure_ascii=False) + "\n" for a in articles),
         encoding="utf-8")
 
-    log.info("articles: %d  matches(docs with spans): %d  spans: %d",
+    log.info("articles: %d  matches(docs with spans): %d  selected spans: %d",
              len(articles), len(matches), n_spans)
+    if args.label is not None:
+        log.info("label: %s  spans of other labels excluded: %d",
+                 args.label, n_other_labels)
 
 
 if __name__ == "__main__":

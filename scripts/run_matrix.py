@@ -86,11 +86,11 @@ def main() -> None:
                          "identical across models")
     ap.add_argument("--dataset", default="gold",
                     help="Corpus root under data/processed. `gold` is the 860-doc "
-                         "Phase 4b set; `gold-wave4` is the 2664-doc expansion "
-                         "and `gold-pilot1k` applies the fully reviewed pilot; "
-                         "both share its validation and test PMIDs. Each model reads "
-                         "<dataset>-<slug>/ and every model in one sweep reads the "
-                         "same split file")
+                         "Phase 4b set; `gold-wave4` is the 2664-doc expansion; "
+                         "`gold-pilot1k` is the fully reviewed pilot; and "
+                         "`pathway-10k` is the grouped 80/10/10 mixed-curation set. "
+                         "Each model reads <dataset>-<slug>/ and every model in one "
+                         "sweep reads the same split file.")
     ap.add_argument("--runs-dir", default="runs")
     ap.add_argument("--summary", default=None,
                     help="Default: <runs-dir>/summary.jsonl")

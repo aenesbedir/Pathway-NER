@@ -27,6 +27,7 @@ Run with:
 """
 
 import argparse
+import hashlib
 import json
 import logging
 import random
@@ -58,6 +59,13 @@ from encoders import resolve, vocab_fingerprint
 LABEL2ID = {"O": 0, "B-Pathway": 1, "I-Pathway": 2}
 ID2LABEL = {v: k for k, v in LABEL2ID.items()}
 NUM_LABELS = len(LABEL2ID)
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 # Class weights: down-weight O (0), up-weight B and I. Overridden by the registry
 # entry and then by --class-weights.
@@ -417,6 +425,11 @@ def main() -> None:
         "model_key": args.model or "biomedbert-base",
         "hf_id": spec.hf_id,
         "data_dir": str(data_dir),
+        "dataset_meta_sha256": file_sha256(data_dir / "meta.json"),
+        "dataset_articles_sha256": meta.get("articles_sha256"),
+        "dataset_matches_sha256": meta.get("matches_sha256"),
+        "splits": args.splits,
+        "splits_sha256": file_sha256(Path(args.splits)),
         "lr": args.lr,
         "seed": args.seed,
         "class_weights": list(CLASS_WEIGHTS),
