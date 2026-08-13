@@ -1,0 +1,96 @@
+{
+  "review_kind": "curated_simple_disagreement_decisions",
+  "warning": "Only add_span and remove_span rows are actionable. The six remaining pathway deferrals require manual adjudication. This file does not modify Doccano annotations.",
+  "scope_limitations": [
+    "The inspection input contains only simple false-positive and false-negative candidates.",
+    "Exact agreements, boundary corrections, uncertain overlap components, and unreviewed spans are not represented.",
+    "Project-wide policy sweeps are not synthesized for spans absent from the inspection input."
+  ],
+  "manual_exclusions": {
+    "disease_abbreviation_remove_rows": 189,
+    "composite_span_remove_rows_requiring_boundary_review": 3
+  },
+  "remaining_deferred_scope": {
+    "disease_rows": 0,
+    "pathway_rows": 6,
+    "pathway_surfaces": [
+      "FA pathway",
+      "pentose phosphate",
+      "Kreb's cycle to oxygen utilization"
+    ]
+  },
+  "policy": {
+    "disease": "Annotate exact spans that directly name diseases or diagnosed conditions in context. Include inflammation and established disease abbreviations, including adjectival uses before patients, tissues, or cells. Exclude insulin resistance, toxicity, symptoms, outcomes, phenotype adjectives, generic pathology, and non-disease senses of ambiguous abbreviations.",
+    "pathway": "Annotate metabolic processes; currently exclude transport, including electron transport chains, as well as uptake, efflux, secretion, translocation, signaling, compounds, genes, and diseases.",
+    "metastasis": "Reject a bare process mention; a complete location-qualified secondary lesion phrase must be adjudicated as its own span."
+  },
+  "sources": {
+    "inspect": "/home/enes/NER-pipeline/data/reviews/disease_pathway_remaining_6125_review_candidates_inspect.jsonl",
+    "inspect_sha256": "fe48875671f8e2ccdb5fd19fb5c6bde90c1b7663a0eb052e62b97cd4a7c5c971",
+    "doccano": "/home/enes/NER-pipeline/data/doccano/disease_pathway_remaining_6125_doccano.jsonl",
+    "doccano_sha256": "dd7ce1a065f858bf3daca8df2a98ddd777509cc07231211be87aaca4246bd6d3"
+  },
+  "output": "/home/enes/NER-pipeline/data/reviews/disease_pathway_remaining_6125_review_decisions_curated.jsonl",
+  "records": 21573,
+  "documents_with_candidates": 5099,
+  "documents_with_actionable_changes": 3712,
+  "counts": {
+    "candidate_type": {
+      "false_negative": 15567,
+      "false_positive": 6006
+    },
+    "curation_confidence": {
+      "high": 18823,
+      "low": 490,
+      "medium": 2260
+    },
+    "curation_status": {
+      "approved": 17302,
+      "deferred": 6,
+      "overridden": 4265
+    },
+    "disease_final_decision": {
+      "add": 3329,
+      "keep": 2978,
+      "reject": 8731,
+      "remove": 1645
+    },
+    "doccano_action": {
+      "add_span": 6389,
+      "defer": 6,
+      "none": 12518,
+      "remove_span": 2660
+    },
+    "entity": {
+      "DISEASE": 16683,
+      "PATHWAY": 4890
+    },
+    "final_decision": {
+      "add": 6389,
+      "defer": 6,
+      "keep": 3341,
+      "reject": 9177,
+      "remove": 2660
+    },
+    "inspect_decision": {
+      "add": 9602,
+      "keep": 3989,
+      "reject": 5965,
+      "remove": 2017
+    },
+    "pathway_final_decision": {
+      "add": 3060,
+      "defer": 6,
+      "keep": 363,
+      "reject": 446,
+      "remove": 1015
+    }
+  },
+  "validation": {
+    "all_candidate_offsets_match_source_text": true,
+    "all_document_indices_match_source_doccano": true,
+    "all_false_positive_spans_exist_in_source_doccano": true,
+    "unique_candidate_ids": true
+  },
+  "output_sha256": "1f7a43eb59b1fdbb43011542949085409cc93249f1626fe4b2feb595490d77f9"
+}

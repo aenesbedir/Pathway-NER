@@ -129,6 +129,7 @@ doccano/batches.zip
 # tracked silver and review files via data/processed/gold/README.md.
 doccano/wave2_1k_doccano.jsonl
 doccano/wave2_1k_gold.jsonl
+doccano/pilot_1k_batch0[1-3]_gold.jsonl
 doccano/pilot_1k_batch05_gold.jsonl
 doccano/batches/wave2_1k_doccano_batch_*_5.jsonl
 
