@@ -3,9 +3,20 @@
 Everything needed to get the LLM-generated (silver) pathway spans in front of human
 annotators, and to get their corrections back out.
 
+The full 1,000-document pilot review is complete. Batches 01-03 have auditable
+review decisions in `analysis/pilot_batchNN_review.json`; batches 04-05 retain
+their existing reviewed gold. The combined canonical output is
+`pilot_1k_gold.jsonl`.
+
 Wave-3 and wave-4 review is complete. Their final canonical training annotations
 are tracked as `wave3_1k_gold.jsonl` and `wave4_1k_gold.jsonl`; detailed review JSONs
 remain local audit material.
+
+Pilot batch 04's final labels are tracked as
+`pilot_1k_batch04_gold.jsonl`: the 200 documents of
+`batches/pilot_1k_doccano_batch_04_5.jsonl` after review, changing the spans of 81
+documents and taking the batch from 413 to 508 spans. Unlike batch 05, it has no
+separate review JSON — this file is the only record of those corrections.
 
 | File | What it is |
 |---|---|

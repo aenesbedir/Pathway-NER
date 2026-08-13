@@ -22,6 +22,10 @@ gold-001…008 and Phase 4b results. The expanded corpus is built separately und
 `data/processed/gold-wave4/`; see `../gold-wave4/README.md` for its frozen split,
 effective per-tokenizer counts and regeneration commands.
 
+The completed 1,000-document pilot review is applied in the newer
+`data/processed/gold-pilot1k/` corpus. The historical directories documented
+here remain unchanged so published experiment comparisons stay reproducible.
+
 ## Provenance chain
 
 ```
