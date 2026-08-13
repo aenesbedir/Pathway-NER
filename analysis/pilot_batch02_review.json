@@ -1,0 +1,4681 @@
+{
+ "batch_file": "doccano/batches/pilot_1k_doccano_batch_02_5.jsonl",
+ "reviewed_range": {
+  "first_doc_1based": 1,
+  "last_doc_1based": 200,
+  "note": "assistant review of machine spans against ANNOTATION_GUIDE.md, informed by prior reviewed batches"
+ },
+ "label": "PATHWAY",
+ "conventions": [
+  "Shared-head coordination is one span; lists with distinct process heads are split.",
+  "A narrow valid machine span remains a TP when a wider coordinated boundary is added as an FN.",
+  "Trailing pathway/pathways may stay; trailing genes, enzymes, defects, signatures, intermediates, or disease terms do not.",
+  "Electron-transport processes are rejected under the current project-scope rule.",
+  "Prior reviewed decisions and two reviewed-data NER checkpoints were used only to propose candidates; all retained spans follow ANNOTATION_GUIDE.md."
+ ],
+ "documents": [
+  {
+   "doc_index_1based": 1,
+   "pmid": "29998832",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 2,
+   "pmid": "12882997",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 113,
+     "end": 135,
+     "text": "nitric oxide synthesis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 3,
+   "pmid": "39454905",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 886,
+     "end": 913,
+     "text": "biosynthesis of amino acids"
+    },
+    {
+     "start": 915,
+     "end": 935,
+     "text": "steroid biosynthesis"
+    },
+    {
+     "start": 937,
+     "end": 964,
+     "text": "arachidonic acid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 589,
+     "end": 605,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 685,
+     "end": 704,
+     "text": "fatty acyls pathway",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 4,
+   "pmid": "34232221",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 82,
+     "end": 102,
+     "text": "vitamin D metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 5,
+   "pmid": "33513874",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1327,
+     "end": 1350,
+     "text": "sphingolipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 6,
+   "pmid": "35848285",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1211,
+     "end": 1231,
+     "text": "vitamin D metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 7,
+   "pmid": "39462280",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1080,
+     "end": 1148,
+     "text": "conversion of PUFAs by cyclooxygenases (COX) and lipoxygenases (LOX)"
+    },
+    {
+     "start": 1227,
+     "end": 1253,
+     "text": "Oxidation of linoleic acid"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 8,
+   "pmid": "39880748",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 483,
+     "end": 496,
+     "text": "citrate cycle"
+    },
+    {
+     "start": 498,
+     "end": 517,
+     "text": "pyruvate metabolism"
+    },
+    {
+     "start": 546,
+     "end": 569,
+     "text": "fatty acid biosynthesis"
+    },
+    {
+     "start": 721,
+     "end": 744,
+     "text": "fatty acid biosynthesis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 9,
+   "pmid": "35295591",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1376,
+     "end": 1386,
+     "text": "glycolysis"
+    },
+    {
+     "start": 1583,
+     "end": 1617,
+     "text": "Oxidative phosphorylation (OXPHOS)"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1249,
+     "end": 1274,
+     "text": "mitochondrial respiration",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    },
+    {
+     "start": 1761,
+     "end": 1778,
+     "text": "energy metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 10,
+   "pmid": "16843432",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 738,
+     "end": 761,
+     "text": "sphingolipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 11,
+   "pmid": "36400009",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 557,
+     "end": 580,
+     "text": "acetyl-CoA biosynthesis"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 331,
+     "end": 344,
+     "text": "CoA synthesis",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 684,
+     "end": 702,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    },
+    {
+     "start": 832,
+     "end": 845,
+     "text": "CoA synthesis",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 941,
+     "end": 954,
+     "text": "CoA synthesis",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1098,
+     "end": 1119,
+     "text": "acetyl-CoA metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 12,
+   "pmid": "35735253",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 242,
+     "end": 261,
+     "text": "de novo lipogenesis"
+    },
+    {
+     "start": 291,
+     "end": 311,
+     "text": "fatty acid oxidation"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 24,
+     "end": 40,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1573,
+     "end": 1589,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 13,
+   "pmid": "42181661",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1059,
+     "end": 1081,
+     "text": "cholesterol metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 14,
+   "pmid": "32846403",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 1219,
+     "end": 1249,
+     "text": "glycerophospholipid metabolism"
+    },
+    {
+     "start": 1251,
+     "end": 1271,
+     "text": "galactose metabolism"
+    },
+    {
+     "start": 1276,
+     "end": 1310,
+     "text": "taurine and hypotaurine metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 15,
+   "pmid": "29855382",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 16,
+   "pmid": "19968882",
+   "machine_span_count": 5,
+   "tp": [
+    {
+     "start": 1386,
+     "end": 1396,
+     "text": "glycolysis"
+    },
+    {
+     "start": 1398,
+     "end": 1413,
+     "text": "gluconeogenesis"
+    },
+    {
+     "start": 1419,
+     "end": 1428,
+     "text": "TCA cycle"
+    },
+    {
+     "start": 1433,
+     "end": 1501,
+     "text": "linoleic acid and alpha-linolenic acid essential fatty acid pathways"
+    },
+    {
+     "start": 1761,
+     "end": 1792,
+     "text": "fatty acid oxidative metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 367,
+     "end": 383,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 17,
+   "pmid": "29988450",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 1143,
+     "end": 1165,
+     "text": "cholesterol metabolism"
+    },
+    {
+     "start": 1296,
+     "end": 1321,
+     "text": "metabolism of cholesterol"
+    },
+    {
+     "start": 1639,
+     "end": 1664,
+     "text": "metabolism of cholesterol"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 18,
+   "pmid": "37643503",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 1033,
+     "end": 1059,
+     "text": "glycolysis/gluconeogenesis"
+    }
+   ],
+   "fp": [
+    {
+     "start": 1061,
+     "end": 1083,
+     "text": "PPAR signaling pathway",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 1089,
+     "end": 1110,
+     "text": "Ras signaling pathway",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": [
+    {
+     "start": 939,
+     "end": 962,
+     "text": "carbohydrate metabolism",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 19,
+   "pmid": "32963689",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 20,
+   "pmid": "41006286",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 779,
+     "end": 800,
+     "text": "Tryptophan metabolism"
+    },
+    {
+     "start": 1037,
+     "end": 1062,
+     "text": "NAD+ de novo biosynthesis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 21,
+   "pmid": "21440524",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 124,
+     "end": 143,
+     "text": "vitamin D synthesis"
+    },
+    {
+     "start": 273,
+     "end": 293,
+     "text": "vitamin D metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 22,
+   "pmid": "38308901",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1576,
+     "end": 1590,
+     "text": "NAD metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 23,
+   "pmid": "26138757",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": [
+    {
+     "start": 133,
+     "end": 151,
+     "text": "nutrient oxidation",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 24,
+   "pmid": "42061984",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 747,
+     "end": 769,
+     "text": "cholesterol metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1055,
+     "end": 1071,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 25,
+   "pmid": "41917198",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 773,
+     "end": 803,
+     "text": "glycerophospholipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 55,
+     "end": 71,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 747,
+     "end": 803,
+     "text": "triglyceride/sphingolipid/glycerophospholipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 862,
+     "end": 879,
+     "text": "energy metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 893,
+     "end": 910,
+     "text": "glucose oxidation",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1202,
+     "end": 1218,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 26,
+   "pmid": "30238936",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 1429,
+     "end": 1450,
+     "text": "cholesterol synthesis"
+    }
+   ],
+   "fp": [
+    {
+     "start": 491,
+     "end": 514,
+     "text": "cholesterol acquisition",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 1241,
+     "end": 1264,
+     "text": "cholesterol acquisition",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": [
+    {
+     "start": 39,
+     "end": 56,
+     "text": "de novo synthesis",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1536,
+     "end": 1558,
+     "text": "phytosterol metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 27,
+   "pmid": "17235696",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 745,
+     "end": 775,
+     "text": "neuroactive steroid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 28,
+   "pmid": "36386216",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 335,
+     "end": 356,
+     "text": "tryptophan metabolism"
+    },
+    {
+     "start": 466,
+     "end": 487,
+     "text": "tryptophan metabolism"
+    },
+    {
+     "start": 938,
+     "end": 959,
+     "text": "tryptophan metabolism"
+    },
+    {
+     "start": 1207,
+     "end": 1228,
+     "text": "tryptophan catabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 29,
+   "pmid": "38849541",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 872,
+     "end": 892,
+     "text": "fatty acid oxidation"
+    },
+    {
+     "start": 930,
+     "end": 950,
+     "text": "fatty acid oxidation"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 30,
+   "pmid": "40565173",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1605,
+     "end": 1630,
+     "text": "oxidative phosphorylation"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1575,
+     "end": 1600,
+     "text": "mitochondrial β-oxidation",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1685,
+     "end": 1695,
+     "text": "glycolysis",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1700,
+     "end": 1715,
+     "text": "lipid synthesis",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 2058,
+     "end": 2076,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 31,
+   "pmid": "32060497",
+   "machine_span_count": 5,
+   "tp": [
+    {
+     "start": 12,
+     "end": 38,
+     "text": "Glycolysis/gluconeogenesis"
+    },
+    {
+     "start": 43,
+     "end": 73,
+     "text": "tricarboxylic acid (TCA) cycle"
+    },
+    {
+     "start": 347,
+     "end": 373,
+     "text": "glycolysis/gluconeogenesis"
+    },
+    {
+     "start": 908,
+     "end": 934,
+     "text": "glycolysis/gluconeogenesis"
+    },
+    {
+     "start": 2030,
+     "end": 2056,
+     "text": "glycolysis/gluconeogenesis"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 378,
+     "end": 387,
+     "text": "TCA cycle",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 939,
+     "end": 948,
+     "text": "TCA cycle",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 32,
+   "pmid": "42321758",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 998,
+     "end": 1021,
+     "text": "cholesterol homeostasis"
+    },
+    {
+     "start": 1847,
+     "end": 1870,
+     "text": "cholesterol homeostasis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 33,
+   "pmid": "30574039",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 157,
+     "end": 207,
+     "text": "microsomal ethanol oxidizing system (MEOS, CYP2E1)"
+    },
+    {
+     "start": 1078,
+     "end": 1095,
+     "text": "folate metabolism"
+    }
+   ],
+   "fp": [
+    {
+     "start": 128,
+     "end": 155,
+     "text": "alcohol dehydrogenase (ADH)",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": [
+    {
+     "start": 73,
+     "end": 91,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 34,
+   "pmid": "34006632",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 2137,
+     "end": 2162,
+     "text": "oxidative phosphorylation"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 35,
+   "pmid": "8301429",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 745,
+     "end": 764,
+     "text": "bile acid synthesis"
+    },
+    {
+     "start": 1095,
+     "end": 1115,
+     "text": "bile acid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 36,
+   "pmid": "38990479",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1003,
+     "end": 1030,
+     "text": "arachidonic acid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 2218,
+     "end": 2254,
+     "text": "arachiodonic acid metabolism pathway",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 37,
+   "pmid": "8305778",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 670,
+     "end": 689,
+     "text": "metabolism of drugs"
+    },
+    {
+     "start": 1057,
+     "end": 1072,
+     "text": "drug metabolism"
+    }
+   ],
+   "fp": [
+    {
+     "start": 701,
+     "end": 729,
+     "text": "oxidative microsomal enzymes",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 762,
+     "end": 780,
+     "text": "hepatic metabolism",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": [
+    {
+     "start": 1498,
+     "end": 1518,
+     "text": "oxidative metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 38,
+   "pmid": "34569869",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1387,
+     "end": 1409,
+     "text": "cholesterol metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 39,
+   "pmid": "39453113",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1880,
+     "end": 1907,
+     "text": "arachidonic acid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 40,
+   "pmid": "42354856",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 435,
+     "end": 456,
+     "text": "tryptophan metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 71,
+     "end": 99,
+     "text": "glucose and lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 41,
+   "pmid": "37945317",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1287,
+     "end": 1307,
+     "text": "fatty acid oxidation"
+    },
+    {
+     "start": 1721,
+     "end": 1753,
+     "text": "propanoic acid metabolic pathway"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 42,
+   "pmid": "28706202",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 454,
+     "end": 470,
+     "text": "heme degradation"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 43,
+   "pmid": "38921560",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 101,
+     "end": 129,
+     "text": "glucose and lipid metabolism"
+    },
+    {
+     "start": 885,
+     "end": 905,
+     "text": "fatty acid oxidation"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 44,
+   "pmid": "42212157",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1278,
+     "end": 1311,
+     "text": "cholesterol biosynthesis pathways"
+    },
+    {
+     "start": 1963,
+     "end": 1985,
+     "text": "cholesterol metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 45,
+   "pmid": "40006055",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1174,
+     "end": 1199,
+     "text": "oxidative phosphorylation"
+    },
+    {
+     "start": 1201,
+     "end": 1227,
+     "text": "glycolysis/gluconeogenesis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 46,
+   "pmid": "31384241",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1140,
+     "end": 1174,
+     "text": "cysteine and methionine metabolism"
+    },
+    {
+     "start": 1196,
+     "end": 1217,
+     "text": "propanoate metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 47,
+   "pmid": "32222648",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 736,
+     "end": 775,
+     "text": "glyoxylate and dicarboxylate metabolism"
+    },
+    {
+     "start": 777,
+     "end": 817,
+     "text": "pentose and glucuronate interconversions"
+    },
+    {
+     "start": 823,
+     "end": 836,
+     "text": "citrate cycle"
+    },
+    {
+     "start": 841,
+     "end": 861,
+     "text": "butanoate metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 708,
+     "end": 726,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 48,
+   "pmid": "23115192",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 782,
+     "end": 796,
+     "text": "heme synthesis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 49,
+   "pmid": "41559743",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 609,
+     "end": 624,
+     "text": "drug metabolism"
+    },
+    {
+     "start": 1439,
+     "end": 1454,
+     "text": "drug metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 50,
+   "pmid": "22775238",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1032,
+     "end": 1058,
+     "text": "glycolysis/gluconeogenesis"
+    },
+    {
+     "start": 1112,
+     "end": 1148,
+     "text": "nucleotide and amino acid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1280,
+     "end": 1290,
+     "text": "glycolysis",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 51,
+   "pmid": "42328061",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 52,
+   "pmid": "42100420",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1550,
+     "end": 1570,
+     "text": "amino acid synthesis"
+    },
+    {
+     "start": 1620,
+     "end": 1638,
+     "text": "steroid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 53,
+   "pmid": "41750558",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 800,
+     "end": 826,
+     "text": "glycolysis/gluconeogenesis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 54,
+   "pmid": "41744759",
+   "machine_span_count": 5,
+   "tp": [
+    {
+     "start": 158,
+     "end": 178,
+     "text": "fatty acid oxidation"
+    },
+    {
+     "start": 180,
+     "end": 183,
+     "text": "FAO"
+    },
+    {
+     "start": 674,
+     "end": 677,
+     "text": "FAO"
+    },
+    {
+     "start": 1142,
+     "end": 1145,
+     "text": "FAO"
+    },
+    {
+     "start": 1276,
+     "end": 1279,
+     "text": "FAO"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1379,
+     "end": 1395,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 55,
+   "pmid": "37078424",
+   "machine_span_count": 6,
+   "tp": [
+    {
+     "start": 372,
+     "end": 382,
+     "text": "glycolysis"
+    },
+    {
+     "start": 634,
+     "end": 644,
+     "text": "glycolysis"
+    },
+    {
+     "start": 678,
+     "end": 688,
+     "text": "glycolysis"
+    },
+    {
+     "start": 967,
+     "end": 977,
+     "text": "glycolysis"
+    },
+    {
+     "start": 978,
+     "end": 1003,
+     "text": "oxidative phosphorylation"
+    },
+    {
+     "start": 1115,
+     "end": 1125,
+     "text": "glycolysis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 56,
+   "pmid": "42184491",
+   "machine_span_count": 1,
+   "tp": [],
+   "fp": [
+    {
+     "start": 1334,
+     "end": 1372,
+     "text": "fatty-acid oxidation-related signaling",
+     "reason": "boundary includes text that does not belong to the metabolic process name"
+    }
+   ],
+   "fn": [
+    {
+     "start": 1334,
+     "end": 1354,
+     "text": "fatty-acid oxidation",
+     "note": "corrected machine boundary"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 57,
+   "pmid": "39113090",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 455,
+     "end": 478,
+     "text": "sphingolipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 58,
+   "pmid": "41971380",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1034,
+     "end": 1055,
+     "text": "amino acid metabolism"
+    },
+    {
+     "start": 1155,
+     "end": 1197,
+     "text": "fatty acid and arachidonic acid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 105,
+     "end": 133,
+     "text": "glucose and lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1507,
+     "end": 1535,
+     "text": "glucose and lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 59,
+   "pmid": "11050670",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1603,
+     "end": 1624,
+     "text": "nucleotide metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 60,
+   "pmid": "2133251",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 556,
+     "end": 577,
+     "text": "eicosanoid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 61,
+   "pmid": "27999522",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 62,
+   "pmid": "36726460",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 32,
+     "end": 53,
+     "text": "nucleotide metabolism"
+    },
+    {
+     "start": 182,
+     "end": 203,
+     "text": "nucleotide metabolism"
+    },
+    {
+     "start": 325,
+     "end": 346,
+     "text": "nucleotide metabolism"
+    },
+    {
+     "start": 2058,
+     "end": 2079,
+     "text": "nucleotide metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 63,
+   "pmid": "31169883",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1206,
+     "end": 1224,
+     "text": "steroid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 64,
+   "pmid": "39564988",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": [
+    {
+     "start": 38,
+     "end": 57,
+     "text": "uric acid synthesis",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 915,
+     "end": 960,
+     "text": "tryptophan, purine, and riboflavin metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1474,
+     "end": 1505,
+     "text": "tryptophan microbial metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 65,
+   "pmid": "30139042",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 79,
+     "end": 98,
+     "text": "metabolism of drugs"
+    },
+    {
+     "start": 632,
+     "end": 647,
+     "text": "drug metabolism"
+    },
+    {
+     "start": 896,
+     "end": 911,
+     "text": "drug metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 66,
+   "pmid": "28589382",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1666,
+     "end": 1686,
+     "text": "vitamin D metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 67,
+   "pmid": "7594441",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1880,
+     "end": 1901,
+     "text": "eicosanoid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1865,
+     "end": 1901,
+     "text": "fatty acid and eicosanoid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 68,
+   "pmid": "41496356",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 809,
+     "end": 831,
+     "text": "glutathione metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 69,
+   "pmid": "23685169",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 498,
+     "end": 519,
+     "text": "tryptophan metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 70,
+   "pmid": "33234693",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 71,
+   "pmid": "24152580",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 665,
+     "end": 681,
+     "text": "lipid metabolism"
+    },
+    {
+     "start": 973,
+     "end": 998,
+     "text": "oxidative phosphorylation"
+    },
+    {
+     "start": 1003,
+     "end": 1039,
+     "text": "nucleic bases biosynthetic processes"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 72,
+   "pmid": "25052890",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 500,
+     "end": 517,
+     "text": "folate metabolism"
+    },
+    {
+     "start": 3444,
+     "end": 3458,
+     "text": "folate pathway"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 73,
+   "pmid": "41468703",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 700,
+     "end": 725,
+     "text": "oxidative phosphorylation"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 219,
+     "end": 236,
+     "text": "energy metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 74,
+   "pmid": "33626316",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 35,
+     "end": 55,
+     "text": "vitamin D metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 75,
+   "pmid": "42027653",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1984,
+     "end": 2005,
+     "text": "vitamin B6 metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 76,
+   "pmid": "23471028",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 396,
+     "end": 419,
+     "text": "sphingolipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 993,
+     "end": 1016,
+     "text": "phospholipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 77,
+   "pmid": "18254660",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1375,
+     "end": 1402,
+     "text": "heparan sulfate degradation"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1358,
+     "end": 1402,
+     "text": "glycoprotein and heparan sulfate degradation",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 78,
+   "pmid": "7783706",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 32,
+     "end": 60,
+     "text": "purine nucleotide metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 79,
+   "pmid": "8121382",
+   "machine_span_count": 4,
+   "tp": [],
+   "fp": [
+    {
+     "start": 436,
+     "end": 440,
+     "text": "MNMS",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 480,
+     "end": 484,
+     "text": "MNMS",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 614,
+     "end": 618,
+     "text": "MNMS",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 1063,
+     "end": 1067,
+     "text": "MNMS",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 80,
+   "pmid": "42061668",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 491,
+     "end": 501,
+     "text": "glycolysis"
+    },
+    {
+     "start": 509,
+     "end": 529,
+     "text": "fatty acid oxidation"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 430,
+     "end": 447,
+     "text": "energy metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 534,
+     "end": 552,
+     "text": "ketone utilization",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 81,
+   "pmid": "34395855",
+   "machine_span_count": 5,
+   "tp": [
+    {
+     "start": 346,
+     "end": 367,
+     "text": "fatty acid metabolism"
+    },
+    {
+     "start": 1079,
+     "end": 1101,
+     "text": "Fatty acid degradation"
+    },
+    {
+     "start": 1158,
+     "end": 1178,
+     "text": "Fatty acid synthesis"
+    },
+    {
+     "start": 1403,
+     "end": 1426,
+     "text": "sphingolipid metabolism"
+    },
+    {
+     "start": 2273,
+     "end": 2296,
+     "text": "sphingolipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1759,
+     "end": 1785,
+     "text": "ceramide synthesis pathway",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 82,
+   "pmid": "32158215",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 775,
+     "end": 796,
+     "text": "nucleotide metabolism"
+    },
+    {
+     "start": 932,
+     "end": 968,
+     "text": "glutamine-glutamate metabolic system"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 745,
+     "end": 796,
+     "text": "amino acid, carbohydrate, and nucleotide metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 840,
+     "end": 858,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    },
+    {
+     "start": 1410,
+     "end": 1440,
+     "text": "glutamine-glutamate-GABA cycle",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1500,
+     "end": 1530,
+     "text": "glutamine-glutamate-GABA cycle",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 83,
+   "pmid": "25806679",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 84,
+   "pmid": "41481452",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 1037,
+     "end": 1067,
+     "text": "tricarboxylic acid (TCA) cycle"
+    },
+    {
+     "start": 1069,
+     "end": 1095,
+     "text": "glycolysis/gluconeogenesis"
+    },
+    {
+     "start": 1101,
+     "end": 1118,
+     "text": "carbon metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 85,
+   "pmid": "42071250",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 221,
+     "end": 238,
+     "text": "citric acid cycle"
+    },
+    {
+     "start": 665,
+     "end": 684,
+     "text": "pyruvate metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 86,
+   "pmid": "39211249",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 1601,
+     "end": 1620,
+     "text": "glutathione pathway"
+    },
+    {
+     "start": 1622,
+     "end": 1628,
+     "text": "OXPHOS"
+    },
+    {
+     "start": 1630,
+     "end": 1640,
+     "text": "glycolysis"
+    },
+    {
+     "start": 1646,
+     "end": 1666,
+     "text": "fatty acid oxidation"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 87,
+   "pmid": "19245819",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 913,
+     "end": 927,
+     "text": "heme synthesis"
+    },
+    {
+     "start": 1101,
+     "end": 1115,
+     "text": "heme synthesis"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1205,
+     "end": 1222,
+     "text": "energy metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 88,
+   "pmid": "37928523",
+   "machine_span_count": 6,
+   "tp": [
+    {
+     "start": 14,
+     "end": 31,
+     "text": "Copper metabolism"
+    },
+    {
+     "start": 255,
+     "end": 276,
+     "text": "nucleotide metabolism"
+    },
+    {
+     "start": 315,
+     "end": 332,
+     "text": "copper metabolism"
+    },
+    {
+     "start": 480,
+     "end": 497,
+     "text": "copper metabolism"
+    },
+    {
+     "start": 563,
+     "end": 580,
+     "text": "copper metabolism"
+    },
+    {
+     "start": 1158,
+     "end": 1175,
+     "text": "copper metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 89,
+   "pmid": "41544944",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1214,
+     "end": 1229,
+     "text": "drug metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1327,
+     "end": 1348,
+     "text": "xenobiotic metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 90,
+   "pmid": "16465269",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 174,
+     "end": 206,
+     "text": "arachidonic acid (AA) metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 91,
+   "pmid": "42147323",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 45,
+     "end": 63,
+     "text": "steroid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 478,
+     "end": 496,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    },
+    {
+     "start": 620,
+     "end": 638,
+     "text": "hormone metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 92,
+   "pmid": "38791520",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 233,
+     "end": 259,
+     "text": "fatty acid oxidation (FAO)"
+    },
+    {
+     "start": 660,
+     "end": 670,
+     "text": "glycolysis"
+    },
+    {
+     "start": 689,
+     "end": 723,
+     "text": "oxidative phosphorylation (OXPHOS)"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 4,
+     "end": 25,
+     "text": "metabolism of glucose",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 160,
+     "end": 176,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 308,
+     "end": 319,
+     "text": "β-oxidation",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 93,
+   "pmid": "37997855",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 619,
+     "end": 647,
+     "text": "purine nucleotide metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 94,
+   "pmid": "37229452",
+   "machine_span_count": 6,
+   "tp": [
+    {
+     "start": 1068,
+     "end": 1091,
+     "text": "sphingolipid metabolism"
+    },
+    {
+     "start": 1093,
+     "end": 1110,
+     "text": "purine metabolism"
+    },
+    {
+     "start": 1112,
+     "end": 1133,
+     "text": "pyrimidine metabolism"
+    },
+    {
+     "start": 1135,
+     "end": 1158,
+     "text": "phospholipid metabolism"
+    },
+    {
+     "start": 1160,
+     "end": 1188,
+     "text": "steroid hormone biosynthesis"
+    },
+    {
+     "start": 1190,
+     "end": 1242,
+     "text": "tryptophan, tyrosine, and phenylalanine biosynthesis"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1040,
+     "end": 1058,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 95,
+   "pmid": "38511423",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 779,
+     "end": 799,
+     "text": "vitamin C metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 96,
+   "pmid": "41042678",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1354,
+     "end": 1374,
+     "text": "fatty acid oxidation"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 549,
+     "end": 574,
+     "text": "mitochondrial respiration",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    },
+    {
+     "start": 1420,
+     "end": 1437,
+     "text": "glucose oxidation",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 97,
+   "pmid": "41994550",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 779,
+     "end": 813,
+     "text": "oxidative phosphorylation (OXPHOS)"
+    },
+    {
+     "start": 839,
+     "end": 865,
+     "text": "fatty acid oxidation (FAO)"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 182,
+     "end": 201,
+     "text": "cellular metabolism",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    },
+    {
+     "start": 411,
+     "end": 430,
+     "text": "cellular metabolism",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    },
+    {
+     "start": 890,
+     "end": 893,
+     "text": "FAO",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 947,
+     "end": 957,
+     "text": "glycolysis",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 98,
+   "pmid": "36648330",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 899,
+     "end": 919,
+     "text": "fatty acid oxidation"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 99,
+   "pmid": "39704926",
+   "machine_span_count": 6,
+   "tp": [
+    {
+     "start": 525,
+     "end": 545,
+     "text": "fatty acid synthesis"
+    },
+    {
+     "start": 547,
+     "end": 568,
+     "text": "amino acid metabolism"
+    }
+   ],
+   "fp": [
+    {
+     "start": 480,
+     "end": 496,
+     "text": "oxidative stress",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 498,
+     "end": 523,
+     "text": "lactic acid concentration",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 570,
+     "end": 579,
+     "text": "autophagy",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 585,
+     "end": 596,
+     "text": "ferroptosis",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 100,
+   "pmid": "32895923",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 101,
+   "pmid": "39133890",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 560,
+     "end": 581,
+     "text": "tryptophan metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 102,
+   "pmid": "25548681",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 442,
+     "end": 457,
+     "text": "drug metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 103,
+   "pmid": "16158042",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 61,
+     "end": 89,
+     "text": "glycosphingolipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 104,
+   "pmid": "42062634",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1025,
+     "end": 1046,
+     "text": "nucleotide metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 105,
+   "pmid": "40498271",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 72,
+     "end": 90,
+     "text": "glucose metabolism"
+    },
+    {
+     "start": 301,
+     "end": 319,
+     "text": "glucose metabolism"
+    },
+    {
+     "start": 582,
+     "end": 600,
+     "text": "glucose metabolism"
+    },
+    {
+     "start": 1434,
+     "end": 1467,
+     "text": "oxidative phosphorylation pathway"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1654,
+     "end": 1667,
+     "text": "ATP synthesis",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 106,
+   "pmid": "37664874",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1919,
+     "end": 1944,
+     "text": "oxidative phosphorylation"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 491,
+     "end": 509,
+     "text": "glucose metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 107,
+   "pmid": "9553952",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 428,
+     "end": 444,
+     "text": "purine synthesis"
+    },
+    {
+     "start": 727,
+     "end": 744,
+     "text": "purine metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 108,
+   "pmid": "34994003",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 76,
+     "end": 91,
+     "text": "cycle of folate"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 109,
+   "pmid": "35903083",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1058,
+     "end": 1078,
+     "text": "vitamin D metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 110,
+   "pmid": "17931985",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1259,
+     "end": 1282,
+     "text": "sphingolipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 9,
+     "end": 25,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 111,
+   "pmid": "36355179",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 1359,
+     "end": 1403,
+     "text": "alanine, aspartate, and glutamate metabolism"
+    },
+    {
+     "start": 1405,
+     "end": 1427,
+     "text": "glutathione metabolism"
+    },
+    {
+     "start": 1433,
+     "end": 1464,
+     "text": "arginine and proline metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 112,
+   "pmid": "39361099",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 1352,
+     "end": 1378,
+     "text": "glycolysis/gluconeogenesis"
+    },
+    {
+     "start": 1380,
+     "end": 1397,
+     "text": "carbon metabolism"
+    },
+    {
+     "start": 1403,
+     "end": 1425,
+     "text": "glutathione metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 113,
+   "pmid": "39484773",
+   "machine_span_count": 5,
+   "tp": [
+    {
+     "start": 1237,
+     "end": 1268,
+     "text": "drug metabolism cytochrome P450"
+    },
+    {
+     "start": 1270,
+     "end": 1314,
+     "text": "metabolism of xenobiotics by cytochrome P450"
+    },
+    {
+     "start": 1366,
+     "end": 1384,
+     "text": "retinol metabolism"
+    },
+    {
+     "start": 1386,
+     "end": 1426,
+     "text": "pentose and glucuronate interconversions"
+    },
+    {
+     "start": 1432,
+     "end": 1468,
+     "text": "porphyrin and chlorophyll metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 114,
+   "pmid": "12403250",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1044,
+     "end": 1078,
+     "text": "mitochondrial fatty acid oxidation"
+    },
+    {
+     "start": 1576,
+     "end": 1586,
+     "text": "urea cycle"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 115,
+   "pmid": "35664672",
+   "machine_span_count": 10,
+   "tp": [
+    {
+     "start": 692,
+     "end": 713,
+     "text": "amino acid metabolism"
+    },
+    {
+     "start": 715,
+     "end": 738,
+     "text": "carbohydrate metabolism"
+    },
+    {
+     "start": 740,
+     "end": 761,
+     "text": "fatty acid metabolism"
+    },
+    {
+     "start": 763,
+     "end": 776,
+     "text": "citrate cycle"
+    },
+    {
+     "start": 782,
+     "end": 801,
+     "text": "pyruvate metabolism"
+    },
+    {
+     "start": 1183,
+     "end": 1204,
+     "text": "amino acid metabolism"
+    },
+    {
+     "start": 1206,
+     "end": 1229,
+     "text": "carbohydrate metabolism"
+    },
+    {
+     "start": 1231,
+     "end": 1252,
+     "text": "fatty acid metabolism"
+    },
+    {
+     "start": 1254,
+     "end": 1267,
+     "text": "citrate cycle"
+    },
+    {
+     "start": 1273,
+     "end": 1292,
+     "text": "pyruvate metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 670,
+     "end": 688,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 116,
+   "pmid": "23850645",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 117,
+   "pmid": "41872157",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 86,
+     "end": 96,
+     "text": "glycolysis"
+    },
+    {
+     "start": 334,
+     "end": 368,
+     "text": "oxidative phosphorylation (OXPHOS)"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 300,
+     "end": 325,
+     "text": "mitochondrial respiration",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    },
+    {
+     "start": 501,
+     "end": 507,
+     "text": "OXPHOS",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 975,
+     "end": 981,
+     "text": "OXPHOS",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1508,
+     "end": 1533,
+     "text": "mitochondrial respiration",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    },
+    {
+     "start": 1827,
+     "end": 1833,
+     "text": "OXPHOS",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 118,
+   "pmid": "35046836",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1033,
+     "end": 1054,
+     "text": "nucleotide metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 102,
+     "end": 127,
+     "text": "de novo liver lipogenesis",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1010,
+     "end": 1054,
+     "text": "amino acid, lipid, and nucleotide metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1199,
+     "end": 1217,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 119,
+   "pmid": "34559138",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1584,
+     "end": 1605,
+     "text": "nucleotide metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 120,
+   "pmid": "41487671",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 1521,
+     "end": 1545,
+     "text": "linoleic acid metabolism"
+    },
+    {
+     "start": 1585,
+     "end": 1602,
+     "text": "folate metabolism"
+    }
+   ],
+   "fp": [
+    {
+     "start": 1547,
+     "end": 1579,
+     "text": "cortisol synthesis and secretion",
+     "reason": "boundary includes text that does not belong to the metabolic process name"
+    }
+   ],
+   "fn": [
+    {
+     "start": 1547,
+     "end": 1565,
+     "text": "cortisol synthesis",
+     "note": "corrected machine boundary"
+    },
+    {
+     "start": 1934,
+     "end": 1955,
+     "text": "one-carbon metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 121,
+   "pmid": "41787744",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 2168,
+     "end": 2183,
+     "text": "drug metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 122,
+   "pmid": "30578842",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 595,
+     "end": 605,
+     "text": "urea cycle"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 609,
+     "end": 629,
+     "text": "polyamines synthesis",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 123,
+   "pmid": "27776302",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 811,
+     "end": 832,
+     "text": "tryptophan metabolism"
+    },
+    {
+     "start": 834,
+     "end": 871,
+     "text": "phenylalanine and tyrosine metabolism"
+    }
+   ],
+   "fp": [
+    {
+     "start": 873,
+     "end": 898,
+     "text": "gut microbiota metabolism",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 903,
+     "end": 940,
+     "text": "insulin resistance related metabolism",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 124,
+   "pmid": "28934963",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 894,
+     "end": 922,
+     "text": "purine nucleotide catabolism"
+    },
+    {
+     "start": 1149,
+     "end": 1192,
+     "text": "arginine and phosphatidylcholine metabolism"
+    }
+   ],
+   "fp": [
+    {
+     "start": 947,
+     "end": 978,
+     "text": "citric acid cycle intermediates",
+     "reason": "boundary includes text that does not belong to the metabolic process name"
+    }
+   ],
+   "fn": [
+    {
+     "start": 317,
+     "end": 335,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    },
+    {
+     "start": 947,
+     "end": 964,
+     "text": "citric acid cycle",
+     "note": "corrected machine boundary"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 125,
+   "pmid": "32807972",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 63,
+     "end": 83,
+     "text": "galactose metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 126,
+   "pmid": "27574546",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 82,
+     "end": 104,
+     "text": "cholesterol metabolism"
+    },
+    {
+     "start": 221,
+     "end": 243,
+     "text": "cholesterol metabolism"
+    },
+    {
+     "start": 421,
+     "end": 443,
+     "text": "cholesterol metabolism"
+    },
+    {
+     "start": 1468,
+     "end": 1490,
+     "text": "cholesterol metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 127,
+   "pmid": "36338341",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 39,
+     "end": 49,
+     "text": "urea cycle"
+    },
+    {
+     "start": 305,
+     "end": 324,
+     "text": "arginine metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 128,
+   "pmid": "39775479",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 227,
+     "end": 249,
+     "text": "cholesterol metabolism"
+    },
+    {
+     "start": 690,
+     "end": 712,
+     "text": "cholesterol metabolism"
+    },
+    {
+     "start": 911,
+     "end": 932,
+     "text": "cholesterol synthesis"
+    },
+    {
+     "start": 1034,
+     "end": 1056,
+     "text": "cholesterol metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 129,
+   "pmid": "40929883",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1412,
+     "end": 1433,
+     "text": "tryptophan metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 803,
+     "end": 819,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1957,
+     "end": 1968,
+     "text": "lipogenesis",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 2175,
+     "end": 2186,
+     "text": "lipogenesis",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 130,
+   "pmid": "10766749",
+   "machine_span_count": 5,
+   "tp": [
+    {
+     "start": 54,
+     "end": 71,
+     "text": "folate metabolism"
+    },
+    {
+     "start": 363,
+     "end": 380,
+     "text": "folate metabolism"
+    },
+    {
+     "start": 798,
+     "end": 815,
+     "text": "folate metabolism"
+    },
+    {
+     "start": 854,
+     "end": 871,
+     "text": "folate metabolism"
+    },
+    {
+     "start": 924,
+     "end": 941,
+     "text": "folate metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 131,
+   "pmid": "38467839",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 872,
+     "end": 902,
+     "text": "glycerophospholipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 179,
+     "end": 195,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 132,
+   "pmid": "36265896",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 838,
+     "end": 863,
+     "text": "oxidative phosphorylation"
+    }
+   ],
+   "fp": [
+    {
+     "start": 808,
+     "end": 832,
+     "text": "mitochondrial metabolism",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 1091,
+     "end": 1115,
+     "text": "mitochondrial metabolism",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": [
+    {
+     "start": 971,
+     "end": 977,
+     "text": "OxPhos",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1120,
+     "end": 1126,
+     "text": "OxPhos",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 133,
+   "pmid": "28769554",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 260,
+     "end": 278,
+     "text": "tryptophan pathway"
+    },
+    {
+     "start": 730,
+     "end": 751,
+     "text": "tryptophan metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 134,
+   "pmid": "40345262",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 262,
+     "end": 283,
+     "text": "tryptophan metabolism"
+    },
+    {
+     "start": 302,
+     "end": 325,
+     "text": "kynurenine pathway (KP)"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 444,
+     "end": 462,
+     "text": "kynurenine pathway",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1063,
+     "end": 1081,
+     "text": "kynurenine pathway",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1359,
+     "end": 1377,
+     "text": "kynurenine pathway",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 135,
+   "pmid": "40701521",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1406,
+     "end": 1428,
+     "text": "cholesterol metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 136,
+   "pmid": "42074155",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 647,
+     "end": 666,
+     "text": "de novo lipogenesis"
+    },
+    {
+     "start": 678,
+     "end": 698,
+     "text": "fatty acid oxidation"
+    }
+   ],
+   "fp": [
+    {
+     "start": 714,
+     "end": 729,
+     "text": "AMPK signalling",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 137,
+   "pmid": "42018362",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1140,
+     "end": 1157,
+     "text": "folate metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 138,
+   "pmid": "32723252",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 309,
+     "end": 326,
+     "text": "purine catabolism"
+    },
+    {
+     "start": 780,
+     "end": 797,
+     "text": "purine metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1064,
+     "end": 1083,
+     "text": "uric acid synthesis",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 139,
+   "pmid": "36817578",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 1240,
+     "end": 1256,
+     "text": "lipid metabolism"
+    },
+    {
+     "start": 1639,
+     "end": 1655,
+     "text": "lipid metabolism"
+    },
+    {
+     "start": 1704,
+     "end": 1750,
+     "text": "mitochondrial oxidative phosphorylation system"
+    }
+   ],
+   "fp": [
+    {
+     "start": 1665,
+     "end": 1683,
+     "text": "ribosomal activity",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 140,
+   "pmid": "26394519",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 141,
+   "pmid": "41155167",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 898,
+     "end": 920,
+     "text": "glutathione metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 142,
+   "pmid": "42070604",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1492,
+     "end": 1512,
+     "text": "bile acid metabolism"
+    },
+    {
+     "start": 1517,
+     "end": 1538,
+     "text": "tryptophan metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 766,
+     "end": 787,
+     "text": "glycolipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1421,
+     "end": 1439,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 143,
+   "pmid": "41994801",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1443,
+     "end": 1465,
+     "text": "glutathione metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 144,
+   "pmid": "33295915",
+   "machine_span_count": 5,
+   "tp": [
+    {
+     "start": 534,
+     "end": 544,
+     "text": "glycolysis"
+    },
+    {
+     "start": 546,
+     "end": 561,
+     "text": "gluconeogenesis"
+    },
+    {
+     "start": 563,
+     "end": 584,
+     "text": "amino acid metabolism"
+    },
+    {
+     "start": 586,
+     "end": 607,
+     "text": "fatty acid metabolism"
+    },
+    {
+     "start": 612,
+     "end": 643,
+     "text": "choline phospholipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 145,
+   "pmid": "37226933",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1014,
+     "end": 1034,
+     "text": "fatty acid synthesis"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 102,
+     "end": 118,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 912,
+     "end": 959,
+     "text": "glycerophospholipid and glycerolipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1050,
+     "end": 1072,
+     "text": "phospholipid synthesis",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 146,
+   "pmid": "16970941",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 36,
+     "end": 60,
+     "text": "sphingolipid degradation"
+    },
+    {
+     "start": 299,
+     "end": 332,
+     "text": "sphingolipid biosynthetic pathway"
+    },
+    {
+     "start": 500,
+     "end": 525,
+     "text": "pathway of SL degradation"
+    },
+    {
+     "start": 903,
+     "end": 926,
+     "text": "sphingolipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 147,
+   "pmid": "41213441",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1785,
+     "end": 1815,
+     "text": "Glycerophospholipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1020,
+     "end": 1036,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 2259,
+     "end": 2278,
+     "text": "de novo lipogenesis",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 148,
+   "pmid": "38498130",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 257,
+     "end": 275,
+     "text": "steroid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 149,
+   "pmid": "41516226",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 1176,
+     "end": 1195,
+     "text": "bile acid synthesis"
+    },
+    {
+     "start": 1572,
+     "end": 1594,
+     "text": "cholesterol metabolism"
+    },
+    {
+     "start": 1609,
+     "end": 1628,
+     "text": "bile acid synthesis"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 114,
+     "end": 130,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 150,
+   "pmid": "36185739",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 889,
+     "end": 909,
+     "text": "glutamate metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1244,
+     "end": 1258,
+     "text": "glutaminolysis",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 151,
+   "pmid": "34208613",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": [
+    {
+     "start": 306,
+     "end": 357,
+     "text": "nicotinamide adenine dinucleotide (NAD+) metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 152,
+   "pmid": "23525151",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 457,
+     "end": 473,
+     "text": "heme degradation"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 153,
+   "pmid": "37003979",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1810,
+     "end": 1830,
+     "text": "fatty acid synthesis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 154,
+   "pmid": "9654398",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 646,
+     "end": 667,
+     "text": "eicosanoid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 155,
+   "pmid": "33900162",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 1193,
+     "end": 1217,
+     "text": "phenylalanine metabolism"
+    },
+    {
+     "start": 1219,
+     "end": 1236,
+     "text": "purine metabolism"
+    },
+    {
+     "start": 1238,
+     "end": 1281,
+     "text": "valine, leucine and isoleucine biosynthesis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 156,
+   "pmid": "36171542",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1216,
+     "end": 1235,
+     "text": "tyrosine metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 157,
+   "pmid": "40666443",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1075,
+     "end": 1100,
+     "text": "oxidative phosphorylation"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 158,
+   "pmid": "29741506",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 652,
+     "end": 669,
+     "text": "citric acid cycle"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 159,
+   "pmid": "41109619",
+   "machine_span_count": 9,
+   "tp": [],
+   "fp": [
+    {
+     "start": 0,
+     "end": 16,
+     "text": "Reductive stress",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 91,
+     "end": 94,
+     "text": "isr",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 317,
+     "end": 333,
+     "text": "Reductive stress",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 478,
+     "end": 481,
+     "text": "ISR",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 529,
+     "end": 576,
+     "text": "mitochondrial oxidative phosphorylation defects",
+     "reason": "boundary includes text that does not belong to the metabolic process name"
+    },
+    {
+     "start": 631,
+     "end": 647,
+     "text": "reductive stress",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 679,
+     "end": 682,
+     "text": "ISR",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 729,
+     "end": 745,
+     "text": "reductive stress",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 902,
+     "end": 918,
+     "text": "reductive stress",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": [
+    {
+     "start": 298,
+     "end": 315,
+     "text": "energy metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 529,
+     "end": 568,
+     "text": "mitochondrial oxidative phosphorylation",
+     "note": "corrected machine boundary"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 160,
+   "pmid": "39287867",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 335,
+     "end": 360,
+     "text": "degradation of tryptophan"
+    },
+    {
+     "start": 592,
+     "end": 610,
+     "text": "kynurenine pathway"
+    },
+    {
+     "start": 686,
+     "end": 707,
+     "text": "tryptophan metabolism"
+    },
+    {
+     "start": 713,
+     "end": 746,
+     "text": "serotonin and melatonin synthesis"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 2575,
+     "end": 2631,
+     "text": "mitochondrial folate-mediated one-carbon (1C) metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 161,
+   "pmid": "42229234",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 0,
+     "end": 22,
+     "text": "Cholesterol metabolism"
+    },
+    {
+     "start": 1682,
+     "end": 1704,
+     "text": "cholesterol metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 916,
+     "end": 937,
+     "text": "glucolipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 162,
+   "pmid": "39726925",
+   "machine_span_count": 1,
+   "tp": [],
+   "fp": [
+    {
+     "start": 595,
+     "end": 611,
+     "text": "xanthine oxidase",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 163,
+   "pmid": "10852543",
+   "machine_span_count": 1,
+   "tp": [],
+   "fp": [
+    {
+     "start": 868,
+     "end": 943,
+     "text": "dolichol pyrophosphate-Man9GlcNAc2 alpha-1,3 glucosyltransferase deficiency",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 164,
+   "pmid": "41979734",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 995,
+     "end": 1012,
+     "text": "purine metabolism"
+    },
+    {
+     "start": 1017,
+     "end": 1047,
+     "text": "glycerophospholipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 929,
+     "end": 947,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    },
+    {
+     "start": 1380,
+     "end": 1403,
+     "text": "phospholipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 165,
+   "pmid": "23196212",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 173,
+     "end": 190,
+     "text": "citric acid cycle"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 166,
+   "pmid": "39776112",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 52,
+     "end": 62,
+     "text": "Urea Cycle"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 167,
+   "pmid": "41644117",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 928,
+     "end": 948,
+     "text": "fatty acid oxidation"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 906,
+     "end": 922,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1332,
+     "end": 1343,
+     "text": "β-oxidation",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 168,
+   "pmid": "31156222",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 169,
+   "pmid": "41711137",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 853,
+     "end": 874,
+     "text": "amino acid metabolism"
+    },
+    {
+     "start": 880,
+     "end": 889,
+     "text": "TCA cycle"
+    },
+    {
+     "start": 891,
+     "end": 916,
+     "text": "pentose phosphate pathway"
+    },
+    {
+     "start": 922,
+     "end": 943,
+     "text": "arginine biosynthesis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 170,
+   "pmid": "37710315",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 436,
+     "end": 463,
+     "text": "Arachidonic Acid Metabolism"
+    },
+    {
+     "start": 1618,
+     "end": 1645,
+     "text": "arachidonic acid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 171,
+   "pmid": "40142198",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1097,
+     "end": 1119,
+     "text": "cholesterol metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 172,
+   "pmid": "34078023",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 638,
+     "end": 663,
+     "text": "oxidative phosphorylation"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 173,
+   "pmid": "32155663",
+   "machine_span_count": 5,
+   "tp": [
+    {
+     "start": 651,
+     "end": 661,
+     "text": "glycolysis"
+    },
+    {
+     "start": 724,
+     "end": 734,
+     "text": "glycolysis"
+    },
+    {
+     "start": 739,
+     "end": 763,
+     "text": "tricarboxylic acid cycle"
+    },
+    {
+     "start": 1139,
+     "end": 1164,
+     "text": "pentose phosphate pathway"
+    },
+    {
+     "start": 1384,
+     "end": 1409,
+     "text": "metabolism of fatty acids"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 174,
+   "pmid": "29471549",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 576,
+     "end": 596,
+     "text": "glutamate metabolism"
+    },
+    {
+     "start": 1684,
+     "end": 1704,
+     "text": "glutamate metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 175,
+   "pmid": "11422339",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 337,
+     "end": 351,
+     "text": "heme synthesis"
+    }
+   ],
+   "fp": [
+    {
+     "start": 295,
+     "end": 313,
+     "text": "hepatic metabolism",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 405,
+     "end": 423,
+     "text": "hepatic metabolism",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 176,
+   "pmid": "28573069",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 609,
+     "end": 629,
+     "text": "fatty acid oxidation"
+    },
+    {
+     "start": 1481,
+     "end": 1501,
+     "text": "fatty acid oxidation"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 177,
+   "pmid": "33659885",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 453,
+     "end": 473,
+     "text": "fatty acid synthesis"
+    },
+    {
+     "start": 778,
+     "end": 798,
+     "text": "fatty acid synthesis"
+    },
+    {
+     "start": 903,
+     "end": 923,
+     "text": "fatty acid synthesis"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 5,
+     "end": 23,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    },
+    {
+     "start": 35,
+     "end": 51,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 178,
+   "pmid": "33029705",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 179,
+   "pmid": "40637748",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 226,
+     "end": 249,
+     "text": "sphingolipid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 180,
+   "pmid": "24922628",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 101,
+     "end": 121,
+     "text": "vitamin D metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 181,
+   "pmid": "11205903",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 110,
+     "end": 134,
+     "text": "synthesis of fatty acids"
+    },
+    {
+     "start": 868,
+     "end": 888,
+     "text": "fatty acid synthesis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 182,
+   "pmid": "42301584",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1798,
+     "end": 1819,
+     "text": "propanoate metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 2151,
+     "end": 2169,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 183,
+   "pmid": "36643050",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 917,
+     "end": 939,
+     "text": "fatty-acid degradation"
+    },
+    {
+     "start": 941,
+     "end": 967,
+     "text": "glycolysis/gluconeogenesis"
+    }
+   ],
+   "fp": [
+    {
+     "start": 21,
+     "end": 53,
+     "text": "Nonalcoholic fatty liver disease",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    },
+    {
+     "start": 973,
+     "end": 1005,
+     "text": "nonalcoholic fatty liver disease",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": [
+    {
+     "start": 888,
+     "end": 906,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 184,
+   "pmid": "11475535",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 2088,
+     "end": 2113,
+     "text": "oxidative phosphorylation"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 185,
+   "pmid": "41565197",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1536,
+     "end": 1556,
+     "text": "fatty acid oxidation"
+    },
+    {
+     "start": 1573,
+     "end": 1590,
+     "text": "taurine synthesis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 186,
+   "pmid": "38274331",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 630,
+     "end": 655,
+     "text": "lipid metabolism pathways"
+    },
+    {
+     "start": 680,
+     "end": 702,
+     "text": "cholesterol metabolism"
+    }
+   ],
+   "fp": [
+    {
+     "start": 665,
+     "end": 675,
+     "text": "peroxisome",
+     "reason": "does not name an in-scope metabolic process under ANNOTATION_GUIDE.md"
+    }
+   ],
+   "fn": [
+    {
+     "start": 1038,
+     "end": 1054,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1194,
+     "end": 1210,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1452,
+     "end": 1468,
+     "text": "lipid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 187,
+   "pmid": "7777588",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 924,
+     "end": 951,
+     "text": "arachidonic acid metabolism"
+    },
+    {
+     "start": 1418,
+     "end": 1445,
+     "text": "arachidonic acid metabolism"
+    },
+    {
+     "start": 2146,
+     "end": 2167,
+     "text": "eicosanoid production"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 953,
+     "end": 973,
+     "text": "polyamine production",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1662,
+     "end": 1681,
+     "text": "polyamine synthesis",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 188,
+   "pmid": "9832597",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 716,
+     "end": 726,
+     "text": "urea cycle"
+    },
+    {
+     "start": 1690,
+     "end": 1710,
+     "text": "fatty acid oxidation"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 780,
+     "end": 801,
+     "text": "amino acid metabolism",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1669,
+     "end": 1684,
+     "text": "gluconeogenesis",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 189,
+   "pmid": "7506539",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 783,
+     "end": 808,
+     "text": "P450-dependent metabolism"
+    },
+    {
+     "start": 856,
+     "end": 871,
+     "text": "drug metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 190,
+   "pmid": "18703087",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1854,
+     "end": 1876,
+     "text": "glutathione metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 191,
+   "pmid": "40947715",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1669,
+     "end": 1684,
+     "text": "drug metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 192,
+   "pmid": "11794878",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 361,
+     "end": 371,
+     "text": "urea cycle"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 193,
+   "pmid": "3474660",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 42,
+     "end": 62,
+     "text": "bile acid metabolism"
+    },
+    {
+     "start": 884,
+     "end": 904,
+     "text": "bile acid metabolism"
+    },
+    {
+     "start": 1270,
+     "end": 1289,
+     "text": "bile acid synthesis"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 194,
+   "pmid": "39061889",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 491,
+     "end": 516,
+     "text": "pentose phosphate pathway"
+    },
+    {
+     "start": 582,
+     "end": 594,
+     "text": "folate cycle"
+    },
+    {
+     "start": 637,
+     "end": 654,
+     "text": "serine catabolism"
+    }
+   ],
+   "fp": [
+    {
+     "start": 178,
+     "end": 224,
+     "text": "NADPH-generating enzymes that fuel lipogenesis",
+     "reason": "boundary includes text that does not belong to the metabolic process name"
+    }
+   ],
+   "fn": [
+    {
+     "start": 213,
+     "end": 224,
+     "text": "lipogenesis",
+     "note": "corrected machine boundary"
+    },
+    {
+     "start": 805,
+     "end": 819,
+     "text": "beta-oxidation",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 828,
+     "end": 868,
+     "text": "phospholipid and lipid droplet synthesis",
+     "note": "metabolic process missed during machine annotation"
+    },
+    {
+     "start": 1001,
+     "end": 1004,
+     "text": "PPP",
+     "note": "metabolic process missed during machine annotation"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 195,
+   "pmid": "41719231",
+   "machine_span_count": 4,
+   "tp": [
+    {
+     "start": 1495,
+     "end": 1522,
+     "text": "galactose metabolic pathway"
+    },
+    {
+     "start": 1535,
+     "end": 1569,
+     "text": "cysteine and methionine metabolism"
+    },
+    {
+     "start": 1872,
+     "end": 1906,
+     "text": "cysteine and methionine metabolism"
+    },
+    {
+     "start": 1919,
+     "end": 1950,
+     "text": "arginine and proline metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1850,
+     "end": 1868,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 196,
+   "pmid": "35148834",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 61,
+     "end": 82,
+     "text": "nucleotide metabolism"
+    },
+    {
+     "start": 153,
+     "end": 174,
+     "text": "nucleotide metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 197,
+   "pmid": "35152682",
+   "machine_span_count": 0,
+   "tp": [],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 198,
+   "pmid": "40437131",
+   "machine_span_count": 2,
+   "tp": [
+    {
+     "start": 1183,
+     "end": 1204,
+     "text": "amino acid metabolism"
+    },
+    {
+     "start": 1209,
+     "end": 1236,
+     "text": "arachidonic acid metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": [
+    {
+     "start": 1101,
+     "end": 1119,
+     "text": "metabolic pathways",
+     "note": "reviewed-surface sweep found a missed metabolic process"
+    }
+   ]
+  },
+  {
+   "doc_index_1based": 199,
+   "pmid": "22377532",
+   "machine_span_count": 3,
+   "tp": [
+    {
+     "start": 158,
+     "end": 181,
+     "text": "sphingolipid metabolism"
+    },
+    {
+     "start": 809,
+     "end": 829,
+     "text": "sphingolipid pathway"
+    },
+    {
+     "start": 1313,
+     "end": 1333,
+     "text": "sphingolipid pathway"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  },
+  {
+   "doc_index_1based": 200,
+   "pmid": "24600438",
+   "machine_span_count": 1,
+   "tp": [
+    {
+     "start": 1315,
+     "end": 1333,
+     "text": "peptide metabolism"
+    }
+   ],
+   "fp": [],
+   "fn": []
+  }
+ ]
+}
