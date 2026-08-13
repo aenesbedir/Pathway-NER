@@ -250,6 +250,12 @@ def main() -> None:
         help="Encoder registry key or HF id (see `python3 encoders.py`); "
              "decides the tokenizer and the truncation length",
     )
+    parser.add_argument(
+        "--include-span-free",
+        action="store_true",
+        help="Write one all-O abstract record for every article without a gold "
+             "span instead of limiting output to positive documents",
+    )
     args = parser.parse_args()
 
     spec = resolve(args.model)
@@ -299,6 +305,13 @@ def main() -> None:
     log.info("Skipped (no spans)   : %d", skipped_no_spans)
     log.info("Skipped (no article) : %d", skipped_no_article)
 
+    if args.include_span_free:
+        for pmid in articles:
+            pmid_data[pmid]
+        log.info("Including span-free : %d PMIDs", len(articles) -
+                 sum(bool(data["abstract_spans"] or data["fulltext_spans"])
+                     for data in pmid_data.values()))
+
     output_path.parent.mkdir(parents=True, exist_ok=True)
     written = abs_written = ft_written = 0
 
@@ -307,7 +320,7 @@ def main() -> None:
             article = articles[pmid]
             pathway_ids = sorted(data["pathway_ids"])
 
-            if data["abstract_spans"]:
+            if data["abstract_spans"] or args.include_span_free:
                 rec = process_abstract(
                     tokenizer, pmid, article, data["abstract_spans"], pathway_ids,
                     spec.max_tokens,
