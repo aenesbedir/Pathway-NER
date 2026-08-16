@@ -65,10 +65,25 @@ not train any model.
 - Changing the existing NER training pipeline, `train.py`, or NER run summaries.
 - Running any command on TRUBA/ARF.
 
+### 2.4 Prerequisites
+
+- The NER survey currently has no authoritative deployable checkpoint because
+  sweep runs did not retain model weights. Candidate generation is blocked until
+  Phase 5 selects, saves, evaluates, and fingerprints one pathway NER checkpoint.
+- The current frozen relation schema must be superseded before annotation by a
+  new version that adds entity validity, sentence-aligned evidence, and
+  `ambiguous_conflict`. Annotation cannot mix records from the old and new schema
+  versions.
+- Label Studio 1.19.0 runs in a separate annotation environment; it is not added
+  to the NER training requirements.
+- NCBI and PubTator credentials, endpoints, and rate limits are configuration,
+  never embedded fallback secrets.
+
 ## 3. Program invariants
 
 - The pathway ontology is the frozen 98-name metabolic vocabulary derived from
-  Recon3D, with KEGG/Reactome mappings where available.
+  Recon3D. It alone defines entity eligibility and identity; KEGG/Reactome
+  mappings are optional metadata.
 - Disease concepts use PubTator3-provided MeSH identifiers.
 - The annotation unit is one normalized `(pathway_id, disease_id)` pair in one
   abstract, not one mention pair.
@@ -97,11 +112,12 @@ was collected through canonical pathway × disease PubMed queries. Running NER o
 that corpus would preserve the canonical-name selection bias.
 
 The primary source starts with the 98 diseases in
-`data/raw/selected_diseases.json`. PubMed retrieval uses disease or MeSH criteria
-only; pathway names are absent from the retrieval query. The exact query,
-pagination parameters, ordering, retrieval timestamp, and frozen PMID list are
-recorded in a manifest. Pathway NER is then responsible for finding metabolic
-pathway language, including non-canonical mentions.
+`data/raw/selected_diseases.json`. Each disease uses the fixed query template
+`("<canonical MeSH name>"[MeSH Terms] OR "<query_name>"[Title/Abstract])`;
+no pathway term is allowed. The exact expanded query, pagination parameters,
+ordering, retrieval timestamp, and frozen PMID list are recorded in a manifest.
+Pathway NER is then responsible for finding metabolic pathway language,
+including non-canonical mentions.
 
 The candidate builder performs these operations per abstract:
 
@@ -227,6 +243,12 @@ a label. Challenge results cannot estimate deployment prevalence.
 | Locked test | 270 | 180 | 450 |
 | **Total** | **300** | **200** | **500** |
 
+The pilot allocation is fixed: prevalence contributes 10 tasks per disease
+category; deployment challenge contributes 5 per category; legacy challenge
+contributes 5. The locked test receives the remaining 90 prevalence tasks per
+category, 45 deployment-challenge tasks per category, and 45 legacy-challenge
+tasks.
+
 The first 50 tasks are used to repair the annotation guide, evaluate IAA, calibrate
 the deterministic challenge sampler once, and later compare teacher prompts and
 models. After the remaining 450 tasks are generated, the sample is locked. Test
@@ -284,10 +306,11 @@ Evidence is a list of one or more complete supporting sentences:
 }
 ```
 
-Sentence segmentation is deterministic and versioned. An exported evidence span
-must match a known sentence boundary. A converter may snap an approximate UI
-selection to a boundary only when the operation is deterministic and recorded;
-otherwise it rejects the annotation.
+Sentence segmentation uses spaCy's rule-based English `sentencizer` over the exact
+stored abstract; the spaCy version and component configuration are part of the
+dataset manifest. An exported evidence span must match a known sentence boundary.
+A converter may snap an approximate UI selection to a boundary only when the
+operation is deterministic and recorded; otherwise it rejects the annotation.
 
 If an abstract contains contradictory claims for the same normalized pair that
 cannot be represented by the single-label schema, the task receives
@@ -296,9 +319,10 @@ and evaluation.
 
 ## 8. Label Studio workflow
 
-Label Studio is selected over Doccano parallel relations and a custom annotation
-application. It represents pair-level relation fields as independent controls and
-evidence as a text span without converting the schema into composite labels.
+Label Studio 1.19.0 is selected over Doccano parallel relations and a custom
+annotation application. It represents pair-level relation fields as independent
+controls and evidence as a text span without converting the schema into composite
+labels.
 
 Each task displays:
 
@@ -418,8 +442,9 @@ Responsibilities:
 - `adjudication.py` merges exact agreements and adjudicated disagreements into
   canonical gold.
 
-The existing `encoders.py` registry supplies encoder and tokenizer identity. The
-existing pathway canonicalization logic may be used behind `grounding.py`; the
+The existing `encoders.py` registry supplies encoder and tokenizer identity.
+`grounding.py` wraps the existing `llm/canonicalize.py` logic and adds the
+versioned ontology contract; it does not duplicate canonicalization rules. The
 relation pipeline does not consume NER silver-record formats directly.
 
 The old relation scripts under `/home/enes/annotations/scripts/` use an obsolete
@@ -555,9 +580,11 @@ metadata cannot become student dataset dependencies.
 
 The teacher subproject will compare one local and one cloud teacher on the
 50-task development set. The selected teacher configuration is then frozen before
-silver generation. The future student succeeds when it remains within two macro-F1
-points of the selected teacher on both locked panels, avoids a material collapse
-in any of the three disease categories, and demonstrates measured inference
+silver generation. The future student succeeds when it remains within two
+macro-F1 points of the selected teacher on both locked panels. For any disease
+category with at least 20 positive gold examples, its macro-F1 may trail the
+teacher by at most five points; categories below that support threshold are
+reported descriptively. The student must also demonstrate measured inference
 throughput or cost advantage. No absolute F1 threshold is invented before the
 gold distribution is observed.
 
