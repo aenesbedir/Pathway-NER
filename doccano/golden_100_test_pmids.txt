@@ -1,27 +1,7 @@
-# Golden-set PMIDs — human-curated evaluation data.
-# These must NEVER enter silver: silver becomes training data, so
-# including them would mean training on our own eval set.
-# Keep in sync with build_golden_set.py (PMIDS_V1 + PMIDS_V2) and
-# run_silver.py GOLDEN_PMIDS, which excludes them unconditionally.
-# One pmid per line. Blank lines and # comments are ignored.
-
-# v1 — most-distinct-pathway abstracts
-11469814
-29615816
-36294866
-39934780
-40225847
-
-# v2 — pathway-type diversity
-34376485
-42299101
-28587170
-38669820
-37807318
-# v3 — 100 test-split docs of the 10k corpus (doccano/golden_100_test_pmids.txt).
-# In doccano review as doccano/golden_100_doccano.jsonl; NOT yet in golden_set.json.
-# 2026-08-18, seed 20260818: stratified by span band, greedy max canonical coverage
-# + variation preference; disjoint from 10k train/val, gold-pilot1k, silver, v1/v2.
+# Golden-set v3 selection — 100 PMIDs from the 10k corpus TEST split.
+# 2026-08-18, seed 20260818. Stratified by span band (0/1/2/3-4/5+), greedy
+# max canonical-pathway coverage + variation preference. Disjoint from
+# 10k train/val, gold-pilot1k, frozen silver, and the 10 curated golden.
 10079102
 11861404
 15677459

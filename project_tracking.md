@@ -827,6 +827,28 @@ cycle, vitamin/cofactor, bile acid, drug/xenobiotic.
   hardcoded exclusion `GOLDEN_PMIDS` in `llm/run_silver.py` (5 → 10) so silver never trains
   on them if regenerated. Doc counts updated (README, doccano guides).
 
+### 🔄 Golden set v3 — 100 fresh docs from the 10k test split (single doccano file)
+Rebuilt from scratch on user request: the 10 curated docs stay separate (not mixed);
+`doccano/golden_100_doccano.jsonl` holds **only 100 test-split docs** (261 pre-filled
+`PATHWAY` + 865 `DISEASE` spans from the 10125-corpus gold; selection record
+`doccano/golden_100_test_pmids.txt`).
+- **Contamination check was decisive:** 404 of 1013 test docs (40%) sit in the old training
+  gold (`data/processed/gold-pilot1k` — wave2/3/4 + pilot) and/or the frozen silver sample;
+  the 10k corpus includes the entire 4k gold-pilot1k. The 100 were drawn from the remaining
+  609 clean docs — disjoint from 10k train/val, gold-pilot1k, silver, and the 10 curated
+  golden (verified programmatically).
+- **Selection criteria (seed 20260818):** span-count bands kept varied (9 docs with 0
+  pathways, 33 with 1, 20 with 2, 22 with 3-4, 16 with 5+ — mirrors the test split);
+  greedy max marginal canonical coverage → the 100 cover **61 of 61** distinct Recon
+  pathways present in the clean pool; variation-rich docs preferred (per-span
+  `canonicalize()` match_type) → **186 variation** spans vs 75 exact/synonym.
+- **Leak protection now:** the 100 PMIDs are in `GOLDEN_PMIDS` (`llm/run_silver.py`) and
+  `playground/golden_set/golden_pmids.txt` — 110 entries total (10 curated + 100 new) — so
+  review time cannot leak them into silver. Not yet in `golden_set.json` — merge after
+  doccano review (`build_gold_from_review.py` → golden-set merge).
+- **Sampler note:** widening `GOLDEN_PMIDS` re-proportions the stratified silver sampler, but
+  the pilot is frozen (`data/silver/pilot_1k_pmids.txt`), so regeneration stays reproducible.
+
 ### 🐞 Silent LLM failures could be cached forever (`llm/extract_guided.py`, `llm/run_silver.py`)
 `call_llm` swallowed every exception into `return []`, so a timeout, a dropped connection or
 a non-JSON reply was indistinguishable from "the model found no pathway". `run_silver.py`
@@ -1352,13 +1374,163 @@ large improvement primarily reflects repaired entity boundaries and removal of
 fragment false positives; the 50-article result is a focused manual audit, not a
 full-corpus accuracy estimate.
 
+## Reviewed-corpus consolidation (completed 2026-08-13)
+
+Work after the 2026-08-05 disease extraction converted the reviewed annotation
+material into two reproducible corpus layers.
+
+### Fully reviewed 4k pilot
+
+`data/processed/gold-pilot1k/README.md` is the contract for the 4,000-document
+reviewed benchmark. It combines the fully reviewed 1,000-document pilot with
+wave 2, wave 3, and wave 4:
+
+| corpus | documents | positive documents | pathway spans |
+|---|---:|---:|---:|
+| full pilot | 1000 | 914 | 2504 |
+| wave 2 | 1000 | 901 | 2334 |
+| wave 3 | 1000 | 901 | 2339 |
+| wave 4 | 1000 | 903 | 2306 |
+| **total** | **4000** | **3619** | **9483** |
+
+The frozen 107-document validation and 109-document test sets from
+`gold-wave4` remain unchanged. The newly available reviewed pilot positives are
+assigned only to training, giving a 3396/107/109 train/validation/test split
+with the seven historical long-document exclusions retained. The canonical
+model-independent artifacts are under `data/processed/gold-pilot1k/`; the
+review application is reproducible through
+`doccano/build_gold_from_review.py`.
+
+### Remaining 6125-document curation
+
+The disease/pathway review workflow produced the canonical curated export
+`data/doccano/disease_pathway_remaining_6125_doccano_curated_v1.jsonl`.
+Its provenance and exact action counts are frozen in
+`data/doccano/disease_pathway_remaining_6125_doccano_curated_v1.manifest.json`;
+the review outcome is summarized in
+`data/reviews/disease_pathway_remaining_6125_review_decisions_curated.summary.json`.
+
+- 6125 documents, 58,530 disease spans, and 15,153 pathway spans.
+- 6389 spans added and 2660 removed by the applied decisions.
+- Six uncertain pathway additions remain explicitly deferred rather than being
+  silently accepted.
+- Each output record carries the curation version plus decision and manifest
+  hashes in `meta.curation`.
+
+## Phase 4d — pathway-only 10,125-document experiment (prepared 2026-08-14)
+
+The reviewed 4k layer and curated remaining 6125 documents were combined in
+`data/doccano/disease_pathway_10125_doccano_combined_v1.jsonl`. The experiment
+retains only `PATHWAY` labels; 96,629 disease spans are deliberately excluded
+by `preprocessing/gold_to_matches.py --label PATHWAY`.
+
+The reproducible preparation entry point is
+`scripts/prepare_pathway_10k.sh`. It creates:
+
+- `data/processed/pathway-10k/articles.jsonl`: all 10,125 documents;
+- `data/processed/pathway-10k/matches.jsonl`: 9168 pathway-positive documents
+  containing 24,636 pathway spans;
+- `data/processed/pathway-10k/splits.json`: the model-independent frozen split;
+- one tokenizer-specific train/validation/test dataset for each of
+  `biomedbert-base`, `biolinkbert-base`, `bioelectra-base`,
+  `biolinkbert-large`, and `biom-electra-large`.
+
+The split is grouped by exact article text so duplicate records cannot cross
+partitions, stratified by pathway-span-count band, and deterministic under seed
+42:
+
+| split | documents | zero-span documents |
+|---|---:|---:|
+| train | 8100 | 765 |
+| validation | 1012 | 96 |
+| test | 1013 | 96 |
+
+All five tokenizer-specific datasets preserve the same PMID assignment.
+`preprocessing/check_alignment.py` accounts for every pathway span with zero
+unexplained losses. The 512-token limit excludes 258 spans for BiomedBERT and
+264 for the shared 28,895-token-vocabulary datasets; these are recorded
+truncations, not silent alignment failures.
+
+`preprocessing/tag_bio.py` records source hashes and tokenizer metadata in each
+`meta.json`. `train.py` copies the dataset meta hash, article/match hashes,
+split path, and split SHA256 into every `test_results.json`. This makes a run
+identifiable by content even when directory names are moved.
+
+### TRUBA sweep implementation
+
+`scripts/run_matrix.py` now accepts the versioned `pathway-10k` dataset and
+writes each model/LR/seed cell independently. `scripts/aggregate_runs.py`
+selects learning rates by mean validation F1 rather than test F1 and treats a
+different split hash as a different experiment.
+
+The initial TRUBA submission used:
+
+- `slurm/sweep_10k_base.slurm`: 3 base models × 3 seeds = 9 cells;
+- `slurm/sweep_10k_large.slurm`: 2 large models × 3 learning rates × 3 seeds =
+  18 cells.
+
+Both ran on `akya-cuda` with one V100 per array task. The base array
+(`6240151`) completed 9/9 cells. The large array (`6240152`) completed 12/18;
+six cells reached the eight-hour wall limit before writing
+`test_results.json`.
+
+### Results available on 2026-08-15
+
+All rows use the same 8100/1012/1013 split. Seed counts below expose incomplete
+large-model groups rather than treating them as full comparisons.
+
+| model | lr | completed seeds | validation F1 | test F1 | precision | recall |
+|---|---:|---:|---:|---:|---:|---:|
+| `biomedbert-base` | 5e-5 | 3/3 | 0.8860 ± 0.0043 | 0.8741 ± 0.0059 | 0.8631 ± 0.0057 | 0.8854 ± 0.0081 |
+| `biolinkbert-base` | 5e-5 | 3/3 | 0.8847 ± 0.0041 | 0.8772 ± 0.0095 | 0.8680 ± 0.0101 | 0.8867 ± 0.0090 |
+| `bioelectra-base` | 3e-5 | 3/3 | 0.8883 ± 0.0024 | 0.8765 ± 0.0050 | 0.8658 ± 0.0068 | 0.8875 ± 0.0033 |
+| `biolinkbert-large` | 1e-5 | 2/3 | 0.8878 ± 0.0031 | 0.8791 ± 0.0019 | 0.8661 ± 0.0113 | 0.8927 ± 0.0081 |
+| `biolinkbert-large` | 2e-5 | 2/3 | 0.8883 ± 0.0083 | 0.8755 ± 0.0005 | 0.8598 ± 0.0058 | 0.8918 ± 0.0052 |
+| `biolinkbert-large` | 3e-5 | 1/3 | 0.8914 | 0.8779 | 0.8616 | 0.8947 |
+| `biom-electra-large` | 1e-5 | 3/3 | 0.8870 ± 0.0009 | 0.8739 ± 0.0007 | 0.8670 ± 0.0041 | 0.8808 ± 0.0033 |
+| `biom-electra-large` | 2e-5 | 2/3 | 0.8842 ± 0.0009 | 0.8723 ± 0.0015 | 0.8632 ± 0.0074 | 0.8816 ± 0.0046 |
+| `biom-electra-large` | 3e-5 | 2/3 | 0.8902 ± 0.0041 | **0.8820 ± 0.0054** | 0.8746 ± 0.0076 | 0.8896 ± 0.0032 |
+
+The available large-model result does not yet establish a size benefit. Its
+best observed mean, `biom-electra-large` at 3e-5, is based on two seeds and is
+only 0.0048 F1 above the best complete base row, inside the observed seed
+variation. The missing seeds and the unswept 5e-5 point must be completed
+before ranking the large models.
+
+### Follow-up TRUBA jobs submitted 2026-08-15
+
+- `slurm/sweep_10k_timeouts.slurm`, job `6244638`: reruns the six timed-out
+  cells into `runs-truba-timeouts/` with a 12-hour limit.
+- `slurm/sweep_10k_large_5e-5.slurm`, job `6244639`: evaluates both large
+  models at 5e-5 across three seeds into `runs-truba-large-5e-5/`.
+- `slurm/sweep_10k_checkpoints_base.slurm`, job `6245620`, and
+  `slurm/sweep_10k_checkpoints_large.slurm`, job `6245621`: retrain one
+  validation-selected seed per model with `--keep-checkpoints` into
+  `runs-truba-checkpoints/`.
+
+The original sweeps intentionally used `--no-save-model`; they retained
+metrics, predictions, and logs but deleted epoch checkpoints after evaluation.
+The checkpoint jobs are therefore new retrains, not copies of weights that
+already existed. The provisional selected cells are
+`biomedbert-base`/5e-5/seed 1, `biolinkbert-base`/5e-5/seed 7,
+`bioelectra-base`/3e-5/seed 7, `biolinkbert-large`/3e-5/seed 1, and
+`biom-electra-large`/3e-5/seed 7. Large-model checkpoint selection remains
+provisional until the timeout and 5e-5 sweeps finish.
+
+At the last queue check, all four follow-up arrays were pending. Slurm estimated
+2026-08-16 14:39 for the two 12-hour experiment arrays; the newly submitted
+checkpoint arrays did not yet have a start estimate.
+
 ## Next
 
-- Adapt `run_matrix.py` for the 15-cell carry-forward experiment and write its
-  results to a separate summary.
-- Select and save an authoritative deployment checkpoint only after the expanded
-  experiment is evaluated; no swept mean belongs to a later retrain.
-- Keep the large-model/TRUBA tier conditional on evidence that the encoder axis
-  separates. The completed base grid does not provide that evidence.
-- GLiNER-biomed and task-adaptive pretraining remain higher-upside modelling
-  directions if the expanded base-encoder comparison remains unresolved.
+- Complete jobs `6244638` and `6244639`, then recompute large-model
+  validation-selected learning rates with all three seeds.
+- Treat the checkpoint retrains as deployment candidates only after confirming
+  that their reproduced metrics agree with the originating cells; reselect the
+  large checkpoints if the completed grids change the validation winner.
+- Sync completed metrics, predictions, logs, and retained checkpoints from
+  TRUBA to local storage with their summary and provenance files intact.
+- Compare the final five-model table using paired document-level bootstrap, not
+  overlapping marginal standard deviations alone.
+- Keep GLiNER-biomed and task-adaptive pretraining as the next modelling
+  directions if the completed large-model comparison remains unresolved.

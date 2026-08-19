@@ -21,6 +21,8 @@ separate review JSON — this file is the only record of those corrections.
 | File | What it is |
 |---|---|
 | `pilot_1k_doccano.jsonl` | **The import file** — 1,000 abstracts, 1,996 pre-filled `PATHWAY` spans |
+| `golden_100_doccano.jsonl` | **Golden-set expansion import (single file)** — 100 docs from the 10k corpus *test* split, 261 `PATHWAY` + 865 `DISEASE` pre-filled spans |
+| `golden_100_test_pmids.txt` | Selection record of the 100 PMIDs (seed 20260818) |
 | `ANNOTATION_GUIDE.md` | **Give this to the annotators.** Accept/reject/boundary rules (EN) |
 | `ANNOTATOR_STEPS.md` | **Give this to the annotators.** Post-install doccano steps (TR) |
 | `split_batches.py` → `batches/` | Splits the import file into per-annotator batches |
@@ -30,6 +32,36 @@ separate review JSON — this file is the only record of those corrections.
 Upstream: `llm/run_silver.py` produces `data/silver/pilot_1k.jsonl`; this folder only
 reshapes it for doccano. Provenance and analysis: `project_tracking.md` (P3-1c/d/e),
 `playground/silver_1k_analyses.md`.
+
+## Golden-set expansion (100 test-split docs, single import file)
+
+`golden_100_doccano.jsonl` is the one file the new golden-set docs move through —
+**all 100 from the 10k corpus test split**, nothing else (the 10 curated docs of
+`playground/golden_set/golden_set.json` stay separate and are not mixed in).
+
+Selection (record: `golden_100_test_pmids.txt`, seed 20260818), from the 609
+test-split docs that are disjoint from all training data (10k train/val,
+gold-pilot1k wave2/3/4+pilot, frozen silver — 404 of 1013 test docs were
+contaminated and excluded):
+
+- **Span-count distribution kept varied** — 9 docs with 0 pathways, 33 with 1,
+  20 with 2, 22 with 3-4, 16 with 5+ (mirrors the test split).
+- **Pathway diversity maximized** — greedy selection by marginal new canonical
+  coverage; the 100 cover **61 of 61** distinct Recon pathways present in the pool.
+- **Variation preference** — tie-breaking prefers docs whose gold spans are
+  paraphrase forms (word-order, chemical synonyms, abbreviations, umbrellas);
+  the 100 contain **186 variation-type** spans (vs 75 exact/synonym).
+
+The pre-filled labels come from the 10125-corpus gold — **both `PATHWAY` (261) and
+`DISEASE` (865) spans are included** — the job is verify/correct, exactly like the
+pilot batches. The doccano project must define **both** labels (`PATHWAY` and
+`DISEASE`); the import fails on any label the project does not define.
+
+- The 100 PMIDs are **already excluded from silver** (`GOLDEN_PMIDS` in
+  `llm/run_silver.py` + `playground/golden_set/golden_pmids.txt` — 110 entries with
+  the 10 curated v1/v2) so review time cannot leak eval data into training. Do not
+  remove them.
+- After review, convert with `build_gold_from_review.py` and merge into the golden set.
 
 ## Preview before you import
 

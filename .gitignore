@@ -32,6 +32,9 @@ data/cache/
 .DS_Store
 Thumbs.db
 
+# Obsidian vault settings
+.obsidian/
+
 # Tool-managed scratch worktrees
 .claude/worktrees/
 

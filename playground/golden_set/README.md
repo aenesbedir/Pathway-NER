@@ -20,6 +20,16 @@ gap.
 - **v2** (+5 abstracts, 10 total): chosen for pathway-*type* diversity to balance
   v1 — energy/central-carbon, carbohydrate, nucleotide, urea cycle, vitamin/cofactor,
   bile acid, drug/xenobiotic. See the articles table below.
+- **v3** (in progress, +100 docs): 100 abstracts from the 10k corpus **test split**,
+  exported for doccano review as `doccano/golden_100_doccano.jsonl` — the single
+  import file for the new golden docs (the 10 curated docs above stay separate, not
+  mixed in). Selection (seed 20260818): span-count bands kept varied (9 zero-span
+  docs, 33/20/22/16 in 1/2/3-4/5+), greedy max canonical-pathway coverage (61 of 61
+  distinct pool pathways), variation-rich docs preferred (186 variation spans).
+  Disjoint from all training data (10k train/val, gold-pilot1k, frozen silver).
+  PMIDs already excluded from silver (`llm/run_silver.py GOLDEN_PMIDS`,
+  `golden_pmids.txt` — 110 entries); not yet merged into `golden_set.json` — merge
+  happens after doccano review.
 
 ## Headline finding
 
