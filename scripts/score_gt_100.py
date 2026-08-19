@@ -104,7 +104,7 @@ def score_model(model_dir: Path, gt: list[dict], max_tokens: int, device) -> dic
         seq_pred.append(pred_tags)
 
     return {
-        "model": model_dir.name,
+        "model": str(model_dir),
         "max_tokens": max_tokens,
         "seqeval": {
             "f1": round(seq_f1(seq_true, seq_pred), 4),

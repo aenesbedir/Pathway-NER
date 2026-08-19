@@ -23,6 +23,31 @@
       "model": "pathway-ner-gold-wave4-random-all-bio-modernbert-base",
       "max_tokens": 8192,
       "seqeval": {"f1": 0.7394, "precision": 0.7266, "recall": 0.7527}
+    },
+    {
+      "model": "runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7",
+      "max_tokens": 512,
+      "seqeval": {"f1": 0.8358, "precision": 0.8682, "recall": 0.8058}
+    },
+    {
+      "model": "runs-truba-checkpoints/pathway-10k/bioelectra-base/lr3e-05/seed7",
+      "max_tokens": 512,
+      "seqeval": {"f1": 0.8194, "precision": 0.8494, "recall": 0.7914}
+    },
+    {
+      "model": "runs-truba-checkpoints/pathway-10k/biomedbert-base/lr5e-05/seed1",
+      "max_tokens": 512,
+      "seqeval": {"f1": 0.8141, "precision": 0.8423, "recall": 0.7878}
+    },
+    {
+      "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-base/lr5e-05/seed7",
+      "max_tokens": 512,
+      "seqeval": {"f1": 0.8059, "precision": 0.8289, "recall": 0.7842}
+    },
+    {
+      "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-large/lr3e-05/seed1",
+      "max_tokens": 512,
+      "seqeval": {"f1": 0.7815, "precision": 0.8053, "recall": 0.759}
     }
   ]
 }
