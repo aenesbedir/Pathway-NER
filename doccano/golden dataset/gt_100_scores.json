@@ -1,0 +1,28 @@
+{
+  "ground_truth": "doccano/golden dataset/gt_100.jsonl",
+  "n_docs": 100,
+  "n_gold_pathway_spans": 279,
+  "notes": "PATHWAY-only scoring (models are single-label pathway NER; DISEASE spans in gt_100 are background). seqeval entity-level F1/P/R, the same convention as train.py and each run's test_results.json. Scored on the 10k dataset's portion intersecting gt_100 (the 100 reviewed abstracts). Script: scripts/score_gt_100.py",
+  "models": [
+    {
+      "model": "pathway-ner-gold-wave4-biomedbert-base",
+      "max_tokens": 512,
+      "seqeval": {"f1": 0.7537, "precision": 0.7829, "recall": 0.7266}
+    },
+    {
+      "model": "pathway-ner-gold-wave4-biomedbert-base-min30",
+      "max_tokens": 512,
+      "seqeval": {"f1": 0.797, "precision": 0.8182, "recall": 0.777}
+    },
+    {
+      "model": "pathway-ner-gold-wave4-random-all-biomedbert-base",
+      "max_tokens": 512,
+      "seqeval": {"f1": 0.8126, "precision": 0.8391, "recall": 0.7878}
+    },
+    {
+      "model": "pathway-ner-gold-wave4-random-all-bio-modernbert-base",
+      "max_tokens": 8192,
+      "seqeval": {"f1": 0.7394, "precision": 0.7266, "recall": 0.7527}
+    }
+  ]
+}
