@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Score the pathway-ner-gold-wave4-* / runs-truba-checkpoints checkpoints
 against the human-reviewed gt_100 ground truth
-(doccano/golden dataset/gt_100.jsonl).
+(doccano/golden_dataset/gt_100.jsonl).
 
 Only PATHWAY spans in gt_100 are used. The models are single-label pathway NER
 (LABEL2ID = {O, B-Pathway, I-Pathway}); DISEASE spans are treated as
@@ -201,7 +201,7 @@ def score_model(model_dir: Path, gt: list[dict], max_tokens: int, device,
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--gt", default="doccano/golden dataset/gt_100.jsonl")
+    ap.add_argument("--gt", default="doccano/golden_dataset/gt_100.jsonl")
     ap.add_argument("--model-dir", action="append", required=True)
     ap.add_argument("--max-tokens", type=int, default=512)
     ap.add_argument("--partial", type=float, default=None,
