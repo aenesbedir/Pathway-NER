@@ -3,11 +3,25 @@
 run_silver.py
 
 Phase 3 / Faz 1c — produce variation-aware **silver** span labels over a sample of
-abstracts using the config chosen in Faz 0 (P3-0c/d):
+abstracts. The default is the config chosen in Faz 0 (P3-0c/d):
     qwen2.5:14b, no-vocab + lenient + synonyms, plus the deterministic booster.
 
-Flow per abstract (one LLM call):
-    extract_guided() + boost()  ->  merge()  ->  canonicalize()  ->  spans
+Flow per abstract:
+    annotator + boost()  ->  merge()  ->  canonicalize()  ->  spans
+
+**The annotator is a parameter.** `--model` takes either an ollama tag (the LLM
+path, unchanged) or the path of a fine-tuned NER checkpoint directory, e.g.
+
+    --model runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7
+
+which runs that token classifier instead. Everything after extraction is identical
+either way, because the booster, merge(), canonicalize() and the cache all work on
+character-offset spans and never ask where a span came from. See llm/annotators.py
+for the interface and how the two are told apart (a disk check, not a flag).
+
+Which to use is a measured question, not a preference: on gt_100 the 10k-trained
+biom-electra-large checkpoint scores exact-span F1 0.836 against the LLM silver's
+0.769, the gap being almost entirely recall (doccano/golden_dataset/gt_100_scores.json).
 
 Silver is machine-labeled and noisy — it goes to doccano for human review before it
 is trusted for training. It is kept strictly apart from the gold set
@@ -16,18 +30,24 @@ is trusted for training. It is kept strictly apart from the gold set
 **The 10 golden PMIDs (v1: 5, v2: +5) are excluded from the sample.** Since silver
 becomes training data, including any gold PMID would mean training on our own eval set.
 
-Input  : data/processed/exact_matches.jsonl  (pmid -> query pathways)
-         data/raw/articles.json              (abstracts)
-         data/raw/pathway_disease_pairs.json (disease category, for stratification)
-Output : data/silver/pilot_1k.jsonl
+Input  : data/processed/exact_matches.jsonl  (pmid -> query pathways, --matches)
+         data/raw/articles.json              (abstracts, --articles)
+         data/raw/pathway_disease_pairs.json (disease category for stratification,
+                                              --pairs; unused with --pmids)
+         Only the abstracts are required. Query pathways are an LLM prompt hint and
+         record metadata — no NER checkpoint reads them — so `--matches none` runs a
+         corpus that has none rather than dropping every pmid for lack of them.
+Output : data/silver/pilot_1k.jsonl (--output)
          plus <output stem>_pmids.txt — the effective sample, in output order, ready
          to feed back as --pmids. Written every run except --limit (a partial head of
          the sample) and --no-freeze.
-Cache  : data/raw/llm_cache_silver/{model}/{pmid}.json  (resumable — a 1k run is ~2h)
-         Scoped per model on purpose: keyed on pmid alone, swapping the model replayed
-         the previous model's answers for every abstract already seen, so a re-label
-         run looked successful and changed nothing. Config per model lives in
-         llm/models.py.
+Cache  : data/raw/llm_cache_silver/{annotator}/{pmid}.json  (resumable — a 1k LLM
+         run is ~2h; a NER run is minutes, and caches mostly to keep --recanonicalize
+         working the same way).
+         Scoped per annotator on purpose: keyed on pmid alone, swapping the model
+         replayed the previous model's answers for every abstract already seen, so a
+         re-label run looked successful and changed nothing. Config per LLM lives in
+         llm/models.py; a checkpoint's slug is derived from its path.
          A failed LLM call is never cached: its empty result is indistinguishable
          from "no pathway mentioned" and the cache is the resume key, so caching it
          would lose the abstract for good. Such pmids are dropped from the output
@@ -55,6 +75,13 @@ Run from repo root:
     venv310/bin/python3 llm/run_silver.py --number-of-articles 2000 \\
         --exclude playground/golden_set/golden_pmids.txt \\
                   data/silver/pilot_1k_pmids.txt
+
+    # another corpus, labelled by the NER checkpoint instead of the LLM
+    venv310/bin/python3 llm/run_silver.py \\
+        --model runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7 \\
+        --articles data/raw/kegg_recon3d/articles.json --matches none \\
+        --pmids data/raw/kegg_recon3d/pmids.txt \\
+        --output data/processed/kegg_recon3d/pathway_spans.jsonl
 """
 
 import argparse
@@ -73,10 +100,11 @@ from tqdm import tqdm
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "llm"))
 
+from annotators import resolve_annotator  # noqa: E402
 from booster import boost, merge  # noqa: E402
 from canonicalize import canonicalize, match_type_for  # noqa: E402
-from extract_guided import LLMCallError, extract_guided  # noqa: E402
-from models import DEFAULT, ModelSpec, resolve  # noqa: E402
+from extract_guided import LLMCallError  # noqa: E402
+from models import DEFAULT  # noqa: E402
 
 MATCHES_FILE = ROOT / "data/processed/exact_matches.jsonl"
 ARTICLES_FILE = ROOT / "data/raw/articles.json"
@@ -221,14 +249,22 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s  %(levelname)-8s  %(
 log = logging.getLogger(__name__)
 
 
-def load_query_pathways() -> dict[str, list[str]]:
+def load_query_pathways(path: Optional[Path] = None) -> dict[str, list[str]]:
     """pmid -> query pathway names.
 
     `exact_matches.jsonl` carries `pathway_id: null` rows (pairs Step 2 found no span
     for), which must not leak into the prompt hints or the export metadata.
+
+    Returns `{}` when no matches file is given. Query pathways are an LLM prompt hint
+    (llm/extract_guided.py) and metadata; a corpus that has none — or an annotator
+    that does not read the abstract's retrieval query, i.e. every NER checkpoint —
+    runs fine without them, so their absence must not silently drop every pmid.
     """
+    path = path or MATCHES_FILE
+    if path is None:
+        return {}
     by_pmid: dict[str, set[str]] = defaultdict(set)
-    with MATCHES_FILE.open(encoding="utf-8") as fh:
+    with path.open(encoding="utf-8") as fh:
         for line in fh:
             if line.strip():
                 r = json.loads(line)
@@ -239,17 +275,26 @@ def load_query_pathways() -> dict[str, list[str]]:
     return {k: sorted(v) for k, v in by_pmid.items()}
 
 
-def load_categories() -> dict[str, str]:
-    """pmid -> primary disease category (deterministic when a pmid has several)."""
+def load_categories(path: Optional[Path] = None) -> dict[str, str]:
+    """pmid -> primary disease category (deterministic when a pmid has several).
+
+    Only the stratified sampler uses this; a `--pmids` run never touches it, which
+    is why a missing pairs file is not an error.
+    """
+    path = path or PAIRS_FILE
+    if path is None or not path.exists():
+        return {}
     cats: dict[str, set[str]] = defaultdict(set)
-    for rec in json.loads(PAIRS_FILE.read_text(encoding="utf-8")):
+    for rec in json.loads(path.read_text(encoding="utf-8")):
         for pmid in rec.get("pmids", []):
             cats[str(pmid)].add(rec["disease_category"])
     return {p: sorted(c)[0] for p, c in cats.items()}
 
 
-def load_abstracts() -> dict[str, str]:
-    arts = json.loads(ARTICLES_FILE.read_text(encoding="utf-8"))
+def load_abstracts(path: Optional[Path] = None) -> dict[str, str]:
+    """pmid -> abstract, from any file in the `articles.json` record shape."""
+    path = path or ARTICLES_FILE
+    arts = json.loads(path.read_text(encoding="utf-8"))
     return {str(a["pmid"]): (a.get("abstract") or "").strip() for a in arts}
 
 
@@ -306,46 +351,53 @@ def select_sample(n: int, seed: int, qmap, abstracts, cats,
     return sample[:n]
 
 
-def _annotate(spans: list[dict], text: str, pmid: str, model: str, qps: list[str]) -> dict:
+def _annotate(spans: list[dict], text: str, pmid: str, model: str, qps: list[str],
+              source: str = "llm_silver") -> dict:
     """Derive canonical/match_type from raw (surface, offset, source) spans.
 
     Cheap and deterministic — kept separate from the LLM call so that a canonicalizer
     change can be re-applied over the cache without paying for inference again
     (see --recanonicalize).
+
+    `source` names the annotator that produced the non-booster spans ("llm_silver"
+    for the Ollama path, "ner:<checkpoint>" for a token classifier), so a record
+    always says what wrote it.
     """
     out = []
     for s in spans:
         if s.get("source") == "booster":
             canonical = s["canonical"]          # the booster knows what it searched for
             mtype = match_type_for(s["surface"], canonical)
-            source = "booster"
+            span_source = "booster"
         else:
             canonical, mtype = canonicalize(s["surface"])
-            source = "llm_silver"
+            span_source = source
         out.append({
             "start": s["start"], "end": s["end"], "text": s["surface"],
-            "canonical": canonical, "match_type": mtype, "source": source,
+            "canonical": canonical, "match_type": mtype, "source": span_source,
         })
     return {"pmid": pmid, "model": model, "query_pathways": qps, "spans": out}
 
 
-def _rebuild_from_cached(rec: dict, text: str) -> list[dict]:
-    """Rebuild raw spans from cache without an LLM call.
+def _rebuild_from_cached(rec: dict, text: str, booster: bool = True) -> list[dict]:
+    """Rebuild raw spans from cache without calling the annotator again.
 
-    Only the LLM spans are recovered from cache — the booster is re-run from scratch
-    (pure regex, free) because its own canonical assignment is baked into the cached
-    record and must not survive a booster change. merge() is re-applied too.
+    Only the annotator's own spans are recovered from cache — the booster is re-run
+    from scratch (pure regex, free) because its own canonical assignment is baked
+    into the cached record and must not survive a booster change. merge() is
+    re-applied too. The test is "not booster" rather than a specific source string,
+    so it holds for every annotator.
     """
-    llm_spans = [{"surface": s["text"], "start": s["start"], "end": s["end"]}
-                 for s in rec["spans"] if s["source"] == "llm_silver"]
-    return merge(llm_spans, boost(text))
+    model_spans = [{"surface": s["text"], "start": s["start"], "end": s["end"]}
+                   for s in rec["spans"] if s["source"] != "booster"]
+    return merge(model_spans, boost(text)) if booster else model_spans
 
 
-def cache_dir_for(spec: ModelSpec) -> Path:
-    return CACHE_ROOT / spec.cache_slug
+def cache_dir_for(annotator) -> Path:
+    return CACHE_ROOT / annotator.cache_slug
 
 
-def freeze_pmids(records: list[dict], output: Path, spec: ModelSpec, seed: int,
+def freeze_pmids(records: list[dict], output: Path, annotator, seed: int,
                  sampled: bool) -> Path:
     """Write the effective sample to `<output stem>_pmids.txt`, in output order.
 
@@ -364,7 +416,7 @@ def freeze_pmids(records: list[dict], output: Path, spec: ModelSpec, seed: int,
     path.write_text(
         f"# Frozen PMID list for {output.name}.\n"
         f"{how}\n"
-        f"# Model: {spec.tag}. Written in output order — this is the *effective*\n"
+        f"# Model: {annotator.tag}. Written in output order — this is the *effective*\n"
         f"# sample: golden pmids, pmids without an abstract and failed LLM calls are\n"
         f"# already excluded, so re-running to retry failures can grow this list.\n"
         f"# Feed to run_silver.py --pmids to reproduce this run.\n"
@@ -373,39 +425,58 @@ def freeze_pmids(records: list[dict], output: Path, spec: ModelSpec, seed: int,
     return path
 
 
-def process_one(pmid: str, text: str, qps: list[str], spec: ModelSpec,
-                recanonicalize: bool = False) -> Optional[dict]:
-    """Silver record for one abstract, or None if the LLM call failed.
+def process_batch(items: list[tuple[str, str, list[str]]], annotator,
+                  booster: bool = True,
+                  recanonicalize: bool = False) -> list[Optional[dict]]:
+    """Records for a batch of (pmid, text, query_pathways), None where a call failed.
 
-    A failed call is deliberately **not** cached. Its empty result is
-    indistinguishable from "this abstract mentions no pathway", and since the cache
-    file is the resume key, caching it would bake the loss in permanently — every
-    later run would skip the pmid. Returning None leaves it unprocessed so a re-run
-    retries it.
+    Cached pmids never reach the annotator, so a batch is only as large as its
+    uncached members. The annotator sees one call for the whole batch — that is the
+    point for a GPU-batched NER checkpoint; the LLM annotator declares batch_size 1
+    so a failed generation stays attributable to its own pmid.
 
-    The cache is scoped per model (`<cache root>/<model slug>/<pmid>.json`). Keying
-    on pmid alone would make a model swap replay the previous model's answers for
-    every abstract already seen — a successful-looking run that cannot re-label.
+    Failure handling mirrors the single-call rule below: a raised LLMCallError marks
+    every item of that batch as failed rather than caching an empty answer.
     """
-    model = spec.tag
-    cache = cache_dir_for(spec) / f"{pmid}.json"
-    if cache.exists():
-        rec = json.loads(cache.read_text(encoding="utf-8"))
-        if not recanonicalize:
-            return rec
-        rec = _annotate(_rebuild_from_cached(rec, text), text, pmid, model, qps)
-        cache.write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
-        return rec
+    out: list[Optional[dict]] = [None] * len(items)
+    pending: list[int] = []
+    for i, (pmid, text, qps) in enumerate(items):
+        cache = cache_dir_for(annotator) / f"{pmid}.json"
+        if cache.exists():
+            rec = json.loads(cache.read_text(encoding="utf-8"))
+            if not recanonicalize:
+                out[i] = rec
+                continue
+            rec = _annotate(_rebuild_from_cached(rec, text, booster), text, pmid,
+                            annotator.tag, qps, source=annotator.source)
+            cache.write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
+            out[i] = rec
+            continue
+        if recanonicalize:      # nothing cached to re-derive; never call the model
+            continue
+        pending.append(i)
+
+    if not pending:
+        return out
 
     try:
-        llm_spans = extract_guided(text, qps, model=model)
+        produced = annotator.spans_batch(
+            [(items[i][1], items[i][2]) for i in pending])
     except LLMCallError as exc:
-        log.warning("%s — LLM call failed, not cached (re-run to retry): %s", pmid, exc)
-        return None
-    merged = merge(llm_spans, boost(text))
-    rec = _annotate(merged, text, pmid, model, qps)
-    cache.write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
-    return rec
+        log.warning("%s — annotator call failed, not cached (re-run to retry): %s",
+                    ", ".join(items[i][0] for i in pending), exc)
+        return out
+
+    for i, spans in zip(pending, produced):
+        pmid, text, qps = items[i]
+        merged = merge(spans, boost(text)) if booster else spans
+        rec = _annotate(merged, text, pmid, annotator.tag, qps, source=annotator.source)
+        (cache_dir_for(annotator) / f"{pmid}.json").write_text(
+            json.dumps(rec, ensure_ascii=False), encoding="utf-8")
+        out[i] = rec
+    return out
+
+
 
 
 def main() -> None:
@@ -421,11 +492,33 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=None,
                     help="process only the first N of the sample (throughput check)")
     ap.add_argument("--seed", type=int, default=42)
-    ap.add_argument("--model", default=MODEL)
+    ap.add_argument("--model", default=MODEL,
+                    help="ollama registry key/tag (LLM annotator, the default) OR a "
+                         "path to a fine-tuned NER checkpoint directory, e.g. "
+                         "runs-truba-checkpoints/pathway-10k/biom-electra-large/"
+                         "lr3e-05/seed7. The dispatch is a disk check — see "
+                         "llm/annotators.py")
+    ap.add_argument("--articles", default=None, metavar="FILE",
+                    help=f"abstracts in articles.json shape (default {ARTICLES_FILE})")
+    ap.add_argument("--matches", default=None, metavar="FILE",
+                    help=f"pmid -> query pathways, exact_matches.jsonl shape (default "
+                         f"{MATCHES_FILE}). Pass 'none' for a corpus without them: "
+                         f"they are an LLM prompt hint, and no NER checkpoint reads "
+                         f"them")
+    ap.add_argument("--pairs", default=None, metavar="FILE",
+                    help=f"disease categories for stratified sampling, unused with "
+                         f"--pmids (default {PAIRS_FILE})")
     ap.add_argument("--output", default=str(OUTPUT_FILE))
+    ap.add_argument("--batch-size", type=int, default=None,
+                    help="override the annotator's batch size (NER only; the LLM "
+                         "annotator is one request per abstract by construction)")
+    ap.add_argument("--no-booster", dest="booster", action="store_false",
+                    help="skip the deterministic recall booster (llm/booster.py). It "
+                         "was tuned to patch LLM recall gaps; a NER checkpoint may "
+                         "not need it — measure before assuming either way")
     ap.add_argument("--recanonicalize", action="store_true",
-                    help="re-derive canonical/match_type over the cache, no LLM calls "
-                         "(use after changing llm/canonicalize.py)")
+                    help="re-derive canonical/match_type over the cache, no model "
+                         "calls (use after changing llm/canonicalize.py)")
     ap.add_argument("--no-freeze", action="store_true",
                     help="skip writing <output stem>_pmids.txt")
     args = ap.parse_args()
@@ -433,14 +526,17 @@ def main() -> None:
         ap.error("--exclude is meaningless with --pmids, which runs an explicit list "
                  "rather than sampling")
 
-    spec = resolve(args.model)
-    cache_dir = cache_dir_for(spec)
+    ner_kwargs = {"batch_size": args.batch_size} if args.batch_size else {}
+    annotator = resolve_annotator(args.model, **ner_kwargs)
+    cache_dir = cache_dir_for(annotator)
     cache_dir.mkdir(parents=True, exist_ok=True)
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
 
-    qmap = load_query_pathways()
-    abstracts = load_abstracts()
-    cats = load_categories()
+    matches_file = (None if (args.matches or "").lower() == "none"
+                    else Path(args.matches) if args.matches else MATCHES_FILE)
+    qmap = load_query_pathways(matches_file)
+    abstracts = load_abstracts(Path(args.articles) if args.articles else None)
+    cats = load_categories(Path(args.pairs) if args.pairs else None)
 
     if args.pmids:
         sample = load_pmid_files(args.pmids)
@@ -450,37 +546,47 @@ def main() -> None:
         if leaked:
             log.warning("Dropped %d GOLDEN pmid(s) from --pmids (never allowed in "
                         "silver): %s", len(leaked), ", ".join(leaked))
-        missing = [p for p in sample
-                   if p not in leaked and (p not in abstracts or p not in qmap)]
+        # Only the abstract is required. A pmid absent from qmap simply has no query
+        # pathways — an empty hint for the LLM, nothing at all for a NER checkpoint.
+        missing = [p for p in sample if p not in leaked and p not in abstracts]
         if missing:
-            log.warning("Dropped %d pmid(s) with no abstract/query-pathway data: %s%s",
+            log.warning("Dropped %d pmid(s) with no abstract: %s%s",
                         len(missing), ", ".join(missing[:10]),
                         " …" if len(missing) > 10 else "")
         drop = set(leaked) | set(missing)
         sample = [p for p in sample if p not in drop]
         log.info("Sample: %d pmids from %d frozen file(s) — no sampling | model=%s",
-                 len(sample), len(args.pmids), spec.tag)
+                 len(sample), len(args.pmids), annotator.tag)
     else:
         excluded = set(load_pmid_files(args.exclude))
-        sample = select_sample(args.n, args.seed, qmap, abstracts, cats, exclude=excluded)
+        pool = qmap or {p: [] for p in abstracts}
+        sample = select_sample(args.n, args.seed, pool, abstracts, cats, exclude=excluded)
         log.info("Sample: %d pmids (golden + %d excluded, seed=%d) | model=%s",
-                 len(sample), len(excluded), args.seed, spec.tag)
+                 len(sample), len(excluded), args.seed, annotator.tag)
+    log.info("Annotator: %s | input window %s | booster %s",
+             annotator, annotator.max_input, "on" if args.booster else "off")
     log.info("Cache : %s", cache_dir)
 
     if args.limit:
         sample = sample[:args.limit]
 
+    batch_size = getattr(annotator, "batch_size", 1)
     records, cached, failed = [], 0, 0
     t0 = time.time()
-    for pmid in tqdm(sample, desc="Silver", unit="abstract"):
-        was_cached = (cache_dir / f"{pmid}.json").exists()
-        rec = process_one(pmid, abstracts[pmid], qmap[pmid], spec,
-                          recanonicalize=args.recanonicalize)
-        if rec is None:          # failed call — omitted, not cached, retried next run
-            failed += 1
-            continue
-        records.append(rec)
-        cached += was_cached
+    with tqdm(total=len(sample), desc="Silver", unit="abstract") as bar:
+        for i in range(0, len(sample), batch_size):
+            chunk = sample[i:i + batch_size]
+            was_cached = [(cache_dir / f"{p}.json").exists() for p in chunk]
+            out = process_batch(
+                [(p, abstracts[p], qmap.get(p, [])) for p in chunk],
+                annotator, booster=args.booster, recanonicalize=args.recanonicalize)
+            for rec, hit in zip(out, was_cached):
+                if rec is None:   # failed call — omitted, not cached, retried next run
+                    failed += 1
+                    continue
+                records.append(rec)
+                cached += hit
+            bar.update(len(chunk))
 
     elapsed = time.time() - t0
     with Path(args.output).open("w", encoding="utf-8") as fh:
@@ -496,7 +602,7 @@ def main() -> None:
         log.warning("Not freezing pmids: --limit %d makes this a partial sample.",
                     args.limit)
     else:
-        frozen = freeze_pmids(records, Path(args.output), spec, args.seed,
+        frozen = freeze_pmids(records, Path(args.output), annotator, args.seed,
                               sampled=not args.pmids)
 
     # ---- stats ----------------------------------------------------------------
@@ -510,7 +616,7 @@ def main() -> None:
     log.info("Output           : %s", args.output)
     if frozen:
         log.info("Frozen pmids     : %s", frozen)
-    log.info("Model / cache    : %s  ->  %s", spec.tag, cache_dir)
+    log.info("Model / cache    : %s  ->  %s", annotator.tag, cache_dir)
     log.info("Abstracts        : %d/%d  (fresh %d, cached %d)",
              len(records), len(sample), fresh, cached)
     if failed:

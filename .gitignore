@@ -204,3 +204,6 @@ data/reviews/*
 # The CSV, the derived query_pathways.jsonl and pmids.txt stay tracked — they are
 # the inputs that define the corpus.
 data/raw/kegg_recon3d/articles.json
+data/raw/kegg_recon3d/fulltext_50/
+# Shared with the main checkout rather than re-fetched per worktree.
+data/raw/llm_cache_silver

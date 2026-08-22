@@ -15,13 +15,12 @@ Reuses `fetch_articles.fetch_pubmed_batch`, so the shared cache
 (`data/raw/article_cache/pubmed_<pmid>.json`) is hit for PMIDs already fetched by
 the main pipeline and the run is resumable.
 
-Outputs (all under data/raw/kegg_recon3d/):
-    articles.json       — [{pmid, title, abstract, year, journal, doi, pub_types,
-                            keywords, mesh_headings, source_csv_rows: [...]}]
-    query_pathways.jsonl — {pmid, pathway_id, pathway_name} per CSV row, mirroring
-                           data/processed/exact_matches.jsonl (the silver runner's
-                           prompt-hint input)
-    pmids.txt            — one PMID per line, in CSV order, for --pmids reruns
+Outputs (both under data/raw/kegg_recon3d/):
+    articles.json  — [{pmid, title, abstract, year, journal, doi, pub_types,
+                       keywords, mesh_headings, source_csv_rows: [...]}]
+                     `source_csv_rows` keeps the pathway/disease link each PMID is
+                     evidence for, so the CSV never has to be re-joined downstream.
+    pmids.txt      — one PMID per line, in CSV order, for `run_silver.py --pmids`
 
 Run from repo root:
     venv310/bin/python3 pubmed_api/fetch_kegg_abstracts.py
@@ -97,19 +96,6 @@ def main() -> None:
 
     (out_dir / "articles.json").write_text(
         json.dumps(articles, ensure_ascii=False, indent=2), encoding="utf-8")
-
-    with (out_dir / "query_pathways.jsonl").open("w", encoding="utf-8") as fh:
-        for a in articles:
-            seen = set()
-            for row in a["source_csv_rows"]:
-                key = (row["pathway_id"], row["pathway_name"])
-                if key in seen:
-                    continue
-                seen.add(key)
-                fh.write(json.dumps({"pmid": a["pmid"],
-                                     "pathway_id": row["pathway_id"],
-                                     "pathway_name": row["pathway_name"]},
-                                    ensure_ascii=False) + "\n")
 
     (out_dir / "pmids.txt").write_text(
         "# PMIDs of kegg_recon3d_matched_pathways.csv, CSV order, abstract fetched.\n"
