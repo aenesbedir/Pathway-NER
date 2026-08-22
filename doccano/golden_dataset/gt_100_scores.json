@@ -13,56 +13,137 @@
     {
       "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-base/lr5e-05/seed7",
       "max_tokens": 512,
-      "seqeval": {"f1": 0.8059, "precision": 0.8289, "recall": 0.7842},
-      "partial": {"threshold": 0.5, "f1": 0.9004, "precision": 0.9278, "recall": 0.8746}
+      "seqeval": {
+        "f1": 0.8059,
+        "precision": 0.8289,
+        "recall": 0.7842
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.9004,
+        "precision": 0.9278,
+        "recall": 0.8746
+      }
     },
     {
       "model": "runs-truba-checkpoints/pathway-10k/biomedbert-base/lr5e-05/seed1",
       "max_tokens": 512,
-      "seqeval": {"f1": 0.8141, "precision": 0.8423, "recall": 0.7878},
-      "partial": {"threshold": 0.5, "f1": 0.898, "precision": 0.9308, "recall": 0.8674}
+      "seqeval": {
+        "f1": 0.8141,
+        "precision": 0.8423,
+        "recall": 0.7878
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.898,
+        "precision": 0.9308,
+        "recall": 0.8674
+      }
     },
     {
       "model": "runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7",
       "max_tokens": 512,
-      "seqeval": {"f1": 0.8358, "precision": 0.8682, "recall": 0.8058},
-      "partial": {"threshold": 0.5, "f1": 0.8939, "precision": 0.9302, "recall": 0.8602}
+      "seqeval": {
+        "f1": 0.8358,
+        "precision": 0.8682,
+        "recall": 0.8058
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.8939,
+        "precision": 0.9302,
+        "recall": 0.8602
+      }
     },
     {
       "model": "runs-truba-checkpoints/pathway-10k/bioelectra-base/lr3e-05/seed7",
       "max_tokens": 512,
-      "seqeval": {"f1": 0.8194, "precision": 0.8494, "recall": 0.7914},
-      "partial": {"threshold": 0.5, "f1": 0.8922, "precision": 0.9266, "recall": 0.8602}
+      "seqeval": {
+        "f1": 0.8194,
+        "precision": 0.8494,
+        "recall": 0.7914
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.8922,
+        "precision": 0.9266,
+        "recall": 0.8602
+      }
     },
     {
       "model": "models/pathway-ner-gold-wave4-random-all-biomedbert-base",
       "max_tokens": 512,
-      "seqeval": {"f1": 0.8126, "precision": 0.8391, "recall": 0.7878},
-      "partial": {"threshold": 0.5, "f1": 0.8926, "precision": 0.9234, "recall": 0.8638}
+      "seqeval": {
+        "f1": 0.8126,
+        "precision": 0.8391,
+        "recall": 0.7878
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.8926,
+        "precision": 0.9234,
+        "recall": 0.8638
+      }
     },
     {
       "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-large/lr3e-05/seed1",
       "max_tokens": 512,
-      "seqeval": {"f1": 0.7815, "precision": 0.8053, "recall": 0.759},
-      "partial": {"threshold": 0.5, "f1": 0.8835, "precision": 0.9122, "recall": 0.8566}
+      "seqeval": {
+        "f1": 0.7815,
+        "precision": 0.8053,
+        "recall": 0.759
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.8835,
+        "precision": 0.9122,
+        "recall": 0.8566
+      }
     },
     {
       "model": "models/pathway-ner-gold-wave4-biomedbert-base-min30",
       "max_tokens": 512,
-      "seqeval": {"f1": 0.797, "precision": 0.8182, "recall": 0.777},
-      "partial": {"threshold": 0.5, "f1": 0.8913, "precision": 0.9167, "recall": 0.8674}
+      "seqeval": {
+        "f1": 0.797,
+        "precision": 0.8182,
+        "recall": 0.777
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.8913,
+        "precision": 0.9167,
+        "recall": 0.8674
+      }
     },
     {
       "model": "models/pathway-ner-gold-wave4-biomedbert-base",
       "max_tokens": 512,
-      "seqeval": {"f1": 0.7537, "precision": 0.7829, "recall": 0.7266},
-      "partial": {"threshold": 0.5, "f1": 0.8529, "precision": 0.8876, "recall": 0.8208}
+      "seqeval": {
+        "f1": 0.7537,
+        "precision": 0.7829,
+        "recall": 0.7266
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.8529,
+        "precision": 0.8876,
+        "recall": 0.8208
+      }
     },
     {
       "model": "models/pathway-ner-gold-wave4-random-all-bio-modernbert-base",
       "max_tokens": 8192,
-      "seqeval": {"f1": 0.7394, "precision": 0.7266, "recall": 0.7527},
-      "partial": {"threshold": 0.5, "f1": 0.8451, "precision": 0.8304, "recall": 0.8602}
+      "seqeval": {
+        "f1": 0.7394,
+        "precision": 0.7266,
+        "recall": 0.7527
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.8451,
+        "precision": 0.8304,
+        "recall": 0.8602
+      }
     }
   ],
   "span_sources": [
@@ -72,13 +153,31 @@
       "n_pmids": 100,
       "n_pmids_with_predictions": 91,
       "n_pred_spans": 261,
-      "exact_span": {"f1": 0.8815, "precision": 0.9119, "recall": 0.853},
-      "partial": {"threshold": 0.5, "f1": 0.9259, "precision": 0.9579, "recall": 0.8961},
+      "exact_span": {
+        "f1": 0.8815,
+        "precision": 0.9119,
+        "recall": 0.853
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.9259,
+        "precision": 0.9579,
+        "recall": 0.8961
+      },
       "superseded_91_pmid_basis": {
         "note": "earlier figure, scored only on the 91 PMIDs present in matches.jsonl; kept for traceability",
         "n_pmids": 91,
-        "exact_span": {"f1": 0.8848, "precision": 0.9119, "recall": 0.8592},
-        "partial": {"threshold": 0.5, "f1": 0.9294, "precision": 0.9579, "recall": 0.9025}
+        "exact_span": {
+          "f1": 0.8848,
+          "precision": 0.9119,
+          "recall": 0.8592
+        },
+        "partial": {
+          "threshold": 0.5,
+          "f1": 0.9294,
+          "precision": 0.9579,
+          "recall": 0.9025
+        }
       }
     },
     {
@@ -88,9 +187,59 @@
       "n_pmids": 100,
       "n_pmids_with_predictions": 87,
       "n_pred_spans": 223,
-      "exact_span": {"f1": 0.7689, "precision": 0.8655, "recall": 0.6918},
-      "partial": {"threshold": 0.5, "f1": 0.8008, "precision": 0.9013, "recall": 0.7204},
+      "exact_span": {
+        "f1": 0.7689,
+        "precision": 0.8655,
+        "recall": 0.6918
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.8008,
+        "precision": 0.9013,
+        "recall": 0.7204
+      },
       "observation": "Precision is respectable but recall is the bottleneck: 223 predicted spans against 279 gold, and 76 gold spans have zero overlapping LLM span. The misses are systematically free-text pathway mentions outside the query vocabulary ('production of reactive oxygen species', 'AA cascade', 'DNPS pathway', 'energy metabolism'). By match_type the produced spans are near-perfect (exact 69/70, synonym 7/7, variation 25/26 land on gold); only unmapped lags at 92/120. The silver therefore scores below the NER models trained from it."
+    },
+    {
+      "pipeline": "llm/run_silver.py with --model <checkpoint> (llm/annotators.py NERAnnotator: 512-token windows, stride 64, word-level offsets), --articles doccano/golden_dataset/gt_100.jsonl --text-field text --matches none --all --allow-golden",
+      "model": "runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7",
+      "n_pmids": 100,
+      "source": "NER checkpoint via run_silver, booster on",
+      "predictions": "data/processed/gt_100/ner_biom_electra_booster.jsonl",
+      "n_pmids_with_predictions": 89,
+      "n_pred_spans": 260,
+      "exact_span": {
+        "f1": 0.8386,
+        "precision": 0.8692,
+        "recall": 0.81
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.9017,
+        "precision": 0.9346,
+        "recall": 0.871
+      }
+    },
+    {
+      "pipeline": "llm/run_silver.py with --model <checkpoint> (llm/annotators.py NERAnnotator: 512-token windows, stride 64, word-level offsets), --articles doccano/golden_dataset/gt_100.jsonl --text-field text --matches none --all --allow-golden",
+      "model": "runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7",
+      "n_pmids": 100,
+      "source": "NER checkpoint via run_silver, booster off",
+      "predictions": "data/processed/gt_100/ner_biom_electra_nobooster.jsonl",
+      "n_pmids_with_predictions": 89,
+      "n_pred_spans": 259,
+      "exact_span": {
+        "f1": 0.8364,
+        "precision": 0.8687,
+        "recall": 0.8065
+      },
+      "partial": {
+        "threshold": 0.5,
+        "f1": 0.8996,
+        "precision": 0.9344,
+        "recall": 0.8674
+      },
+      "observation": "The booster (llm/booster.py) adds exactly one span over these 100 abstracts and it is a true positive: exact F1 0.8364 -> 0.8386. It was built to patch LLM recall gaps and has almost nothing left to add on top of a NER checkpoint, which already finds the Recon vocabulary itself. Keeping it on is free and costs no precision here; it is not what makes this source strong. Scored with scripts/compare_vs_gt100.py, so these are character-offset set matches, comparable to the other span_sources rows and NOT to the seqeval numbers under `models` — though for this checkpoint they agree to 0.002, which is itself evidence the word-level offset decoding is right."
     }
   ]
 }

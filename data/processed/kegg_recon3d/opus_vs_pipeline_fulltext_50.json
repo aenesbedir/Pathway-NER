@@ -1,0 +1,144 @@
+{
+  "a": "opus_revised",
+  "b": "pipeline_ner",
+  "a_file": "data/processed/kegg_recon3d/opus_prediction_fulltext_50_revised.jsonl",
+  "b_file": "data/processed/kegg_recon3d/pathway_spans_fulltext_50.jsonl",
+  "n_docs": 50,
+  "docs_with_any": {
+    "a": 37,
+    "b": 37
+  },
+  "distinct_names": {
+    "a": 161,
+    "b": 166
+  },
+  "agreed": 169,
+  "a_only": 67,
+  "b_only": 70,
+  "jaccard": 0.5523,
+  "doc_level_agreement": "48/50",
+  "top_a_only": [
+    [
+      "intermediary metabolism",
+      3
+    ],
+    [
+      "anaplerosis",
+      2
+    ],
+    [
+      "carbohydrate metabolism",
+      2
+    ],
+    [
+      "phospholipid biosynthesis",
+      2
+    ],
+    [
+      "pi4ka",
+      1
+    ],
+    [
+      "pi 4 p phosphatidylserine metabolism",
+      1
+    ],
+    [
+      "fe s cluster biosynthesis",
+      1
+    ],
+    [
+      "tryptophan degradation",
+      1
+    ],
+    [
+      "nad biosynthesis",
+      1
+    ],
+    [
+      "gpl biosynthesis",
+      1
+    ],
+    [
+      "abhd16a abhd12",
+      1
+    ],
+    [
+      "betaine homocysteine methyltransferase bhmt",
+      1
+    ],
+    [
+      "intracellular cbl metabolism",
+      1
+    ],
+    [
+      "fat oxidation",
+      1
+    ],
+    [
+      "beta oxidation",
+      1
+    ]
+  ],
+  "top_b_only": [
+    [
+      "energy metabolism",
+      3
+    ],
+    [
+      "fatty acid synthesis",
+      2
+    ],
+    [
+      "synthesis of glycogen",
+      2
+    ],
+    [
+      "phosphatidylserine metabolism",
+      1
+    ],
+    [
+      "keto",
+      1
+    ],
+    [
+      "cholesterol and lipid metabolism",
+      1
+    ],
+    [
+      "lysine and tryptophan degradation",
+      1
+    ],
+    [
+      "nad biosynthesis33",
+      1
+    ],
+    [
+      "central metabolism10",
+      1
+    ],
+    [
+      "degradation of lysine",
+      1
+    ],
+    [
+      "tryptophan and lysine amino acid degradation",
+      1
+    ],
+    [
+      "production of tryptophan",
+      1
+    ],
+    [
+      "degradation of a number of sphingolipids",
+      1
+    ],
+    [
+      "transcarboxylation domain",
+      1
+    ],
+    [
+      "biotin carboxylation domain",
+      1
+    ]
+  ]
+}
