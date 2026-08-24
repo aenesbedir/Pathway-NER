@@ -38,20 +38,37 @@ from pathlib import Path
 from schema import read_jsonl
 
 
-def key_strict(r: dict):
+def keys_strict(r: dict) -> list:
+    """Every identity a record can be matched on, strongest first.
+
+    A record written by the teacher carries a `candidate_id`; one written by hand
+    against the same spans does not. Returning both identities lets the two match,
+    which a single-key function cannot do - keying on `candidate_id` when present
+    and on spans otherwise means the two sides never compare equal at all.
+    """
+    keys = []
     if r.get("candidate_id"):
-        return ("cid", r["candidate_id"])
-    return (
-        "span",
-        str(r["pmid"]),
-        r["pathway"]["start"],
-        r["pathway"]["end"],
-        r["disease"]["start"],
-        r["disease"]["end"],
+        keys.append(("cid", r["candidate_id"]))
+    keys.append(
+        (
+            "span",
+            str(r["pmid"]),
+            r["pathway"]["start"],
+            r["pathway"]["end"],
+            r["disease"]["start"],
+            r["disease"]["end"],
+        )
     )
+    return keys
 
 
 def key_loose(r: dict):
+    """Same pathway mention, any disease mention.
+
+    Two annotators often pick different mentions of the same disease in one
+    abstract. Counting those as non-overlapping understates agreement, so they are
+    matched here and reported as a separate, weaker tier.
+    """
     return (str(r["pmid"]), r["pathway"]["start"], r["pathway"]["end"])
 
 
@@ -114,14 +131,17 @@ def main() -> None:
         return rows
 
     A, B = load(args.a), load(args.b)
-    Bs = {key_strict(r): r for r in B}
+    Bs: dict = {}
+    for r in B:
+        for k in keys_strict(r):
+            Bs.setdefault(k, r)
     Bl = defaultdict(list)
     for r in B:
         Bl[key_loose(r)].append(r)
 
     strict, loose_only, missing = [], [], []
     for r in A:
-        hit = Bs.get(key_strict(r))
+        hit = next((Bs[k] for k in keys_strict(r) if k in Bs), None)
         if hit is not None:
             strict.append((r, hit))
             continue
