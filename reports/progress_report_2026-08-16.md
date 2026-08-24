@@ -373,6 +373,74 @@ used here.
 
 ---
 
+## 6. Answers to questions (added 2026-08-24)
+
+This section records answers to questions raised during review of this report.
+
+### 6.1 What do the BIO labels `O`, `B-Pathway`, and `I-Pathway` represent?
+
+The three labels operate at token level. `B-Pathway` marks the first token of a
+pathway mention (Begin), `I-Pathway` marks its continuation tokens (Inside), and
+`O` marks every token that is not part of any pathway mention (Outside). For
+example, in "the MAPK signaling pathway is...", "MAPK" is `B-Pathway`,
+"signaling" and "pathway" are `I-Pathway`, and the remaining tokens are `O`.
+Fine-tuning therefore trains a three-class token classifier. Because the vast
+majority of tokens are `O`, the cross-entropy loss uses per-class weights (the
+coefficients in Section 4.1; Section 4.2 reports experiments with alternative
+weightings).
+
+### 6.2 How were the 98 target diseases selected?
+
+The selection was a manual curation validated against MeSH, not an automatic
+procedure. First, all descriptors under the three MeSH tree branches C04
+(Neoplasms), C10.574 (Neurodegenerative Diseases), and C18 (Nutritional and
+Metabolic Diseases) were retrieved, yielding 834 unique descriptors (Section
+3.1). From this pool, a hand-curated target list of 100 diseases was defined in
+`pubmed_api/select_diseases.py`, chosen for clinical importance, literature
+volume, and plausible association with metabolic pathways, while keeping all
+three categories represented. Each target name was resolved to an official MeSH
+descriptor (exact match, then partial match, then a direct NCBI E-utilities
+lookup), which attaches a MeSH ID and official synonyms to every disease. Two
+targets resolved to descriptors already selected ("Carcinoma, Non-Small-Cell
+Lung" and "Dementia") and were deduplicated by MeSH ID, leaving 98 diseases:
+37 cancer, 28 neurodegenerative, and 33 metabolic.
+
+### 6.3 Do the silver annotations contain the query terms that retrieved each abstract?
+
+Since every abstract was retrieved by a
+`("<pathway>"[Title/Abstract]) AND ("<disease>"[Title/Abstract])` query, the
+query terms are known to co-occur with the article, and their absence from the
+annotations would signal missed entities. The script
+`scripts/compare_query_string_vs_predicted.py` measures this on the combined
+10,125-document corpus. Exact match requires an annotated span whose normalized
+token set equals a query term's token set (order-insensitive, so inverted MeSH
+forms match natural word order). Word overlap requires at least one shared
+content word, excluding generic words such as "pathway", "metabolism",
+"disease", and "cancer".
+
+| Measure | PATHWAY | DISEASE |
+|---|---:|---:|
+| Documents with query terms | 10,125 | 10,125 |
+| Documents with zero spans of the type | 957 (9.5%) | 110 (1.1%) |
+| Exact query-term match | 7,835 (77.4%) | 6,998 (69.1%) |
+| At least one content-word overlap | 8,828 (87.2%) | 9,421 (93.0%) |
+| Overlap among documents with spans | 96.3% | 94.1% |
+| No overlap at all | 1,297 (12.8%) | 704 (7.0%) |
+| ...of which the term occurs verbatim in the abstract | 627 | 300 |
+
+Interpretation: coverage is high. Exact-match rates are lower for diseases
+because official MeSH names ("Breast Neoplasms") rarely appear verbatim in
+abstracts ("breast cancer"). Most no-overlap cases are not annotation errors:
+the query matched Title OR Abstract while the annotated text is the abstract
+only, and inspected examples are abbreviations ("Trp metabolism" for
+"tryptophan metabolism"), synonyms ("retinol metabolism" for "vitamin A
+metabolism"), or cell-line contexts ("SH-SY5Y human neuroblastoma cells", which
+is arguably not a disease mention). The verbatim-in-abstract rows are therefore
+an upper bound on true annotation misses: at most 6.2% of documents for
+pathways and 3.0% for diseases.
+
+---
+
 ## Appendix A. Pathway query coverage
 
 `Pair queries with hits` is the number of the 98 disease pairings that returned at
