@@ -224,10 +224,24 @@ def label_document(teacher, cache_dir: Path, pmid: str, cands: list[Candidate]):
     abstract = cands[0].abstract
     cache_file = cache_dir / f"{pmid}.json"
     status = "cached"
+    want_ids = [c.candidate_id for c in cands]
 
+    payload = None
     if cache_file.exists():
-        payload = json.loads(cache_file.read_text())
-    else:
+        cached = json.loads(cache_file.read_text())
+        # The response answers one specific list of pairs, but the cache is keyed
+        # on the PMID alone. Two candidate files can cover the same abstract with
+        # different pairs - a different stratum sample, a reviewed pathway layer -
+        # and replaying the old answer would silently label the new pairs with the
+        # old ones' indices. `llm/models.py` records the same failure for the NER
+        # silver cache, where swapping the model replayed the previous model's
+        # answers. Treat a changed pair list as a miss.
+        if cached.get("candidate_ids") == want_ids:
+            payload = cached
+        else:
+            status = "stale_cache"
+
+    if payload is None:
         pairs = [
             (c.pathway_mentions[0].text, c.disease_mentions[0].text) for c in cands
         ]
@@ -241,12 +255,12 @@ def label_document(teacher, cache_dir: Path, pmid: str, cands: list[Candidate]):
             "pmid": pmid,
             "model": teacher.name,
             "n_pairs": len(cands),
-            "candidate_ids": [c.candidate_id for c in cands],
+            "candidate_ids": want_ids,
             "raw": raw,
             "wall_s": round(time.time() - started, 2),
         }
         cache_file.write_text(json.dumps(payload, ensure_ascii=False))
-        status = "fetched"
+        status = "refetched" if status == "stale_cache" else "fetched"
 
     rejected: Counter = Counter()
     try:
