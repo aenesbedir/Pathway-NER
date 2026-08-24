@@ -66,21 +66,50 @@ def entity_id(prefix: str, key: str) -> str:
     return prefix + ":" + re.sub(r"[^a-z0-9]+", "_", key).strip("_")[:60]
 
 
-def split_title(text: str) -> tuple[str, str]:
-    """Split `text` into (title, abstract) at a space, preserving global offsets.
+#: Placeholder title. See `split_title`.
+SYNTHETIC_TITLE = "Abstract"
+TITLE_SHIFT = len(SYNTHETIC_TITLE) + 1
 
-    PubTator reassembles the document as `title + " " + abstract`. Splitting at an
-    existing space means the reassembled string equals the original, so every
-    stored offset stays valid. The first sentence break is preferred; failing
-    that, any space; failing that, the document is emitted with an empty abstract.
+#: PubTator delimits its title and abstract lines with `|` and the reader takes
+#: the third field, so an abstract containing a pipe is silently truncated there
+#: and every later offset in that document lands outside the text. Substituting a
+#: single same-width character keeps all offsets exact and costs one glyph; the
+#: alternative, dropping the document, loses it from the comparison entirely.
+PIPE_SUBSTITUTE = "/"
+
+#: BioREDirect maps an entity's character offsets onto BERT tokens by counting
+#: characters with ASCII spaces removed
+#: (`src/dataset_format_converter/utils.py: tokenize_document_by_bert`). The
+#: tokenizer, however, drops every kind of Unicode whitespace, so a non-breaking
+#: or thin space desynchronises the two counts and the entity after it can no
+#: longer be located - the converter then aborts the file. These abstracts carry
+#: 129 non-breaking and 63 thin spaces, so the substitution is not optional.
+#: Every replacement is one character for one character, leaving offsets exact.
+UNICODE_SPACES = "\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u200b\ufeff"
+SPACE_TABLE = {ord(ch): " " for ch in UNICODE_SPACES}
+
+
+def sanitize(text: str) -> str:
+    """Replace pipes and Unicode whitespace, one character for one character."""
+    return text.replace("|", PIPE_SUBSTITUTE).translate(SPACE_TABLE)
+
+
+def split_title(text: str) -> tuple[str, str, int]:
+    """Return (title, abstract, offset shift) for a document with no stored title.
+
+    PubTator reassembles a document as `title + " " + abstract` and requires every
+    annotation to fall entirely inside one of the two passages. Splitting the
+    stored text at its first sentence break satisfies the offsets but not that
+    second rule: this corpus has entity spans that begin in the first sentence and
+    end after it, and BioREDirect's reader aborts the whole file when one
+    annotation cannot be assigned to a passage.
+
+    A fixed placeholder title avoids the boundary entirely - the real text becomes
+    the abstract, whole - at the price of shifting every offset by a constant. The
+    shift is returned rather than applied silently, and the mapping back to
+    candidates goes through entity identifiers, not offsets.
     """
-    m = re.search(r"(?<=[.!?]) (?=[A-Z0-9(])", text[:400])
-    idx = m.start() if m else text.find(" ", 1)
-    if idx <= 0:
-        return text, ""
-    title, abstract = text[:idx], text[idx + 1 :]
-    assert title + " " + abstract == text, "title split changed the document"
-    return title, abstract
+    return SYNTHETIC_TITLE, text, TITLE_SHIFT
 
 
 def main() -> None:
@@ -102,12 +131,16 @@ def main() -> None:
     for c in cands:
         by_pmid[c.pmid].append(c)
 
-    n_docs = n_ann = 0
+    n_docs = n_ann = n_piped = 0
     with open(args.out, "w", encoding="utf-8") as fh:
         for pmid in sorted(by_pmid):
             group = by_pmid[pmid]
             text = group[0].abstract
-            title, abstract = split_title(text)
+            clean = sanitize(text)
+            if clean != text:
+                n_piped += 1
+            text = clean
+            title, abstract, shift = split_title(text)
             fh.write(f"{pmid}|t|{title}\n")
             fh.write(f"{pmid}|a|{abstract}\n")
 
@@ -123,11 +156,19 @@ def main() -> None:
                     if (m.start, m.end) in seen:
                         continue
                     seen.add((m.start, m.end))
-                    assert text[m.start : m.end] == m.text
+                    a, b = m.start + shift, m.end + shift
+                    doc = title + " " + abstract
+                    surface = doc[a:b]
+                    assert len(surface) == len(m.text), (
+                        "shifted offset does not span the mention"
+                    )
+                    assert surface == sanitize(m.text), (
+                        "shifted offset does not land on the mention"
+                    )
                     lines.append(
                         (
-                            m.start,
-                            f"{pmid}\t{m.start}\t{m.end}\t{m.text}\t{typ}\t"
+                            a,
+                            f"{pmid}\t{a}\t{b}\t{surface}\t{typ}\t"
                             f"{entity_id(prefix, key)}",
                         )
                     )
@@ -141,6 +182,8 @@ def main() -> None:
         f"{n_docs} documents, {n_ann} entity annotations, "
         f"{len(cands)} candidate pairs -> {args.out}"
     )
+    if n_piped:
+        print(f"  {n_piped} documents were sanitized (pipe / Unicode whitespace)")
 
 
 if __name__ == "__main__":
