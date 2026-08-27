@@ -2,9 +2,9 @@
 """
 schema.py
 
-Canonical record definitions for pathway-disease relation extraction, v3.
+Canonical record definitions for pathway-disease relation extraction, v4.
 
-Why v3 exists
+Why v4 exists
 -------------
 `doccano/RELATION_SCHEMA.md` froze a four-label schema with separate `direction`
 and `negated` fields. `reports/relation_extraction_independent_review_2026-08-19.md`
@@ -25,16 +25,27 @@ pairs are unsigned or interventional claims forced into a signed class, all at
 association.
 
 The 2026-08-19 review anticipated this exact repair: "`association` can be added
-back as a fourth class without re-annotating the existing gold". v3 does that and
-adds two classes the gt_100 pass showed are frequent enough to matter on their own.
+back as a fourth class without re-annotating the existing gold". v4 does that.
+
+v3 additionally carried a `therapeutic_target` label and a `certainty` field.
+Both are removed here. They were the two parts of the schema with no counterpart
+in `doccano/RELATION_SCHEMA.md` or the 2026-08-19 review - they were introduced
+from the gt_100 reading alone - and every label in a thesis-facing schema should
+trace to an established annotation scheme. An intervention claim now falls to
+`association` when the abstract connects the pathway to the disease at all, and
+to `none` when it does not; hedging is not recorded.
+
+The cost is measured, not assumed: in the v3 silver corpus `therapeutic_target`
+was 429 of 4,982 pairs (8.6%), and hedged claims were 34% of those and 21% of
+`association`. Losing the interventional distinction means the database cannot
+separate "this pathway is disturbed in this disease" from "targeting this pathway
+treats this disease" without re-reading the evidence sentence.
 
 Labels
 ------
 `upregulation`          the pathway's activity/expression is increased in the disease
 `downregulation`        it is decreased
 `association`           a change or involvement is claimed with no sign
-`therapeutic_target`    intervening on the pathway treats or prevents the disease;
-                        the pathway's state in the disease is not itself asserted
 `no_association_stated` the abstract makes an explicit claim that the relation is
                         absent (measured and not found), which is evidence, not silence
 `none`                  the abstract makes no claim connecting the two entities
@@ -47,10 +58,9 @@ recoverable across abstracts. `upregulation` is a state claim, not a causal one.
 explicit absence claim, is `no_association_stated`; keeping a boolean head for a
 class this rare was rejected for the reasons the review gives.
 
-`certainty` is annotated because hedged claims ("may contribute", "a potential
-role", "further studies are indicated") were 12% of the gt_100 abstracts and are
-carried into `association` in bulk. It is metadata for database filtering, not a
-prediction target for v1.
+Hedging is not annotated. `doccano/RELATION_SCHEMA.md` made the same call and
+gave the reason: a hedged claim keeps its label, and separating the two is a
+second annotation axis this version does not carry.
 """
 
 from __future__ import annotations
@@ -61,26 +71,29 @@ import re
 from dataclasses import asdict, dataclass, field
 from typing import Iterable
 
-SCHEMA_VERSION = "pathway_disease_v3"
+SCHEMA_VERSION = "pathway_disease_v4"
 SCHEMA_TAG = (
-    "pathway_disease_v3:"
-    "upregulation|downregulation|association|therapeutic_target|"
-    "no_association_stated|none"
+    "pathway_disease_v4:"
+    "upregulation|downregulation|association|no_association_stated|none"
 )
+
+#: Namespace for `candidate_id`, frozen at the value in use when the first
+#: candidate files were built. A candidate's identity is (pmid, pathway, disease);
+#: it does not change when the *label* set is revised. Deriving the digest from
+#: SCHEMA_VERSION instead would rewrite every id on a label change, invalidating
+#: the candidate files, their manifests and the teacher cache for no reason.
+CANDIDATE_NAMESPACE = "pathway_disease_v3"
 
 LABELS = (
     "upregulation",
     "downregulation",
     "association",
-    "therapeutic_target",
     "no_association_stated",
     "none",
 )
 
 #: Labels that require a verbatim evidence sentence. `none` forbids one.
 EVIDENCE_REQUIRED = tuple(l for l in LABELS if l != "none")
-
-CERTAINTY = ("asserted", "hedged")
 
 CONFIDENCE = ("high", "medium", "low")
 
@@ -117,7 +130,7 @@ def normalize_surface(text: str) -> str:
 
 def candidate_id(pmid: str, pathway_key: str, disease_key: str) -> str:
     """Deterministic digest of the pair identity. Same inputs, same id, always."""
-    raw = "\x1f".join((SCHEMA_VERSION, str(pmid), pathway_key, disease_key))
+    raw = "\x1f".join((CANDIDATE_NAMESPACE, str(pmid), pathway_key, disease_key))
     return hashlib.sha1(raw.encode("utf-8")).hexdigest()[:16]
 
 
@@ -188,7 +201,6 @@ class Relation:
     label: str
     evidence: str
     relation_source: str
-    certainty: str = "asserted"
     confidence: str = "medium"
     candidate_id: str = ""
     stratum: str = ""
@@ -197,8 +209,6 @@ class Relation:
     def check(self, abstract: str | None = None) -> None:
         if self.label not in LABELS:
             raise RecordError(f"unknown label: {self.label!r}")
-        if self.certainty not in CERTAINTY:
-            raise RecordError(f"unknown certainty: {self.certainty!r}")
         if self.confidence not in CONFIDENCE:
             raise RecordError(f"unknown confidence: {self.confidence!r}")
         if self.label in EVIDENCE_REQUIRED and not self.evidence.strip():
@@ -218,7 +228,6 @@ class Relation:
             "disease": asdict(self.disease),
             "pathway": asdict(self.pathway),
             "label": self.label,
-            "certainty": self.certainty,
             "confidence": self.confidence,
             "evidence": self.evidence,
             "relation_source": self.relation_source,
@@ -236,7 +245,6 @@ class Relation:
             label=d["label"],
             evidence=d.get("evidence", ""),
             relation_source=d.get("relation_source", ""),
-            certainty=d.get("certainty", "asserted"),
             confidence=d.get("confidence", "medium"),
             candidate_id=d.get("candidate_id", ""),
             stratum=d.get("stratum", ""),

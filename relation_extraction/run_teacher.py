@@ -14,7 +14,7 @@ Grounding
 Nothing the model returns is trusted. Each row must satisfy:
 
 - the index refers to a pair that was actually asked about;
-- the label is one of the six schema values;
+- the label is one of the five schema values;
 - the evidence is a verbatim substring of the abstract;
 - a non-`none` label carries evidence, and `none` carries none.
 
@@ -25,7 +25,8 @@ training examples for the majority class out of a parsing failure.
 
 Caching
 -------
-One JSON file per (model, pmid) under `--cache-dir`. The cache stores the raw
+One JSON file per (model, pmid) under `--cache-dir`, valid only while the pair
+list and the annotation guide are unchanged. The cache stores the raw
 response text, so re-parsing after a grounding fix costs nothing while a model
 change is a cache miss. An error response is never cached as a success, which is
 the failure mode that silently froze bad answers in the NER silver run
@@ -35,6 +36,7 @@ the failure mode that silently froze bad answers in the NER silver run
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -50,13 +52,20 @@ from schema import (
     Mention,
     Relation,
     SCHEMA_TAG,
-    CERTAINTY,
     CONFIDENCE,
     LABELS,
     RecordError,
     read_jsonl,
     write_jsonl,
 )
+
+#: Digest of the annotation guide in force. The cached response answers one
+#: specific guide; a revised guide is a different question, so it must be a cache
+#: miss. Without this the v4 run would replay every v3 answer, silently keeping
+#: labels for classes the guide no longer defines.
+PROMPT_FINGERPRINT = hashlib.sha1(
+    (prompts.SYSTEM + prompts.GUIDE).encode("utf-8")
+).hexdigest()[:12]
 
 REPO = Path(__file__).resolve().parents[1]
 DEFAULT_INDIR = REPO / "data/processed/relation/silver_2k"
@@ -178,9 +187,6 @@ def ground(
         if label not in LABELS:
             rejected["unknown_label"] += 1
             continue
-        certainty = str(row.get("certainty", "asserted")).strip()
-        if certainty not in CERTAINTY:
-            certainty = "asserted"
         confidence = str(row.get("confidence", "medium")).strip()
         if confidence not in CONFIDENCE:
             confidence = "medium"
@@ -200,7 +206,6 @@ def ground(
             disease=cand.disease_mentions[0],
             pathway=cand.pathway_mentions[0],
             label=label,
-            certainty=certainty,
             confidence=confidence,
             evidence=evidence,
             relation_source=source,
@@ -236,7 +241,10 @@ def label_document(teacher, cache_dir: Path, pmid: str, cands: list[Candidate]):
         # old ones' indices. `llm/models.py` records the same failure for the NER
         # silver cache, where swapping the model replayed the previous model's
         # answers. Treat a changed pair list as a miss.
-        if cached.get("candidate_ids") == want_ids:
+        if (
+            cached.get("candidate_ids") == want_ids
+            and cached.get("prompt_fingerprint") == PROMPT_FINGERPRINT
+        ):
             payload = cached
         else:
             status = "stale_cache"
@@ -256,6 +264,7 @@ def label_document(teacher, cache_dir: Path, pmid: str, cands: list[Candidate]):
             "model": teacher.name,
             "n_pairs": len(cands),
             "candidate_ids": want_ids,
+            "prompt_fingerprint": PROMPT_FINGERPRINT,
             "raw": raw,
             "wall_s": round(time.time() - started, 2),
         }
@@ -339,13 +348,14 @@ def main() -> None:
 
     summary = {
         "teacher": teacher.name,
+        "prompt_fingerprint": PROMPT_FINGERPRINT,
+        "schema": SCHEMA_TAG,
         "backend": args.backend,
         "candidates": str(cand_path),
         "n_abstracts": len(pmids),
         "n_pairs_asked": sum(len(by_pmid[p]) for p in pmids),
         "n_rows_kept": n,
         "labels": dict(Counter(r.label for r in all_rels).most_common()),
-        "certainty": dict(Counter(r.certainty for r in all_rels).most_common()),
         "confidence": dict(Counter(r.confidence for r in all_rels).most_common()),
         "by_stratum": dict(Counter(r.stratum for r in all_rels).most_common()),
         "rejected": dict(rejected.most_common()),

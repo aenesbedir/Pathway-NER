@@ -2,7 +2,7 @@
 """
 prompts.py
 
-The teacher prompt for pathway-disease relation labelling, v3.
+The teacher prompt for pathway-disease relation labelling, v4.
 
 Design notes
 ------------
@@ -14,11 +14,17 @@ document-level extraction, where the same models collapse.
 
 Every worked example below is a real sentence from the gt_100 abstracts, chosen
 because it was a case the two-label Opus run got wrong or had to force. The
-`therapeutic_target`, `no_association_stated` and hedged-`association` examples in
-particular exist to stop the model reaching for a signed class when the abstract
-does not state a sign.
+intervention and `no_association_stated` examples in particular exist to stop the
+model reaching for a signed class when the abstract does not state a sign.
 
-The model must quote its evidence verbatim. `ground.py` checks the quote against
+The intervention examples sit inside `association` rather than in a class of
+their own. v3 gave them a `therapeutic_target` label; v4 removes it, so the rule
+that an intervention's direction is not the pathway's direction has to be carried
+by the `association` entry instead. Without it the model reads "inhibiting X
+treats Y" as `downregulation`, which was the single most common forced label in
+the two-class run.
+
+The model must quote its evidence verbatim. `run_teacher.py` checks the quote against
 the abstract and drops the row if it does not match, the same grounding rule the
 pathway NER silver pipeline applies to spans.
 """
@@ -69,18 +75,16 @@ re-annotate entities, and do not consider any other pair.
       -> association
     Use `association` when a pathway is named in a list of enriched pathways from
     a metabolomics or GSEA analysis and no direction is given for it.
-
-`therapeutic_target`
-    The abstract's claim is about INTERVENING on the pathway to treat, prevent or
-    sensitize the disease, and it does NOT separately state the pathway's state in
-    the disease. The direction of the intervention is not the direction of the
-    pathway in the disease, so these must not be labelled up or down.
+    Use `association` ALSO when the only claim is that intervening on the pathway
+    treats, prevents or sensitizes the disease. The direction of an intervention
+    is not the direction of the pathway in the disease, so such a claim must not
+    be labelled up or down.
     - "Inhibiting GTP synthesis radiosensitizes GBM cells and patient-derived
-      neurospheres by impairing DNA repair." -> therapeutic_target
+      neurospheres by impairing DNA repair." -> association
     - "Pharmacological and genetic inhibition of serotonin synthesis reduced
-      HFD-induced hepatic lipid accumulation." -> therapeutic_target
-    If the abstract states BOTH a state in the disease and an intervention, label
-    the state (`upregulation` / `downregulation`) and quote the state sentence.
+      HFD-induced hepatic lipid accumulation." -> association
+    If the abstract states BOTH the pathway's state in the disease and an
+    intervention, label the state and quote the state sentence.
 
 `no_association_stated`
     The abstract reports that it LOOKED and found NO relation. An explicit claim
@@ -108,14 +112,6 @@ sensitive cells, one subtype versus another, patients with a feature versus
 without). If the abstract makes no comparison at all, the label is `association`
 or `none`, not a guessed sign.
 
-# `certainty`
-
-`asserted`   the abstract states the claim as a finding.
-`hedged`     the claim is softened: may, might, could, suggests, potential,
-             possible, warrants further study, has not been reported to date.
-Hedging is not negation. A hedged claim keeps its label and sets `certainty` to
-`hedged`.
-
 # `evidence`
 
 One sentence, copied CHARACTER FOR CHARACTER from the abstract, that carries the
@@ -133,7 +129,7 @@ quote that is not found in the abstract verbatim causes the row to be discarded.
 
 Return ONLY a JSON array, one object per pair, in the given order:
 
-[{"i": 1, "label": "...", "certainty": "...", "confidence": "...", "evidence": "..."}]
+[{"i": 1, "label": "...", "confidence": "...", "evidence": "..."}]
 
 No prose before or after. No markdown fences.
 """
