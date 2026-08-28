@@ -26,7 +26,7 @@ training examples for the majority class out of a parsing failure.
 Caching
 -------
 One JSON file per (model, pmid) under `--cache-dir`, valid only while the pair
-list and the annotation guide are unchanged. The cache stores the raw
+list, the annotation guide and the invocation are unchanged. The cache stores the raw
 response text, so re-parsing after a grounding fix costs nothing while a model
 change is a cache miss. An error response is never cached as a success, which is
 the failure mode that silently froze bad answers in the NER silver run
@@ -59,14 +59,6 @@ from schema import (
     write_jsonl,
 )
 
-#: Digest of the annotation guide in force. The cached response answers one
-#: specific guide; a revised guide is a different question, so it must be a cache
-#: miss. Without this the v4 run would replay every v3 answer, silently keeping
-#: labels for classes the guide no longer defines.
-PROMPT_FINGERPRINT = hashlib.sha1(
-    (prompts.SYSTEM + prompts.GUIDE).encode("utf-8")
-).hexdigest()[:12]
-
 REPO = Path(__file__).resolve().parents[1]
 DEFAULT_INDIR = REPO / "data/processed/relation/silver_2k"
 DEFAULT_CACHE = REPO / "data/raw/relation_teacher_cache"
@@ -76,8 +68,56 @@ def slug(name: str) -> str:
     return re.sub(r"[^A-Za-z0-9._-]+", "_", name)
 
 
+#: Flags that strip the Claude Code agent scaffolding from a headless call.
+#:
+#: `claude -p` is not a raw API call. By default it sends its own agent system
+#: prompt, every built-in tool definition, the discovered CLAUDE.md and machine
+#: context - measured at ~28,000 input tokens for a five-word prompt, and 1,745
+#: tokens more when run from a directory carrying a CLAUDE.md. The annotation
+#: task then depends on the working directory and on the Claude Code version,
+#: neither of which belongs in an annotation protocol.
+#:
+#: With these flags the same probe costs ~285 tokens. What remains, and cannot be
+#: removed from the CLI, is one identity line plus a system-reminder carrying the
+#: user's email address and the current date. `--bare` would go further but
+#: requires ANTHROPIC_API_KEY; `--setting-sources ""` does not affect this block.
+#: `--exclude-dynamic-system-prompt-sections` is deliberately absent: its help
+#: text states it is ignored whenever `--system-prompt` is given.
+#:
+#: `--system-prompt ""` empties the default prompt; `--append-system-prompt` then
+#: adds ours to it. The pair is verified to deliver our text.
+RAW_FLAGS = [
+    "--safe-mode",
+    "--system-prompt",
+    "",
+    "--strict-mcp-config",
+    "--mcp-config",
+    '{"mcpServers":{}}',
+    "--tools",
+    "",
+    "--no-session-persistence",
+]
+
+#: The current date reaches the model through that system-reminder, so two runs
+#: on different days are not byte-identical requests. Recorded, not hidden.
+RESIDUAL_CONTEXT = "claude-agent-sdk identity line + system-reminder (userEmail, currentDate)"
+
+#: Digest of everything that decides what the model is asked, other than the
+#: abstract and its pairs: the guide, our system prompt, and the invocation.
+#:
+#: The guide belongs here for the obvious reason - a revised guide is a different
+#: question. The invocation belongs here for a less obvious one: the same guide
+#: sent with the default Claude Code scaffolding and sent with RAW_FLAGS are two
+#: different requests, and the first run of this pipeline used the former. Keying
+#: only on the guide would let those answers pass as valid under the new
+#: configuration.
+PROMPT_FINGERPRINT = hashlib.sha1(
+    "\x1f".join((prompts.SYSTEM, prompts.GUIDE, *RAW_FLAGS)).encode("utf-8")
+).hexdigest()[:12]
+
+
 class ClaudeCLI:
-    """Teacher backed by the local `claude` CLI in headless mode."""
+    """Teacher backed by the local `claude` CLI, stripped to a near-raw call."""
 
     def __init__(self, model: str, timeout: int = 300):
         self.model = model
@@ -91,6 +131,7 @@ class ClaudeCLI:
             user_prompt,
             "--model",
             self.model,
+            *RAW_FLAGS,
             "--append-system-prompt",
             prompts.SYSTEM,
             "--output-format",
@@ -349,6 +390,8 @@ def main() -> None:
     summary = {
         "teacher": teacher.name,
         "prompt_fingerprint": PROMPT_FINGERPRINT,
+        "raw_flags": RAW_FLAGS,
+        "residual_context": RESIDUAL_CONTEXT,
         "schema": SCHEMA_TAG,
         "backend": args.backend,
         "candidates": str(cand_path),
