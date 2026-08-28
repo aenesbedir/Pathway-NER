@@ -158,3 +158,108 @@ def render(abstract: str, pairs: list[tuple[str, str]]) -> str:
         f"Return a JSON array of exactly {len(pairs)} objects.",
     ]
     return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# Single-pair mode
+# ---------------------------------------------------------------------------
+#
+# The mode above asks about every pair of one abstract in one request. That is
+# cheaper, and it lets the model resolve pairs against each other - in PMID
+# 23377617 it recognised "Zn deficiency" and "ZD" as one disease and rejected
+# "neuroblastoma" as a cell line, decisions that are hard to make from a single
+# pair in isolation.
+#
+# It also means the pairs are not judged independently. A label may depend on
+# which other pairs happened to share the request, which is a property of the
+# candidate file rather than of the abstract. This mode removes that coupling:
+# one request carries one pair, and the model sees nothing else.
+#
+# The entity is no longer named as a quoted surface string for the model to
+# locate; every mention of it is marked in the abstract itself. Two things follow.
+# The model cannot pick the wrong occurrence of a repeated surface, and a pathway
+# nested inside a disease span stays visible as nested rather than being flattened
+# into two unrelated quotes.
+
+MARKERS = {
+    "PATHWAY": ("[[PATHWAY]]", "[[/PATHWAY]]"),
+    "DISEASE": ("[[DISEASE]]", "[[/DISEASE]]"),
+}
+
+
+def mark_abstract(abstract: str, mentions: list) -> str:
+    """Insert markers around every given mention, leaving the rest untouched.
+
+    `mentions` carry character offsets into `abstract`. Insertions run from the
+    last offset backwards so that earlier offsets stay valid, and nesting is
+    preserved: this corpus contains pathway spans that sit inside a disease span
+    ("inborn error of glycosphingolipid metabolism"), and flattening those would
+    misrepresent what the annotators marked.
+    """
+    edits = []
+    for m in mentions:
+        open_tag, close_tag = MARKERS[m.label]
+        # Tie-breakers matter only when two spans share an offset, which nesting
+        # guarantees. Insertions run right-to-left and each one at a given offset
+        # pushes the previous ones rightwards, so whatever is inserted *last* ends
+        # up leftmost. For two spans ending together the inner one must close
+        # first, so it is sorted last: inner means the later start. For two spans
+        # starting together the outer one must open first, so the wider span -
+        # the later end - is sorted last.
+        edits.append((m.start, 0, m.end, open_tag))
+        edits.append((m.end, 1, m.start, close_tag))
+    out = abstract
+    for pos, _kind, _tie, tag in sorted(edits, key=lambda e: (-e[0], e[1], e[2])):
+        out = out[:pos] + tag + out[pos:]
+    return out
+
+
+GUIDE_SINGLE = GUIDE.replace(
+    """For each numbered (PATHWAY, DISEASE) pair, decide what THIS ABSTRACT claims about
+the relation between them. Both entities are already identified for you; do not
+re-annotate entities, and do not consider any other pair.""",
+    """Decide what THIS ABSTRACT claims about the relation between ONE pathway and ONE
+disease. Both are already identified for you: every mention of the pathway is
+wrapped in [[PATHWAY]] ... [[/PATHWAY]] and every mention of the disease in
+[[DISEASE]] ... [[/DISEASE]]. The markers are not part of the text. A pathway
+marker may appear inside a disease marker; that is a real nesting in the source
+annotation, not an error.
+
+Judge only this one pair. Other pathways and diseases in the abstract are left
+unmarked and are not your concern.""",
+).replace(
+    """# Output
+
+Return ONLY a JSON array, one object per pair, in the given order:
+
+[{"i": 1, "label": "...", "confidence": "...", "evidence": "..."}]
+
+No prose before or after. No markdown fences.""",
+    """# Output
+
+Return ONLY a JSON object:
+
+{"label": "...", "confidence": "...", "evidence": "..."}
+
+No prose before or after. No markdown fences.""",
+)
+
+
+def render_single(abstract: str, pathway_mentions: list, disease_mentions: list,
+                  pathway_text: str, disease_text: str) -> str:
+    """Build the user message for exactly one (pathway, disease) pair."""
+    marked = mark_abstract(abstract, [*pathway_mentions, *disease_mentions])
+    return "\n".join([
+        GUIDE_SINGLE,
+        "",
+        "# Abstract",
+        "",
+        marked,
+        "",
+        "# Pair to label",
+        "",
+        f'PATHWAY = "{pathway_text}"   (marked [[PATHWAY]] ... [[/PATHWAY]])',
+        f'DISEASE = "{disease_text}"   (marked [[DISEASE]] ... [[/DISEASE]])',
+        "",
+        "Return a single JSON object.",
+    ])

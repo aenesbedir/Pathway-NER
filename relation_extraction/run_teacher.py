@@ -111,9 +111,18 @@ RESIDUAL_CONTEXT = "claude-agent-sdk identity line + system-reminder (userEmail,
 #: different requests, and the first run of this pipeline used the former. Keying
 #: only on the guide would let those answers pass as valid under the new
 #: configuration.
-PROMPT_FINGERPRINT = hashlib.sha1(
-    "\x1f".join((prompts.SYSTEM, prompts.GUIDE, *RAW_FLAGS)).encode("utf-8")
-).hexdigest()[:12]
+def prompt_fingerprint(mode: str) -> str:
+    """Digest of everything that decides what the model is asked, bar the abstract.
+
+    The mode is not hashed in by name: the two modes carry different guides, and
+    the guide is already in the digest. Naming it as well would change the batch
+    fingerprint the moment single mode was added, invalidating answers that were
+    produced by an identical request.
+    """
+    guide = prompts.GUIDE if mode == "batch" else prompts.GUIDE_SINGLE
+    return hashlib.sha1(
+        "\x1f".join((prompts.SYSTEM, guide, *RAW_FLAGS)).encode("utf-8")
+    ).hexdigest()[:12]
 
 
 class ClaudeCLI:
@@ -199,6 +208,25 @@ def parse_array(text: str) -> list[dict]:
     return obj
 
 
+def parse_object(text: str) -> dict:
+    """Pull the single JSON object out of a response, tolerating fences and prose."""
+    cleaned = re.sub(r"^```(?:json)?|```$", "", text.strip(), flags=re.MULTILINE)
+    try:
+        obj = json.loads(cleaned)
+    except json.JSONDecodeError:
+        match = re.search(r"\{.*\}", cleaned, flags=re.DOTALL)
+        if not match:
+            raise
+        obj = json.loads(match.group(0))
+    if isinstance(obj, list):
+        if len(obj) != 1:
+            raise ValueError(f"expected one object, got a list of {len(obj)}")
+        obj = obj[0]
+    if not isinstance(obj, dict):
+        raise ValueError(f"response is {type(obj).__name__}, expected object")
+    return obj
+
+
 def ground(
     rows: list[dict],
     cands: list[Candidate],
@@ -265,61 +293,107 @@ def ground(
     return out
 
 
-def label_document(teacher, cache_dir: Path, pmid: str, cands: list[Candidate]):
-    """Return (relations, rejected_counter, status) for one abstract."""
+def label_batch(teacher, cache_dir: Path, pmid: str, cands: list[Candidate], fp: str):
+    """One request carrying every pair of one abstract."""
     abstract = cands[0].abstract
-    cache_file = cache_dir / f"{pmid}.json"
-    status = "cached"
     want_ids = [c.candidate_id for c in cands]
-
-    payload = None
-    if cache_file.exists():
-        cached = json.loads(cache_file.read_text())
-        # The response answers one specific list of pairs, but the cache is keyed
-        # on the PMID alone. Two candidate files can cover the same abstract with
-        # different pairs - a different stratum sample, a reviewed pathway layer -
-        # and replaying the old answer would silently label the new pairs with the
-        # old ones' indices. `llm/models.py` records the same failure for the NER
-        # silver cache, where swapping the model replayed the previous model's
-        # answers. Treat a changed pair list as a miss.
-        if (
-            cached.get("candidate_ids") == want_ids
-            and cached.get("prompt_fingerprint") == PROMPT_FINGERPRINT
-        ):
-            payload = cached
-        else:
-            status = "stale_cache"
+    cache_file = cache_dir / f"{pmid}.json"
+    payload, status = _read_cache(cache_file, want_ids, fp)
 
     if payload is None:
         pairs = [
             (c.pathway_mentions[0].text, c.disease_mentions[0].text) for c in cands
         ]
         prompt = prompts.render(abstract, pairs)
-        started = time.time()
-        try:
-            raw = teacher(prompt)
-        except Exception as exc:  # noqa: BLE001 - reported, never cached
-            return [], Counter({"request_failed": len(cands)}), f"error: {exc}"
-        payload = {
-            "pmid": pmid,
-            "model": teacher.name,
-            "n_pairs": len(cands),
-            "candidate_ids": want_ids,
-            "prompt_fingerprint": PROMPT_FINGERPRINT,
-            "raw": raw,
-            "wall_s": round(time.time() - started, 2),
-        }
-        cache_file.write_text(json.dumps(payload, ensure_ascii=False))
-        status = "refetched" if status == "stale_cache" else "fetched"
+        payload, status = _fetch(teacher, cache_file, prompt, pmid, want_ids, fp, status)
+        if payload is None:
+            return [], Counter({"request_failed": len(cands)}), status
 
     rejected: Counter = Counter()
     try:
         rows = parse_array(payload["raw"])
     except Exception:  # noqa: BLE001 - a bad response is data, not a crash
         return [], Counter({"unparsable_response": len(cands)}), "unparsable"
+    return ground(rows, cands, abstract, payload["model"], rejected), rejected, status
 
-    rels = ground(rows, cands, abstract, payload["model"], rejected)
-    return rels, rejected, status
+
+def label_single(teacher, cache_dir: Path, pmid: str, cands: list[Candidate], fp: str):
+    """One request per pair, with that pair's mentions marked in the abstract.
+
+    Each request is a separate process and carries no history, so a pair is judged
+    without seeing the other pairs of its abstract. That is the point of the mode:
+    it removes the cross-pair reasoning that `label_batch` allows and makes the
+    label a property of the pair alone.
+    """
+    abstract = cands[0].abstract
+    out: list[Relation] = []
+    rejected: Counter = Counter()
+    statuses: Counter = Counter()
+
+    for cand in cands:
+        want_ids = [cand.candidate_id]
+        cache_file = cache_dir / f"{pmid}__{cand.candidate_id}.json"
+        payload, status = _read_cache(cache_file, want_ids, fp)
+
+        if payload is None:
+            prompt = prompts.render_single(
+                abstract,
+                cand.pathway_mentions,
+                cand.disease_mentions,
+                cand.pathway_mentions[0].text,
+                cand.disease_mentions[0].text,
+            )
+            payload, status = _fetch(
+                teacher, cache_file, prompt, pmid, want_ids, fp, status
+            )
+            if payload is None:
+                rejected["request_failed"] += 1
+                statuses[status.split(":")[0]] += 1
+                continue
+
+        try:
+            obj = parse_object(payload["raw"])
+        except Exception:  # noqa: BLE001
+            rejected["unparsable_response"] += 1
+            statuses["unparsable"] += 1
+            continue
+
+        obj["i"] = 1
+        out.extend(ground([obj], [cand], abstract, payload["model"], rejected))
+        statuses[status.split(":")[0]] += 1
+
+    worst = "error" if statuses["error"] else statuses.most_common(1)[0][0]
+    return out, rejected, worst
+
+
+def _read_cache(cache_file: Path, want_ids: list[str], fp: str):
+    """Return (payload, status). A payload answering a different question is a miss."""
+    if not cache_file.exists():
+        return None, "cached"
+    cached = json.loads(cache_file.read_text())
+    if cached.get("candidate_ids") == want_ids and cached.get("prompt_fingerprint") == fp:
+        return cached, "cached"
+    return None, "stale_cache"
+
+
+def _fetch(teacher, cache_file: Path, prompt: str, pmid: str, want_ids, fp, status):
+    """Call the teacher and cache the raw answer. An error is never cached."""
+    started = time.time()
+    try:
+        raw = teacher(prompt)
+    except Exception as exc:  # noqa: BLE001 - reported, never cached
+        return None, f"error: {exc}"
+    payload = {
+        "pmid": pmid,
+        "model": teacher.name,
+        "n_pairs": len(want_ids),
+        "candidate_ids": want_ids,
+        "prompt_fingerprint": fp,
+        "raw": raw,
+        "wall_s": round(time.time() - started, 2),
+    }
+    cache_file.write_text(json.dumps(payload, ensure_ascii=False))
+    return payload, ("refetched" if status == "stale_cache" else "fetched")
 
 
 def main() -> None:
@@ -328,6 +402,16 @@ def main() -> None:
     ap.add_argument("--candidates", type=Path, default=None)
     ap.add_argument("--out", type=Path, default=None)
     ap.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE)
+    ap.add_argument(
+        "--mode",
+        choices=("batch", "single"),
+        default="batch",
+        help=(
+            "batch: one request per abstract carrying all its pairs (default). "
+            "single: one request per pair, with that pair's mentions marked in "
+            "the abstract, so pairs are judged independently of each other."
+        ),
+    )
     ap.add_argument("--backend", choices=("claude", "ollama"), default="claude")
     ap.add_argument("--model", default="opus")
     ap.add_argument("--limit", type=int, default=0, help="stop after N abstracts")
@@ -345,17 +429,25 @@ def main() -> None:
     teacher = (
         ClaudeCLI(args.model) if args.backend == "claude" else OllamaHTTP(args.model)
     )
-    cache_dir = args.cache_dir / slug(teacher.name)
+    fp = prompt_fingerprint(args.mode)
+    label = label_batch if args.mode == "batch" else label_single
+    # The two modes ask different questions and cache different units, so they get
+    # different directories as well as different fingerprints.
+    cache_dir = args.cache_dir / f"{slug(teacher.name)}__{args.mode}"
     cache_dir.mkdir(parents=True, exist_ok=True)
 
     pmids = sorted(by_pmid)
     if args.limit:
         pmids = pmids[: args.limit]
 
-    out_path = args.out or (args.indir / f"relations_{slug(teacher.name)}.jsonl")
+    out_path = args.out or (
+        args.indir / f"relations_{slug(teacher.name)}_{args.mode}.jsonl"
+    )
+    n_pairs = sum(len(by_pmid[p]) for p in pmids)
+    n_requests = len(pmids) if args.mode == "batch" else n_pairs
     print(
-        f"{len(pmids)} abstracts, {sum(len(by_pmid[p]) for p in pmids)} pairs, "
-        f"teacher={teacher.name}, cache={cache_dir}",
+        f"{len(pmids)} abstracts, {n_pairs} pairs, {n_requests} requests, "
+        f"mode={args.mode}, teacher={teacher.name}, cache={cache_dir}",
         file=sys.stderr,
     )
 
@@ -365,7 +457,7 @@ def main() -> None:
     started = time.time()
 
     def work(pmid: str):
-        return pmid, label_document(teacher, cache_dir, pmid, by_pmid[pmid])
+        return pmid, label(teacher, cache_dir, pmid, by_pmid[pmid], fp)
 
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         for done, (pmid, (rels, rej, status)) in enumerate(
@@ -389,14 +481,16 @@ def main() -> None:
 
     summary = {
         "teacher": teacher.name,
-        "prompt_fingerprint": PROMPT_FINGERPRINT,
+        "mode": args.mode,
+        "prompt_fingerprint": fp,
         "raw_flags": RAW_FLAGS,
         "residual_context": RESIDUAL_CONTEXT,
         "schema": SCHEMA_TAG,
         "backend": args.backend,
         "candidates": str(cand_path),
         "n_abstracts": len(pmids),
-        "n_pairs_asked": sum(len(by_pmid[p]) for p in pmids),
+        "n_pairs_asked": n_pairs,
+        "n_requests": n_requests,
         "n_rows_kept": n,
         "labels": dict(Counter(r.label for r in all_rels).most_common()),
         "confidence": dict(Counter(r.confidence for r in all_rels).most_common()),
