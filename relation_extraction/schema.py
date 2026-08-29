@@ -148,6 +148,12 @@ class Candidate:
     #: Sentence spans where both entities appear. Empty for a doc-level candidate.
     shared_sentences: list[tuple[int, int]]
     stratum: str  # "same_sentence" | "doc_level"
+    #: Other surfaces folded into this entity, when the candidate builder merged
+    #: an abbreviation with the form that defines it. Empty when no merge applied.
+    #: Kept so a prompt can disclose the variants and a reviewer can see what was
+    #: merged without re-running the detector.
+    pathway_variants: list[str] = field(default_factory=list)
+    disease_variants: list[str] = field(default_factory=list)
     schema_version: str = SCHEMA_VERSION
 
     def check(self) -> None:
@@ -168,6 +174,14 @@ class Candidate:
     def to_json(self) -> dict:
         d = asdict(self)
         d["shared_sentences"] = [list(s) for s in self.shared_sentences]
+        # Omit the variant lists when nothing was merged, so a candidate file
+        # built without --merge-abbreviations stays byte-identical to the ones
+        # built before the option existed. Their manifests record a sha256, and a
+        # field appearing out of nowhere would break every one of them for a
+        # change that carries no information.
+        for key in ("pathway_variants", "disease_variants"):
+            if not d[key]:
+                del d[key]
         return d
 
     @staticmethod
@@ -182,6 +196,8 @@ class Candidate:
             disease_mentions=[Mention(**m) for m in d["disease_mentions"]],
             shared_sentences=[tuple(s) for s in d["shared_sentences"]],
             stratum=d["stratum"],
+            pathway_variants=list(d.get("pathway_variants", [])),
+            disease_variants=list(d.get("disease_variants", [])),
             schema_version=d.get("schema_version", SCHEMA_VERSION),
         )
 

@@ -102,24 +102,24 @@ RAW_FLAGS = [
 #: on different days are not byte-identical requests. Recorded, not hidden.
 RESIDUAL_CONTEXT = "claude-agent-sdk identity line + system-reminder (userEmail, currentDate)"
 
-#: Digest of everything that decides what the model is asked, other than the
-#: abstract and its pairs: the guide, our system prompt, and the invocation.
-#:
-#: The guide belongs here for the obvious reason - a revised guide is a different
-#: question. The invocation belongs here for a less obvious one: the same guide
-#: sent with the default Claude Code scaffolding and sent with RAW_FLAGS are two
-#: different requests, and the first run of this pipeline used the former. Keying
-#: only on the guide would let those answers pass as valid under the new
-#: configuration.
 def prompt_fingerprint(mode: str) -> str:
-    """Digest of everything that decides what the model is asked, bar the abstract.
+    """Digest of what decides the question, bar the abstract: guide, system
+    prompt, invocation.
 
-    The mode is not hashed in by name: the two modes carry different guides, and
-    the guide is already in the digest. Naming it as well would change the batch
-    fingerprint the moment single mode was added, invalidating answers that were
+    The invocation belongs here for a non-obvious reason: the same guide sent with
+    the default Claude Code scaffolding and sent with RAW_FLAGS are two different
+    requests, and the first runs of this pipeline used the former.
+
+    The mode is not hashed in by name. Each mode carries its own guide and the
+    guide is already in the digest, so naming the mode as well would have changed
+    the batch fingerprint the moment a second mode was added, invalidating answers
     produced by an identical request.
     """
-    guide = prompts.GUIDE if mode == "batch" else prompts.GUIDE_SINGLE
+    guide = {
+        "batch": prompts.GUIDE,
+        "single": prompts.GUIDE_SINGLE,
+        "grouped": prompts.GUIDE_GROUPED,
+    }[mode]
     return hashlib.sha1(
         "\x1f".join((prompts.SYSTEM, guide, *RAW_FLAGS)).encode("utf-8")
     ).hexdigest()[:12]
@@ -317,7 +317,20 @@ def label_batch(teacher, cache_dir: Path, pmid: str, cands: list[Candidate], fp:
     return ground(rows, cands, abstract, payload["model"], rejected), rejected, status
 
 
-def label_single(teacher, cache_dir: Path, pmid: str, cands: list[Candidate], fp: str):
+def label_grouped(teacher, cache_dir: Path, pmid: str, cands: list[Candidate], fp: str):
+    """One request per pair, naming the surfaces folded into each entity.
+
+    Identical to `label_single` except for the prompt: the candidates it reads are
+    expected to come from `build_candidates.py --merge-abbreviations`, so a pair
+    may carry variant surfaces, and the prompt lists them.
+    """
+    return label_single(teacher, cache_dir, pmid, cands, fp, grouped=True)
+
+
+def label_single(
+    teacher, cache_dir: Path, pmid: str, cands: list[Candidate], fp: str,
+    grouped: bool = False,
+):
     """One request per pair, with that pair's mentions marked in the abstract.
 
     Each request is a separate process and carries no history, so a pair is judged
@@ -336,13 +349,24 @@ def label_single(teacher, cache_dir: Path, pmid: str, cands: list[Candidate], fp
         payload, status = _read_cache(cache_file, want_ids, fp)
 
         if payload is None:
-            prompt = prompts.render_single(
-                abstract,
-                cand.pathway_mentions,
-                cand.disease_mentions,
-                cand.pathway_mentions[0].text,
-                cand.disease_mentions[0].text,
-            )
+            if grouped:
+                prompt = prompts.render_grouped(
+                    abstract,
+                    cand.pathway_mentions,
+                    cand.disease_mentions,
+                    cand.pathway_key,
+                    cand.disease_key,
+                    cand.pathway_variants,
+                    cand.disease_variants,
+                )
+            else:
+                prompt = prompts.render_single(
+                    abstract,
+                    cand.pathway_mentions,
+                    cand.disease_mentions,
+                    cand.pathway_mentions[0].text,
+                    cand.disease_mentions[0].text,
+                )
             payload, status = _fetch(
                 teacher, cache_file, prompt, pmid, want_ids, fp, status
             )
@@ -404,12 +428,15 @@ def main() -> None:
     ap.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE)
     ap.add_argument(
         "--mode",
-        choices=("batch", "single"),
+        choices=("batch", "single", "grouped"),
         default="batch",
         help=(
             "batch: one request per abstract carrying all its pairs (default). "
             "single: one request per pair, with that pair's mentions marked in "
-            "the abstract, so pairs are judged independently of each other."
+            "the abstract, so pairs are judged independently of each other. "
+            "grouped: as single, but the prompt also names the surfaces folded "
+            "into each entity; pair it with candidates built using "
+            "--merge-abbreviations."
         ),
     )
     ap.add_argument("--backend", choices=("claude", "ollama"), default="claude")
@@ -430,7 +457,11 @@ def main() -> None:
         ClaudeCLI(args.model) if args.backend == "claude" else OllamaHTTP(args.model)
     )
     fp = prompt_fingerprint(args.mode)
-    label = label_batch if args.mode == "batch" else label_single
+    label = {
+        "batch": label_batch,
+        "single": label_single,
+        "grouped": label_grouped,
+    }[args.mode]
     # The two modes ask different questions and cache different units, so they get
     # different directories as well as different fingerprints.
     cache_dir = args.cache_dir / f"{slug(teacher.name)}__{args.mode}"

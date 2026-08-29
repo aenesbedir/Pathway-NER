@@ -263,3 +263,79 @@ def render_single(abstract: str, pathway_mentions: list, disease_mentions: list,
         "",
         "Return a single JSON object.",
     ])
+
+
+# ---------------------------------------------------------------------------
+# Grouped mode
+# ---------------------------------------------------------------------------
+#
+# Single mode asks about one pair and marks every mention of it. That is already
+# grouped by normalized surface, so the five "ALL" mentions of PMID 36531023 were
+# marked together. What it could not do is recognise that the sixth mention,
+# "acute lymphoblastic leukemia", names the same disease: the two were separate
+# entities, so they became two requests, and the two requests marked different
+# parts of the abstract - the long form appears only in the opening sentence, the
+# short form beside the results. The model answered each faithfully and the
+# answers disagreed.
+#
+# Grouped mode pairs `--merge-abbreviations` candidates with a prompt that names
+# the folded surfaces. The merge is what removes the second question; naming the
+# variants is what stops the model wondering why an unmarked "ALL" sits next to a
+# marked "acute lymphoblastic leukemia".
+
+GUIDE_GROUPED = GUIDE_SINGLE.replace(
+    """Decide what THIS ABSTRACT claims about the relation between ONE pathway and ONE
+disease. Both are already identified for you: every mention of the pathway is
+wrapped in [[PATHWAY]] ... [[/PATHWAY]] and every mention of the disease in
+[[DISEASE]] ... [[/DISEASE]]. The markers are not part of the text.""",
+    """Decide what THIS ABSTRACT claims about the relation between ONE pathway and ONE
+disease. Both are already identified for you: every mention of the pathway is
+wrapped in [[PATHWAY]] ... [[/PATHWAY]] and every mention of the disease in
+[[DISEASE]] ... [[/DISEASE]]. The markers are not part of the text.
+
+An entity may be written several ways in one abstract - a full name and the
+abbreviation the abstract defines for it. All of those spellings are marked, and
+the ones in use are listed under the pair. Treat them as one entity: evidence
+carrying any spelling is evidence for it.""",
+)
+
+
+def render_grouped(abstract: str, pathway_mentions: list, disease_mentions: list,
+                   pathway_text: str, disease_text: str,
+                   pathway_variants: list[str], disease_variants: list[str]) -> str:
+    """Build the user message for one merged (pathway, disease) entity pair."""
+    marked = mark_abstract(abstract, [*pathway_mentions, *disease_mentions])
+
+    def line(role: str, name: str, mentions: list, variants: list[str], tag: str) -> str:
+        # Show the spellings as the abstract writes them, not the normalized keys
+        # they were folded under: the model is looking at the text, and "ALLs" is
+        # findable there while "alls" is not.
+        seen, spellings = set(), []
+        for m in mentions:
+            if m.text.lower() == name.lower() or m.text in seen:
+                continue
+            seen.add(m.text)
+            spellings.append(m.text)
+        also = (
+            "   also written: " + ", ".join(f'"{v}"' for v in spellings)
+            if variants and spellings
+            else ""
+        )
+        return f'{role} = "{name}"   (marked {tag}){also}'
+
+    return "\n".join([
+        GUIDE_GROUPED,
+        "",
+        "# Abstract",
+        "",
+        marked,
+        "",
+        "# Pair to label",
+        "",
+        line("PATHWAY", pathway_text, pathway_mentions, pathway_variants,
+             "[[PATHWAY]] ... [[/PATHWAY]]"),
+        line("DISEASE", disease_text, disease_mentions, disease_variants,
+             "[[DISEASE]] ... [[/DISEASE]]"),
+        "",
+        "Return a single JSON object.",
+    ])

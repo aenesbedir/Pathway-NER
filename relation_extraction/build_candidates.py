@@ -54,6 +54,7 @@ from pathlib import Path
 
 import spacy
 
+import abbreviations
 from schema import (
     Candidate,
     Mention,
@@ -105,11 +106,44 @@ def group_mentions(labels, text, wanted):
     return groups
 
 
-def build_for_document(nlp, pmid: str, text: str, labels) -> list[Candidate]:
+def apply_merges(groups: dict, text: str) -> tuple[dict, dict[str, list[str]]]:
+    """Fold abbreviation surfaces into the form the document defines them by.
+
+    Returns the regrouped mentions and, per surviving key, the variant surfaces
+    that were folded into it. Without this an article that writes "acute
+    lymphoblastic leukemia (ALL)" and then uses the short form yields two
+    entities, so the same question is asked twice and can be answered twice
+    differently - which is exactly what happened in PMID 36531023.
+    """
+    mapping = abbreviations.merge_map(text, set(groups))
+    if not mapping:
+        return groups, {}
+    merged: dict = {}
+    variants: dict[str, list[str]] = {}
+    for key, mentions in groups.items():
+        target = mapping.get(key, key)
+        merged.setdefault(target, []).extend(mentions)
+        if target != key:
+            variants.setdefault(target, []).append(key)
+    for key in merged:
+        merged[key].sort(key=lambda m: m.start)
+        variants.setdefault(key, [])
+    return merged, variants
+
+
+def build_for_document(
+    nlp, pmid: str, text: str, labels, merge_abbreviations: bool = False
+) -> list[Candidate]:
     pathways = group_mentions(labels, text, "PATHWAY")
     diseases = group_mentions(labels, text, "DISEASE")
     if not pathways or not diseases:
         return []
+
+    p_variants: dict[str, list[str]] = {}
+    d_variants: dict[str, list[str]] = {}
+    if merge_abbreviations:
+        pathways, p_variants = apply_merges(pathways, text)
+        diseases, d_variants = apply_merges(diseases, text)
 
     sents = sentence_spans(nlp, text)
 
@@ -136,6 +170,8 @@ def build_for_document(nlp, pmid: str, text: str, labels) -> list[Candidate]:
                 disease_mentions=dms,
                 shared_sentences=[sents[i] for i in shared],
                 stratum="same_sentence" if shared else "doc_level",
+                pathway_variants=sorted(p_variants.get(pkey, [])),
+                disease_variants=sorted(d_variants.get(dkey, [])),
             )
             cand.check()
             out.append(cand)
@@ -169,6 +205,16 @@ def main() -> None:
         type=int,
         default=1800,
         help="how many doc_level candidates to keep (same_sentence is exhaustive)",
+    )
+    ap.add_argument(
+        "--merge-abbreviations",
+        action="store_true",
+        help=(
+            "fold a short form into the long form the document defines it by "
+            '("acute lymphoblastic leukemia (ALL)" makes ALL and ALLs one entity '
+            "with it). Only definitions written in the abstract count; a hypernym "
+            "such as 'leukemia' is never merged."
+        ),
     )
     ap.add_argument("--seed", type=int, default=42)
     args = ap.parse_args()
@@ -214,7 +260,9 @@ def main() -> None:
             labels = rec["label"]
             if pathway_override:
                 labels = [s for s in labels if s[2] != "PATHWAY"] + pathway_override.get(pmid, [])
-            cands = build_for_document(nlp, pmid, rec["text"], labels)
+            cands = build_for_document(
+                nlp, pmid, rec["text"], labels, args.merge_abbreviations
+            )
             if cands:
                 docs_with_pairs += 1
             for c in cands:
@@ -259,6 +307,9 @@ def main() -> None:
         "n_doc_level_total": len(doc_level),
         "n_doc_level_kept": len(kept_doc_level),
         "n_candidates": n,
+        "merge_abbreviations": args.merge_abbreviations,
+        "n_merged_pathway_surfaces": sum(len(c.pathway_variants) for c in same + kept_doc_level),
+        "n_merged_disease_surfaces": sum(len(c.disease_variants) for c in same + kept_doc_level),
         "spacy_version": spacy.__version__,
         "segmentation": "spacy.blank('en') + sentencizer",
         "output": str(out_path),
