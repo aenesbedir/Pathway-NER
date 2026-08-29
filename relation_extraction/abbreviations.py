@@ -72,8 +72,6 @@ def _is_plausible(short: str, long: str) -> bool:
 
     Schwartz-Hearst proper matches characters right to left; this is the cheap
     version used by the fallback. It rejects "(see Methods)" and similar noise,
-    and it accepts the plural of a defined form ("ALLs" for "ALL") because the
-    caller strips a trailing s before asking.
     """
     letters = [c for c in short.lower() if c.isalnum()]
     if not letters or len(letters) > 10:
@@ -148,10 +146,18 @@ def _fallback(text: str) -> list[Definition]:
 def merge_map(text: str, keys: set[str]) -> dict[str, str]:
     """Map each normalized surface in `keys` to the key it should merge into.
 
-    Only surfaces that actually occur as entities are merged, and only when both
-    sides of a definition are present: finding "acute lymphoblastic leukemia
-    (ALL)" is useless unless the pipeline also produced both as entities. A
-    trailing plural "s" on the short form is tolerated, so "ALLs" joins "ALL".
+    A surface merges only when the abstract itself defines it: the long form and
+    the short form must both occur as entities, and the pair must come from a
+    parenthetical definition the authors wrote. Nothing is inferred beyond that.
+
+    An earlier version also folded a trailing plural "s" into the defined short
+    form, to catch "ALLs" alongside "ALL". Measured on the 2k corpus that rule
+    produced 2 correct merges and 1 wrong one: PMID 38569232 defines both "AF"
+    (atrial fibrillation) and "AFS" (AF related stroke) and contrasts the two
+    patient groups, so reading AFS as a plural of AF collapses two distinct
+    conditions. A rule with that ratio is not worth its risk, and guessing at
+    morphology is the kind of judgement this module exists to avoid. Plural forms
+    therefore stay separate entities unless the abstract defines them.
 
     The long form wins as the canonical key. It is the unambiguous one, it reads
     correctly in a report, and it is what a later MeSH lookup would match on.
@@ -159,11 +165,7 @@ def merge_map(text: str, keys: set[str]) -> dict[str, str]:
     mapping: dict[str, str] = {}
     for d in find_definitions(text):
         long_key, short_key = d.long_key, d.short_key
-        if long_key not in keys:
+        if long_key not in keys or short_key not in keys:
             continue
-        for candidate in keys:
-            base = candidate[:-1] if candidate.endswith("s") else candidate
-            if candidate == short_key or base == short_key:
-                if candidate != long_key:
-                    mapping[candidate] = long_key
+        mapping[short_key] = long_key
     return mapping
