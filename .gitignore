@@ -153,3 +153,10 @@ data/processed/gold-wave4/*.jsonl
 # per-run directories hold logs and prediction dumps and are regenerable.
 runs/*/
 !runs/summary.jsonl
+
+# Synthetic-data feasibility probe (reports/synthetic_data_probe_2026-08-31.md).
+# Seeds, generated abstracts and their re-labelling all regenerate from the
+# tracked scripts plus SMPDB; the SMPDB archives are a 167MB third-party download.
+data/raw/smpdb/
+data/raw/relation_synth_cache/
+data/processed/relation/synth_probe/
