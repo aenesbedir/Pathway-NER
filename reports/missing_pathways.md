@@ -179,82 +179,137 @@ not use the surface forms in either tree.
 
 ---
 
-# Addendum — pair-only slice, staged deterministic layers
+# Addendum — labelled slice, staged deterministic layers
 
-`scripts/run_missing_stages.py`. The pair-only PMIDs of the eight curated targets
-(blocklisted names excluded), labelled by the checkpoint and then by each
-deterministic layer in turn, so every layer's contribution is measured rather than
-assumed. The booster now carries the surface-form dictionary: `boost_surface()`
-scans `preprocessing/pathway_surface_forms.py` verbatim, alongside the existing
-pattern scan.
+`scripts/run_missing_stages.py`. The eight curated targets, labelled by the
+checkpoint and then by each deterministic layer in turn, so every layer's
+contribution is measured rather than assumed. The booster now carries the
+surface-form dictionary: `boost_surface()` scans
+`preprocessing/pathway_surface_forms.py` verbatim, alongside the existing pattern
+scan. Blocklisted names are excluded — no forms, and no model-predicted span in
+777 abstracts.
 
-Slice: 691 pair-only PMIDs, **682 with an abstract**.
+## Slice
+
+Per pathway the slice is the **pair-only** set: PMIDs the disease-paired query
+returned and the solo query did not. That set is empty for five of the eight, and
+structurally so — pair-only can only fill once the solo cap of 200 overflows, and
+`n-glycan metabolism` has 7 hits in total. Those five contribute **all** of their
+PMIDs instead, so every target is represented rather than only the three large
+enough to overflow.
+
+| route | pathways | PMIDs |
+|---|---|---:|
+| pair-only | squalene and cholesterol synthesis, androgen and estrogen synthesis and metabolism, phosphatidylinositol phosphate metabolism | 682 |
+| all | lipoate metabolism, keratan sulfate synthesis, n-glycan metabolism, hippurate metabolism, blood group synthesis | 149 |
+
+852 PMIDs, **831 with an abstract**.
 
 ## Span growth per stage
 
 | stage | spans | added | docs touched |
 |---|---:|---:|---:|
-| 1 · ner (biom-electra-large seed7) | 1451 | — | 652 |
-| 2 · + `boost()` pattern scan | 1468 | **+17** | 15 |
-| 3 · + `boost_surface()` dictionary | 1544 | **+76** | 55 |
+| 1 · ner (biom-electra-large seed7) | 1909 | — | 793 |
+| 2 · + `boost()` pattern scan | 1930 | **+21** | 18 |
+| 3 · + `boost_surface()` dictionary | 2010 | **+80** | 59 |
 
-Final merged output is 1541, not 1544: three model spans are absorbed by longer
-dictionary spans on overlap. Recall gain over the model alone is **+6.2%**.
+Final merged output is 2007: three model spans are absorbed by longer dictionary
+spans on overlap. Recall gain over the model alone is **+5.3%**.
 
-## What each layer actually contributes
+## What each layer contributes
 
-Span provenance in the merged output: `dict` 1027, `ner` 497, `booster` 17.
+Span provenance in the merged output: `dict` 1292, `ner` 695, `booster` 20.
 
-The dictionary appears to dominate, but only 76 of its 1027 spans are new — the
-other **951 sit at exactly the offsets the model already found**, and win the
-merge because they carry a canonical. That is the real contribution: **67.7% of
-the 1541 spans now carry a canonical pathway label**, where the checkpoint alone
+The dictionary looks dominant, but only 80 of its 1292 spans are new — the other
+**1212 sit at exactly the offsets the model already found**, and win the merge
+because they carry a canonical. That is the larger contribution: **65.4% of the
+2007 spans now carry a canonical pathway label**, where the checkpoint alone
 produces bare character offsets with no idea which pathway they name.
 
-The pattern scan adds 17 spans across 15 documents — an order of magnitude less
-than the dictionary. Its generative templates were built for word-order reversal,
-and this slice has almost none.
+The pattern scan adds 21 spans across 18 documents, an order of magnitude less.
+Its templates were built for word-order reversal, which is rare in this slice.
 
 ## Per pathway
 
-| pathway | docs | ner | +boost | +dict | total |
-|---|---:|---:|---:|---:|---:|
-| squalene and cholesterol synthesis | 411 | 1024 | 2 | 70 | 1096 |
-| androgen and estrogen synthesis and metabolism | 226 | 365 | 15 | 3 | 383 |
-| phosphatidylinositol phosphate metabolism | 45 | 62 | 0 | 0 | 62 |
+| pathway | route | docs | ner | +boost | +dict | total |
+|---|---|---:|---:|---:|---:|---:|
+| squalene and cholesterol synthesis | pair-only | 411 | 1024 | 2 | 70 | 1096 |
+| androgen and estrogen synthesis and metabolism | pair-only | 226 | 365 | 15 | 3 | 383 |
+| lipoate metabolism | all | 97 | 331 | 0 | 2 | 333 |
+| keratan sulfate synthesis | all | 35 | 88 | 3 | 1 | 92 |
+| phosphatidylinositol phosphate metabolism | pair-only | 45 | 62 | 0 | 0 | 62 |
+| n-glycan metabolism | all | 7 | 28 | 0 | 1 | 29 |
+| hippurate metabolism | all | 5 | 9 | 0 | 0 | 9 |
+| blood group synthesis | all | 5 | 2 | 1 | 0 | 3 |
 
-The two layers are not interchangeable and they do not overlap: the dictionary
-carries the cholesterol pathway (70 of 76 additions), the pattern scan carries the
-steroid one (15 of 17). Dropping either loses a pathway.
+The layers are not interchangeable and barely overlap: the dictionary carries the
+cholesterol pathway (70 of 80 additions), the pattern scan the steroid one (15 of
+21). Dropping either loses a pathway.
 
-## What the dictionary found that the model missed
+## Surface forms found, per target
 
-| surface | n |
+| canonical | spans | forms |
+|---|---:|---|
+| squalene and cholesterol synthesis | 481 | cholesterol synthesis 255 · mevalonate pathway 184 · isoprenoid biosynthesis 27 · cholesterol biosynthetic pathway 14 · terpenoid backbone biosynthesis 1 |
+| androgen and estrogen synthesis and metabolism | 274 | estrogen metabolism 72 · estrogen synthesis 57 · androgen synthesis 50 · estrogen biosynthesis 33 · androgen metabolism 24 · androgen biosynthesis 23 · formation of estrogen 6 · estrogen production 4 · five more at 1 |
+| lipoate metabolism | 99 | lipoic acid metabolism 82 · lipoate metabolism 17 |
+| phosphatidylinositol phosphate metabolism | 46 | phosphoinositide metabolism 46 |
+| keratan sulfate synthesis | 42 | keratan sulfate synthesis 19 · keratan sulfate biosynthesis 19 · keratan sulphate synthesis 4 |
+| n-glycan metabolism | 7 | n-glycan metabolism 7 |
+| blood group synthesis | 3 | blood group biosynthesis 3 |
+| hippurate metabolism | 3 | hippurate metabolism 3 |
+
+`formation of estrogen`, `production of estrogen` and `androgen formation` are not
+dictionary hits — they come from `boost()`'s `<process> of <content>` template, and
+they are the whole of that pathway's +15.
+
+Two targets are carried entirely by a form that is not their canonical:
+`lipoate metabolism` (83% `lipoic acid metabolism`) and
+`phosphatidylinositol phosphate metabolism` (100% `phosphoinositide metabolism`).
+
+## Spans on pathways that were never queried
+
+The dictionary scans all 90 canonicals, so a document retrieved for one pathway
+gets every other pathway it mentions labelled too. 63 canonicals appear in total.
+
+| canonical | spans | top forms |
+|---|---:|---|
+| cholesterol metabolism | 97 | cholesterol metabolism 50 · cholesterol homeostasis 46 |
+| fatty acid synthesis | 43 | lipogenesis 13 · DNL 9 · de novo lipogenesis 8 |
+| glycolysis/gluconeogenesis | 35 | glycolysis 15 · gluconeogenesis 8 · aerobic glycolysis 6 · Warburg effect 4 |
+| citric acid cycle | 20 | tricarboxylic acid cycle 5 · TCA cycle 5 · citrate cycle 4 |
+| steroid metabolism | 18 | steroidogenesis 6 · steroid biosynthesis 6 |
+| oxidative phosphorylation | 13 | oxidative phosphorylation 6 · mitochondrial respiratory chain 4 |
+| bile acid synthesis | 12 | bile acid synthesis 5 · bile acid biosynthesis 4 |
+| n-glycan degradation | 8 | n-glycan degradation 7 |
+| n-glycan synthesis | 7 | n-glycan biosynthesis 4 · n-glycosylation 2 |
+
+## Gaps the run exposes in the dictionary
+
+695 spans (231 unique surfaces) carry no canonical — the model found them, no
+form matches. The largest are variants of forms that are already in the file:
+
+| surface | spans |
 |---|---:|
-| cholesterol homeostasis | 45 |
-| DNL | 9 |
-| Warburg effect | 4 |
-| steroidogenesis | 3 |
-| mevalonate pathway | 3 |
-| respiratory chain / mitochondrial respiratory chain | 4 |
-| triglyceride synthesis | 2 |
-| de novo lipogenesis, N-glycosylation, N-linked glycosylation, isoprenoid biosynthesis, glycolytic flux, pentose phosphate pathways | 1 each |
+| lipid metabolism | 65 |
+| **cholesterol biosynthesis** | **50** |
+| de novo cholesterol synthesis | 15 |
+| cholesterol biosynthesis pathway | 11 |
+| mevalonate (MVA) pathway | 9 |
+| synthesis of cholesterol | 8 |
+| cholesterol synthesis pathway | 7 |
+| L-mevalonate pathway | 4 |
 
-These are the two failure modes the surface-form module was written for:
-abbreviations the model never learned (`DNL`, `Warburg effect`) and near-synonyms
-of a canonical it does know (`cholesterol homeostasis` beside `cholesterol
-synthesis`). `cholesterol homeostasis` alone is 59% of the gain.
+`cholesterol biosynthesis` is absent while `cholesterol synthesis` is present;
+`mevalonate (MVA) pathway` and `L-mevalonate pathway` fail the word-boundary regex
+that `mevalonate pathway` passes. Adding these three would give roughly 80 more
+spans a canonical.
 
-The spans also reach beyond the three query pathways — 97 land on `cholesterol
-metabolism`, 38 on `fatty acid synthesis`, 33 on `glycolysis/gluconeogenesis`.
-The dictionary scans all 90 canonicals, so retrieving documents for one pathway
-labels every other pathway they mention.
-
-Thirty of the 682 abstracts still carry no span at any stage.
+Thirty-six of the 831 abstracts carry no span at any stage.
 
 ## Read
 
-The dictionary layer earns its place twice over, and the second reason is the
-larger one: +6.2% recall, and canonical labels on two thirds of all spans. That is
-the argument for wiring `pathway_surface_forms.py` into `match_exact.py` as well —
-where it currently contributes nothing at all.
+The dictionary layer earns its place twice: +5.3% recall, and canonical labels on
+two thirds of all spans. That is the argument for wiring
+`pathway_surface_forms.py` into `match_exact.py` as well, where it currently
+contributes nothing.
