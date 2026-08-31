@@ -176,3 +176,85 @@ not use the surface forms in either tree.
 5. **3589 new abstracts** with 7776 model spans are available as annotation
    candidates. They are silver: machine-labeled, unreviewed, and the model that
    produced them scores 0.8358 on gt_100, so roughly one span in six is wrong.
+
+---
+
+# Addendum — pair-only slice, staged deterministic layers
+
+`scripts/run_missing_stages.py`. The pair-only PMIDs of the eight curated targets
+(blocklisted names excluded), labelled by the checkpoint and then by each
+deterministic layer in turn, so every layer's contribution is measured rather than
+assumed. The booster now carries the surface-form dictionary: `boost_surface()`
+scans `preprocessing/pathway_surface_forms.py` verbatim, alongside the existing
+pattern scan.
+
+Slice: 691 pair-only PMIDs, **682 with an abstract**.
+
+## Span growth per stage
+
+| stage | spans | added | docs touched |
+|---|---:|---:|---:|
+| 1 · ner (biom-electra-large seed7) | 1451 | — | 652 |
+| 2 · + `boost()` pattern scan | 1468 | **+17** | 15 |
+| 3 · + `boost_surface()` dictionary | 1544 | **+76** | 55 |
+
+Final merged output is 1541, not 1544: three model spans are absorbed by longer
+dictionary spans on overlap. Recall gain over the model alone is **+6.2%**.
+
+## What each layer actually contributes
+
+Span provenance in the merged output: `dict` 1027, `ner` 497, `booster` 17.
+
+The dictionary appears to dominate, but only 76 of its 1027 spans are new — the
+other **951 sit at exactly the offsets the model already found**, and win the
+merge because they carry a canonical. That is the real contribution: **67.7% of
+the 1541 spans now carry a canonical pathway label**, where the checkpoint alone
+produces bare character offsets with no idea which pathway they name.
+
+The pattern scan adds 17 spans across 15 documents — an order of magnitude less
+than the dictionary. Its generative templates were built for word-order reversal,
+and this slice has almost none.
+
+## Per pathway
+
+| pathway | docs | ner | +boost | +dict | total |
+|---|---:|---:|---:|---:|---:|
+| squalene and cholesterol synthesis | 411 | 1024 | 2 | 70 | 1096 |
+| androgen and estrogen synthesis and metabolism | 226 | 365 | 15 | 3 | 383 |
+| phosphatidylinositol phosphate metabolism | 45 | 62 | 0 | 0 | 62 |
+
+The two layers are not interchangeable and they do not overlap: the dictionary
+carries the cholesterol pathway (70 of 76 additions), the pattern scan carries the
+steroid one (15 of 17). Dropping either loses a pathway.
+
+## What the dictionary found that the model missed
+
+| surface | n |
+|---|---:|
+| cholesterol homeostasis | 45 |
+| DNL | 9 |
+| Warburg effect | 4 |
+| steroidogenesis | 3 |
+| mevalonate pathway | 3 |
+| respiratory chain / mitochondrial respiratory chain | 4 |
+| triglyceride synthesis | 2 |
+| de novo lipogenesis, N-glycosylation, N-linked glycosylation, isoprenoid biosynthesis, glycolytic flux, pentose phosphate pathways | 1 each |
+
+These are the two failure modes the surface-form module was written for:
+abbreviations the model never learned (`DNL`, `Warburg effect`) and near-synonyms
+of a canonical it does know (`cholesterol homeostasis` beside `cholesterol
+synthesis`). `cholesterol homeostasis` alone is 59% of the gain.
+
+The spans also reach beyond the three query pathways — 97 land on `cholesterol
+metabolism`, 38 on `fatty acid synthesis`, 33 on `glycolysis/gluconeogenesis`.
+The dictionary scans all 90 canonicals, so retrieving documents for one pathway
+labels every other pathway they mention.
+
+Thirty of the 682 abstracts still carry no span at any stage.
+
+## Read
+
+The dictionary layer earns its place twice over, and the second reason is the
+larger one: +6.2% recall, and canonical labels on two thirds of all spans. That is
+the argument for wiring `pathway_surface_forms.py` into `match_exact.py` as well —
+where it currently contributes nothing at all.
