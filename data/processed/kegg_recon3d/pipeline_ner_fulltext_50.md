@@ -3,14 +3,14 @@
 `llm/run_silver.py --model runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7`
 run over `data/raw/kegg_recon3d/fulltext_50/articles_fulltext_50.json` with
 `--text-field full_text --all`, output
-`data/processed/kegg_recon3d/pathway_spans_fulltext_50.jsonl`.
+`data/processed/kegg_recon3d/pathway-10k-biom-electra-large-seed7_fulltext_50.jsonl`.
 
 Two questions, both answered by `scripts/compare_span_sets.py`; the numbers live in
 `opus_vs_pipeline_fulltext_50.json` rather than in a table here.
 
 ## 1. Does the pipeline reproduce the earlier direct-inference run?
 
-Against `pathway_predictions_fulltext_50.jsonl` (the same checkpoint driven by
+Against `pathway-10k-biom-electra-large-seed7_fulltext_50_direct.jsonl` (the same checkpoint driven by
 `playground/model_005_analysis/predict_abstracts.py`): 238 agreed names, **zero**
 exclusive to the old run, one exclusive to the pipeline — Jaccard 0.996, document
 agreement 50/50. The one addition is the deterministic booster's single span.

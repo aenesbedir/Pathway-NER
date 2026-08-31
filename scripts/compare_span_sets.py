@@ -22,7 +22,7 @@ annotator systematically sees and the other does not.
 
     venv310/bin/python3 scripts/compare_span_sets.py \\
         --a data/processed/kegg_recon3d/opus_prediction_fulltext_50_revised.jsonl \\
-        --b data/processed/kegg_recon3d/pathway_spans_fulltext_50.jsonl \\
+        --b data/processed/kegg_recon3d/pathway-10k-biom-electra-large-seed7_fulltext_50.jsonl \\
         --label-a opus_revised --label-b pipeline_ner
 """
 

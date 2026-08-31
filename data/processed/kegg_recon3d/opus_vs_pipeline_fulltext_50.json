@@ -2,7 +2,7 @@
   "a": "opus_revised",
   "b": "pipeline_ner",
   "a_file": "data/processed/kegg_recon3d/opus_prediction_fulltext_50_revised.jsonl",
-  "b_file": "data/processed/kegg_recon3d/pathway_spans_fulltext_50.jsonl",
+  "b_file": "data/processed/kegg_recon3d/pathway-10k-biom-electra-large-seed7_fulltext_50.jsonl",
   "n_docs": 50,
   "docs_with_any": {
     "a": 37,

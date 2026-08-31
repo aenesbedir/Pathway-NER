@@ -81,7 +81,7 @@ Run from repo root:
         --model runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7 \\
         --articles data/raw/kegg_recon3d/articles.json --matches none \\
         --pmids data/raw/kegg_recon3d/pmids.txt \\
-        --output data/processed/kegg_recon3d/pathway_spans.jsonl
+        --output data/processed/kegg_recon3d/pathway-10k-biom-electra-large-seed7_abstracts_1521.jsonl
 """
 
 import argparse
