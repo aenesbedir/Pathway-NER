@@ -6,10 +6,15 @@ Build the pair-only slice of the missing-pathway corpus and label it with the
 three deterministic layers applied one at a time, so each layer's contribution is
 a measured number rather than an assumption.
 
-Slice: PMIDs that only the disease-paired PubMed query returned (absent from the
-solo query) for the eight targets that have curated surface forms. Blocklisted
-Recon names are excluded — they have no forms, and the earlier run showed the
-model predicts none of them in 777 abstracts.
+Slice: the eight targets that have curated surface forms; blocklisted Recon names
+are excluded, having no forms and no model-predicted span in 777 abstracts.
+
+Per pathway the slice is the pair-only set — PMIDs the disease-paired query
+returned and the solo query did not. That set is empty for five of the eight, and
+structurally so: pair-only can only fill once the solo cap of 200 overflows, and
+`n-glycan metabolism` has 7 hits in total. Those five contribute all of their
+PMIDs instead, so every target is represented rather than only the three large
+enough to overflow.
 
 Stages, each a superset of the one before:
 
@@ -51,7 +56,8 @@ def main() -> None:
     arts = {a["pmid"]: a for a in json.loads((RAW / "articles.json").read_text())}
 
     owner: dict[str, set[str]] = defaultdict(set)
-    pair_only: set[str] = set()
+    route: dict[str, str] = {}
+    selected: set[str] = set()
     for path, rec in q.items():
         if rec["blocklisted"]:
             continue
@@ -59,13 +65,20 @@ def main() -> None:
         for d in rec["forms"].values():
             solo |= set(d["solo_ids"])
             pair |= set(d["pair_pmids"])
-        for p in pair - solo:
+        take = pair - solo
+        how = "pair_only"
+        if not take:
+            take = solo | pair
+            how = "all"
+        print(f"  {path:46} {how:9} {len(take)}")
+        for p in take:
             owner[p].add(path)
-        pair_only |= pair - solo
+            route.setdefault(p, how)
+        selected |= take
 
-    pmids = sorted(p for p in pair_only
+    pmids = sorted(p for p in selected
                    if p in arts and (arts[p].get("abstract") or "").strip())
-    print(f"pair-only pmids: {len(pair_only)} | with abstract: {len(pmids)}")
+    print(f"selected pmids: {len(selected)} | with abstract: {len(pmids)}")
 
     ann = resolve_annotator(MODEL)
     texts = [arts[p]["abstract"] for p in pmids]
@@ -101,6 +114,7 @@ def main() -> None:
         rows.append({
             "pmid": pmid,
             "pathways": sorted(owner[pmid]),
+            "route": route[pmid],
             "n_ner": len(s1),
             "n_after_boost": len(s2),
             "n_after_dict": len(s3),
@@ -123,6 +137,7 @@ def main() -> None:
     metrics = {
         "model": MODEL,
         "abstracts": len(pmids),
+        "by_route": dict(Counter(route[p] for p in pmids)),
         "spans_stage1_ner": tot["ner"],
         "spans_added_boost": tot["boost"],
         "spans_added_dict": tot["dict"],
