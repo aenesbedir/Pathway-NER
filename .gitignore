@@ -169,6 +169,12 @@ data/processed/gold-pilot1k/*.jsonl
 # TRUBA separately because they are generated from the local Doccano export.
 data/processed/pathway-10k/*.jsonl
 data/processed/pathway-10k-*/
+# The merged 10k + missing-pathway corpus follows the same rule as pathway-10k:
+# its frozen split is the contract between runs, so it is tracked while the
+# generated corpus and tokenizer-specific datasets are not.
+!data/processed/pathway-10k-missing/
+data/processed/pathway-10k-missing/*
+!data/processed/pathway-10k-missing/splits.json
 
 # Sweep outputs. summary.jsonl is the aggregated result and is kept; the
 # per-run directories hold logs and prediction dumps and are regenerable.
