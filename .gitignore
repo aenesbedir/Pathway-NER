@@ -160,3 +160,8 @@ runs/*/
 data/raw/smpdb/
 data/raw/relation_synth_cache/
 data/processed/relation/synth_probe/
+
+# PrimeKG snapshot for the seed-source comparison
+# (reports/seed_source_comparison_2026-09-03.md). 937MB third-party download
+# from Harvard Dataverse; the seed builder regenerates everything from it.
+data/raw/primekg/
