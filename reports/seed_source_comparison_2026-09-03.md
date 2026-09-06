@@ -26,7 +26,7 @@ passes it, and the number says nothing about the pair.
 ## The measurement used instead
 
 A seed source proposes pairs a paper might plausibly be written about. That is
-checkable against the 10,121 real abstracts in
+checkable against the 10,125 real abstracts in
 `data/processed/pathway-10k/articles.jsonl`: how often do both names of a
 proposed pair appear in the same abstract?
 

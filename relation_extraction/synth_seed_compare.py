@@ -59,24 +59,23 @@ def short_name(name: str) -> str:
 def load_corpus(path: Path) -> list[str]:
     """Abstracts, case-folded.
 
-    Thirteen of the 10,125 records carry a raw newline inside the abstract
-    string, so a record is not always a line. Lines are joined until they parse
-    rather than dropped: the affected abstracts are ordinary text and excluding
-    them would quietly shrink the corpus the attestation rates are measured
-    against.
+    Some records carry a raw newline inside the abstract string, so a record is
+    not always a line. Scanning line by line and joining until the buffer parses
+    loses every record after the first one it cannot close - it silently read
+    6,700 of 10,125 abstracts - so the file is decoded as a stream of
+    concatenated JSON values instead.
     """
-    out, buf = [], ""
-    for line in path.read_text(encoding="utf-8").splitlines():
-        if not line.strip() and not buf:
-            continue
-        buf = f"{buf}\\n{line}" if buf else line
-        try:
-            out.append(json.loads(buf)["abstract"].lower())
-        except json.JSONDecodeError:
-            continue
-        buf = ""
-    if buf:
-        print(f"warning: {len(buf)} trailing bytes did not parse", file=sys.stderr)
+    text = path.read_text(encoding="utf-8")
+    decoder = json.JSONDecoder()
+    out: list[str] = []
+    i, n = 0, len(text)
+    while i < n:
+        while i < n and text[i].isspace():
+            i += 1
+        if i >= n:
+            break
+        row, i = decoder.raw_decode(text, i)
+        out.append(row["abstract"].lower())
     return out
 
 
