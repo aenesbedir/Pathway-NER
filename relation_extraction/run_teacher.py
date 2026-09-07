@@ -362,13 +362,11 @@ def label_batch(teacher, cache_dir: Path, pmid: str, cands: list[Candidate], fp:
     abstract = cands[0].abstract
     want_ids = [c.candidate_id for c in cands]
     cache_file = cache_dir / f"{pmid}.json"
-    payload, status = _read_cache(cache_file, want_ids, fp)
+    pairs = [(c.pathway_mentions[0].text, c.disease_mentions[0].text) for c in cands]
+    prompt = prompts.render(abstract, pairs)
+    payload, status = _read_cache(cache_file, want_ids, fp, prompt_sha(prompt))
 
     if payload is None:
-        pairs = [
-            (c.pathway_mentions[0].text, c.disease_mentions[0].text) for c in cands
-        ]
-        prompt = prompts.render(abstract, pairs)
         payload, status = _fetch(teacher, cache_file, prompt, pmid, want_ids, fp, status)
         if payload is None:
             return [], Counter({"request_failed": len(cands)}), status
@@ -410,27 +408,27 @@ def label_single(
     for cand in cands:
         want_ids = [cand.candidate_id]
         cache_file = cache_dir / f"{pmid}__{cand.candidate_id}.json"
-        payload, status = _read_cache(cache_file, want_ids, fp)
+        if grouped:
+            prompt = prompts.render_grouped(
+                abstract,
+                cand.pathway_mentions,
+                cand.disease_mentions,
+                cand.pathway_key,
+                cand.disease_key,
+                cand.pathway_variants,
+                cand.disease_variants,
+            )
+        else:
+            prompt = prompts.render_single(
+                abstract,
+                cand.pathway_mentions,
+                cand.disease_mentions,
+                cand.pathway_mentions[0].text,
+                cand.disease_mentions[0].text,
+            )
+        payload, status = _read_cache(cache_file, want_ids, fp, prompt_sha(prompt))
 
         if payload is None:
-            if grouped:
-                prompt = prompts.render_grouped(
-                    abstract,
-                    cand.pathway_mentions,
-                    cand.disease_mentions,
-                    cand.pathway_key,
-                    cand.disease_key,
-                    cand.pathway_variants,
-                    cand.disease_variants,
-                )
-            else:
-                prompt = prompts.render_single(
-                    abstract,
-                    cand.pathway_mentions,
-                    cand.disease_mentions,
-                    cand.pathway_mentions[0].text,
-                    cand.disease_mentions[0].text,
-                )
             payload, status = _fetch(
                 teacher, cache_file, prompt, pmid, want_ids, fp, status
             )
@@ -454,12 +452,32 @@ def label_single(
     return out, rejected, worst
 
 
-def _read_cache(cache_file: Path, want_ids: list[str], fp: str):
-    """Return (payload, status). A payload answering a different question is a miss."""
+def prompt_sha(prompt: str) -> str:
+    return hashlib.sha1(prompt.encode("utf-8")).hexdigest()[:16]
+
+
+def _read_cache(cache_file: Path, want_ids: list[str], fp: str, sent: str):
+    """Return (payload, status). A payload answering a different question is a miss.
+
+    `sent` is a digest of the exact user message. The pair ids and the guide
+    fingerprint do not determine that message on their own: `single` and
+    `grouped` mark every mention of the pair inside the abstract, so a candidate
+    whose mention list changes produces a different question under an unchanged
+    id and an unchanged guide. Keying on the ids alone served a stale answer as a
+    fresh one when the gt_100 mention lists were corrected.
+
+    A payload written before this digest existed has no `prompt_sha` and is
+    treated as stale, which costs a re-fetch and buys the guarantee that a cached
+    answer was produced by the message about to be sent.
+    """
     if not cache_file.exists():
         return None, "cached"
     cached = json.loads(cache_file.read_text())
-    if cached.get("candidate_ids") == want_ids and cached.get("prompt_fingerprint") == fp:
+    if (
+        cached.get("candidate_ids") == want_ids
+        and cached.get("prompt_fingerprint") == fp
+        and cached.get("prompt_sha") == sent
+    ):
         return cached, "cached"
     return None, "stale_cache"
 
@@ -477,6 +495,7 @@ def _fetch(teacher, cache_file: Path, prompt: str, pmid: str, want_ids, fp, stat
         "n_pairs": len(want_ids),
         "candidate_ids": want_ids,
         "prompt_fingerprint": fp,
+        "prompt_sha": prompt_sha(prompt),
         "raw": raw,
         "wall_s": round(time.time() - started, 2),
     }
