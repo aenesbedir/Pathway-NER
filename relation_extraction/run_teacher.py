@@ -229,6 +229,60 @@ def parse_object(text: str) -> dict:
     return obj
 
 
+#: Marker tokens `single` and `grouped` insert around the pair being judged.
+_MARKER_RE = re.compile(r"\[\[/?(?:PATHWAY|DISEASE)\]\]")
+
+
+def resolve_quote(quote: str, abstract: str) -> str | None:
+    """Return the abstract's own text for `quote`, or None if it is not there.
+
+    A quote is rejected unless it is verbatim, and two harmless mismatches used to
+    cause most rejections. The model copies the `[[PATHWAY]]` markers it was shown
+    into the quote, and it re-wraps whitespace. Neither changes what was quoted.
+
+    So the match is attempted three ways - exact, marker-stripped, then
+    whitespace-normalized - and what gets stored is always the substring taken
+    from the abstract, never the model's rendering of it. The record therefore
+    still satisfies "evidence is a verbatim substring", which is the property the
+    rest of the pipeline relies on.
+    """
+    quote = quote.strip()
+    if not quote:
+        return None
+    if quote in abstract:
+        return quote
+    stripped = _MARKER_RE.sub("", quote).strip()
+    if stripped and stripped in abstract:
+        return stripped
+    if not stripped:
+        return None
+
+    # Whitespace-insensitive search: walk the abstract keeping a map from each
+    # normalized character back to its offset, then slice the original.
+    norm_chars: list[str] = []
+    offsets: list[int] = []
+    prev_space = False
+    for i, ch in enumerate(abstract):
+        if ch.isspace():
+            if prev_space:
+                continue
+            prev_space = True
+            norm_chars.append(" ")
+            offsets.append(i)
+        else:
+            prev_space = False
+            norm_chars.append(ch)
+            offsets.append(i)
+    norm_abstract = "".join(norm_chars)
+    norm_quote = re.sub(r"\s+", " ", stripped).strip()
+    at = norm_abstract.find(norm_quote)
+    if at < 0:
+        return None
+    start = offsets[at]
+    end = offsets[at + len(norm_quote) - 1] + 1
+    return abstract[start:end]
+
+
 def ground(
     rows: list[dict],
     cands: list[Candidate],
@@ -273,9 +327,12 @@ def ground(
         elif len(quotes) > MAX_EVIDENCE_QUOTES:
             rejected["too_many_evidence_quotes"] += 1
             continue
-        elif any(q not in abstract for q in quotes):
-            rejected["evidence_not_verbatim"] += 1
-            continue
+        else:
+            resolved = tuple(resolve_quote(q, abstract) for q in quotes)
+            if any(q is None for q in resolved):
+                rejected["evidence_not_verbatim"] += 1
+                continue
+            quotes = resolved
 
         rel = Relation(
             pmid=cand.pmid,

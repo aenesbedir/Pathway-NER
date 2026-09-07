@@ -82,16 +82,7 @@ re-annotate entities, and do not consider any other pair.
     - "Alterations in multiple metabolic pathways, including purine, arginine and
       proline metabolism, were also associated with CAC in women with SLE."
       -> association
-    Use `association` ALSO when the only claim is that intervening on the pathway
-    treats, prevents or sensitizes the disease. The direction of an intervention
-    is not the direction of the pathway in the disease, so such a claim must not
-    be labelled up or down.
-    - "Inhibiting GTP synthesis radiosensitizes GBM cells and patient-derived
-      neurospheres by impairing DNA repair." -> association
-    - "Pharmacological and genetic inhibition of serotonin synthesis reduced
-      HFD-induced hepatic lipid accumulation." -> association
-    If the abstract states BOTH the pathway's state in the disease and an
-    intervention, label the state and quote the state sentence.
+    An intervention claim is not `association`; see the rule below.
 
 `no_association_stated`
     The abstract reports that it LOOKED and found NO relation. An explicit claim
@@ -110,6 +101,31 @@ re-annotate entities, and do not consider any other pair.
       factor connected to neurodegenerative diseases" makes no claim about the
       diatom's urea cycle in neurodegenerative disease -> none
 
+# Interventions
+
+When the only claim is that acting on the pathway treats, prevents or sensitizes
+the disease, read the sign from the direction of the intervention that helps:
+
+    inhibiting / blocking / depleting the pathway helps  -> upregulation
+    activating / supplementing / restoring it helps      -> downregulation
+
+    - "Inhibiting GTP synthesis radiosensitizes GBM cells and patient-derived
+      neurospheres by impairing DNA repair." -> upregulation
+    - "MTX acts as an inhibitor of dihydrofolate reductase, leading to suppression
+      of purine and pyrimidine synthesis in high metabolic and turnover cells,
+      targeting cancer and dysregulated immune cells." -> upregulation
+
+This is the one place the guide asks you to read past what is literally written:
+the abstract states the effect of the intervention, not the state of the pathway
+in the disease. Apply it only when the intervention and the disease are both
+named, and use `confidence: medium` unless the sentence is unambiguous.
+
+If the abstract states BOTH the pathway's state in the disease and an
+intervention, label the state and quote the state sentence.
+
+If the abstract names an intervention but not the disease it treats, that is
+`none`, not a signed label.
+
 # Reference point for `upregulation` / `downregulation`
 
 The sign is relative to the comparison the abstract itself makes — disease versus
@@ -122,7 +138,8 @@ or `none`, not a guessed sign.
 
 A list of one to three sentences, each copied CHARACTER FOR CHARACTER from the
 abstract, that together carry the claim. Do not paraphrase, do not merge two
-sentences into one string, do not fix typography. A quote that is not found in
+sentences into one string, do not fix typography, and do not copy the
+[[PATHWAY]] / [[DISEASE]] markers into a quote - they are not part of the text. A quote that is not found in
 the abstract verbatim causes the row to be discarded.
 
 Quote one sentence when one sentence states the claim. Quote more only when the
