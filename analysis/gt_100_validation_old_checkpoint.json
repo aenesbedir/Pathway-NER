@@ -1,0 +1,25 @@
+{
+ "gold": {
+  "file": "doccano/golden_dataset/gt_100.jsonl",
+  "pmids": 100,
+  "spans": 279
+ },
+ "runs": [
+  {
+   "run_dir": "/home/enes/NER-pipeline/runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7",
+   "model_key": "biom-electra-large",
+   "lr": 3e-05,
+   "seed": 7,
+   "dataset": "pathway-10k-biom-electra-large",
+   "test_f1_on_split": 0.8858706669369552,
+   "gt100_exact_f1": 0.8343,
+   "gt100_exact_p": 0.8682,
+   "gt100_exact_r": 0.8029,
+   "gt100_partial_f1": 0.8939,
+   "gt100_partial_p": 0.9302,
+   "gt100_partial_r": 0.8602,
+   "pred_spans": 258,
+   "pmids_without_predictions": 0
+  }
+ ]
+}
