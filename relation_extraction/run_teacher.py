@@ -48,13 +48,15 @@ from pathlib import Path
 
 import prompts
 from schema import (
+    CONFIDENCE,
     Candidate,
+    LABELS,
+    MAX_EVIDENCE_QUOTES,
     Mention,
+    RecordError,
     Relation,
     SCHEMA_TAG,
-    CONFIDENCE,
-    LABELS,
-    RecordError,
+    as_quotes,
     read_jsonl,
     write_jsonl,
 )
@@ -260,13 +262,18 @@ def ground(
         if confidence not in CONFIDENCE:
             confidence = "medium"
 
-        evidence = str(row.get("evidence") or "").strip()
+        # Evidence may arrive as one string or as several quotes; both are
+        # normalized to a tuple, and every quote has to be verbatim.
+        quotes = as_quotes(row.get("evidence"))
         if label == "none":
-            evidence = ""
-        elif not evidence:
+            quotes = ()
+        elif not quotes:
             rejected["missing_evidence"] += 1
             continue
-        elif evidence not in abstract:
+        elif len(quotes) > MAX_EVIDENCE_QUOTES:
+            rejected["too_many_evidence_quotes"] += 1
+            continue
+        elif any(q not in abstract for q in quotes):
             rejected["evidence_not_verbatim"] += 1
             continue
 
@@ -276,7 +283,7 @@ def ground(
             pathway=cand.pathway_mentions[0],
             label=label,
             confidence=confidence,
-            evidence=evidence,
+            evidence=quotes,
             relation_source=source,
             candidate_id=cand.candidate_id,
             stratum=cand.stratum,

@@ -69,7 +69,7 @@ import hashlib
 import json
 import re
 from dataclasses import asdict, dataclass, field
-from typing import Iterable
+from typing import Iterable, Sequence
 
 SCHEMA_VERSION = "pathway_disease_v4"
 SCHEMA_TAG = (
@@ -92,10 +92,34 @@ LABELS = (
     "none",
 )
 
-#: Labels that require a verbatim evidence sentence. `none` forbids one.
+#: Labels that require at least one verbatim evidence quote. `none` forbids any.
 EVIDENCE_REQUIRED = tuple(l for l in LABELS if l != "none")
 
+#: Upper bound on evidence quotes per relation.
+#:
+#: Evidence was one sentence until 2026-09-07. The limit was raised because a
+#: claim is often split across an abstract: a `doc_level` pair - 155 of the 175
+#: rows in the gt_100 panel - can never have both entities in one sentence, so a
+#: single-sentence quote could not show that the claim connects them at all.
+#:
+#: A cap is still needed. Without one a model that cannot decide quotes half the
+#: abstract, and an evidence field that holds everything identifies nothing.
+MAX_EVIDENCE_QUOTES = 3
+
 CONFIDENCE = ("high", "medium", "low")
+
+
+def as_quotes(evidence) -> tuple[str, ...]:
+    """Normalize an evidence field to a tuple of non-empty quotes.
+
+    Accepts the pre-2026-09-07 single string, the list written since, and None.
+    Records produced under the old rule stay readable without a migration.
+    """
+    if evidence is None:
+        return ()
+    if isinstance(evidence, str):
+        evidence = [evidence]
+    return tuple(q for q in (str(e).strip() for e in evidence) if q)
 
 
 class RecordError(ValueError):
@@ -215,28 +239,41 @@ class Relation:
     disease: Mention
     pathway: Mention
     label: str
-    evidence: str
+    #: Verbatim quotes carrying the claim. Normalized to a tuple by
+    #: `__post_init__`; a single string is accepted for records written before
+    #: multi-quote evidence was allowed.
+    evidence: "str | Sequence[str]"
     relation_source: str
     confidence: str = "medium"
     candidate_id: str = ""
     stratum: str = ""
     schema: str = SCHEMA_TAG
 
+    def __post_init__(self) -> None:
+        # A caller may pass one string or several; the record keeps a tuple so
+        # every consumer sees one shape.
+        self.evidence = as_quotes(self.evidence)
+
     def check(self, abstract: str | None = None) -> None:
         if self.label not in LABELS:
             raise RecordError(f"unknown label: {self.label!r}")
         if self.confidence not in CONFIDENCE:
             raise RecordError(f"unknown confidence: {self.confidence!r}")
-        if self.label in EVIDENCE_REQUIRED and not self.evidence.strip():
-            raise RecordError(f"label {self.label} requires an evidence sentence")
-        if self.label == "none" and self.evidence.strip():
+        if self.label in EVIDENCE_REQUIRED and not self.evidence:
+            raise RecordError(f"label {self.label} requires at least one evidence quote")
+        if self.label == "none" and self.evidence:
             raise RecordError("label none must not carry evidence")
+        if len(self.evidence) > MAX_EVIDENCE_QUOTES:
+            raise RecordError(
+                f"{len(self.evidence)} evidence quotes, at most {MAX_EVIDENCE_QUOTES}"
+            )
         if abstract is None:
             return
         self.disease.check(abstract)
         self.pathway.check(abstract)
-        if self.evidence.strip() and self.evidence not in abstract:
-            raise RecordError("evidence is not a verbatim substring of the abstract")
+        for quote in self.evidence:
+            if quote not in abstract:
+                raise RecordError("evidence is not a verbatim substring of the abstract")
 
     def to_json(self) -> dict:
         return {
@@ -245,7 +282,7 @@ class Relation:
             "pathway": asdict(self.pathway),
             "label": self.label,
             "confidence": self.confidence,
-            "evidence": self.evidence,
+            "evidence": list(self.evidence),
             "relation_source": self.relation_source,
             "candidate_id": self.candidate_id,
             "stratum": self.stratum,

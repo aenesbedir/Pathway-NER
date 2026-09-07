@@ -48,15 +48,24 @@ re-annotate entities, and do not consider any other pair.
 
 `upregulation`
     The abstract states the pathway's activity, expression or flux is INCREASED,
-    activated, enriched or overexpressed in the disease.
-    - "Oncogenic KRAS induces metabolic rewiring in pancreatic ductal
-      adenocarcinoma characterized by dependency on de novo pyrimidine
-      biosynthesis." -> upregulation
+    activated or overexpressed in the disease.
+
+    `enriched` is deliberately absent from both this list and `association`. It
+    is used two ways in this literature - a pathway described as enriched in a
+    condition, and a pathway merely named by an enrichment analysis - and no
+    wording rule separated them reliably. Judge it by the general definitions and
+    by the reference point below, and use `confidence: low` when it is unclear.
+    - "Glycolytic flux was markedly higher in tumour tissue than in matched
+      normal tissue." -> upregulation
     - "MTHFD2 was overexpressed in glioma tissues" -> upregulation
 
 `downregulation`
     The abstract states it is DECREASED, impaired, suppressed, deficient or
-    defective in the disease. Inborn errors of metabolism belong here: a disease
+    defective in the disease. The test is loss of function: `impaired`,
+    `deficient`, `defective` and `reduced` assert that the pathway does less than
+    it should, and belong here. Words that assert only that its regulation is
+    disordered - `disturbed`, `perturbed`, `dysregulated` - assert no loss and
+    belong to `association`. Inborn errors of metabolism belong here: a disease
     defined as a defect of a pathway states that pathway is down.
     - "Gaucher disease is an autosomal recessive inborn error of
       glycosphingolipid metabolism caused by the deficient activity of ..."
@@ -65,16 +74,14 @@ re-annotate entities, and do not consider any other pair.
 
 `association`
     The abstract claims the pathway is CHANGED or INVOLVED in the disease but
-    states NO direction. This is the most common label. Typical wording: altered,
-    dysregulated, perturbed, disturbed, enriched for, associated with, implicated
-    in, plays a role in, differed between groups, reprogrammed.
+    states NO direction. Typical wording: altered, dysregulated, perturbed,
+    disturbed, associated with, implicated in, plays a role in, differed between
+    groups, reprogrammed.
     - "The TCA cycle was significantly affected in both young and middle-aged MDD
       patients" -> association
     - "Alterations in multiple metabolic pathways, including purine, arginine and
       proline metabolism, were also associated with CAC in women with SLE."
       -> association
-    Use `association` when a pathway is named in a list of enriched pathways from
-    a metabolomics or GSEA analysis and no direction is given for it.
     Use `association` ALSO when the only claim is that intervening on the pathway
     treats, prevents or sensitizes the disease. The direction of an intervention
     is not the direction of the pathway in the disease, so such a claim must not
@@ -98,8 +105,7 @@ re-annotate entities, and do not consider any other pair.
     The abstract makes no claim connecting this pathway to this disease. The two
     are merely co-mentioned, or the pathway is discussed in a context (a cell
     line, a different organism, a drug's metabolism, a definition sentence) that
-    is not a claim about this disease. Expect this to be common, especially for
-    pairs whose entities never share a sentence.
+    is not a claim about this disease.
     - An abstract about diatom metabolism that opens "BMAA is an environmental
       factor connected to neurodegenerative diseases" makes no claim about the
       diatom's urea cycle in neurodegenerative disease -> none
@@ -114,10 +120,17 @@ or `none`, not a guessed sign.
 
 # `evidence`
 
-One sentence, copied CHARACTER FOR CHARACTER from the abstract, that carries the
-claim. Do not paraphrase, do not join two sentences, do not fix typography. A
-quote that is not found in the abstract verbatim causes the row to be discarded.
-`none` takes an empty evidence string.
+A list of one to three sentences, each copied CHARACTER FOR CHARACTER from the
+abstract, that together carry the claim. Do not paraphrase, do not merge two
+sentences into one string, do not fix typography. A quote that is not found in
+the abstract verbatim causes the row to be discarded.
+
+Quote one sentence when one sentence states the claim. Quote more only when the
+claim is genuinely split - typically when the pathway and the disease are named
+in different sentences, and a third sentence is what connects them. Quote the
+fewest sentences that let a reader check the label without reading the abstract.
+
+`none` takes an empty list.
 
 # `confidence`
 
@@ -129,7 +142,7 @@ quote that is not found in the abstract verbatim causes the row to be discarded.
 
 Return ONLY a JSON array, one object per pair, in the given order:
 
-[{"i": 1, "label": "...", "confidence": "...", "evidence": "..."}]
+[{"i": 1, "label": "...", "confidence": "...", "evidence": ["...", "..."]}]
 
 No prose before or after. No markdown fences.
 """
@@ -232,14 +245,14 @@ unmarked and are not your concern.""",
 
 Return ONLY a JSON array, one object per pair, in the given order:
 
-[{"i": 1, "label": "...", "confidence": "...", "evidence": "..."}]
+[{"i": 1, "label": "...", "confidence": "...", "evidence": ["...", "..."]}]
 
 No prose before or after. No markdown fences.""",
     """# Output
 
 Return ONLY a JSON object:
 
-{"label": "...", "confidence": "...", "evidence": "..."}
+{"label": "...", "confidence": "...", "evidence": ["...", "..."]}
 
 No prose before or after. No markdown fences.""",
 )
