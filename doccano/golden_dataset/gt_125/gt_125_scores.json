@@ -1,0 +1,217 @@
+{
+ "ground_truth": "doccano/golden_dataset/gt_125/gt_125.jsonl",
+ "n_docs": 125,
+ "n_gold_pathway_spans": 348,
+ "notes": "PATHWAY-only scoring, same conventions as gt_100_scores.json. gt_125 = the 100 gt_100 abstracts plus 25 abstracts drawn at random (seed 11) from the test split of the missing-pathway corpus and curated by hand, so the reference covers the corpus the merged dataset added as well as the original 10k. seqeval = entity-level F1/P/R (train.py convention). partial = gold-coverage F1/P/R at threshold 0.5, greedy one-to-one. Scripts: scripts/build_gt_125.py, scripts/score_gt_100.py --gt <this file>, scripts/score_gt_125_span_sources.py.",
+ "composition": {
+  "gt_100": {
+   "docs": 100,
+   "spans": 279,
+   "annotation": "reviewed_gold"
+  },
+  "curated_missing_sample": {
+   "docs": 25,
+   "spans": 69,
+   "annotation": "human_curated",
+   "sampled_from": "75 missing-pathway abstracts in the test split",
+   "seed": 11,
+   "vs_silver": {
+    "kept": 49,
+    "added": 20,
+    "removed": 4,
+    "of_which_boundary_moves": 4
+   }
+  }
+ },
+ "caveat": "the 5 models below were trained on data/processed/pathway-10k, which does not contain the 25 curated abstracts, so gt_125 is a clean held-out set for them. Models trained on pathway-10k-missing saw those 25 only in their own test split, never in training, so gt_125 stays held out for them too.",
+ "models": [
+  {
+   "model": "runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7",
+   "max_tokens": 512,
+   "seqeval": {
+    "f1": 0.8311,
+    "precision": 0.8806,
+    "recall": 0.7867
+   },
+   "n_gold_pathway_spans": 348,
+   "n_docs": 125,
+   "partial": {
+    "threshold": 0.5,
+    "f1": 0.8845,
+    "precision": 0.9387,
+    "recall": 0.8362
+   }
+  },
+  {
+   "model": "runs-truba-checkpoints/pathway-10k/bioelectra-base/lr3e-05/seed7",
+   "max_tokens": 512,
+   "seqeval": {
+    "f1": 0.8115,
+    "precision": 0.8513,
+    "recall": 0.7752
+   },
+   "n_gold_pathway_spans": 348,
+   "n_docs": 125,
+   "partial": {
+    "threshold": 0.5,
+    "f1": 0.8855,
+    "precision": 0.9304,
+    "recall": 0.8448
+   }
+  },
+  {
+   "model": "runs-truba-checkpoints/pathway-10k/biomedbert-base/lr5e-05/seed1",
+   "max_tokens": 512,
+   "seqeval": {
+    "f1": 0.8048,
+    "precision": 0.8401,
+    "recall": 0.7723
+   },
+   "n_gold_pathway_spans": 348,
+   "n_docs": 125,
+   "partial": {
+    "threshold": 0.5,
+    "f1": 0.8876,
+    "precision": 0.9279,
+    "recall": 0.8506
+   }
+  },
+  {
+   "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-base/lr5e-05/seed7",
+   "max_tokens": 512,
+   "seqeval": {
+    "f1": 0.8006,
+    "precision": 0.8344,
+    "recall": 0.7695
+   },
+   "n_gold_pathway_spans": 348,
+   "n_docs": 125,
+   "partial": {
+    "threshold": 0.5,
+    "f1": 0.8862,
+    "precision": 0.925,
+    "recall": 0.8506
+   }
+  },
+  {
+   "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-large/lr3e-05/seed1",
+   "max_tokens": 512,
+   "seqeval": {
+    "f1": 0.782,
+    "precision": 0.8176,
+    "recall": 0.7493
+   },
+   "n_gold_pathway_spans": 348,
+   "n_docs": 125,
+   "partial": {
+    "threshold": 0.5,
+    "f1": 0.8709,
+    "precision": 0.9119,
+    "recall": 0.8333
+   }
+  }
+ ],
+ "span_sources": {
+  "ground_truth": "doccano/golden_dataset/gt_125/gt_125.jsonl",
+  "basis": {
+   "n_docs": 25,
+   "n_gold_pathway_spans": 69,
+   "rule": "the 25 human-curated abstracts of gt_125 only; the gt_100 half has no silver counterpart to score"
+  },
+  "notes": "Stages of the pipeline that produced the missing-pathway corpus, scored against the human curation of the same 25 abstracts. `reviewed` is `merged` after an LLM audit removed the spans it judged wrong; the audit ran through the raw Claude CLI (scripts/review_missing_dataset.py), which uses the session's configured model rather than a pinned one, so the exact model id is not recorded in the artefacts.",
+  "review_effect": {},
+  "review_verdict_vs_curator": {
+   "correct -> curator_kept_exactly": 44,
+   "boundary -> curator_moved_boundary": 4,
+   "boundary -> curator_kept_exactly": 5
+  },
+  "review_verdict_note": "the audit dropped no span in these 25, so only its verdicts can be compared, not its removals",
+  "sources": {
+   "ner": {
+    "pred_spans": 17,
+    "exact": {
+     "f1": 0.3721,
+     "precision": 0.9412,
+     "recall": 0.2319,
+     "tp": 16,
+     "fp": 1,
+     "fn": 53
+    },
+    "partial": {
+     "threshold": 0.5,
+     "f1": 0.3721,
+     "precision": 0.9412,
+     "recall": 0.2319
+    }
+   },
+   "ner+booster": {
+    "pred_spans": 18,
+    "exact": {
+     "f1": 0.3678,
+     "precision": 0.8889,
+     "recall": 0.2319,
+     "tp": 16,
+     "fp": 2,
+     "fn": 53
+    },
+    "partial": {
+     "threshold": 0.5,
+     "f1": 0.3908,
+     "precision": 0.9444,
+     "recall": 0.2464
+    }
+   },
+   "merged": {
+    "pred_spans": 53,
+    "exact": {
+     "f1": 0.8033,
+     "precision": 0.9245,
+     "recall": 0.7101,
+     "tp": 49,
+     "fp": 4,
+     "fn": 20
+    },
+    "partial": {
+     "threshold": 0.5,
+     "f1": 0.8525,
+     "precision": 0.9811,
+     "recall": 0.7536
+    }
+   },
+   "reviewed": {
+    "pred_spans": 53,
+    "exact": {
+     "f1": 0.8033,
+     "precision": 0.9245,
+     "recall": 0.7101,
+     "tp": 49,
+     "fp": 4,
+     "fn": 20
+    },
+    "partial": {
+     "threshold": 0.5,
+     "f1": 0.8525,
+     "precision": 0.9811,
+     "recall": 0.7536
+    }
+   },
+   "dict_only": {
+    "pred_spans": 35,
+    "exact": {
+     "f1": 0.6346,
+     "precision": 0.9429,
+     "recall": 0.4783,
+     "tp": 33,
+     "fp": 2,
+     "fn": 36
+    },
+    "partial": {
+     "threshold": 0.5,
+     "f1": 0.6731,
+     "precision": 1.0,
+     "recall": 0.5072
+    }
+   }
+  }
+ }
+}

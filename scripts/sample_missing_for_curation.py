@@ -8,14 +8,19 @@ reference. This script draws a random sample of them for human curation, so the
 curated result can be folded into gt_100 and the sweep re-scored against a
 reference that covers the new corpus as well as the old.
 
-Output is Doccano sequence-labeling import format, matching
-doccano/golden_dataset/gt_100.jsonl:
+Two files are written, because Doccano reads one shape and writes another:
 
-    {"text": ..., "meta": {"pmid": ...}, "entities": [{"start_offset", "end_offset", "label"}]}
+  *_import.jsonl  {"text": ..., "label": [[start, end, "PATHWAY"], ...], "meta": {...}}
+      The sequence-labeling import shape, the same one data/doccano/*.jsonl use.
+      `meta` holds only scalars and strings; nested objects break the importer.
 
-The existing silver spans are pre-filled as entities, so curation is accept /
-fix / delete / add rather than annotation from scratch, and meta.silver records
-which stage produced each span for reference while curating.
+  *_reference.jsonl  {"text": ..., "entities": [{"start_offset", ...}], "meta": {...}}
+      The export shape that doccano/golden_dataset/gt_100.jsonl uses, kept so the
+      sample can be diffed against gt_100 and merged into it later.
+
+The existing silver spans are pre-filled, so curation is accept / fix / delete /
+add rather than annotation from scratch. meta.silver spells out which stage
+produced each span, as one readable line per span.
 
 Usage:
     python scripts/sample_missing_for_curation.py --n 25 --seed 11
@@ -67,37 +72,43 @@ def main() -> None:
     picked = sorted(pmids[: args.n])
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    out = OUT_DIR / f"missing_test_sample_{args.n}.jsonl"
+    imp = OUT_DIR / f"missing_test_sample_{args.n}_import.jsonl"
+    ref = OUT_DIR / f"missing_test_sample_{args.n}_reference.jsonl"
     n_spans = 0
-    with out.open("w", encoding="utf-8") as fh:
+    with imp.open("w", encoding="utf-8") as fi, ref.open("w", encoding="utf-8") as fr:
         for pmid in picked:
             doc = docs[pmid]
             text = doc["text"]
-            entities = [
-                {"start_offset": s, "end_offset": e, "label": "PATHWAY"}
-                for s, e, _ in doc["label"]
-            ]
-            n_spans += len(entities)
+            label = [[s, e, "PATHWAY"] for s, e, _ in doc["label"]]
+            n_spans += len(label)
             st = stages.get(pmid, {})
-            fh.write(json.dumps({
+            silver = "; ".join(
+                f"{s['text']} [{s['source']}"
+                + (f" -> {s['canonical']}]" if s.get("canonical") else "]")
+                for s in st.get("spans", [])
+            )
+            meta = {
+                "pmid": pmid,
+                "source": "missing_pathways test split",
+                "query_pathways": ", ".join(st.get("pathways") or []),
+                "route": st.get("route") or "",
+                "annotation_status": "silver_for_curation",
+                "silver": silver,
+            }
+            fi.write(json.dumps({"text": text, "label": label, "meta": meta},
+                                ensure_ascii=False) + "\n")
+            fr.write(json.dumps({
                 "text": text,
-                "entities": entities,
-                "meta": {
-                    "pmid": pmid,
-                    "source": "missing_pathways test split",
-                    "query_pathways": st.get("pathways"),
-                    "route": st.get("route"),
-                    "annotation_status": "silver_for_curation",
-                    "silver": [
-                        {"text": s["text"], "stage": s["source"],
-                         "canonical": s.get("canonical")}
-                        for s in st.get("spans", [])
-                    ],
-                },
+                "entities": [
+                    {"start_offset": s, "end_offset": e, "label": "PATHWAY"}
+                    for s, e, _ in doc["label"]
+                ],
+                "meta": meta,
             }, ensure_ascii=False) + "\n")
 
     print(json.dumps({
-        "output": str(out.relative_to(ROOT)),
+        "import_file": str(imp.relative_to(ROOT)),
+        "reference_file": str(ref.relative_to(ROOT)),
         "documents": len(picked),
         "pre_filled_spans": n_spans,
         "docs_without_span": sum(1 for p in picked if not docs[p]["label"]),
