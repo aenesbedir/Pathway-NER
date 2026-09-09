@@ -1,0 +1,290 @@
+{
+ "basis": {
+  "curated_docs": 25,
+  "curator_additions": 20,
+  "pipeline_spans": 53,
+  "judge_model": {
+   "claude-opus-5": 116
+  },
+  "judge_model_requested": "opus"
+ },
+ "discovery": {
+  "A_audit_prompt_missed": {
+   "tp": 12,
+   "total": 20,
+   "fp": 14,
+   "recall": 0.6,
+   "precision": 0.462,
+   "hits": [
+    "polyphosphoinositide hydrolysis",
+    "calcium homeostasis",
+    "inositol polyphosphate formation",
+    "aromatization from testosterone",
+    "de novo cholesterol synthesis",
+    "androgen signaling/metabolism",
+    "mva metabolism",
+    "glucose utilization",
+    "glucose uptake",
+    "cholesterol absorption",
+    "lipoprotein metabolic process",
+    "ra metabolism"
+   ],
+   "false": [
+    "de novo synthesis",
+    "ar signaling",
+    "cholesterol synthetic genes",
+    "brain cholesterol synthesis",
+    "androgen metabolism/signaling pathways",
+    "neuroendocrine differentiation pathways",
+    "mevalonate signaling",
+    "mitochondrial respiration",
+    "enzymatic pathways",
+    "wnt pathway",
+    "wnt pathway",
+    "ubiquitination and lysosomal pathways",
+    "ppar signaling pathway",
+    "bile secretion"
+   ]
+  },
+  "B_recall_first": {
+   "tp": 16,
+   "total": 20,
+   "fp": 53,
+   "recall": 0.8,
+   "precision": 0.232,
+   "hits": [
+    "polyphosphoinositide hydrolysis",
+    "inositol polyphosphate formation",
+    "calcium homeostasis",
+    "aromatization from testosterone",
+    "de novo cholesterol synthesis",
+    "androgen signaling/metabolism",
+    "mva metabolism",
+    "synthesis of the mitochondrial electron carrier coenzyme q10 (coq10)",
+    "glucose utilization",
+    "glucose uptake",
+    "cholesterol absorption and synthesis",
+    "cholesterol absorption",
+    "lysosomal pathways",
+    "protein lipoylation",
+    "lipoprotein metabolic process",
+    "ra metabolism"
+   ],
+   "false": [
+    "release of calcium from an intracellular store",
+    "calcium entry across the plasma membrane",
+    "ins(1,4,5)p3 mass formation",
+    "ins(1,3,4,5)p4 mass formation",
+    "dephosphorylating ins(1,4,5)p3 to ins(1,4)p2",
+    "phosphorylating ins(1,4,5)p3 to ins(1,3,4,5)p4",
+    "release intracellular sequestered calcium",
+    "calcium mobilizing",
+    "release of intracellular stored calcium",
+    "calcium influx",
+    "systemic estrogen administration",
+    "sex hormone-binding globulin production",
+    "estradiol release",
+    "estradiol release",
+    "re-filling of estradiol stores",
+    "androgen synthesis and secretion",
+    "androgen secretion",
+    "uptake from nutrients and lipoproteins",
+    "de novo synthesis from acetyl-coa",
+    "cholesterol is distributed to different membranes",
+    "delivery from extramitochondrial sources",
+    "trafficking within mitochondrial membranes",
+    "accumulation of cholesterol in mitochondria",
+    "transforms androgens to estrogens",
+    "cholesterol synthetic",
+    "brain cholesterol synthesis",
+    "androgen metabolism/signaling pathways",
+    "claisen condensations",
+    "oppenauer oxidation",
+    "ligation of acquired lipoic acid to the dehydrogenase complexes",
+    "lipoic acid synthesis and ligation to the enzymes in the apicoplast",
+    "alternative pathway",
+    "metabolic reprogramming",
+    "cancer metabolism",
+    "mevalonate signaling",
+    "glioma cell metabolism",
+    "coq10 depletion",
+    "inhibition of hmg-coa reductase (hmgr)",
+    "enzymatic pathways",
+    "mitochondrial protein homeostasis",
+    "ubiquitination",
+    "lipoylation of e2 subunits of alpha-ketoglutarate dehydrogenase (α-kgdh e2)",
+    "bile secretion",
+    "metabolism of inositol phospholipids",
+    "incorporation of 32p from [ gamma-32p ] adenosine triphosphate (atp) into the diphosphoinositides (dpi) and the triphosphoinositides (tpi)",
+    "conversion of phosphatidylinositol into dpi and tpi",
+    "32p-labeling of tpi",
+    "synthesis and action of androgens",
+    "synthesis and/or degradation of many endogenous compounds",
+    "androgen ablation",
+    "adrenal androgen biosynthesis",
+    "p450-dependent catabolism of retinoic acid (ra)",
+    "androgen deprivation"
+   ]
+  },
+  "C_recall_first_plus_filter": {
+   "tp": 14,
+   "total": 20,
+   "fp": 15,
+   "recall": 0.7,
+   "precision": 0.483,
+   "hits": [
+    "polyphosphoinositide hydrolysis",
+    "inositol polyphosphate formation",
+    "calcium homeostasis",
+    "de novo cholesterol synthesis",
+    "androgen signaling/metabolism",
+    "mva metabolism",
+    "synthesis of the mitochondrial electron carrier coenzyme q10 (coq10)",
+    "glucose utilization",
+    "glucose uptake",
+    "cholesterol absorption and synthesis",
+    "cholesterol absorption",
+    "protein lipoylation",
+    "lipoprotein metabolic process",
+    "ra metabolism"
+   ],
+   "false": [
+    "ins(1,4,5)p3 mass formation",
+    "ins(1,3,4,5)p4 mass formation",
+    "androgen synthesis and secretion",
+    "uptake from nutrients and lipoproteins",
+    "de novo synthesis from acetyl-coa",
+    "brain cholesterol synthesis",
+    "androgen metabolism/signaling pathways",
+    "lipoic acid synthesis and ligation to the enzymes in the apicoplast",
+    "mitochondrial protein homeostasis",
+    "ubiquitination",
+    "lipoylation of e2 subunits of alpha-ketoglutarate dehydrogenase (α-kgdh e2)",
+    "metabolism of inositol phospholipids",
+    "synthesis and/or degradation of many endogenous compounds",
+    "adrenal androgen biosynthesis",
+    "p450-dependent catabolism of retinoic acid (ra)"
+   ]
+  }
+ },
+ "boundary": {
+  "D_unconstrained": {
+   "real_boundary_errors": 4,
+   "fixed": 3,
+   "correct_spans": 49,
+   "broken": 9,
+   "detail": [
+    [
+     "broke",
+     "estrogen synthesis",
+     "estrogen synthesis and estrogen receptor expression"
+    ],
+    [
+     "broke",
+     "androgen synthesis",
+     "androgen synthesis and secretion"
+    ],
+    [
+     "fixed",
+     "cholesterol synthesis",
+     "de novo cholesterol synthesis"
+    ],
+    [
+     "fixed",
+     "formation of steroid",
+     "formation of steroid hormones"
+    ],
+    [
+     "broke",
+     "cholesterol synthesis",
+     "brain cholesterol synthesis"
+    ],
+    [
+     "broke",
+     "androgen metabolism",
+     "androgen metabolism/signaling pathways"
+    ],
+    [
+     "broke",
+     "lipoic acid synthesis",
+     "lipoic acid synthesis and ligation to the enzymes in the apicoplast"
+    ],
+    [
+     "broke",
+     "mevalonate pathway",
+     "mevalonate pathway enzymes"
+    ],
+    [
+     "fixed",
+     "glutamine metabolism",
+     "glucose and glutamine metabolism"
+    ],
+    [
+     "broke",
+     "metabolism of inositol",
+     "metabolism of inositol phospholipids of the erythrocyte membrane"
+    ],
+    [
+     "broke",
+     "androgen biosynthesis",
+     "testicular and adrenal androgen biosynthesis"
+    ],
+    [
+     "broke",
+     "androgen biosynthesis",
+     "adrenal androgen biosynthesis"
+    ],
+    [
+     "missed",
+     "P450-dependent catabolism",
+     "P450-dependent catabolism of retinoic acid (RA)"
+    ]
+   ]
+  },
+  "E_constrained": {
+   "real_boundary_errors": 4,
+   "fixed": 2,
+   "correct_spans": 49,
+   "broken": 2,
+   "detail": [
+    [
+     "missed",
+     "cholesterol synthesis",
+     "cholesterol synthesis"
+    ],
+    [
+     "fixed",
+     "formation of steroid",
+     "formation of steroid hormones"
+    ],
+    [
+     "broke",
+     "androgen metabolism",
+     "androgen metabolism/signaling pathways"
+    ],
+    [
+     "fixed",
+     "glutamine metabolism",
+     "glucose and glutamine metabolism"
+    ],
+    [
+     "broke",
+     "metabolism of inositol",
+     "metabolism of inositol phospholipids"
+    ],
+    [
+     "missed",
+     "P450-dependent catabolism",
+     "P450-dependent catabolism of retinoic acid (RA)"
+    ]
+   ]
+  }
+ },
+ "prompts": {
+  "A": "You are auditing a biomedical NER pipeline. Entity type is PATHWAY: a named\nmetabolic or biochemical route, or a named handling process for a class of\ncompounds. Not pathways: bare process nouns, single metabolites, genes, enzymes,\ndiseases, cell-fate and stress processes (apoptosis, oxidative stress,\ninflammation), experimental methods.\n\nThe pipeline already found these spans: {found}\n\nList any pathway mention in the abstract it missed entirely. Reply with JSON\nonly: {{\"missed\": [\"<exact substring>\", ...]}}\n\nABSTRACT:\n{text}\n",
+  "B": "Read this biomedical abstract and list every phrase that names a biological\nprocess involving the transformation, movement, or turnover of a chemical\ncompound or class of compounds. Include: metabolic routes, biosynthesis and\ndegradation, uptake/transport/absorption/efflux, homeostasis of a named\nsubstance, enzymatic modification of a substrate, and named cycles or pathways.\n\nExclude phrases naming only: a substance, a gene, a protein or enzyme, a disease,\na measurement or method, or a cell-level outcome such as apoptosis or\nproliferation with no compound named.\n\nQuote each phrase exactly as it appears, including qualifiers such as \"de novo\",\na trailing \"pathway\", and any parenthesised abbreviation.\n\nReply with JSON only: {{\"missed\": [\"<exact substring>\", ...]}}\n\nSome phrases are already recorded, do not repeat them: {found}\n\nABSTRACT:\n{text}\n",
+  "filter": "These phrases were proposed as PATHWAY entities in the abstract below. Decide\nwhich ones an annotator would actually mark.\n\nKeep a phrase when it is a noun phrase naming a process, with a process head noun\n(metabolism, synthesis, biosynthesis, degradation, catabolism, oxidation,\nhydrolysis, uptake, absorption, transport, homeostasis, turnover, utilization,\nformation, lipoylation, glycosylation, cycle, pathway ...) and a named compound\nor compound class attached to it.\n\nDrop a phrase when it is:\n  - a clause describing one reaction rather than naming a process\n    (\"dephosphorylating X to Y\", \"transforms androgens to estrogens\")\n  - the release, secretion, trafficking or storage of a substance, or its entry\n    into a compartment, rather than its chemical turnover\n  - headed by genes, enzymes, machinery, proteins, receptors or a measurement\n  - a named signalling cascade with no metabolic term in it (Wnt, PPAR, MAPK)\n  - a restatement of a phrase already in the list\n\nReply with JSON only: {{\"missed\": [\"<kept phrase>\", ...]}}\n\nCANDIDATES:\n{cands}\n\nABSTRACT:\n{text}\n",
+  "D": "A biomedical NER pipeline marked the phrases below in this abstract as PATHWAY\nentities. For each one, give the phrase a careful annotator would have marked\ninstead, if the offsets are wrong.\n\nAn annotated pathway phrase keeps the whole noun phrase: leading qualifiers such\nas \"de novo\" or \"hepatic\", a trailing \"pathway\" or \"cascade\", a parenthesised\nabbreviation that follows it, the object of an \"of\"-phrase and any \"to X\" or\n\"from X\" continuation, and every member of a coordinated list under one head.\nIt never starts or ends mid-word and never cuts a compound name in half.\n\nReply with JSON only, one entry per input phrase, in order:\n{{\"spans\": [{{\"i\": <index>, \"corrected\": \"<exact substring, or the same text>\"}}]}}\n\nPHRASES:\n{phrases}\n\nABSTRACT:\n{text}\n",
+  "E": "A biomedical NER pipeline marked the phrases below in this abstract as PATHWAY\nentities. Most are right. Change one only when its offsets cut the phrase itself,\nnot when more context could be added.\n\nExtend a phrase only for words that are part of the process name:\n  - a leading qualifier that changes which process it is: \"de novo\", \"non-oxidative\"\n  - a trailing \"pathway\", \"cascade\" or \"cycle\"\n  - a parenthesised abbreviation immediately after it\n  - the object of an \"of\"-phrase, with any \"to X\" / \"from X\" continuation\n  - every member of a coordinated list sharing one head noun,\n    as in \"glucose and glutamine metabolism\"\n\nNever extend a phrase to take in:\n  - where it happens: an organ, tissue, cell type, compartment or organism\n    (\"in the liver\", \"brain\", \"testicular\", \"within the amygdala\")\n  - what carries it out: \"enzymes\", \"genes\", \"machinery\", \"proteins\"\n  - a second process joined by \"and\" that has its own head noun\n    (\"... and secretion\", \"... and bile secretion\")\n  - anything after the phrase that describes a result, a rate or a measurement\n\nIf a phrase is already correct, repeat it unchanged. Most phrases are correct.\n\nReply with JSON only, one entry per input phrase, in order:\n{{\"spans\": [{{\"i\": <index>, \"corrected\": \"<exact substring>\"}}]}}\n\nPHRASES:\n{phrases}\n\nABSTRACT:\n{text}\n"
+ }
+}

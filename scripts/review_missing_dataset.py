@@ -149,17 +149,58 @@ def build_prompt(rec: dict, art: dict) -> str:
     )
 
 
-def rawclaude(prompt: str) -> str:
-    """Call the zshrc `rawclaude` function with the prompt as its argument."""
+def rawclaude(prompt: str, model: str | None) -> tuple[str, str | None]:
+    """Call the zshrc `rawclaude` function, returning (reply, model_id).
+
+    `--output-format json` makes the CLI report which model actually answered.
+    Without it the reply is plain text and the model is whatever the session is
+    configured to use, which is not recorded anywhere - an earlier run of this
+    script left no way to tell afterwards which model had produced the audit.
+    Pass --model to pin it; the id that comes back is stored either way.
+    """
+    extra = ["--output-format", "json"]
+    if model:
+        extra += ["--model", model]
     proc = subprocess.run(
-        ["zsh", "-c", 'source ~/.zshrc >/dev/null 2>&1; rawclaude "$1"', "_", prompt],
+        ["zsh", "-c", 'source ~/.zshrc >/dev/null 2>&1; rawclaude "$@"',
+         "_", prompt, *extra],
         capture_output=True,
         text=True,
         timeout=600,
     )
     if proc.returncode != 0:
         raise RuntimeError(proc.stderr.strip()[:400] or "rawclaude failed")
-    return proc.stdout.strip()
+    try:
+        env = json.loads(proc.stdout)
+    except json.JSONDecodeError:
+        return proc.stdout.strip(), None
+    text = env.get("result") if isinstance(env, dict) else None
+    if text is None:
+        return proc.stdout.strip(), None
+    # modelUsage lists the model that answered plus auxiliary calls the CLI
+    # makes on its own (a safe-mode classifier, for one). Counting inputTokens
+    # picks the wrong row: the answering model's prompt is billed as cache
+    # creation, so it can show inputTokens=2 next to an auxiliary call's 899.
+    # The top-level `usage` object belongs to the answering model, so match on
+    # it instead.
+    usage = env.get("modelUsage") or {}
+    top = env.get("usage") or {}
+    want = (top.get("input_tokens"), top.get("cache_creation_input_tokens"),
+            top.get("output_tokens"))
+    answered = None
+    for name, u in usage.items():
+        if (u.get("inputTokens"), u.get("cacheCreationInputTokens"),
+                u.get("outputTokens")) == want:
+            answered = name
+            break
+    if answered is None:
+        answered = max(
+            usage,
+            key=lambda m: sum(usage[m].get(k, 0) for k in
+                              ("inputTokens", "cacheCreationInputTokens",
+                               "cacheReadInputTokens")),
+            default=None) or env.get("model")
+    return text.strip(), answered
 
 
 def parse(out: str) -> dict:
@@ -174,6 +215,13 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=120, help="abstracts to sample")
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--out-suffix", default="",
+                    help="write llm_review<suffix>.jsonl instead of the default; "
+                         "use it for trial runs so a small --limit cannot "
+                         "overwrite a full one")
+    ap.add_argument("--model", default=None,
+                    help="pin the judge model (passed to claude --model); "
+                         "without it the CLI default is used and only recorded")
     args = ap.parse_args()
 
     arts = {a["pmid"]: a for a in json.loads(ARTICLES.read_text())}
@@ -189,13 +237,16 @@ def main() -> None:
 
     def work(rec: dict) -> dict:
         art = arts[rec["pmid"]]
+        model_used = None
         try:
-            verdict = parse(rawclaude(build_prompt(rec, art)))
+            reply, model_used = rawclaude(build_prompt(rec, art), args.model)
+            verdict = parse(reply)
             err = None
         except Exception as exc:  # noqa: BLE001 - recorded, not raised
             verdict, err = {"spans": [], "missed": []}, f"{type(exc).__name__}: {exc}"
         return {
             "pmid": rec["pmid"],
+            "judge_model": model_used,
             "pathways": rec["pathways"],
             "route": rec["route"],
             "spans": rec["spans"],
@@ -206,7 +257,17 @@ def main() -> None:
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         out = list(pool.map(work, sample))
 
-    with OUT_JSONL.open("w") as fh:
+    out_jsonl = OUT_JSONL.with_name(f"llm_review{args.out_suffix}.jsonl")
+    out_json = OUT_JSON.with_name(f"llm_review{args.out_suffix}.json")
+    if out_jsonl.exists():
+        existing = sum(1 for _ in out_jsonl.open())
+        if existing > len(out):
+            raise SystemExit(
+                f"{out_jsonl} holds {existing} records and this run produced "
+                f"{len(out)}; refusing to shrink it. Pass --out-suffix to write "
+                f"a separate file.")
+
+    with out_jsonl.open("w") as fh:
         for rec in out:
             fh.write(json.dumps(rec) + "\n")
 
@@ -228,14 +289,17 @@ def main() -> None:
             if v.get("canonical_ok") is not None:
                 canon[bool(v["canonical_ok"])] += 1
 
+    models = Counter(r["judge_model"] for r in out if r.get("judge_model"))
     summary = {
+        "judge_model": dict(models) or "not reported by the CLI",
+        "judge_model_requested": args.model,
         "sampled": len(out),
         "failed": failed,
         "by_stage": {k: dict(v) for k, v in by_stage.items()},
         "canonical_ok": {"true": canon[True], "false": canon[False]},
         "missed_mentions": missed,
     }
-    OUT_JSON.write_text(json.dumps(summary, indent=1) + "\n")
+    out_json.write_text(json.dumps(summary, indent=1) + "\n")
     print(json.dumps(summary, indent=1))
 
 
