@@ -17,11 +17,16 @@ This tool inverts that: one screen is one pair. The abstract is shown whole with
 every mention of that pair highlighted and nothing else marked, so the question
 "what does this abstract claim about THESE two" has a visible subject.
 
-Blind by default
-----------------
-The teacher's label and evidence are hidden until a decision is recorded. An
-anchored reviewer agrees with the model more often than an independent one, and
-the number this tool exists to produce is teacher accuracy.
+Teacher's answer is shown, and can be hidden
+--------------------------------------------
+The teacher's label, its confidence and its evidence - underlined in the
+abstract - are visible while you decide. That makes the tool a fast way to audit
+and correct a corpus.
+
+It also anchors: a reviewer who sees an answer agrees with it more often than an
+independent one would, so agreement measured this way overstates teacher
+accuracy. The `blind` toggle hides all of it until a decision is recorded; use
+that when the number being produced is accuracy rather than a corrected corpus.
 
 Output
 ------
@@ -107,6 +112,16 @@ PAGE = """<!doctype html>
            padding: .05em .15em; border-radius: 2px; }
   mark.d { background: var(--disease-bg); color: var(--disease); font-weight: 600;
            padding: .05em .15em; border-radius: 2px; }
+  .ev { text-decoration: underline; text-decoration-color: var(--accent);
+        text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .teacher {
+    display: flex; gap: 1rem; align-items: baseline; flex-wrap: wrap;
+    margin-bottom: 1rem; padding: .7rem 1.1rem; background: var(--surface);
+    border: 1px solid var(--rule); border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+  }
+  .teacher .lab { font-size: 1.02rem; font-weight: 600; color: var(--accent); }
+  .hidden { display: none; }
   .choices { display: flex; gap: .5rem; flex-wrap: wrap; margin: 1.2rem 0 .6rem; }
   button {
     font: inherit; padding: .55rem .9rem; border-radius: 4px; cursor: pointer;
@@ -141,6 +156,7 @@ PAGE = """<!doctype html>
   <progress id="prog" max="100" value="0"></progress>
   <span class="muted" id="done"></span>
   <span class="grow"></span>
+  <button id="blind">Blind: off</button>
   <select id="filter">
     <option value="all">all pairs</option>
     <option value="todo">undecided only</option>
@@ -157,6 +173,7 @@ PAGE = """<!doctype html>
     <div><span class="k">PMID</span><span class="v" id="pmid"></span></div>
     <div><span class="k">Stratum</span><span class="v" id="strat"></span></div>
   </div>
+  <div class="teacher" id="teacher"></div>
   <article id="abs"></article>
   <div class="choices" id="choices"></div>
   <div class="muted">Keys 1&ndash;5 to label, 0 to clear, &larr; &rarr; to move.</div>
@@ -174,21 +191,42 @@ const KEY = "gt100_relation_review_v1";
 let store = {};
 try { store = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { store = {}; }
 let order = DATA.map((_, i) => i), at = 0;
+let blind = localStorage.getItem("gt100_blind") === "1";
 
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
 const esc = s => s.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 
-function marked(item) {
-  const spans = [...item.pathway.map(m => ({ ...m, c: "p" })),
-                 ...item.disease.map(m => ({ ...m, c: "d" }))].sort((a, b) => a.s - b.s);
-  let out = "", cur = 0;
-  for (const sp of spans) {
-    if (sp.s < cur) continue;            // overlapping mention, keep the first
-    out += esc(item.text.slice(cur, sp.s));
-    out += `<mark class="${sp.c}">${esc(item.text.slice(sp.s, sp.e))}</mark>`;
-    cur = sp.e;
+// An evidence quote is a sentence and a mention sits inside it, so the two
+// layers overlap by construction. Flagging every character and emitting runs of
+// equal flags renders both without either having to win.
+function marked(item, showEvidence) {
+  const n = item.text.length;
+  const flag = new Uint8Array(n);        // bit 0 pathway, bit 1 disease, bit 2 evidence
+  const paint = (spans, bit) => {
+    for (const sp of spans || []) {
+      for (let i = Math.max(0, sp.s); i < Math.min(n, sp.e); i++) flag[i] |= bit;
+    }
+  };
+  paint(item.pathway, 1);
+  paint(item.disease, 2);
+  if (showEvidence) paint(item.evidence_spans, 4);
+
+  let out = "", i = 0;
+  while (i < n) {
+    const f = flag[i];
+    let j = i;
+    while (j < n && flag[j] === f) j++;
+    const chunk = esc(item.text.slice(i, j));
+    if (f === 0) out += chunk;
+    else {
+      const cls = [(f & 1) ? "p" : (f & 2) ? "d" : "", (f & 4) ? "ev" : ""]
+        .filter(Boolean).join(" ");
+      const tag = (f & 3) ? "mark" : "span";
+      out += `<${tag} class="${cls}">${chunk}</${tag}>`;
+    }
+    i = j;
   }
-  return out + esc(item.text.slice(cur));
+  return out;
 }
 
 function applyFilter() {
@@ -211,7 +249,27 @@ function render() {
   document.getElementById("ds").textContent = item.disease_key;
   document.getElementById("pmid").textContent = item.pmid;
   document.getElementById("strat").textContent = item.stratum;
-  document.getElementById("abs").innerHTML = marked(item);
+  const chosen0 = store[item.candidate_id];
+  const show = !blind || !!chosen0;      // blind hides the teacher until you decide
+  document.getElementById("abs").innerHTML = marked(item, show);
+
+  const strip = document.getElementById("teacher");
+  if (!show) {
+    strip.className = "teacher hidden";
+  } else {
+    strip.className = "teacher";
+    const same = chosen0 && chosen0.label === item.model_label;
+    strip.innerHTML =
+      `<span class="k" style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--soft)">Teacher</span>` +
+      `<span class="lab">${item.model_label}</span>` +
+      `<span class="muted">confidence: ${item.model_confidence}</span>` +
+      (item.evidence_spans.length
+        ? `<span class="muted">evidence underlined below</span>`
+        : `<span class="muted">no evidence quoted</span>`) +
+      (chosen0
+        ? `<span class="${same ? "agree" : "differ"}">${same ? "you agree" : "you differ"}</span>`
+        : "");
+  }
   document.getElementById("pos").textContent = `${at + 1} / ${order.length}`;
   document.getElementById("cid").textContent = item.candidate_id;
 
@@ -231,15 +289,11 @@ function render() {
   });
 
   const rev = document.getElementById("reveal");
-  if (!chosen) { rev.innerHTML = ""; return; }
-  const same = chosen.label === item.model_label;
-  rev.innerHTML =
-    `<div class="reveal"><h4>Teacher's answer &mdash; shown after your decision</h4>` +
-    `<div><span class="${same ? "agree" : "differ"}">${item.model_label}</span>` +
-    ` <span class="muted">(confidence: ${item.model_confidence})</span>` +
-    ` ${same ? "&mdash; agrees with you" : "&mdash; differs from you"}</div>` +
-    item.model_evidence.map(q => `<blockquote>${esc(q)}</blockquote>`).join("") +
-    `</div>`;
+  const unlocated = show && item.model_evidence.length !== item.evidence_spans.length;
+  rev.innerHTML = unlocated
+    ? `<div class="reveal"><h4>Evidence that could not be located in the text</h4>` +
+      item.model_evidence.map(q => `<blockquote>${esc(q)}</blockquote>`).join("") + `</div>`
+    : "";
 }
 
 function choose(lab) {
@@ -253,6 +307,17 @@ function move(d) { at = Math.max(0, Math.min(order.length - 1, at + d)); render(
 document.getElementById("next").onclick = () => move(1);
 document.getElementById("prev").onclick = () => move(-1);
 document.getElementById("filter").onchange = applyFilter;
+const blindBtn = document.getElementById("blind");
+const paintBlind = () => {
+  blindBtn.textContent = "Blind: " + (blind ? "on" : "off");
+  blindBtn.className = blind ? "sel" : "";
+};
+blindBtn.onclick = () => {
+  blind = !blind;
+  localStorage.setItem("gt100_blind", blind ? "1" : "0");
+  paintBlind(); render();
+};
+paintBlind();
 document.addEventListener("keydown", e => {
   if (e.target.tagName === "SELECT") return;
   if (e.key >= "1" && e.key <= String(LABELS.length)) choose(LABELS[+e.key - 1]);
@@ -297,6 +362,12 @@ def main() -> None:
         cand = cands.get(row["candidate_id"])
         if cand is None:
             continue
+        quotes = list(as_quotes(row.get("evidence")))
+        ev_spans = []
+        for q in quotes:
+            at = cand.abstract.find(q)
+            if at >= 0:
+                ev_spans.append({"s": at, "e": at + len(q)})
         items.append(
             {
                 "candidate_id": cand.candidate_id,
@@ -309,7 +380,11 @@ def main() -> None:
                 "disease": [{"s": m.start, "e": m.end} for m in cand.disease_mentions],
                 "model_label": row["label"],
                 "model_confidence": row.get("confidence", ""),
-                "model_evidence": list(as_quotes(row.get("evidence"))),
+                "model_evidence": quotes,
+                # Offsets of each quote in the abstract, so the reader can see
+                # which sentence the teacher read. Quotes are verbatim by
+                # construction; the first occurrence is used when one repeats.
+                "evidence_spans": ev_spans,
             }
         )
     items.sort(key=lambda d: (d["pmid"], d["pathway_key"], d["disease_key"]))
