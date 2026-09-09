@@ -54,6 +54,10 @@ def norm_entities(rec: dict) -> list[dict]:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--curated", required=True)
+    ap.add_argument("--version", required=True,
+                    help="label for this curation round, e.g. v2; written to "
+                         "gt_125.manifest.json next to the output together with "
+                         "the sha256 of the curated export")
     args = ap.parse_args()
 
     gt = [json.loads(l) for l in GT100.open(encoding="utf-8")]
@@ -107,12 +111,28 @@ def main() -> None:
         for rec in added:
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
+    import hashlib
+
+    manifest = {
+        "version": args.version,
+        "output": str(OUT.relative_to(ROOT)),
+        "output_sha256": hashlib.sha256(OUT.read_bytes()).hexdigest(),
+        "curated_export_sha256": hashlib.sha256(Path(args.curated).read_bytes()).hexdigest(),
+        "gt_100": str(GT100.relative_to(ROOT)),
+        "documents": len(gt) + len(added),
+        "curated_documents": len(added),
+        "curated_spans": n_spans,
+        "withdrawn_after_curation": sorted(f"{p}: {t}" for p, t in EXCLUDE),
+    }
+    (OUT.parent / "gt_125.manifest.json").write_text(json.dumps(manifest, indent=1) + "\n")
+
     gt_spans = sum(
         1 for r in gt for e in r.get("entities", [])
         if str(e.get("label", "")).upper().startswith("PATH")
     )
     print(json.dumps({
         "output": str(OUT.relative_to(ROOT)),
+        "version": args.version,
         "documents": len(gt) + len(added),
         "gt_100_documents": len(gt),
         "gt_100_spans": gt_spans,

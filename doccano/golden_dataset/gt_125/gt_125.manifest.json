@@ -1,0 +1,14 @@
+{
+ "version": "v2",
+ "output": "doccano/golden_dataset/gt_125/gt_125.jsonl",
+ "output_sha256": "767dccabae2212b031df2f6eeb1f5cbac9c7e330e2b778c653ba20c0b466cdfa",
+ "curated_export_sha256": "7719aabc55e5a7f982bc8f8e7cee4f108d74a80f95329872d20bfa62ed9eb839",
+ "gt_100": "doccano/golden_dataset/gt_100.jsonl",
+ "documents": 125,
+ "curated_documents": 25,
+ "curated_spans": 68,
+ "withdrawn_after_curation": [
+  "1317042: calcium homeostasis",
+  "40663606: lysosomal pathways"
+ ]
+}

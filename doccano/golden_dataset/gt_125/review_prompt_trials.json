@@ -1,7 +1,7 @@
 {
  "basis": {
   "curated_docs": 25,
-  "curator_additions": 18,
+  "curator_additions": 19,
   "pipeline_spans": 53,
   "judge_model": {
    "claude-opus-5": 115
@@ -11,14 +11,14 @@
  "discovery": {
   "A_audit_prompt_missed": {
    "tp": 10,
-   "total": 18,
-   "fp": 17,
-   "recall": 0.556,
-   "precision": 0.37,
+   "total": 19,
+   "fp": 15,
+   "recall": 0.526,
+   "precision": 0.4,
    "hits": [
     "polyphosphoinositide hydrolysis",
     "aromatization from testosterone",
-    "de novo cholesterol synthesis",
+    "de novo synthesis from acetyl-coa",
     "androgen signaling/metabolism",
     "mva metabolism",
     "glucose utilization",
@@ -30,43 +30,45 @@
    "false": [
     "calcium homeostasis",
     "sex hormone-binding globulin production",
-    "de novo synthesis from acetyl-coa",
-    "ar signaling",
-    "cholesterol synthetic",
+    "cholesterol synthetic genes",
     "brain cholesterol synthesis",
     "androgen metabolism/signaling pathways",
     "neuroendocrine differentiation pathways",
     "mevalonate signaling",
-    "ras-erk",
     "mitochondrial respiration",
     "enzymatic pathways",
     "wnt pathway",
     "wnt pathway",
     "ubiquitination and lysosomal pathways",
     "ppar signaling pathway",
-    "bile secretion"
+    "bile secretion",
+    "metabolism of inositol phospholipids"
    ]
   },
   "B_recall_first": {
-   "tp": 14,
-   "total": 18,
-   "fp": 58,
-   "recall": 0.778,
-   "precision": 0.194,
+   "tp": 18,
+   "total": 19,
+   "fp": 55,
+   "recall": 0.947,
+   "precision": 0.247,
    "hits": [
     "polyphosphoinositide hydrolysis",
     "inositol polyphosphate formation",
     "aromatization from testosterone",
+    "de novo synthesis from acetyl-coa",
     "de novo cholesterol synthesis",
     "androgen signaling/metabolism",
     "mva metabolism",
     "synthesis of the mitochondrial electron carrier coenzyme q10 (coq10)",
     "glucose utilization",
     "glucose uptake",
+    "glucose and glutamine metabolism",
     "cholesterol absorption and synthesis",
     "cholesterol absorption",
+    "lipoylation of e2 subunits of alpha-ketoglutarate dehydrogenase (α-kgdh e2)",
     "protein lipoylation",
     "lipoprotein metabolic process",
+    "catabolism of retinoic acid (ra)",
     "ra metabolism"
    ],
    "false": [
@@ -84,14 +86,13 @@
     "systemic estrogen administration",
     "sex hormone-binding globulin production",
     "estradiol release",
-    "estradiol release into the medium",
-    "measured estradiol release",
+    "estradiol are synthesized",
+    "estradiol release of hippocampal slice cultures",
     "re-filling of estradiol stores",
-    "androgen synthesis and secretion",
     "androgen secretion",
+    "androgen synthesis and secretion",
     "secretion of metabolically active substances",
     "uptake from nutrients and lipoproteins",
-    "de novo synthesis from acetyl-coa",
     "cholesterol is distributed to different membranes",
     "delivery from extramitochondrial sources",
     "trafficking within mitochondrial membranes",
@@ -108,14 +109,12 @@
     "cancer metabolism",
     "metabolic dysregulation",
     "metabolic dysregulation",
-    "metabolic alterations",
     "glioma cell metabolism",
     "coq10 depletion",
     "inhibition of hmg-coa reductase (hmgr)",
-    "common enzymatic pathways",
-    "ubiquitination",
-    "lipoylation of e2 subunits of alpha-ketoglutarate dehydrogenase (α-kgdh e2)",
+    "enzymatic pathways",
     "mitochondrial protein homeostasis",
+    "ubiquitination",
     "bile secretion",
     "metabolism of inositol phospholipids",
     "incorporation of 32p from [ gamma-32p ] adenosine triphosphate (atp) into the diphosphoinositides (dpi) and the triphosphoinositides (tpi)",
@@ -123,32 +122,36 @@
     "conversion of phosphatidylinositol into dpi and tpi",
     "synthesis and action of androgens",
     "synthesis and/or degradation of many endogenous compounds",
-    "adrenal androgen biosynthesis",
-    "p450-dependent catabolism of retinoic acid (ra)",
-    "inhibition of aromatase",
     "androgen deprivation",
-    "androgen ablation"
+    "androgen ablation",
+    "adrenal androgen biosynthesis",
+    "inhibition of aromatase",
+    "androgen blockade"
    ]
   },
   "C_recall_first_plus_filter": {
-   "tp": 13,
-   "total": 18,
-   "fp": 14,
-   "recall": 0.722,
-   "precision": 0.481,
+   "tp": 17,
+   "total": 19,
+   "fp": 13,
+   "recall": 0.895,
+   "precision": 0.567,
    "hits": [
     "polyphosphoinositide hydrolysis",
     "inositol polyphosphate formation",
+    "de novo synthesis from acetyl-coa",
     "de novo cholesterol synthesis",
     "androgen signaling/metabolism",
     "mva metabolism",
     "synthesis of the mitochondrial electron carrier coenzyme q10 (coq10)",
     "glucose utilization",
     "glucose uptake",
+    "glucose and glutamine metabolism",
     "cholesterol absorption and synthesis",
     "cholesterol absorption",
+    "lipoylation of e2 subunits of alpha-ketoglutarate dehydrogenase (α-kgdh e2)",
     "protein lipoylation",
     "lipoprotein metabolic process",
+    "catabolism of retinoic acid (ra)",
     "ra metabolism"
    ],
    "false": [
@@ -157,35 +160,24 @@
     "calcium homeostasis",
     "androgen synthesis and secretion",
     "uptake from nutrients and lipoproteins",
-    "de novo synthesis from acetyl-coa",
     "brain cholesterol synthesis",
     "androgen metabolism/signaling pathways",
-    "lipoylation of e2 subunits of alpha-ketoglutarate dehydrogenase (α-kgdh e2)",
+    "cancer metabolism",
     "mitochondrial protein homeostasis",
+    "ubiquitination",
     "metabolism of inositol phospholipids",
     "synthesis and/or degradation of many endogenous compounds",
-    "adrenal androgen biosynthesis",
-    "p450-dependent catabolism of retinoic acid (ra)"
+    "adrenal androgen biosynthesis"
    ]
   }
  },
  "boundary": {
   "D_unconstrained": {
    "real_boundary_errors": 4,
-   "fixed": 3,
+   "fixed": 2,
    "correct_spans": 49,
-   "broken": 10,
+   "broken": 11,
    "detail": [
-    [
-     "broke",
-     "estrogen synthesis",
-     "estrogen synthesis and estrogen receptor expression"
-    ],
-    [
-     "broke",
-     "synthesis of estrogen",
-     "synthesis of estrogen within the central nucleus of the amygdala"
-    ],
     [
      "broke",
      "androgen synthesis",
@@ -197,9 +189,14 @@
      "de novo cholesterol synthesis"
     ],
     [
-     "fixed",
+     "broke",
+     "synthesis of bile acids",
+     "synthesis of bile acids in the liver"
+    ],
+    [
+     "missed",
      "formation of steroid",
-     "formation of steroid hormones"
+     "formation of steroid hormones in specialized tissues"
     ],
     [
      "broke",
@@ -222,9 +219,19 @@
      "lipoic acid metabolism machinery"
     ],
     [
+     "broke",
+     "mevalonate pathway",
+     "mevalonate pathway enzymes"
+    ],
+    [
      "fixed",
      "glutamine metabolism",
      "glucose and glutamine metabolism"
+    ],
+    [
+     "broke",
+     "cholesterol synthesis",
+     "low cholesterol synthesis"
     ],
     [
      "broke",
@@ -250,14 +257,14 @@
   },
   "E_constrained": {
    "real_boundary_errors": 4,
-   "fixed": 3,
+   "fixed": 2,
    "correct_spans": 49,
    "broken": 2,
    "detail": [
     [
-     "fixed",
+     "missed",
      "cholesterol synthesis",
-     "de novo cholesterol synthesis"
+     "cholesterol synthesis"
     ],
     [
      "fixed",

@@ -2,7 +2,7 @@
  "ground_truth": "doccano/golden_dataset/gt_125/gt_125.jsonl",
  "basis": {
   "n_docs": 25,
-  "n_gold_pathway_spans": 67,
+  "n_gold_pathway_spans": 68,
   "rule": "the 25 human-curated abstracts of gt_125 only; the gt_100 half has no silver counterpart to score"
  },
  "notes": "Stages of the pipeline that produced the missing-pathway corpus, scored against the human curation of the same 25 abstracts. `reviewed` is `merged` after an LLM audit removed the spans it judged wrong; the audit ran through the raw Claude CLI (scripts/review_missing_dataset.py), which uses the session's configured model rather than a pinned one, so the exact model id is not recorded in the artefacts.",
@@ -18,86 +18,86 @@
   "ner": {
    "pred_spans": 17,
    "exact": {
-    "f1": 0.381,
+    "f1": 0.3765,
     "precision": 0.9412,
-    "recall": 0.2388,
+    "recall": 0.2353,
     "tp": 16,
     "fp": 1,
-    "fn": 51
+    "fn": 52
    },
    "partial": {
     "threshold": 0.5,
-    "f1": 0.381,
+    "f1": 0.3765,
     "precision": 0.9412,
-    "recall": 0.2388
+    "recall": 0.2353
    }
   },
   "ner+booster": {
    "pred_spans": 18,
    "exact": {
-    "f1": 0.3765,
+    "f1": 0.3721,
     "precision": 0.8889,
-    "recall": 0.2388,
+    "recall": 0.2353,
     "tp": 16,
     "fp": 2,
-    "fn": 51
+    "fn": 52
    },
    "partial": {
     "threshold": 0.5,
-    "f1": 0.4,
+    "f1": 0.3953,
     "precision": 0.9444,
-    "recall": 0.2537
+    "recall": 0.25
    }
   },
   "merged": {
    "pred_spans": 53,
    "exact": {
-    "f1": 0.8167,
+    "f1": 0.8099,
     "precision": 0.9245,
-    "recall": 0.7313,
+    "recall": 0.7206,
     "tp": 49,
     "fp": 4,
-    "fn": 18
+    "fn": 19
    },
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8667,
+    "f1": 0.8595,
     "precision": 0.9811,
-    "recall": 0.7761
+    "recall": 0.7647
    }
   },
   "reviewed": {
    "pred_spans": 53,
    "exact": {
-    "f1": 0.8167,
+    "f1": 0.8099,
     "precision": 0.9245,
-    "recall": 0.7313,
+    "recall": 0.7206,
     "tp": 49,
     "fp": 4,
-    "fn": 18
+    "fn": 19
    },
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8667,
+    "f1": 0.8595,
     "precision": 0.9811,
-    "recall": 0.7761
+    "recall": 0.7647
    }
   },
   "dict_only": {
    "pred_spans": 35,
    "exact": {
-    "f1": 0.6471,
+    "f1": 0.6408,
     "precision": 0.9429,
-    "recall": 0.4925,
+    "recall": 0.4853,
     "tp": 33,
     "fp": 2,
-    "fn": 34
+    "fn": 35
    },
    "partial": {
     "threshold": 0.5,
-    "f1": 0.6863,
+    "f1": 0.6796,
     "precision": 1.0,
-    "recall": 0.5224
+    "recall": 0.5147
    }
   }
  }

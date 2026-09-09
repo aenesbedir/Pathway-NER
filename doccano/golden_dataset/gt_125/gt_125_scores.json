@@ -1,7 +1,7 @@
 {
  "ground_truth": "doccano/golden_dataset/gt_125/gt_125.jsonl",
  "n_docs": 125,
- "n_gold_pathway_spans": 346,
+ "n_gold_pathway_spans": 347,
  "notes": "PATHWAY-only scoring, same conventions as gt_100_scores.json. gt_125 = the 100 gt_100 abstracts plus 25 abstracts drawn at random (seed 11) from the test split of the missing-pathway corpus and curated by hand, so the reference covers the corpus the merged dataset added as well as the original 10k. seqeval = entity-level F1/P/R (train.py convention). partial = gold-coverage F1/P/R at threshold 0.5, greedy one-to-one. Scripts: scripts/build_gt_125.py, scripts/score_gt_100.py --gt <this file>, scripts/score_gt_125_span_sources.py.",
  "composition": {
   "gt_100": {
@@ -11,13 +11,13 @@
   },
   "curated_missing_sample": {
    "docs": 25,
-   "spans": 67,
+   "spans": 68,
    "annotation": "human_curated",
    "sampled_from": "75 missing-pathway abstracts in the test split",
    "seed": 11,
    "vs_silver": {
     "kept": 49,
-    "added": 18,
+    "added": 19,
     "removed": 4,
     "of_which_boundary_moves": 4
    },
@@ -25,7 +25,13 @@
     "1317042: calcium homeostasis",
     "40663606: lysosomal pathways"
    ],
-   "withdrawal_rule": "a transport/homeostasis/modification phrase counts only when the named substrate's turnover is a Recon3D pathway; see scripts/build_gt_125.py"
+   "withdrawal_rule": "a transport/homeostasis/modification phrase counts only when the named substrate's turnover is a Recon3D pathway; see scripts/build_gt_125.py",
+   "curation_round": "v2",
+   "v2_changes": [
+    "19012251 + de novo synthesis from acetyl-CoA",
+    "40663606 + lipoylation of E2 subunits of alpha-ketoglutarate dehydrogenase (\u03b1-KGDH E2)",
+    "31917509 - glycolytic parameters"
+   ]
   }
  },
  "caveat": "the 5 models below were trained on data/processed/pathway-10k, which does not contain the 25 curated abstracts, so gt_125 is a clean held-out set for them. Models trained on pathway-10k-missing saw those 25 only in their own test split, never in training, so gt_125 stays held out for them too.",
@@ -34,119 +40,136 @@
    "model": "runs-truba-10k-missing-checkpoints/pathway-10k-missing/biom-electra-large/lr3e-05/seed42",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8338,
+    "f1": 0.8326,
     "precision": 0.8541,
-    "recall": 0.8145
+    "recall": 0.8121
    },
-   "n_gold_pathway_spans": 346,
+   "n_gold_pathway_spans": 347,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.9037,
+    "f1": 0.9024,
     "precision": 0.9271,
-    "recall": 0.8815
+    "recall": 0.879
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8336,
+    "f1": 0.8323,
     "precision": 0.8806,
-    "recall": 0.7913
+    "recall": 0.789
    },
-   "n_gold_pathway_spans": 346,
+   "n_gold_pathway_spans": 347,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8872,
+    "f1": 0.8858,
     "precision": 0.9387,
-    "recall": 0.841
+    "recall": 0.8386
+   }
+  },
+  {
+   "model": "runs-truba-10k-missing-checkpoints/pathway-10k-missing/biom-electra-large/lr2e-05/seed42",
+   "max_tokens": 512,
+   "seqeval": {
+    "f1": 0.8218,
+    "precision": 0.8608,
+    "recall": 0.7861
+   },
+   "n_gold_pathway_spans": 347,
+   "n_docs": 125,
+   "partial": {
+    "threshold": 0.5,
+    "f1": 0.8959,
+    "precision": 0.9399,
+    "recall": 0.8559
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/bioelectra-base/lr3e-05/seed7",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8139,
+    "f1": 0.8127,
     "precision": 0.8513,
-    "recall": 0.7797
+    "recall": 0.7775
    },
-   "n_gold_pathway_spans": 346,
+   "n_gold_pathway_spans": 347,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8882,
-    "precision": 0.9304,
-    "recall": 0.8497
+    "f1": 0.8899,
+    "precision": 0.9335,
+    "recall": 0.8501
    }
   },
   {
    "model": "runs-truba-10k-missing-checkpoints/pathway-10k-missing/bioelectra-base/lr3e-05/seed42",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.811,
+    "f1": 0.8097,
     "precision": 0.8553,
-    "recall": 0.771
+    "recall": 0.7688
    },
-   "n_gold_pathway_spans": 346,
+   "n_gold_pathway_spans": 347,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8858,
+    "f1": 0.8845,
     "precision": 0.9357,
-    "recall": 0.841
+    "recall": 0.8386
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/biomedbert-base/lr5e-05/seed1",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8072,
+    "f1": 0.806,
     "precision": 0.8401,
-    "recall": 0.7768
+    "recall": 0.7746
    },
-   "n_gold_pathway_spans": 346,
+   "n_gold_pathway_spans": 347,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8902,
-    "precision": 0.9279,
-    "recall": 0.8555
+    "f1": 0.8919,
+    "precision": 0.931,
+    "recall": 0.8559
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-base/lr5e-05/seed7",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.803,
+    "f1": 0.8018,
     "precision": 0.8344,
-    "recall": 0.7739
+    "recall": 0.7717
    },
-   "n_gold_pathway_spans": 346,
+   "n_gold_pathway_spans": 347,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8889,
-    "precision": 0.925,
-    "recall": 0.8555
+    "f1": 0.8906,
+    "precision": 0.9281,
+    "recall": 0.8559
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-large/lr3e-05/seed1",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.7843,
+    "f1": 0.7831,
     "precision": 0.8176,
-    "recall": 0.7536
+    "recall": 0.7514
    },
-   "n_gold_pathway_spans": 346,
+   "n_gold_pathway_spans": 347,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8735,
+    "f1": 0.8722,
     "precision": 0.9119,
-    "recall": 0.8382
+    "recall": 0.8357
    }
   }
  ],
@@ -154,7 +177,7 @@
   "ground_truth": "doccano/golden_dataset/gt_125/gt_125.jsonl",
   "basis": {
    "n_docs": 25,
-   "n_gold_pathway_spans": 67,
+   "n_gold_pathway_spans": 68,
    "rule": "the 25 human-curated abstracts of gt_125 only; the gt_100 half has no silver counterpart to score"
   },
   "notes": "Stages of the pipeline that produced the missing-pathway corpus, scored against the human curation of the same 25 abstracts. `reviewed` is `merged` after an LLM audit removed the spans it judged wrong; the audit ran through the raw Claude CLI (scripts/review_missing_dataset.py), which uses the session's configured model rather than a pinned one, so the exact model id is not recorded in the artefacts.",
@@ -170,88 +193,89 @@
    "ner": {
     "pred_spans": 17,
     "exact": {
-     "f1": 0.381,
+     "f1": 0.3765,
      "precision": 0.9412,
-     "recall": 0.2388,
+     "recall": 0.2353,
      "tp": 16,
      "fp": 1,
-     "fn": 51
+     "fn": 52
     },
     "partial": {
      "threshold": 0.5,
-     "f1": 0.381,
+     "f1": 0.3765,
      "precision": 0.9412,
-     "recall": 0.2388
+     "recall": 0.2353
     }
    },
    "ner+booster": {
     "pred_spans": 18,
     "exact": {
-     "f1": 0.3765,
+     "f1": 0.3721,
      "precision": 0.8889,
-     "recall": 0.2388,
+     "recall": 0.2353,
      "tp": 16,
      "fp": 2,
-     "fn": 51
+     "fn": 52
     },
     "partial": {
      "threshold": 0.5,
-     "f1": 0.4,
+     "f1": 0.3953,
      "precision": 0.9444,
-     "recall": 0.2537
+     "recall": 0.25
     }
    },
    "merged": {
     "pred_spans": 53,
     "exact": {
-     "f1": 0.8167,
+     "f1": 0.8099,
      "precision": 0.9245,
-     "recall": 0.7313,
+     "recall": 0.7206,
      "tp": 49,
      "fp": 4,
-     "fn": 18
+     "fn": 19
     },
     "partial": {
      "threshold": 0.5,
-     "f1": 0.8667,
+     "f1": 0.8595,
      "precision": 0.9811,
-     "recall": 0.7761
+     "recall": 0.7647
     }
    },
    "reviewed": {
     "pred_spans": 53,
     "exact": {
-     "f1": 0.8167,
+     "f1": 0.8099,
      "precision": 0.9245,
-     "recall": 0.7313,
+     "recall": 0.7206,
      "tp": 49,
      "fp": 4,
-     "fn": 18
+     "fn": 19
     },
     "partial": {
      "threshold": 0.5,
-     "f1": 0.8667,
+     "f1": 0.8595,
      "precision": 0.9811,
-     "recall": 0.7761
+     "recall": 0.7647
     }
    },
    "dict_only": {
     "pred_spans": 35,
     "exact": {
-     "f1": 0.6471,
+     "f1": 0.6408,
      "precision": 0.9429,
-     "recall": 0.4925,
+     "recall": 0.4853,
      "tp": 33,
      "fp": 2,
-     "fn": 34
+     "fn": 35
     },
     "partial": {
      "threshold": 0.5,
-     "f1": 0.6863,
+     "f1": 0.6796,
      "precision": 1.0,
-     "recall": 0.5224
+     "recall": 0.5147
     }
    }
   }
- }
+ },
+ "version": "v2"
 }
