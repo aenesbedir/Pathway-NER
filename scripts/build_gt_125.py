@@ -24,6 +24,19 @@ GT100 = ROOT / "doccano/golden_dataset/gt_100.jsonl"
 OUT = ROOT / "doccano/golden_dataset/gt_125/gt_125.jsonl"
 SILVER = ROOT / "doccano/curation/missing_test_sample_25_import.jsonl"
 
+# Curated spans withdrawn after review against the annotation rule that a
+# transport / homeostasis / modification phrase counts only when the named
+# substrate's turnover is a Recon3D pathway. Neither passes: calcium is not
+# metabolised (its traffic sits in the transport subsystems the Recon list
+# excludes), and "lysosomal pathways" names no substrate - it is the route by
+# which a protein is degraded. The metabolic pathway in each abstract is
+# annotated separately (inositol polyphosphate formation; lipoic acid
+# biosynthesis and protein lipoylation).
+EXCLUDE = {
+    ("1317042", "calcium homeostasis"),
+    ("40663606", "lysosomal pathways"),
+}
+
 
 def norm_entities(rec: dict) -> list[dict]:
     out = []
@@ -59,7 +72,8 @@ def main() -> None:
         pmid = rec["meta"]["pmid"]
         if pmid in gt_pmids:
             raise SystemExit(f"{pmid} already in gt_100 - overlap not expected")
-        ents = norm_entities(rec)
+        ents = [e for e in norm_entities(rec)
+                if (pmid, rec["text"][e["start_offset"]:e["end_offset"]]) not in EXCLUDE]
         n_spans += len(ents)
 
         sil = silver.get(pmid)
@@ -106,6 +120,7 @@ def main() -> None:
         "curated_spans": n_spans,
         "total_spans": gt_spans + n_spans,
         "curation_delta_vs_silver": delta,
+        "withdrawn_after_curation": sorted(f"{p}: {t}" for p, t in EXCLUDE),
     }, indent=1))
 
 

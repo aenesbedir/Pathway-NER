@@ -1,7 +1,7 @@
 {
  "ground_truth": "doccano/golden_dataset/gt_125/gt_125.jsonl",
  "n_docs": 125,
- "n_gold_pathway_spans": 348,
+ "n_gold_pathway_spans": 346,
  "notes": "PATHWAY-only scoring, same conventions as gt_100_scores.json. gt_125 = the 100 gt_100 abstracts plus 25 abstracts drawn at random (seed 11) from the test split of the missing-pathway corpus and curated by hand, so the reference covers the corpus the merged dataset added as well as the original 10k. seqeval = entity-level F1/P/R (train.py convention). partial = gold-coverage F1/P/R at threshold 0.5, greedy one-to-one. Scripts: scripts/build_gt_125.py, scripts/score_gt_100.py --gt <this file>, scripts/score_gt_125_span_sources.py.",
  "composition": {
   "gt_100": {
@@ -11,103 +11,142 @@
   },
   "curated_missing_sample": {
    "docs": 25,
-   "spans": 69,
+   "spans": 67,
    "annotation": "human_curated",
    "sampled_from": "75 missing-pathway abstracts in the test split",
    "seed": 11,
    "vs_silver": {
     "kept": 49,
-    "added": 20,
+    "added": 18,
     "removed": 4,
     "of_which_boundary_moves": 4
-   }
+   },
+   "withdrawn_after_curation": [
+    "1317042: calcium homeostasis",
+    "40663606: lysosomal pathways"
+   ],
+   "withdrawal_rule": "a transport/homeostasis/modification phrase counts only when the named substrate's turnover is a Recon3D pathway; see scripts/build_gt_125.py"
   }
  },
  "caveat": "the 5 models below were trained on data/processed/pathway-10k, which does not contain the 25 curated abstracts, so gt_125 is a clean held-out set for them. Models trained on pathway-10k-missing saw those 25 only in their own test split, never in training, so gt_125 stays held out for them too.",
  "models": [
   {
-   "model": "runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7",
+   "model": "runs-truba-10k-missing-checkpoints/pathway-10k-missing/biom-electra-large/lr3e-05/seed42",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8311,
-    "precision": 0.8806,
-    "recall": 0.7867
+    "f1": 0.8338,
+    "precision": 0.8541,
+    "recall": 0.8145
    },
-   "n_gold_pathway_spans": 348,
+   "n_gold_pathway_spans": 346,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8845,
+    "f1": 0.9037,
+    "precision": 0.9271,
+    "recall": 0.8815
+   }
+  },
+  {
+   "model": "runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7",
+   "max_tokens": 512,
+   "seqeval": {
+    "f1": 0.8336,
+    "precision": 0.8806,
+    "recall": 0.7913
+   },
+   "n_gold_pathway_spans": 346,
+   "n_docs": 125,
+   "partial": {
+    "threshold": 0.5,
+    "f1": 0.8872,
     "precision": 0.9387,
-    "recall": 0.8362
+    "recall": 0.841
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/bioelectra-base/lr3e-05/seed7",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8115,
+    "f1": 0.8139,
     "precision": 0.8513,
-    "recall": 0.7752
+    "recall": 0.7797
    },
-   "n_gold_pathway_spans": 348,
+   "n_gold_pathway_spans": 346,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8855,
+    "f1": 0.8882,
     "precision": 0.9304,
-    "recall": 0.8448
+    "recall": 0.8497
+   }
+  },
+  {
+   "model": "runs-truba-10k-missing-checkpoints/pathway-10k-missing/bioelectra-base/lr3e-05/seed42",
+   "max_tokens": 512,
+   "seqeval": {
+    "f1": 0.811,
+    "precision": 0.8553,
+    "recall": 0.771
+   },
+   "n_gold_pathway_spans": 346,
+   "n_docs": 125,
+   "partial": {
+    "threshold": 0.5,
+    "f1": 0.8858,
+    "precision": 0.9357,
+    "recall": 0.841
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/biomedbert-base/lr5e-05/seed1",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8048,
+    "f1": 0.8072,
     "precision": 0.8401,
-    "recall": 0.7723
+    "recall": 0.7768
    },
-   "n_gold_pathway_spans": 348,
+   "n_gold_pathway_spans": 346,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8876,
+    "f1": 0.8902,
     "precision": 0.9279,
-    "recall": 0.8506
+    "recall": 0.8555
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-base/lr5e-05/seed7",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8006,
+    "f1": 0.803,
     "precision": 0.8344,
-    "recall": 0.7695
+    "recall": 0.7739
    },
-   "n_gold_pathway_spans": 348,
+   "n_gold_pathway_spans": 346,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8862,
+    "f1": 0.8889,
     "precision": 0.925,
-    "recall": 0.8506
+    "recall": 0.8555
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-large/lr3e-05/seed1",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.782,
+    "f1": 0.7843,
     "precision": 0.8176,
-    "recall": 0.7493
+    "recall": 0.7536
    },
-   "n_gold_pathway_spans": 348,
+   "n_gold_pathway_spans": 346,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8709,
+    "f1": 0.8735,
     "precision": 0.9119,
-    "recall": 0.8333
+    "recall": 0.8382
    }
   }
  ],
@@ -115,101 +154,102 @@
   "ground_truth": "doccano/golden_dataset/gt_125/gt_125.jsonl",
   "basis": {
    "n_docs": 25,
-   "n_gold_pathway_spans": 69,
+   "n_gold_pathway_spans": 67,
    "rule": "the 25 human-curated abstracts of gt_125 only; the gt_100 half has no silver counterpart to score"
   },
   "notes": "Stages of the pipeline that produced the missing-pathway corpus, scored against the human curation of the same 25 abstracts. `reviewed` is `merged` after an LLM audit removed the spans it judged wrong; the audit ran through the raw Claude CLI (scripts/review_missing_dataset.py), which uses the session's configured model rather than a pinned one, so the exact model id is not recorded in the artefacts.",
   "review_effect": {},
   "review_verdict_vs_curator": {
-   "correct -> curator_kept_exactly": 44,
-   "boundary -> curator_moved_boundary": 4,
-   "boundary -> curator_kept_exactly": 5
+   "correct -> curator_kept_exactly": 45,
+   "boundary -> curator_moved_boundary": 3,
+   "boundary -> curator_kept_exactly": 4,
+   "correct -> curator_moved_boundary": 1
   },
   "review_verdict_note": "the audit dropped no span in these 25, so only its verdicts can be compared, not its removals",
   "sources": {
    "ner": {
     "pred_spans": 17,
     "exact": {
-     "f1": 0.3721,
+     "f1": 0.381,
      "precision": 0.9412,
-     "recall": 0.2319,
+     "recall": 0.2388,
      "tp": 16,
      "fp": 1,
-     "fn": 53
+     "fn": 51
     },
     "partial": {
      "threshold": 0.5,
-     "f1": 0.3721,
+     "f1": 0.381,
      "precision": 0.9412,
-     "recall": 0.2319
+     "recall": 0.2388
     }
    },
    "ner+booster": {
     "pred_spans": 18,
     "exact": {
-     "f1": 0.3678,
+     "f1": 0.3765,
      "precision": 0.8889,
-     "recall": 0.2319,
+     "recall": 0.2388,
      "tp": 16,
      "fp": 2,
-     "fn": 53
+     "fn": 51
     },
     "partial": {
      "threshold": 0.5,
-     "f1": 0.3908,
+     "f1": 0.4,
      "precision": 0.9444,
-     "recall": 0.2464
+     "recall": 0.2537
     }
    },
    "merged": {
     "pred_spans": 53,
     "exact": {
-     "f1": 0.8033,
+     "f1": 0.8167,
      "precision": 0.9245,
-     "recall": 0.7101,
+     "recall": 0.7313,
      "tp": 49,
      "fp": 4,
-     "fn": 20
+     "fn": 18
     },
     "partial": {
      "threshold": 0.5,
-     "f1": 0.8525,
+     "f1": 0.8667,
      "precision": 0.9811,
-     "recall": 0.7536
+     "recall": 0.7761
     }
    },
    "reviewed": {
     "pred_spans": 53,
     "exact": {
-     "f1": 0.8033,
+     "f1": 0.8167,
      "precision": 0.9245,
-     "recall": 0.7101,
+     "recall": 0.7313,
      "tp": 49,
      "fp": 4,
-     "fn": 20
+     "fn": 18
     },
     "partial": {
      "threshold": 0.5,
-     "f1": 0.8525,
+     "f1": 0.8667,
      "precision": 0.9811,
-     "recall": 0.7536
+     "recall": 0.7761
     }
    },
    "dict_only": {
     "pred_spans": 35,
     "exact": {
-     "f1": 0.6346,
+     "f1": 0.6471,
      "precision": 0.9429,
-     "recall": 0.4783,
+     "recall": 0.4925,
      "tp": 33,
      "fp": 2,
-     "fn": 36
+     "fn": 34
     },
     "partial": {
      "threshold": 0.5,
-     "f1": 0.6731,
+     "f1": 0.6863,
      "precision": 1.0,
-     "recall": 0.5072
+     "recall": 0.5224
     }
    }
   }
