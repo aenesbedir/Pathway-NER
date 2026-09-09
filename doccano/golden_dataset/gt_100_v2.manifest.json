@@ -1,0 +1,127 @@
+{
+ "version": "v2",
+ "source": "doccano/golden_dataset/gt_100.jsonl",
+ "source_sha256": "12c9ba592a812cc3587bb17bd4f2cba04cc530c7f3e7b67732051a8ad1c95f66",
+ "output": "doccano/golden_dataset/gt_100_v2.jsonl",
+ "output_sha256": "1a8bc62c7220405d10558510fe6704bfcd0f3441c311c8f11bc8eb6d21c31a90",
+ "documents": 100,
+ "spans_before": 279,
+ "spans_after": 289,
+ "added": [
+  {
+   "pmid": "23121637",
+   "start": 1356,
+   "end": 1366,
+   "text": "AA cascade",
+   "kind": "unmarked_repeat",
+   "reason": "annotated twice in this abstract; this third occurrence was skipped"
+  },
+  {
+   "pmid": "30112875",
+   "start": 798,
+   "end": 817,
+   "text": "serotonin synthesis",
+   "kind": "unmarked_repeat",
+   "reason": "annotated earlier in this abstract; this occurrence was skipped"
+  },
+  {
+   "pmid": "11861404",
+   "start": 741,
+   "end": 753,
+   "text": "visual cycle",
+   "kind": "missing_span",
+   "reason": "the retinoid cycle: the sentence is about regenerating retinol from retinal; recon=vitamin a metabolism"
+  },
+  {
+   "pmid": "3271614",
+   "start": 1345,
+   "end": 1367,
+   "text": "prostacyclin synthesis",
+   "kind": "missing_span",
+   "reason": "the same process this abstract annotates as 'Prostacyclin production' and 'prostanoid synthesis'; recon=eicosanoid metabolism"
+  },
+  {
+   "pmid": "30740736",
+   "start": 21,
+   "end": 48,
+   "text": "coenzyme A (CoA) metabolism",
+   "kind": "missing_span",
+   "reason": "the spelled-out form of 'CoA metabolism', which this abstract annotates elsewhere. The surrounding 'inborn errors of' names the disease; the pathway is the noun phrase after it; recon=coa synthesis"
+  },
+  {
+   "pmid": "30993483",
+   "start": 1280,
+   "end": 1317,
+   "text": "metabolic pathways for MTX and folate",
+   "kind": "missing_span",
+   "reason": "the same pathways this abstract annotates as 'MTX and folate metabolisms'; recon=folate metabolism"
+  },
+  {
+   "pmid": "856442",
+   "start": 823,
+   "end": 873,
+   "text": "formation of 5alpha-reduced 17beta-hydroxysteroids",
+   "kind": "missing_span",
+   "reason": "steroid conversion, the 'formation of <product>' pattern; the abstract annotates '17beta-hydroxysteroid pathway' for the same chemistry; recon=androgen and estrogen synthesis and metabolism"
+  },
+  {
+   "pmid": "36531023",
+   "start": 867,
+   "end": 883,
+   "text": "bile acid uptake",
+   "kind": "missing_span",
+   "reason": "last member of a list whose other five members are all annotated ('pentose phosphate pathway, purine and pyrimidine synthesis, phospholipid metabolism, and bile acid uptake'); uptake counts because bile acid turnover is in the model; recon=bile acid synthesis"
+  },
+  {
+   "pmid": "41652287",
+   "start": 443,
+   "end": 456,
+   "text": "DNA synthesis",
+   "kind": "missing_span",
+   "reason": "the same process annotated elsewhere as 'DNA and RNA synthesis'; the span stops before 'and methylation', which has its own head; recon=nucleotide metabolism"
+  },
+  {
+   "pmid": "22185841",
+   "start": 669,
+   "end": 717,
+   "text": "CYP-mediated formation of endogenous eicosanoids",
+   "kind": "missing_span",
+   "reason": "eicosanoid biosynthesis. 'CYP-mediated' is kept inside the span on the same reading that keeps 'P450-dependent' in the curated half; this boundary is a judgement call, not a rule the guide settles; recon=eicosanoid metabolism"
+  }
+ ],
+ "widened": [
+  {
+   "pmid": "37538846",
+   "from": [
+    1982,
+    1999
+   ],
+   "to": [
+    1968,
+    1999
+   ],
+   "text": "mitochondrial energy metabolism",
+   "reason": "the abstract annotates 'mitochondrial energy metabolism' in full twice (at 585 and 1635); this third occurrence kept only 'energy metabolism'"
+  }
+ ],
+ "rejected": {
+  "1635807 urea cycle": "followed by 'disorders' - names the disease group",
+  "1635807 fatty acid oxidation": "followed by 'disorders' - names the disease group",
+  "1635807 glycoprotein degradation": "followed by 'disorders' - names the disease group",
+  "41810983 electron transport chain": "listed among protein subunits (SDHA) - names the complex, not the process",
+  "41577073 metabolism toward PPP": "names flux directed at a pathway, not the pathway; PPP itself is annotated",
+  "16188953 ROS generation": "the abstract annotates detoxification only; leaving generation out looks deliberate",
+  "1898255 vitamin B12 binding and/or transport": "'binding' is not turnover and the phrase cannot be split",
+  "23121637 AA incorporation and turnover in brain phospholipid": "'incorporation' plus a location; no core process name survives",
+  "23580368 impaired intracellular synthesis of adenosylcobalamin and methylcobalamin": "'impaired' is a pathological qualifier, not part of the process name",
+  "23811272 intracellular metabolism": "no substrate named; 'intracellular' is a location",
+  "26741399 energetic metabolism": "stylistic variant of 'energy metabolism', already annotated",
+  "33663989 glycosylation": "bare, and part of the disease name 'Congenital disorders of glycosylation'",
+  "3871414 Malabsorption of vitamin D": "a pathological state, not a pathway",
+  "40176362 metabolites of tryptophan (Trp)": "head noun is a substance, not a process",
+  "40277908 energy homeostasis": "names no compound",
+  "41471909 taurine-hypotaurine": "elliptical: the shared head 'pathways' is dropped, leaving a compound name",
+  "41872128 lipid peroxidation": "oxidative damage rather than metabolic turnover",
+  "41872128 iron-dependent lipid peroxidation": "oxidative damage rather than metabolic turnover"
+ }
+}

@@ -1,7 +1,7 @@
 {
  "basis": {
   "curated_docs": 25,
-  "curated_spans": 69,
+  "curated_spans": 68,
   "docs_reviewed_by_audit": 23,
   "judge_model": {
    "claude-opus-5[1m]": 23
@@ -18,16 +18,16 @@
   "proposals": 21,
   "outcomes": {
    "restates_existing_span": 2,
-   "in_text_not_gold": 8,
-   "not_verbatim_in_text": 4,
-   "matches_curator_addition": 7
+   "in_text_not_gold": 7,
+   "matches_curator_addition": 8,
+   "not_verbatim_in_text": 4
   },
-  "curator_additions": 20,
+  "curator_additions": 19,
   "curator_additions_by_reason": {
-   "unreviewed_doc": 3,
-   "proposed_by_audit": 6,
+   "unreviewed_doc": 2,
+   "proposed_by_audit": 7,
    "boundary_of_existing": 4,
-   "not_proposed": 7
+   "not_proposed": 6
   },
   "detail": [
    {
@@ -43,7 +43,7 @@
    {
     "pmid": "19012251",
     "proposal": "de novo synthesis from acetyl-CoA",
-    "outcome": "in_text_not_gold"
+    "outcome": "matches_curator_addition"
    },
    {
     "pmid": "23585733",
@@ -142,8 +142,7 @@
    "pmid": "1317042",
    "curator_spans": [
     "polyphosphoinositide hydrolysis",
-    "inositol polyphosphate formation",
-    "calcium homeostasis"
+    "inositol polyphosphate formation"
    ]
   },
   {
@@ -163,13 +162,13 @@
    "reason": "unreviewed_doc"
   },
   {
-   "pmid": "1317042",
-   "span": "calcium homeostasis",
-   "reason": "unreviewed_doc"
-  },
-  {
    "pmid": "16165297",
    "span": "aromatization from testosterone",
+   "reason": "proposed_by_audit"
+  },
+  {
+   "pmid": "19012251",
+   "span": "de novo synthesis from acetyl-CoA",
    "reason": "proposed_by_audit"
   },
   {
@@ -204,11 +203,6 @@
   },
   {
    "pmid": "31917509",
-   "span": "glycolytic parameters",
-   "reason": "not_proposed"
-  },
-  {
-   "pmid": "31917509",
    "span": "glucose uptake",
    "reason": "not_proposed"
   },
@@ -229,7 +223,7 @@
   },
   {
    "pmid": "40663606",
-   "span": "lysosomal pathways",
+   "span": "lipoylation of E2 subunits of alpha-ketoglutarate dehydrogenase (α-KGDH E2)",
    "reason": "not_proposed"
   },
   {

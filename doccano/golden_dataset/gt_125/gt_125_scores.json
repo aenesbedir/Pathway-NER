@@ -1,13 +1,15 @@
 {
  "ground_truth": "doccano/golden_dataset/gt_125/gt_125.jsonl",
  "n_docs": 125,
- "n_gold_pathway_spans": 347,
+ "n_gold_pathway_spans": 357,
  "notes": "PATHWAY-only scoring, same conventions as gt_100_scores.json. gt_125 = the 100 gt_100 abstracts plus 25 abstracts drawn at random (seed 11) from the test split of the missing-pathway corpus and curated by hand, so the reference covers the corpus the merged dataset added as well as the original 10k. seqeval = entity-level F1/P/R (train.py convention). partial = gold-coverage F1/P/R at threshold 0.5, greedy one-to-one. Scripts: scripts/build_gt_125.py, scripts/score_gt_100.py --gt <this file>, scripts/score_gt_125_span_sources.py.",
  "composition": {
   "gt_100": {
    "docs": 100,
-   "spans": 279,
-   "annotation": "reviewed_gold"
+   "spans": 289,
+   "annotation": "reviewed_gold, corrected in gt_100_v2",
+   "source": "doccano/golden_dataset/gt_100_v2.jsonl",
+   "manifest": "doccano/golden_dataset/gt_100_v2.manifest.json"
   },
   "curated_missing_sample": {
    "docs": 25,
@@ -40,136 +42,136 @@
    "model": "runs-truba-10k-missing-checkpoints/pathway-10k-missing/biom-electra-large/lr3e-05/seed42",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8326,
-    "precision": 0.8541,
-    "recall": 0.8121
+    "f1": 0.8321,
+    "precision": 0.8663,
+    "recall": 0.8006
    },
-   "n_gold_pathway_spans": 347,
+   "n_gold_pathway_spans": 357,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.9024,
-    "precision": 0.9271,
-    "recall": 0.879
+    "f1": 0.898,
+    "precision": 0.9362,
+    "recall": 0.8627
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8323,
-    "precision": 0.8806,
-    "recall": 0.789
+    "f1": 0.8258,
+    "precision": 0.8871,
+    "recall": 0.7725
    },
-   "n_gold_pathway_spans": 347,
+   "n_gold_pathway_spans": 357,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8858,
-    "precision": 0.9387,
-    "recall": 0.8386
+    "f1": 0.8756,
+    "precision": 0.9419,
+    "recall": 0.8179
    }
   },
   {
    "model": "runs-truba-10k-missing-checkpoints/pathway-10k-missing/biom-electra-large/lr2e-05/seed42",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8218,
-    "precision": 0.8608,
-    "recall": 0.7861
+    "f1": 0.8125,
+    "precision": 0.8639,
+    "recall": 0.7669
    },
-   "n_gold_pathway_spans": 347,
+   "n_gold_pathway_spans": 357,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8959,
-    "precision": 0.9399,
-    "recall": 0.8559
+    "f1": 0.8886,
+    "precision": 0.9462,
+    "recall": 0.8375
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/bioelectra-base/lr3e-05/seed7",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8127,
+    "f1": 0.8006,
     "precision": 0.8513,
-    "recall": 0.7775
+    "recall": 0.7556
    },
-   "n_gold_pathway_spans": 347,
+   "n_gold_pathway_spans": 357,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8899,
-    "precision": 0.9335,
-    "recall": 0.8501
-   }
-  },
-  {
-   "model": "runs-truba-10k-missing-checkpoints/pathway-10k-missing/bioelectra-base/lr3e-05/seed42",
-   "max_tokens": 512,
-   "seqeval": {
-    "f1": 0.8097,
-    "precision": 0.8553,
-    "recall": 0.7688
-   },
-   "n_gold_pathway_spans": 347,
-   "n_docs": 125,
-   "partial": {
-    "threshold": 0.5,
-    "f1": 0.8845,
-    "precision": 0.9357,
-    "recall": 0.8386
-   }
-  },
-  {
-   "model": "runs-truba-checkpoints/pathway-10k/biomedbert-base/lr5e-05/seed1",
-   "max_tokens": 512,
-   "seqeval": {
-    "f1": 0.806,
-    "precision": 0.8401,
-    "recall": 0.7746
-   },
-   "n_gold_pathway_spans": 347,
-   "n_docs": 125,
-   "partial": {
-    "threshold": 0.5,
-    "f1": 0.8919,
-    "precision": 0.931,
-    "recall": 0.8559
+    "f1": 0.8796,
+    "precision": 0.9367,
+    "recall": 0.8291
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-base/lr5e-05/seed7",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.8018,
-    "precision": 0.8344,
-    "recall": 0.7717
+    "f1": 0.7988,
+    "precision": 0.8438,
+    "recall": 0.7584
    },
-   "n_gold_pathway_spans": 347,
+   "n_gold_pathway_spans": 357,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8906,
-    "precision": 0.9281,
-    "recall": 0.8559
+    "f1": 0.8833,
+    "precision": 0.9344,
+    "recall": 0.8375
+   }
+  },
+  {
+   "model": "runs-truba-10k-missing-checkpoints/pathway-10k-missing/bioelectra-base/lr3e-05/seed42",
+   "max_tokens": 512,
+   "seqeval": {
+    "f1": 0.7976,
+    "precision": 0.8553,
+    "recall": 0.7472
+   },
+   "n_gold_pathway_spans": 357,
+   "n_docs": 125,
+   "partial": {
+    "threshold": 0.5,
+    "f1": 0.8743,
+    "precision": 0.9389,
+    "recall": 0.8179
+   }
+  },
+  {
+   "model": "runs-truba-checkpoints/pathway-10k/biomedbert-base/lr5e-05/seed1",
+   "max_tokens": 512,
+   "seqeval": {
+    "f1": 0.797,
+    "precision": 0.8433,
+    "recall": 0.7556
+   },
+   "n_gold_pathway_spans": 357,
+   "n_docs": 125,
+   "partial": {
+    "threshold": 0.5,
+    "f1": 0.8846,
+    "precision": 0.9373,
+    "recall": 0.8375
    }
   },
   {
    "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-large/lr3e-05/seed1",
    "max_tokens": 512,
    "seqeval": {
-    "f1": 0.7831,
-    "precision": 0.8176,
-    "recall": 0.7514
+    "f1": 0.7804,
+    "precision": 0.827,
+    "recall": 0.7388
    },
-   "n_gold_pathway_spans": 347,
+   "n_gold_pathway_spans": 357,
    "n_docs": 125,
    "partial": {
     "threshold": 0.5,
-    "f1": 0.8722,
-    "precision": 0.9119,
-    "recall": 0.8357
+    "f1": 0.8652,
+    "precision": 0.9182,
+    "recall": 0.8179
    }
   }
  ],
@@ -277,5 +279,5 @@
    }
   }
  },
- "version": "v2"
+ "version": "v3"
 }

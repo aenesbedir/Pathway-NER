@@ -1,6 +1,6 @@
 """Merge the curated missing-pathway sample into gt_100, producing gt_125.
 
-gt_100 covers only the original 10k corpus. The 25 abstracts curated from the
+gt_100_v2 (scripts/build_gt_100_v2.py) covers only the original 10k corpus. The 25 abstracts curated from the
 missing-pathway test split extend the reference to the part of the corpus the
 merged dataset added, so a score on gt_125 measures both halves instead of
 scoring new training data against an old reference.
@@ -20,7 +20,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-GT100 = ROOT / "doccano/golden_dataset/gt_100.jsonl"
+GT100 = ROOT / "doccano/golden_dataset/gt_100_v2.jsonl"
 OUT = ROOT / "doccano/golden_dataset/gt_125/gt_125.jsonl"
 SILVER = ROOT / "doccano/curation/missing_test_sample_25_import.jsonl"
 
