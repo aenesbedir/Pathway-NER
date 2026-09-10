@@ -38,6 +38,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import random
 import re
 import subprocess
 import sys
@@ -130,12 +131,25 @@ def prompt_fingerprint(mode: str) -> str:
 class ClaudeCLI:
     """Teacher backed by the local `claude` CLI, stripped to a near-raw call."""
 
-    def __init__(self, model: str, timeout: int = 300):
+    def __init__(self, model: str, timeout: int = 300, retries: int = 5):
         self.model = model
         self.timeout = timeout
+        self.retries = retries
         self.name = f"llm:{model}"
 
     def __call__(self, user_prompt: str) -> str:
+        """One call, retried on transient failure.
+
+        Under concurrency the CLI returns exit 1 with an empty stderr often
+        enough to ruin a sweep: three runs over this corpus lost between a fifth
+        and three quarters of their requests that way, while the same prompt
+        sent alone succeeded immediately. The failure carries no message to
+        distinguish it from a real one, so every non-zero exit is retried with
+        an exponential, jittered backoff, and only the last one is raised.
+
+        Retrying here rather than in the caching layer keeps an error out of the
+        cache: `_fetch` still never writes a failure, it just sees fewer.
+        """
         cmd = [
             "claude",
             "-p",
@@ -148,17 +162,26 @@ class ClaudeCLI:
             "--output-format",
             "text",
         ]
-        proc = subprocess.run(
-            cmd, capture_output=True, text=True, timeout=self.timeout
-        )
-        if proc.returncode != 0:
-            raise RuntimeError(
-                f"claude exited {proc.returncode}: {proc.stderr.strip()[:300]}"
-            )
-        out = proc.stdout.strip()
-        if not out:
-            raise RuntimeError("claude returned an empty response")
-        return out
+        last = ""
+        for attempt in range(self.retries):
+            if attempt:
+                time.sleep(min(60, 2 ** attempt) * (0.5 + random.random()))
+            try:
+                proc = subprocess.run(
+                    cmd, capture_output=True, text=True, timeout=self.timeout
+                )
+            except subprocess.TimeoutExpired:
+                last = f"timed out after {self.timeout}s"
+                continue
+            if proc.returncode != 0:
+                last = f"claude exited {proc.returncode}: {proc.stderr.strip()[:300]}"
+                continue
+            out = proc.stdout.strip()
+            if not out:
+                last = "claude returned an empty response"
+                continue
+            return out
+        raise RuntimeError(f"{last} (after {self.retries} attempts)")
 
 
 class OllamaHTTP:
