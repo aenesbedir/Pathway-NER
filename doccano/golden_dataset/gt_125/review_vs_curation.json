@@ -1,7 +1,7 @@
 {
  "basis": {
   "curated_docs": 25,
-  "curated_spans": 68,
+  "curated_spans": 70,
   "docs_reviewed_by_audit": 23,
   "judge_model": {
    "claude-opus-5[1m]": 23
@@ -22,12 +22,12 @@
    "matches_curator_addition": 8,
    "not_verbatim_in_text": 4
   },
-  "curator_additions": 19,
+  "curator_additions": 21,
   "curator_additions_by_reason": {
-   "unreviewed_doc": 2,
+   "unreviewed_doc": 3,
    "proposed_by_audit": 7,
    "boundary_of_existing": 4,
-   "not_proposed": 6
+   "not_proposed": 7
   },
   "detail": [
    {
@@ -142,7 +142,8 @@
    "pmid": "1317042",
    "curator_spans": [
     "polyphosphoinositide hydrolysis",
-    "inositol polyphosphate formation"
+    "inositol polyphosphate formation",
+    "calcium homeostasis"
    ]
   },
   {
@@ -159,6 +160,11 @@
   {
    "pmid": "1317042",
    "span": "inositol polyphosphate formation",
+   "reason": "unreviewed_doc"
+  },
+  {
+   "pmid": "1317042",
+   "span": "calcium homeostasis",
    "reason": "unreviewed_doc"
   },
   {
@@ -220,6 +226,11 @@
    "pmid": "37100627",
    "span": "cholesterol absorption",
    "reason": "proposed_by_audit"
+  },
+  {
+   "pmid": "40663606",
+   "span": "lysosomal pathways",
+   "reason": "not_proposed"
   },
   {
    "pmid": "40663606",
