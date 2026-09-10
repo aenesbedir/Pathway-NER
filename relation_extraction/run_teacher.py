@@ -128,6 +128,10 @@ def prompt_fingerprint(mode: str) -> str:
     ).hexdigest()[:12]
 
 
+class SafeguardRefusal(RuntimeError):
+    """The provider's safety filter refused this prompt. Not retryable."""
+
+
 class ClaudeCLI:
     """Teacher backed by the local `claude` CLI, stripped to a near-raw call."""
 
@@ -174,6 +178,15 @@ class ClaudeCLI:
                 last = f"timed out after {self.timeout}s"
                 continue
             if proc.returncode != 0:
+                # A safeguard refusal is deterministic: the same abstract is
+                # refused every time, and the CLI reports it on stdout with an
+                # empty stderr and exit 1 - indistinguishable from a transient
+                # failure unless the text is read. Retrying one wastes five
+                # calls, and this corpus is biomedical enough that Opus refused
+                # roughly three quarters of it.
+                blob = (proc.stdout or "") + (proc.stderr or "")
+                if "safeguards flagged" in blob:
+                    raise SafeguardRefusal(blob.strip()[:200])
                 last = f"claude exited {proc.returncode}: {proc.stderr.strip()[:300]}"
                 continue
             out = proc.stdout.strip()
@@ -510,6 +523,12 @@ def _fetch(teacher, cache_file: Path, prompt: str, pmid: str, want_ids, fp, stat
     started = time.time()
     try:
         raw = teacher(prompt)
+    except SafeguardRefusal as exc:
+        # Counted apart from a failed call. A refusal is a property of the
+        # abstract and the model, not of the run, and it will not resolve on a
+        # re-run; lumping it with transient errors hides a systematic gap in the
+        # corpus behind a number that looks like flakiness.
+        return None, f"refused: {exc}"
     except Exception as exc:  # noqa: BLE001 - reported, never cached
         return None, f"error: {exc}"
     payload = {
