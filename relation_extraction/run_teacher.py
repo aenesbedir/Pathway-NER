@@ -440,6 +440,7 @@ def label_single(
     out: list[Relation] = []
     rejected: Counter = Counter()
     statuses: Counter = Counter()
+    first_error = ""
 
     for cand in cands:
         want_ids = [cand.candidate_id]
@@ -471,6 +472,13 @@ def label_single(
             if payload is None:
                 rejected["request_failed"] += 1
                 statuses[status.split(":")[0]] += 1
+                # The counter is keyed on the prefix so the summary stays
+                # readable, but the prefix alone is not diagnosable: it says
+                # "error" and drops the reason. Keeping the first full message
+                # is what distinguishes a safeguard refusal from a throttle
+                # from a timeout without reproducing the call by hand.
+                if not first_error:
+                    first_error = status
                 continue
 
         try:
@@ -484,7 +492,9 @@ def label_single(
         out.extend(ground([obj], [cand], abstract, payload["model"], rejected))
         statuses[status.split(":")[0]] += 1
 
-    worst = "error" if statuses["error"] else statuses.most_common(1)[0][0]
+    worst = first_error or (
+        "refused" if statuses["refused"] else statuses.most_common(1)[0][0]
+    )
     return out, rejected, worst
 
 
@@ -622,7 +632,7 @@ def main() -> None:
             all_rels.extend(rels)
             rejected.update(rej)
             statuses[status.split(":")[0]] += 1
-            if status.startswith("error"):
+            if status.startswith(("error", "refused", "timed out")):
                 print(f"  {pmid}: {status}", file=sys.stderr)
             if done % 25 == 0 or done == len(pmids):
                 rate = done / max(time.time() - started, 1e-9)
