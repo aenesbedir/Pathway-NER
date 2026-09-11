@@ -16,7 +16,12 @@ data/raw/llm_cache_silver/
 data/raw/article_cache/
 data/raw/mesh_cache/
 data/raw/pair_cache/
+data/raw/relation_teacher_cache/
 data/raw/articles.json
+
+venv-re/
+
+models_re/
 
 # Images
 *.png
