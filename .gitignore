@@ -170,3 +170,15 @@ data/processed/relation/synth_probe/
 # (reports/seed_source_comparison_2026-09-03.md). 937MB third-party download
 # from Harvard Dataverse; the seed builder regenerates everything from it.
 data/raw/primekg/
+
+# Relation extraction outputs (reports/synthetic_data_probe_2026-08-31.md and
+# later probes). Candidates, teacher labels, manifests and doccano/review exports
+# all regenerate from the tracked scripts in relation_extraction/.
+data/processed/relation/
+data/processed/gt_100/
+
+# Symlinks into the main checkout, where the real files live and are tracked.
+# No trailing slash: git sees a symlink as a file, and "dir/" only matches a
+# directory, so a slashed pattern would silently fail to ignore these.
+data/doccano
+data/processed/pathway-10k
