@@ -120,6 +120,11 @@ the abstract states the effect of the intervention, not the state of the pathway
 in the disease. Apply it only when the intervention and the disease are both
 named, and use `confidence: medium` unless the sentence is unambiguous.
 
+The rule does not cover prognostic markers, metabolite levels, or a pathway said
+to "play a role in" the disease. None of those is an intervention, and each stays
+`association` or `none`. An earlier wording without this paragraph signed six
+such claims among 161 pairs.
+
 If the abstract states BOTH the pathway's state in the disease and an
 intervention, label the state and quote the state sentence.
 
