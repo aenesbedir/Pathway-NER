@@ -465,7 +465,7 @@ def main() -> None:
         per_device_eval_batch_size=batch_size,
         learning_rate=args.lr,
         num_train_epochs=args.epochs,
-        warmup_ratio=0.1,
+        warmup_steps=0.1,  # a float below 1 is a ratio of total steps (transformers >= 5.17)
         weight_decay=0.01,
         eval_strategy="epoch",
         save_strategy="epoch",
