@@ -394,6 +394,10 @@ def main() -> None:
                          "the label head against the single-head baseline on equal terms")
     ap.add_argument("--ev-weights", nargs=2, type=float, default=None,
                     help="class weights for O / evidence (default: inverse frequency)")
+    ap.add_argument(
+        "--augment", type=Path, default=None,
+        help="folder written by entity_switch/entity_switch.py; its copies join fit only",
+    )
     ap.add_argument("--val-fraction", type=float, default=0.1)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--limit", type=int, default=0)
@@ -415,6 +419,27 @@ def main() -> None:
     fit_rows = [r for r in train_rows if r["pmid"] not in val_pmids]
     if args.limit:
         fit_rows = fit_rows[: args.limit]
+
+    # Augmented copies are added after the split, and only to fit. A copy keeps
+    # its source PMID, so one whose source is in validation is dropped: letting it
+    # into fit would train on a rewrite of a validation abstract.
+    aug_stats: dict = {}
+    if args.augment:
+        aug_rows, aug_build = build(
+            args.augment / "entity_switch_relations.jsonl",
+            args.augment / "entity_switch_candidates.jsonl",
+            tokenizer, args.max_len,
+        )
+        kept = [r for r in aug_rows if r["pmid"] not in val_pmids]
+        aug_stats = {
+            "folder": str(args.augment),
+            "manifest": json.loads((args.augment / "entity_switch.manifest.json").read_text()),
+            "built": len(aug_rows),
+            "dropped_val_pmid": len(aug_rows) - len(kept),
+            "added_to_fit": len(kept),
+            "build_stats": aug_build,
+        }
+        fit_rows = fit_rows + kept
 
     fit_ds = PairDataset(fit_rows, tokenizer, args.max_len)
     val_ds = PairDataset(val_rows, tokenizer, args.max_len)
@@ -487,6 +512,7 @@ def main() -> None:
         "marker_tokens_added": n_added,
         "evidence_token_counts_fit": {"O": fit_ds.counts[EV_O], "EV": fit_ds.counts[EV_POS]},
         "build_stats": {"train": train_stats, "test": test_stats},
+        "augment": aug_stats,
         "val": {k: v for k, v in val_metrics.items() if k.startswith("eval_")},
         "test": {k: v for k, v in test_metrics.items() if k.startswith("test_")},
     }
