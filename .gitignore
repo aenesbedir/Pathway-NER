@@ -188,8 +188,17 @@ runs-truba*/
 # Caveat recorded deliberately: the qwen2.5:14b silver is LLM sampling output
 # and is not bit-reproducible from the tracked inputs. Losing it means the
 # PATHWAY side of this batch cannot be rebuilt exactly. Keep local backups.
-data/doccano/
+data/doccano/*
 data/evaluation/
+
+# Final data products are the exception: the curated remaining_6125 export, the
+# combined 10,125-document corpus built on it, and the dictionary-matched 10k
+# that feeds pathway_10k_plus_missing. They are tracked because the silver
+# behind them cannot be regenerated exactly.
+!data/doccano/disease_pathway_remaining_6125_doccano_curated_v1.jsonl
+!data/doccano/disease_pathway_remaining_6125_doccano_curated_v1.manifest.json
+!data/doccano/disease_pathway_10125_doccano_combined_v1.jsonl
+!data/doccano/10k_dict_match.jsonl
 data/processed/disease-ner/
 data/processed/pathway-ner/
 data/silver/pathway_remaining_6125.jsonl

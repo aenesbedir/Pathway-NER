@@ -1,0 +1,98 @@
+{
+  "split": "pathway-10k test",
+  "results": [
+    {
+      "n_records": 1013,
+      "f1": 0.8858,
+      "precision": 0.8803,
+      "recall": 0.8914,
+      "model": "runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7",
+      "data_dir": "data/processed/pathway-10k-biom-electra-large"
+    },
+    {
+      "n_records": 1013,
+      "f1": 0.8812,
+      "precision": 0.8727,
+      "recall": 0.8898,
+      "model": "runs-truba-checkpoints/pathway-10k/bioelectra-base/lr3e-05/seed7",
+      "data_dir": "data/processed/pathway-10k-bioelectra-base"
+    },
+    {
+      "n_records": 1013,
+      "f1": 0.879,
+      "precision": 0.8689,
+      "recall": 0.8894,
+      "model": "runs-truba-checkpoints/pathway-10k/biomedbert-base/lr5e-05/seed1",
+      "data_dir": "data/processed/pathway-10k-biomedbert-base"
+    },
+    {
+      "n_records": 1013,
+      "f1": 0.8822,
+      "precision": 0.8735,
+      "recall": 0.891,
+      "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-base/lr5e-05/seed7",
+      "data_dir": "data/processed/pathway-10k-biolinkbert-base"
+    },
+    {
+      "n_records": 1013,
+      "f1": 0.878,
+      "precision": 0.862,
+      "recall": 0.8947,
+      "model": "runs-truba-checkpoints/pathway-10k/biolinkbert-large/lr3e-05/seed1",
+      "data_dir": "data/processed/pathway-10k-biolinkbert-large"
+    },
+    {
+      "n_records": 1013,
+      "f1": 0.9231,
+      "precision": 0.9201,
+      "recall": 0.9262,
+      "n_records_seen_in_training": 292,
+      "clean_subset": {
+        "n_records": 721,
+        "f1": 0.8998,
+        "precision": 0.8966,
+        "recall": 0.9031
+      },
+      "model": "models/pathway-ner-gold-wave4-random-all-biomedbert-base",
+      "data_dir": "data/processed/pathway-10k-biomedbert-base"
+    },
+    {
+      "n_records": 1013,
+      "f1": 0.8953,
+      "precision": 0.8871,
+      "recall": 0.9037,
+      "n_records_seen_in_training": 274,
+      "clean_subset": {
+        "n_records": 739,
+        "f1": 0.8639,
+        "precision": 0.8543,
+        "recall": 0.8737
+      },
+      "model": "models/pathway-ner-gold-wave4-biomedbert-base-min30",
+      "data_dir": "data/processed/pathway-10k-biomedbert-base"
+    },
+    {
+      "n_records": 1013,
+      "f1": 0.8953,
+      "precision": 0.8939,
+      "recall": 0.8968,
+      "n_records_seen_in_training": 274,
+      "clean_subset": {
+        "n_records": 739,
+        "f1": 0.867,
+        "precision": 0.8682,
+        "recall": 0.8658
+      },
+      "model": "models/pathway-ner-gold-wave4-biomedbert-base",
+      "data_dir": "data/processed/pathway-10k-biomedbert-base"
+    },
+    {
+      "n_records": 1013,
+      "f1": 0.8063,
+      "precision": 0.7584,
+      "recall": 0.8607,
+      "model": "models/pathway-ner-gold-wave4-random-all-bio-modernbert-base/checkpoint-160",
+      "data_dir": "data/processed/pathway-10k-bio-modernbert-base"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "artifact_type": "doccano_sequence_labeling_import",
+  "version": "curated-v1",
+  "created_on": "2026-08-12",
+  "output": {
+    "path": "data/doccano/disease_pathway_remaining_6125_doccano_curated_v1.jsonl",
+    "sha256": "25fd804877d2c8f081d7bf01b4ae8fb0b7936ffffe3ff0f8baee1401f65b4d60",
+    "documents": 6125,
+    "labels": {
+      "DISEASE": 58530,
+      "PATHWAY": 15153,
+      "total": 73683
+    }
+  },
+  "inputs": {
+    "doccano": {
+      "path": "data/doccano/disease_pathway_remaining_6125_doccano.jsonl",
+      "sha256": "dd7ce1a065f858bf3daca8df2a98ddd777509cc07231211be87aaca4246bd6d3",
+      "labels": {
+        "DISEASE": 56846,
+        "PATHWAY": 13108,
+        "total": 69954
+      }
+    },
+    "decisions": {
+      "path": "data/reviews/disease_pathway_remaining_6125_review_decisions_curated.jsonl",
+      "sha256": "1f7a43eb59b1fdbb43011542949085409cc93249f1626fe4b2feb595490d77f9"
+    },
+    "annotation_guide": {
+      "path": "doccano/ANNOTATION_GUIDE.md",
+      "sha256": "d9f21e494e9a8f2358687edcbc10bf9150dadc193abda4956c6d313f072a35ee"
+    }
+  },
+  "application": {
+    "applied_actions": {
+      "add_span": {
+        "DISEASE": 3329,
+        "PATHWAY": 3060,
+        "total": 6389
+      },
+      "remove_span": {
+        "DISEASE": 1645,
+        "PATHWAY": 1015,
+        "total": 2660
+      }
+    },
+    "deferred_actions_applied": false,
+    "deferred_actions_skipped": {
+      "PATHWAY": 6,
+      "surfaces": {
+        "FA pathway": 4,
+        "Kreb's cycle to oxygen utilization": 1,
+        "pentose phosphate": 1
+      }
+    },
+    "label_delta": {
+      "DISEASE": 1684,
+      "PATHWAY": 2045,
+      "total": 3729
+    }
+  },
+  "record_metadata": {
+    "field": "meta.curation",
+    "contains": [
+      "version",
+      "decision_file",
+      "decision_sha256",
+      "manifest_file",
+      "applied_actions",
+      "deferred_decisions_applied"
+    ]
+  }
+}
