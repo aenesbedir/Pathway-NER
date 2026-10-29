@@ -32,7 +32,7 @@ from transformers import AutoTokenizer
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-GT = ROOT / "doccano/golden_dataset/gt_100.jsonl"
+DEFAULT_GT = ROOT / "doccano/golden_dataset/gt_100.jsonl"
 DATA = ROOT / "data/processed"
 
 
@@ -90,9 +90,9 @@ def prf(tp, fp, fn):
     return round(p, 4), round(r, 4), round(f, 4)
 
 
-def load_gold():
+def load_gold(path: Path):
     gold = {}
-    for line in GT.open(encoding="utf-8"):
+    for line in path.open(encoding="utf-8"):
         rec = json.loads(line)
         pmid = rec["meta"]["pmid"]
         spans = {
@@ -199,9 +199,12 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs-dir", default="runs-truba-10k-missing")
     ap.add_argument("--output", default="analysis/gt_100_from_predictions.json")
+    ap.add_argument("--gt", default=str(DEFAULT_GT),
+                    help="gold file; gt_100 or gt_125, same shape")
     args = ap.parse_args()
 
-    gold = load_gold()
+    gt_path = Path(args.gt)
+    gold = load_gold(gt_path)
     n_gold = sum(len(g["spans"]) for g in gold.values())
 
     cache: dict = {}
@@ -211,13 +214,13 @@ def main() -> None:
 
     rows.sort(key=lambda r: -r["gt100_exact_f1"])
     out = {
-        "gold": {"file": str(GT.relative_to(ROOT)), "pmids": len(gold),
+        "gold": {"file": str(gt_path), "pmids": len(gold),
                  "spans": n_gold},
         "runs": rows,
     }
     (ROOT / args.output).write_text(json.dumps(out, indent=1) + "\n")
 
-    print(f"gt_100: {len(gold)} pmids, {n_gold} gold spans\n")
+    print(f"{gt_path.name}: {len(gold)} pmids, {n_gold} gold spans\n")
     print(f"{'exact':>7} {'part.5':>7} {'lenient':>8} {'len_P':>6} {'len_R':>6}"
           f" {'split':>7}  {'model':20} {'lr':>7} {'seed':>4}")
     for r in rows:
