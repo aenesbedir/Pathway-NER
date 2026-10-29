@@ -55,6 +55,7 @@ Articles file can be JSONL (one record per line) or a JSON array.
 """
 
 import argparse
+import hashlib
 import json
 import logging
 import sys
@@ -74,6 +75,14 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 
 
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 # ---------------------------------------------------------------------------
 # Data loading
 # ---------------------------------------------------------------------------
@@ -81,12 +90,16 @@ log = logging.getLogger(__name__)
 def load_articles(articles_path: Path, db_path: Path | None = None) -> dict[str, dict]:
     """Load articles from a JSONL or JSON-array file, keyed by str(pmid)."""
     articles: dict[str, dict] = {}
-    raw = articles_path.read_text(encoding="utf-8").strip()
-
-    if raw.startswith("["):
-        records = json.loads(raw)
-    else:
-        records = [json.loads(line) for line in raw.splitlines() if line.strip()]
+    with articles_path.open(encoding="utf-8") as source:
+        prefix = source.read(4096).lstrip()
+        source.seek(0)
+        if prefix.startswith("["):
+            records = json.load(source)
+        else:
+            # Iterate physical JSONL records. ``str.splitlines()`` also splits
+            # Unicode line-separator characters that are valid inside JSON
+            # strings, corrupting abstracts that contain them.
+            records = [json.loads(line) for line in source if line.strip()]
 
     for r in records:
         pmid = str(r.get("pmid", ""))
@@ -250,6 +263,12 @@ def main() -> None:
         help="Encoder registry key or HF id (see `python3 encoders.py`); "
              "decides the tokenizer and the truncation length",
     )
+    parser.add_argument(
+        "--include-span-free",
+        action="store_true",
+        help="Write one all-O abstract record for every article without a gold "
+             "span instead of limiting output to positive documents",
+    )
     args = parser.parse_args()
 
     spec = resolve(args.model)
@@ -299,6 +318,13 @@ def main() -> None:
     log.info("Skipped (no spans)   : %d", skipped_no_spans)
     log.info("Skipped (no article) : %d", skipped_no_article)
 
+    if args.include_span_free:
+        for pmid in articles:
+            pmid_data[pmid]
+        log.info("Including span-free : %d PMIDs", len(articles) -
+                 sum(bool(data["abstract_spans"] or data["fulltext_spans"])
+                     for data in pmid_data.values()))
+
     output_path.parent.mkdir(parents=True, exist_ok=True)
     written = abs_written = ft_written = 0
 
@@ -307,7 +333,7 @@ def main() -> None:
             article = articles[pmid]
             pathway_ids = sorted(data["pathway_ids"])
 
-            if data["abstract_spans"]:
+            if data["abstract_spans"] or args.include_span_free:
                 rec = process_abstract(
                     tokenizer, pmid, article, data["abstract_spans"], pathway_ids,
                     spec.max_tokens,
@@ -339,6 +365,11 @@ def main() -> None:
         "vocab_fingerprint": vocab_fingerprint(tokenizer),
         "max_tokens": spec.max_tokens,
         "transformers_version": transformers.__version__,
+        "matches": str(matches_path),
+        "matches_sha256": file_sha256(matches_path),
+        "articles": str(articles_path),
+        "articles_sha256": file_sha256(articles_path),
+        "include_span_free": args.include_span_free,
         "n_records": written,
     }
     meta_path = output_path.parent / "meta.json"

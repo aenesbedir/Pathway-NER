@@ -7,12 +7,25 @@
 # offline resolver cannot match — fails here in seconds instead of after hours of
 # queue time.
 #
-#     cd /arf/scratch/$USER/NER-pipeline
-#     bash slurm/verify_cache.sh biomedbert-base bioelectra-base biolinkbert-base
+# cd /arf/scratch/$USER/NER-pipeline
+# bash slurm/verify_cache.sh
 #
-# No GPU and no allocation needed: this is a disk read, not training.
+# With no arguments, verify the five models in the pathway-10k sweep. Explicit
+# registry keys still override that default. No GPU and no allocation needed:
+# this is a disk read, not training.
 
 set -euo pipefail
+
+MODELS=("$@")
+if [ ${#MODELS[@]} -eq 0 ]; then
+    MODELS=(
+        biomedbert-base
+        biolinkbert-base
+        bioelectra-base
+        biolinkbert-large
+        biom-electra-large
+    )
+fi
 
 REPO=/arf/scratch/$USER/NER-pipeline
 SIF=/arf/home/$USER/container-user/nerenv.sif
@@ -23,7 +36,7 @@ export HF_HUB_OFFLINE=1
 cd "$REPO"
 
 apptainer exec --bind /arf/scratch/$USER:/arf/scratch/$USER "$SIF" \
-    python3 - "$@" <<'EOF'
+ python3 - "${MODELS[@]}" <<'EOF'
 import sys
 
 sys.path.insert(0, ".")

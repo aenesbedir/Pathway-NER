@@ -1,0 +1,87 @@
+{
+  "review_kind": "independent_source_disagreement_candidates",
+  "warning": "Disagreements are candidates for human adjudication, not automatic false-positive or false-negative decisions.",
+  "documents": 6125,
+  "include_accepted": true,
+  "documents_with_candidates": {
+    "disease": 4946,
+    "pathway": 2901
+  },
+  "counts": {
+    "disease.accepted": 47667,
+    "disease.corrections": 3193,
+    "disease.false_negatives": 12060,
+    "disease.false_positives": 4812,
+    "disease.uncertain": 742,
+    "disease.unreviewed": 157,
+    "pathway.accepted": 10661,
+    "pathway.corrections": 828,
+    "pathway.false_negatives": 3507,
+    "pathway.false_positives": 1386,
+    "pathway.uncertain": 195,
+    "pathway.unreviewed": 0
+  },
+  "span_partitions": {
+    "disease": {
+      "ambiguous_components": 742,
+      "ambiguous_current_spans": 1017,
+      "ambiguous_reviewer_spans": 1241,
+      "current_only_candidates": 4812,
+      "current_total": 56846,
+      "exact_agreements": 47667,
+      "one_to_one_boundary_disagreements": 3193,
+      "reviewer_only_candidates": 12060,
+      "reviewer_total": 64161,
+      "unreviewed_current_spans": 157
+    },
+    "pathway": {
+      "ambiguous_components": 195,
+      "ambiguous_current_spans": 233,
+      "ambiguous_reviewer_spans": 360,
+      "current_only_candidates": 1386,
+      "current_total": 13108,
+      "exact_agreements": 10661,
+      "one_to_one_boundary_disagreements": 828,
+      "reviewer_only_candidates": 3507,
+      "reviewer_total": 15356,
+      "unreviewed_current_spans": 0
+    }
+  },
+  "confidence_counts": {
+    "disease.corrections.medium": 3193,
+    "disease.false_negatives.low": 12060,
+    "disease.false_positives.low": 3008,
+    "disease.false_positives.medium": 1804,
+    "disease.uncertain.low": 742,
+    "pathway.corrections.medium": 828,
+    "pathway.false_negatives.medium": 3507,
+    "pathway.false_positives.medium": 1386,
+    "pathway.uncertain.low": 195
+  },
+  "reviewer_quality": {
+    "disease": {
+      "document_status": {
+        "ok": 6111,
+        "missing": 14
+      },
+      "abstract_text_mismatches_aligned": 2803,
+      "alignment_methods": {
+        "direct_offset": 34201,
+        "exact_surface_occurrence": 29865,
+        "sequence_alignment": 95
+      },
+      "alignment_failures_skipped": 67
+    },
+    "pathway": {
+      "document_status": {
+        "ok": 6125
+      }
+    }
+  },
+  "sources": {
+    "annotations": "/home/enes/NER-pipeline/data/doccano/disease_pathway_remaining_6125_doccano.jsonl",
+    "disease_primary_evidence": "/home/enes/NER-pipeline/data/processed/disease-ner/disease_spans_remaining_6125_bent.jsonl",
+    "disease_reviewer": "/home/enes/NER-pipeline/data/processed/disease-ner/pubtator_disease_remaining_6125.jsonl",
+    "pathway_reviewer": "/home/enes/NER-pipeline/data/processed/pathway-ner/pathway_best_remaining_6125.jsonl"
+  }
+}

@@ -4,6 +4,10 @@ Versioned expansion of the historical Phase 4b gold dataset. The old
 `data/processed/gold/` snapshot and every `data/processed/gold-<tokenizer>/`
 dataset remain unchanged.
 
+This snapshot intentionally contains only pilot batch 05. The newer
+`data/processed/gold-pilot1k/` corpus applies the completed review of all five
+pilot batches while preserving this snapshot's validation and test assignments.
+
 ## Sources
 
 The four sources have no PMID overlap:

@@ -77,6 +77,12 @@ def main() -> None:
              "cross-model comparison; without it the legacy shuffle applies and "
              "the split becomes tokenizer-dependent",
     )
+    parser.add_argument(
+        "--keep-span-free",
+        action="store_true",
+        help="Keep all-O records so explicitly negative documents participate "
+             "in training and evaluation",
+    )
     args = parser.parse_args()
 
     bio_tags_path = Path(args.input)
@@ -90,8 +96,11 @@ def main() -> None:
     records = [json.loads(l) for l in bio_tags_path.open(encoding="utf-8")]
     log.info("Loaded: %d records", len(records))
 
-    records = [r for r in records if any(l in (1, 2) for l in r["labels"])]
-    log.info("After filtering (no positive labels removed): %d records", len(records))
+    if args.keep_span_free:
+        log.info("After filtering (span-free records retained): %d records", len(records))
+    else:
+        records = [r for r in records if any(l in (1, 2) for l in r["labels"])]
+        log.info("After filtering (no positive labels removed): %d records", len(records))
 
     # Group records by PMID — all records (abstract + full-text windows) from
     # the same article must land in the same split to prevent leakage.

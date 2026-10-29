@@ -223,7 +223,7 @@ def main() -> None:
     for rec in records:
         pmid = str(rec["pmid"])
         text = articles[pmid]
-        spans = gold[pmid]
+        spans = gold.get(pmid, [])
 
         encoding = tokenizer(text, max_length=spec.max_tokens, truncation=True,
                              return_offsets_mapping=True)

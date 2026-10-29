@@ -22,6 +22,10 @@ data/raw/articles.json
 venv-re/
 
 models_re/
+# Raw PubTator BioC responses, one file per PMID. Re-fetchable from the NCBI
+# PubTator API via scripts/fetch_pubtator_disease.py, which skips any PMID that
+# is already cached. Chemical/Gene/Species annotations are stripped locally.
+data/cache/
 
 # Images
 *.png
@@ -31,6 +35,9 @@ models_re/
 # OS
 .DS_Store
 Thumbs.db
+
+# Obsidian vault settings
+.obsidian/
 
 # Tool-managed scratch worktrees
 .claude/worktrees/
@@ -120,6 +127,7 @@ data/processed/phase2/
 analysis/alignment_*.json
 logs/*.log
 runs/*.log
+data/silver/*.log
 
 # doccano batch archives (regenerable via doccano/split_batches.py)
 doccano/batches.zip
@@ -128,6 +136,7 @@ doccano/batches.zip
 # tracked silver and review files via data/processed/gold/README.md.
 doccano/wave2_1k_doccano.jsonl
 doccano/wave2_1k_gold.jsonl
+doccano/pilot_1k_batch0[1-3]_gold.jsonl
 doccano/pilot_1k_batch05_gold.jsonl
 doccano/batches/wave2_1k_doccano_batch_*_5.jsonl
 
@@ -153,6 +162,17 @@ data/processed/gold-*/
 # regenerable and remain ignored by the rule above.
 !data/processed/gold-wave4/
 data/processed/gold-wave4/*.jsonl
+
+# Full reviewed pilot expansion. Keep its provenance and frozen split; the
+# model-independent JSONLs are regenerated from the canonical doccano gold files.
+!data/processed/gold-pilot1k/
+data/processed/gold-pilot1k/*.jsonl
+
+# Mixed-curation 10k pathway experiment. The frozen split is tracked; the
+# model-independent JSONLs and tokenizer-specific datasets are transferred to
+# TRUBA separately because they are generated from the local Doccano export.
+data/processed/pathway-10k/*.jsonl
+data/processed/pathway-10k-*/
 
 # Sweep outputs. summary.jsonl is the aggregated result and is kept; the
 # per-run directories hold logs and prediction dumps and are regenerable.
@@ -193,3 +213,27 @@ data/processed/relation/silver_2k_full/*
 # directory, so a slashed pattern would silently fail to ignore these.
 data/doccano
 data/processed/pathway-10k
+runs-truba*/
+
+# remaining_6125 disease/pathway review batch. Only the PMID list that defines
+# the corpus slice and the review summary are tracked; every other artefact in
+# the chain below is a machine output kept locally.
+#
+#   pmids.txt -> articles -> BENT spans      -> disease doccano  \
+#                         -> qwen2.5:14b     -> pathway doccano  |-> merged doccano
+#                                                                /
+#   merged doccano + PubTator cache + pathway checkpoint -> reviews/
+#
+# Caveat recorded deliberately: the qwen2.5:14b silver is LLM sampling output
+# and is not bit-reproducible from the tracked inputs. Losing it means the
+# PATHWAY side of this batch cannot be rebuilt exactly. Keep local backups.
+data/doccano/
+data/evaluation/
+data/processed/disease-ner/
+data/processed/pathway-ner/
+data/silver/pathway_remaining_6125.jsonl
+
+# Review candidates are a pure derivative of the sources above; the summary is
+# the provenance record and stays tracked.
+data/reviews/*
+!data/reviews/*.summary.json

@@ -1,3 +1,5 @@
+@AGENTS.md
+
 # Project rules
 
 ## Every recorded run must be traceable to a code snapshot

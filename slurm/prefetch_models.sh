@@ -6,12 +6,25 @@
 # so a from_pretrained call there can only succeed from this cache. Downloading
 # is I/O, not compute, so it does not violate the "no heavy work on arf-ui" rule.
 #
-#     bash /arf/scratch/$USER/NER-pipeline/slurm/prefetch_models.sh biomedbert-base bioelectra-base
+#     bash /arf/scratch/$USER/NER-pipeline/slurm/prefetch_models.sh
 #
+# With no arguments, cache the five models in the pathway-10k sweep. Explicit
+# registry keys still override that default.
 # The cache lives on scratch because it is large and regenerable. Scratch is
 # wiped after 30 days; re-running this script restores it.
 
 set -euo pipefail
+
+MODELS=("$@")
+if [ ${#MODELS[@]} -eq 0 ]; then
+    MODELS=(
+        biomedbert-base
+        biolinkbert-base
+        bioelectra-base
+        biolinkbert-large
+        biom-electra-large
+    )
+fi
 
 REPO=/arf/scratch/$USER/NER-pipeline
 SIF=/arf/home/$USER/container-user/nerenv.sif
@@ -22,7 +35,7 @@ mkdir -p "$HF_HOME"
 cd "$REPO"
 
 apptainer exec --bind /arf/scratch/$USER:/arf/scratch/$USER "$SIF" \
-    python3 - "$@" <<'EOF'
+    python3 - "${MODELS[@]}" <<'EOF'
 import sys
 from transformers import AutoModelForTokenClassification
 

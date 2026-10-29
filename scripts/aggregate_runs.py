@@ -97,10 +97,12 @@ def load_runs(summary: Path) -> list[dict]:
     if not summary.exists():
         raise SystemExit(f"{summary} not found — run scripts/run_matrix.py first")
     runs = [json.loads(l) for l in summary.open(encoding="utf-8")]
-    # A re-run of the same cell appends a second line; the last one wins.
+    # A re-run of the same cell appends a second line; the last one wins. A
+    # different frozen split is a different cell even when model/LR/seed match.
     latest: dict[tuple, dict] = {}
     for r in runs:
-        latest[(r["model_key"], r["lr"], r["seed"], r.get("train_fraction", 1.0))] = r
+        latest[(r["model_key"], r["lr"], r["seed"],
+                r.get("train_fraction", 1.0), r.get("splits_sha256"))] = r
     return list(latest.values())
 
 
@@ -112,35 +114,72 @@ def table(runs: list[dict]) -> None:
         grouped[(r["model_key"], r["lr"])].append(r)
 
     def stat(values):
+        if not values:
+            return "-"
         if len(values) == 1:
             return f"{values[0]:.4f}  (1 seed)"
         return f"{statistics.mean(values):.4f} ± {statistics.stdev(values):.4f}"
 
-    print("\n| model | lr | seeds | test F1 | precision | recall | best epoch | n_test |")
-    print("|---|---|---|---|---|---|---|---|")
-    for (model, lr), group in sorted(grouped.items(),
-                                     key=lambda kv: -statistics.mean(
-                                         [r["test_f1"] for r in kv[1]])):
+    best_lr = {}
+    for model in {model for model, _ in grouped}:
+        candidates = {
+            lr: group for (candidate, lr), group in grouped.items()
+            if candidate == model and all(r.get("best_val_f1") is not None for r in group)
+        }
+        if candidates:
+            best_lr[model] = max(
+                candidates,
+                key=lambda lr: statistics.mean(r["best_val_f1"]
+                                               for r in candidates[lr]),
+            )
+
+    print("\n| model | lr | val-selected | seeds | val F1 | test F1 | precision | recall | best epoch | n_test |")
+    print("|---|---|---|---|---|---|---|---|---|---|")
+    ordered = sorted(
+        grouped.items(),
+        key=lambda item: (
+            item[0][1] != best_lr.get(item[0][0]),
+            -statistics.mean(r["test_f1"] for r in item[1]),
+        ),
+    )
+    for (model, lr), group in ordered:
+        vals = [r["best_val_f1"] for r in group if r.get("best_val_f1") is not None]
         f1s = [r["test_f1"] for r in group]
         ps = [r["test_precision"] for r in group]
         rs = [r["test_recall"] for r in group]
         n_test = sorted({r.get("n_test_effective") for r in group})
         epochs = [r["best_epoch"] for r in group if r.get("best_epoch")]
-        print(f"| `{model}` | {lr:g} | {len(group)} | {stat(f1s)} | {stat(ps)} | "
-              f"{stat(rs)} | {f'{statistics.mean(epochs):.0f}' if epochs else '-'} | "
+        selected = "yes" if lr == best_lr.get(model) else ""
+        print(f"| `{model}` | {lr:g} | {selected} | {len(group)} | {stat(vals)} | "
+              f"{stat(f1s)} | {stat(ps)} | {stat(rs)} | "
+              f"{f'{statistics.mean(epochs):.0f}' if epochs else '-'} | "
               f"{','.join(str(n) for n in n_test)} |")
     print()
 
 
 def best_of(runs: list[dict], model: str) -> tuple[float, list[dict]]:
-    """The (lr, runs) group with the highest mean F1 for one model."""
+    """The LR group with the highest mean validation F1 for one model."""
     grouped = defaultdict(list)
     for r in runs:
         if r["model_key"] == model:
             grouped[r["lr"]].append(r)
     if not grouped:
         raise SystemExit(f"no runs found for model {model!r}")
-    lr = max(grouped, key=lambda k: statistics.mean([r["test_f1"] for r in grouped[k]]))
+    incomplete = [
+        lr for lr, group in grouped.items()
+        if any(r.get("best_val_f1") is None for r in group)
+    ]
+    if incomplete:
+        raise SystemExit(
+            f"cannot select {model!r} learning rate without validation F1: "
+            f"{', '.join(f'{lr:g}' for lr in incomplete)}"
+        )
+    lr = max(
+        grouped,
+        key=lambda candidate: statistics.mean(
+            r["best_val_f1"] for r in grouped[candidate]
+        ),
+    )
     return lr, grouped[lr]
 
 
@@ -272,7 +311,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--summary", default="runs/summary.jsonl")
     ap.add_argument("--compare", nargs=2, metavar=("A", "B"), default=None,
-                    help="Two registry keys; each uses its best-mean lr group")
+                    help="Two registry keys; each uses its validation-selected LR")
     ap.add_argument("--by", nargs="*", default=["domain", "objective", "arch"],
                     help="Ablation axes to group by (registry fields)")
     ap.add_argument("--resamples", type=int, default=10000)
