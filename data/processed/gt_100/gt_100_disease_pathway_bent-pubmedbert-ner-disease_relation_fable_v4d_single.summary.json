@@ -1,0 +1,49 @@
+{
+  "teacher": "llm:claude-fable-5-1",
+  "mode": "single",
+  "prompt_fingerprint": "9fe05ec15831",
+  "raw_flags": [
+    "--safe-mode",
+    "--system-prompt",
+    "",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "{\"mcpServers\":{}}",
+    "--tools",
+    "",
+    "--no-session-persistence"
+  ],
+  "residual_context": "claude-agent-sdk identity line + system-reminder (userEmail, currentDate)",
+  "schema": "pathway_disease_v4:upregulation|downregulation|association|no_association_stated|none",
+  "backend": "claude",
+  "candidates": "../data/processed/gt_100/candidates_v4.jsonl",
+  "n_abstracts": 79,
+  "n_pairs_asked": 180,
+  "n_requests": 180,
+  "n_rows_kept": 180,
+  "labels": {
+    "association": 101,
+    "upregulation": 36,
+    "downregulation": 27,
+    "none": 11,
+    "no_association_stated": 5
+  },
+  "confidence": {
+    "medium": 105,
+    "high": 63,
+    "low": 12
+  },
+  "by_stratum": {
+    "doc_level": 118,
+    "same_sentence": 62
+  },
+  "rejected": {
+    "unanswered_pair": 0
+  },
+  "request_status": {
+    "cached": 78,
+    "refetched": 1
+  },
+  "wall_s": 8.8,
+  "output": "../data/processed/gt_100/gt_100_disease_pathway_bent-pubmedbert-ner-disease_relation_fable_v4d_single.jsonl"
+}
