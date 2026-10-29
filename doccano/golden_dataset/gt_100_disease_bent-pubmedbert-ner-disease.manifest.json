@@ -1,0 +1,15 @@
+{
+  "purpose": "disease spans for the gt_100 PMIDs, joined out of the 10k corpus",
+  "reviewed": false,
+  "annotator": "pruas/BENT-PubMedBERT-NER-Disease",
+  "annotator_revision": "e70d6a5b1bd797b38092b0f2e4707ec36db9de59",
+  "pathway_side": "/home/enes/NER-pipeline/doccano/golden_dataset/gt_100.jsonl",
+  "pathway_side_sha256": "12c9ba592a812cc3587bb17bd4f2cba04cc530c7f3e7b67732051a8ad1c95f66",
+  "disease_side": "/home/enes/NER-pipeline/data/doccano/disease_pathway_10125_doccano_combined_v1.jsonl",
+  "disease_side_sha256": "62c221104ef4dfb92da425bb610c3dad4ea66445a45a8fd275fe184ae04d4623",
+  "n_documents": 100,
+  "n_disease_spans": 865,
+  "n_documents_without_disease": 2,
+  "output": "/home/enes/NER-pipeline/doccano/golden_dataset/gt_100_disease_bent-pubmedbert-ner-disease.jsonl",
+  "output_sha256": "b63e80b01877686c3cf8e0a3c5b6c87a72f04c034a7f8db2d0dc5e965ecf1814"
+}

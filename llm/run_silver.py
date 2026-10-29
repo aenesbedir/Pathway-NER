@@ -7,7 +7,23 @@ abstracts using the config chosen in Faz 0 (P3-0c/d):
     qwen2.5:14b, no-vocab + lenient + synonyms, plus the deterministic booster.
 
 Flow per abstract (one LLM call):
-    extract_guided() + boost()  ->  merge()  ->  canonicalize()  ->  spans
+    extract_guided() + boost_surface() + boost()  ->  merge()  ->  canonicalize()
+
+Three independent sources produce raw spans for the same abstract, merged
+longest-wins with ties going to the earlier source:
+
+    1. boost_surface()  the curated surface-form dictionary
+                        (preprocessing/pathway_surface_forms.py)
+    2. extract_guided() the LLM
+    3. boost()          the <content> <process> pattern scan
+
+The dictionary goes first because it is the only source that knows which canonical
+a phrase belongs to. Over the 10,125 cached qwen2.5:14b records it produces spans
+byte-identical to the LLM's 13,414 times; in 1,013 of those the LLM span
+canonicalizes to None ("de novo purine synthesis", "steroidogenesis", "GSH
+metabolism") while the dictionary carries the canonical. In the 110 remaining
+disagreements the dictionary is the better answer as well ("cholesterol synthesis"
+belongs to "squalene and cholesterol synthesis", not "cholesterol metabolism").
 
 Silver is machine-labeled and noisy — it goes to doccano for human review before it
 is trusted for training. It is kept strictly apart from the gold set
@@ -73,7 +89,7 @@ from tqdm import tqdm
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "llm"))
 
-from booster import boost, merge  # noqa: E402
+from booster import boost, boost_surface, merge  # noqa: E402
 from canonicalize import canonicalize, match_type_for  # noqa: E402
 from extract_guided import LLMCallError, extract_guided  # noqa: E402
 from models import DEFAULT, ModelSpec, resolve  # noqa: E402
@@ -315,10 +331,12 @@ def _annotate(spans: list[dict], text: str, pmid: str, model: str, qps: list[str
     """
     out = []
     for s in spans:
-        if s.get("source") == "booster":
-            canonical = s["canonical"]          # the booster knows what it searched for
+        if s.get("source") in ("booster", "dict"):
+            # Both deterministic sources know what they searched for; the LLM does
+            # not, so only its spans go through canonicalize().
+            canonical = s["canonical"]
             mtype = match_type_for(s["surface"], canonical)
-            source = "booster"
+            source = s["source"]
         else:
             canonical, mtype = canonicalize(s["surface"])
             source = "llm_silver"
@@ -332,13 +350,15 @@ def _annotate(spans: list[dict], text: str, pmid: str, model: str, qps: list[str
 def _rebuild_from_cached(rec: dict, text: str) -> list[dict]:
     """Rebuild raw spans from cache without an LLM call.
 
-    Only the LLM spans are recovered from cache — the booster is re-run from scratch
-    (pure regex, free) because its own canonical assignment is baked into the cached
-    record and must not survive a booster change. merge() is re-applied too.
+    Only the LLM spans are recovered from cache — the dictionary and the pattern
+    scan are re-run from scratch (pure regex, free) because their canonical
+    assignment is baked into the cached record and must not survive a dictionary or
+    booster change. merge() is re-applied too, in the same precedence order as a
+    fresh run.
     """
     llm_spans = [{"surface": s["text"], "start": s["start"], "end": s["end"]}
                  for s in rec["spans"] if s["source"] == "llm_silver"]
-    return merge(llm_spans, boost(text))
+    return merge(boost_surface(text), llm_spans, boost(text))
 
 
 def cache_dir_for(spec: ModelSpec) -> Path:
@@ -402,7 +422,7 @@ def process_one(pmid: str, text: str, qps: list[str], spec: ModelSpec,
     except LLMCallError as exc:
         log.warning("%s — LLM call failed, not cached (re-run to retry): %s", pmid, exc)
         return None
-    merged = merge(llm_spans, boost(text))
+    merged = merge(boost_surface(text), llm_spans, boost(text))
     rec = _annotate(merged, text, pmid, model, qps)
     cache.write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
     return rec

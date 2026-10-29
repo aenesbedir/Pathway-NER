@@ -21,15 +21,38 @@ two patterns:
 Requiring an adjacent process word is what keeps precision: a bare metabolite
 mention ("decreased ... arginine, and aspartate levels") never matches.
 
+Since 2026-08-26 this module also hosts a second, independent scan:
+``boost_surface()`` matches a **dictionary of literature surface forms** built by
+``preprocessing/pathway_surface_forms.py`` — canonical names, abbreviations (TCA
+cycle, OXPHOS), KEGG names of the same pathway, and the split forms of
+multi-substrate canonicals ("aspartate metabolism" for "alanine and aspartate
+metabolism"). Whole-phrase matches need no direction guard: the phrase carries its
+own process word, and the dictionary already says which canonical it belongs to.
+It closes the gap measured in section 6.3 of the progress report, where 627
+documents contained their pathway query term verbatim yet carried no span.
+
+The two scans are complementary, not nested. The pattern scan is generative — 103
+content phrases x 11 process words x 2 templates, a 2,266-phrase space that exists
+only as regexes — so it finds "arginine oxidation" and "catabolism of lysine",
+which nobody would enumerate. The dictionary is the opposite: a closed list, the
+only way to reach "Warburg effect", "FAO" or "kynurenine pathway", which contain
+no Recon content phrase and no process word for the pattern scan to anchor on.
+
+They are deliberately NOT merged here. ``llm/run_silver.py`` passes them to
+``merge()`` as two separate sources alongside the LLM, so the precedence order —
+and with it every tie-break — is visible at the call site.
+
 It scans the **whole 90-name Recon vocabulary**, not just the article's query
 pathways. Measured reason: PMID 11469814 mentions "metabolism of androgens" but was
 never retrieved by "androgen and estrogen synthesis and metabolism" — that canonical
 is absent from its 21 query pathways, so a query-only scan structurally cannot find
 it. Query pathways are an incomplete hint.
 
-Entry point:
-    boost(text, vocab=None) -> [{"surface","start","end","canonical","source"}]
-    merge(llm_spans, booster_spans) -> merged spans (longest wins on overlap)
+Entry points:
+    boost(text, vocab=None)   -> pattern spans,    source "booster"
+    boost_surface(text)       -> dictionary spans, source "dict"
+    merge(*sources)           -> union; longest wins on overlap, earlier source
+                                 wins a tie of equal length
 """
 
 import re
@@ -38,6 +61,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "preprocessing"))
 
+from pathway_surface_forms import build_surface_forms  # noqa: E402
 from recon_vocab import load_recon_names  # noqa: E402
 
 # Process words, longest-first so the alternation prefers the longer form.
@@ -125,8 +149,59 @@ def _default_vocab() -> list[str]:
     return _VOCAB_CACHE
 
 
+_SURFACE_CACHE: list[tuple[re.Pattern, str, str]] | None = None
+
+
+def _surface_patterns() -> list[tuple[re.Pattern, str, str]]:
+    """(compiled pattern, canonical, origin), longest phrase first.
+
+    Longest-first ordering makes the "first claim wins" rule in boost() prefer
+    "androgen synthesis and metabolism" over the shorter "androgen synthesis"
+    that starts at the same offset.
+    """
+    global _SURFACE_CACHE
+    if _SURFACE_CACHE is None:
+        entries = []
+        for canonical, forms in build_surface_forms().items():
+            for f in forms:
+                flags = 0 if f.case_sensitive else re.IGNORECASE
+                # Trailing (?![\w-]) also blocks "glycolysis-derived" style hits.
+                pat = re.compile(rf"(?<![\w-]){re.escape(f.text)}(?![\w-])", flags)
+                entries.append((len(f.text), pat, canonical, f.origin))
+        entries.sort(key=lambda e: -e[0])
+        _SURFACE_CACHE = [(p, c, o) for _, p, c, o in entries]
+    return _SURFACE_CACHE
+
+
+def boost_surface(text: str) -> list[dict]:
+    """Dictionary scan: whole-phrase hits from pathway_surface_forms.py."""
+    found: dict[tuple[int, int], dict] = {}
+    for pat, canonical, origin in _surface_patterns():
+        for m in pat.finditer(text):
+            key = (m.start(), m.end())
+            if key not in found:
+                found[key] = {
+                    "surface": text[m.start():m.end()],
+                    "start": m.start(),
+                    "end": m.end(),
+                    "canonical": canonical,
+                    "source": "dict",
+                    "rule": f"surface:{origin}",
+                }
+    return sorted(found.values(), key=lambda d: d["start"])
+
+
 def boost(text: str, vocab: list[str] | None = None) -> list[dict]:
-    """Find <content> <process> and <process> of <content> spans in text.
+    """Pattern scan: <content> <process> and <process> of <content> spans.
+
+    This is the generative half of the deterministic layer. It never enumerates
+    phrases: 103 content phrases x 11 process words x 2 templates is a 2,266-phrase
+    space that only exists as regexes, which is how it catches "arginine oxidation"
+    and "catabolism of lysine" without anyone writing them down.
+
+    The enumerated half is boost_surface(). The two are merged by the caller —
+    llm/run_silver.py runs them as separate sources so that the merge order, and
+    with it the tie-breaking, is visible at the call site rather than buried here.
 
     vocab defaults to the full 90-name Recon vocabulary (see module docstring for
     why this is not restricted to the article's query pathways).
@@ -156,19 +231,27 @@ def boost(text: str, vocab: list[str] | None = None) -> list[dict]:
                             "end": m.end(),
                             "canonical": canonical,
                             "source": "booster",
+                            "rule": "pattern",
                         }
     return sorted(found.values(), key=lambda d: d["start"])
 
 
-def merge(llm_spans: list[dict], booster_spans: list[dict]) -> list[dict]:
-    """Union of both span sets; on overlap the longer span wins.
+def merge(*sources: list[dict]) -> list[dict]:
+    """Union of the given span sets; on overlap the longer span wins.
 
-    LLM spans are kept as-is (they carry no canonical); booster spans fill gaps and
-    replace shorter overlapping LLM spans (e.g. booster's "metabolism of androgens"
-    beats a bare LLM "metabolism").
+    Sources are listed in precedence order: when two spans have the *same* length
+    and overlap, the one from the earlier source is kept. Callers therefore encode
+    their trust ordering in the argument order. run_silver.py passes the dictionary
+    first, because it is the only source that knows which canonical a phrase belongs
+    to — measured over the 10,125 cached qwen2.5:14b records, the dictionary and the
+    LLM produce byte-identical spans 13,414 times, and in 1,013 of those the LLM
+    span canonicalizes to None while the dictionary carries the right canonical.
+
+    The two-argument form merge(llm_spans, booster_spans) still works and keeps its
+    old meaning.
     """
     spans = sorted(
-        llm_spans + booster_spans,
+        [s for src in sources for s in src],
         key=lambda d: (d["start"] - d["end"], d["start"]),  # longest first
     )
     kept: list[dict] = []

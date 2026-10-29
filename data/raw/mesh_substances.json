@@ -1,0 +1,3117 @@
+{
+  "25-hydroxyvitamin d": null,
+  "abo blood group": {
+    "mesh_id": "68000017",
+    "name": "ABO Blood-Group System",
+    "tree_numbers": [
+      "D23.050.301.290.031",
+      "D23.050.705.230.031"
+    ],
+    "matched_variant": "abo blood group",
+    "entry_terms": [
+      "ABO Blood Group System",
+      "Blood-Group System, ABO",
+      "System, ABO Blood-Group",
+      "ABH Blood Group",
+      "Blood Group, ABH",
+      "H Blood Group",
+      "Blood Group, H",
+      "H Blood Group System",
+      "ABO Blood Group",
+      "Blood Group, ABO",
+      "ABO Factors",
+      "Factors, ABO",
+      "Blood Group H Type 1 Antigen"
+    ]
+  },
+  "alanine": {
+    "mesh_id": "68000409",
+    "name": "Alanine",
+    "tree_numbers": [
+      "D12.125.042"
+    ],
+    "matched_variant": "alanine",
+    "entry_terms": [
+      "L-Alanine",
+      "L Alanine",
+      "Alanine, L-Isomer",
+      "Alanine, L Isomer",
+      "L-Isomer Alanine",
+      "Abufène"
+    ]
+  },
+  "alanine and aspartate": null,
+  "alanine, aspartate and glutamate": null,
+  "aldarate": null,
+  "alkaloid": {
+    "mesh_id": "68000470",
+    "name": "Alkaloids",
+    "tree_numbers": [
+      "D03.132"
+    ],
+    "matched_variant": "alkaloid",
+    "entry_terms": [
+      "Alkaloid",
+      "Plant Alkaloids",
+      "Alkaloids, Plant",
+      "Plant Alkaloid",
+      "Alkaloid, Plant"
+    ]
+  },
+  "alpha-lipoic acid": {
+    "mesh_id": "68008063",
+    "name": "Thioctic Acid",
+    "tree_numbers": [
+      "D02.241.803",
+      "D02.886.778.827",
+      "D08.211.906",
+      "D10.251.941"
+    ],
+    "matched_variant": "alpha-lipoic acid",
+    "entry_terms": [
+      "alpha-Lipoic Acid",
+      "Acid, alpha-Lipoic",
+      "alpha Lipoic Acid",
+      "Lipoic Acid",
+      "Alpha-Lipon Stada",
+      "Alpha Lipon Stada",
+      "AlphaLipon Stada",
+      "alpha-Liponaure Heumann",
+      "alpha Liponaure Heumann",
+      "alphaLiponaure Heumann",
+      "Alpha-Liponsaure Sofotec",
+      "Alpha Liponsaure Sofotec",
+      "AlphaLiponsaure Sofotec",
+      "alpha-Liponsaure von ct",
+      "alpha Liponsaure von ct",
+      "alphaLiponsaure von ct",
+      "Alpha-Lippon AL",
+      "Alpha Lippon AL",
+      "AlphaLippon AL",
+      "biomo-lipon",
+      "biomolipon",
+      "biomo lipon",
+      "Azulipont",
+      "Alphaflam",
+      "alpha-Vibolex",
+      "alphaVibolex",
+      "alpha Vibolex",
+      "duralipon",
+      "espa-lipon",
+      "espalipon",
+      "espa lipon",
+      "Juthiac",
+      "Fenint",
+      "Liponsaure-ratiopharm",
+      "Liponsaureratiopharm",
+      "Liponsaure ratiopharm",
+      "MTW-Alphaliponsaure",
+      "MTWAlphaliponsaure",
+      "MTW Alphaliponsaure",
+      "Pleomix-Alpha",
+      "PleomixAlpha",
+      "Pleomix Alpha",
+      "Neurium",
+      "Pleomix-Alpha N",
+      "Pleomix Alpha N",
+      "PleomixAlpha N",
+      "Tromlipon",
+      "Thioctacid",
+      "Thioctacide T",
+      "Thiogamma Injekt",
+      "Injekt, Thiogamma",
+      "Alpha-Lipogamma",
+      "AlphaLipogamma",
+      "Alpha Lipogamma",
+      "Thiogamma oral",
+      "Verla-Lipon",
+      "VerlaLipon",
+      "Verla Lipon"
+    ]
+  },
+  "alpha-tocopherol": {
+    "mesh_id": "68024502",
+    "name": "alpha-Tocopherol",
+    "tree_numbers": [
+      "D03.383.663.283.909.750.249",
+      "D03.633.100.150.909.750.249"
+    ],
+    "matched_variant": "alpha-tocopherol",
+    "entry_terms": [
+      "alpha Tocopherol",
+      "3,4-Dihydro-2,5,7,8-tetramethyl-2-(4,8,12-trimethyltridecyl)-2H-1-benzopyran-6-ol",
+      "alpha-Tocopherol Succinate",
+      "alpha Tocopherol Succinate",
+      "Vitamin E Succinate",
+      "alpha-Tocopherol Hemisuccinate",
+      "alpha Tocopherol Hemisuccinate",
+      "Tocopherol Succinate",
+      "alpha-Tocopheryl Calcium Succinate",
+      "alpha Tocopheryl Calcium Succinate",
+      "alpha-Tocopherol Acetate",
+      "alpha Tocopherol Acetate",
+      "Tocopherol Acetate",
+      "Acetate, Tocopherol",
+      "Tocopheryl Acetate",
+      "d-alpha Tocopherol",
+      "d alpha Tocopherol",
+      "Tocopherol, d-alpha",
+      "R,R,R-alpha-Tocopherol",
+      "d-alpha-Tocopheryl Acetate",
+      "d alpha Tocopheryl Acetate"
+    ]
+  },
+  "amino sugar": {
+    "mesh_id": "68000606",
+    "name": "Amino Sugars",
+    "tree_numbers": [
+      "D09.067"
+    ],
+    "matched_variant": "amino sugar",
+    "entry_terms": [
+      "Sugars, Amino",
+      "Amino Sugar",
+      "Sugar, Amino"
+    ]
+  },
+  "amino sugar and nucleotide sugar": null,
+  "aminosugar": null,
+  "androgen": {
+    "mesh_id": "68000728",
+    "name": "Androgens",
+    "tree_numbers": [
+      "D27.505.696.399.472.161"
+    ],
+    "matched_variant": "androgen",
+    "entry_terms": [
+      "Androgen",
+      "Androgen Receptor Agonist",
+      "Agonist, Androgen Receptor",
+      "Receptor Agonist, Androgen",
+      "Androgen Receptor Agonists",
+      "Agonists, Androgen Receptor",
+      "Receptor Agonists, Androgen",
+      "Androgenic Agents",
+      "Agents, Androgenic",
+      "Androgenic Compounds",
+      "Compounds, Androgenic",
+      "Androgen Effect",
+      "Effect, Androgen",
+      "Androgen Effects",
+      "Effects, Androgen"
+    ]
+  },
+  "androgen and estrogen": null,
+  "arachidonate": {
+    "mesh_id": "68016718",
+    "name": "Arachidonic Acid",
+    "tree_numbers": [
+      "D10.251.355.255.100.100",
+      "D10.251.355.310.166.100"
+    ],
+    "matched_variant": "arachidonic acid",
+    "entry_terms": [
+      "(all-Z)-5,8,11,14-Eicosatetraenoic acid",
+      "Vitamin F",
+      "Arachidonic Acid, Sodium Salt",
+      "Sodium Arachidonate",
+      "Arachidonate, Sodium",
+      "Arachidonic Acid, Cesium Salt, (all-Z)-Isomer",
+      "Arachidonic Acid, Cerium Salt, (all-Z)-Isomer",
+      "Arachidonic Acid, Potassium Salt, (all-Z)-Isomer",
+      "Arachidonic Acid, (all-Z)-Isomer, 1-(14)C-Labeled",
+      "Arachidonic Acid, Ammonium Salt, (all-Z)-Isomer",
+      "Arachidonic Acid, Zinc Salt, (all-Z)-Isomer",
+      "Arachidonic Acid, Sodium Salt, (all-Z)-Isomer",
+      "Arachidonic Acid, (all-Z)-isomer, 3H-Labeled",
+      "Arachidonic Acid, Lithium Salt, (all-Z)-Isomer"
+    ]
+  },
+  "arachidonic acid": {
+    "mesh_id": "68016718",
+    "name": "Arachidonic Acid",
+    "tree_numbers": [
+      "D10.251.355.255.100.100",
+      "D10.251.355.310.166.100"
+    ],
+    "matched_variant": "arachidonic acid",
+    "entry_terms": [
+      "(all-Z)-5,8,11,14-Eicosatetraenoic acid",
+      "Vitamin F",
+      "Arachidonic Acid, Sodium Salt",
+      "Sodium Arachidonate",
+      "Arachidonate, Sodium",
+      "Arachidonic Acid, Cesium Salt, (all-Z)-Isomer",
+      "Arachidonic Acid, Cerium Salt, (all-Z)-Isomer",
+      "Arachidonic Acid, Potassium Salt, (all-Z)-Isomer",
+      "Arachidonic Acid, (all-Z)-Isomer, 1-(14)C-Labeled",
+      "Arachidonic Acid, Ammonium Salt, (all-Z)-Isomer",
+      "Arachidonic Acid, Zinc Salt, (all-Z)-Isomer",
+      "Arachidonic Acid, Sodium Salt, (all-Z)-Isomer",
+      "Arachidonic Acid, (all-Z)-isomer, 3H-Labeled",
+      "Arachidonic Acid, Lithium Salt, (all-Z)-Isomer"
+    ]
+  },
+  "arginine": {
+    "mesh_id": "68001120",
+    "name": "Arginine",
+    "tree_numbers": [
+      "D12.125.068.050",
+      "D12.125.095.104",
+      "D12.125.142.087"
+    ],
+    "matched_variant": "arginine",
+    "entry_terms": [
+      "Arginine, L-Isomer",
+      "Arginine, L Isomer",
+      "L-Isomer Arginine",
+      "L-Arginine",
+      "L Arginine",
+      "DL-Arginine Acetate, Monohydrate",
+      "DL Arginine Acetate, Monohydrate",
+      "Monohydrate DL-Arginine Acetate",
+      "Arginine Hydrochloride",
+      "Hydrochloride, Arginine"
+    ]
+  },
+  "arginine and proline": null,
+  "ascorbate": {
+    "mesh_id": "68001205",
+    "name": "Ascorbic Acid",
+    "tree_numbers": [
+      "D02.241.081.844.107",
+      "D02.241.511.902.107",
+      "D09.811.100"
+    ],
+    "matched_variant": "ascorbic acid",
+    "entry_terms": [
+      "Acid, Ascorbic",
+      "L-Ascorbic Acid",
+      "Acid, L-Ascorbic",
+      "L Ascorbic Acid",
+      "Vitamin C",
+      "Ferrous Ascorbate",
+      "Ascorbate, Ferrous",
+      "Magnesium Ascorbate",
+      "Ascorbate, Magnesium",
+      "Magnesium Ascorbicum",
+      "Magnesium di-L-Ascorbate",
+      "di-L-Ascorbate, Magnesium",
+      "Magnesium di L Ascorbate",
+      "Magnorbin",
+      "Hybrin",
+      "Sodium Ascorbate",
+      "Ascorbate, Sodium",
+      "Ascorbic Acid, Monosodium Salt"
+    ]
+  },
+  "ascorbate and aldarate": null,
+  "ascorbic acid": {
+    "mesh_id": "68001205",
+    "name": "Ascorbic Acid",
+    "tree_numbers": [
+      "D02.241.081.844.107",
+      "D02.241.511.902.107",
+      "D09.811.100"
+    ],
+    "matched_variant": "ascorbic acid",
+    "entry_terms": [
+      "Acid, Ascorbic",
+      "L-Ascorbic Acid",
+      "Acid, L-Ascorbic",
+      "L Ascorbic Acid",
+      "Vitamin C",
+      "Ferrous Ascorbate",
+      "Ascorbate, Ferrous",
+      "Magnesium Ascorbate",
+      "Ascorbate, Magnesium",
+      "Magnesium Ascorbicum",
+      "Magnesium di-L-Ascorbate",
+      "di-L-Ascorbate, Magnesium",
+      "Magnesium di L Ascorbate",
+      "Magnorbin",
+      "Hybrin",
+      "Sodium Ascorbate",
+      "Ascorbate, Sodium",
+      "Ascorbic Acid, Monosodium Salt"
+    ]
+  },
+  "aspartate": {
+    "mesh_id": "68001224",
+    "name": "Aspartic Acid",
+    "tree_numbers": [
+      "D12.125.067.500",
+      "D12.125.119.170",
+      "D12.125.427.040"
+    ],
+    "matched_variant": "aspartate",
+    "entry_terms": [
+      "L-Aspartic Acid",
+      "L Aspartic Acid",
+      "Mg-5-Longoral",
+      "Aspartate",
+      "L-Aspartate",
+      "L Aspartate",
+      "Magnesiocard",
+      "Aspartic Acid, Magnesium-Potassium (2:1:2) Salt",
+      "Monopotassium Aspartate",
+      "Aspartate, Monopotassium",
+      "Aspartic Acid, Monopotassium Salt",
+      "Potassium Aspartate",
+      "Aspartate, Potassium",
+      "Aspartic Acid, Potassium Salt",
+      "Sodium Aspartate",
+      "Aspartate, Sodium",
+      "Aspartic Acid, Sodium Salt",
+      "Aspartic Acid, Hydrochloride",
+      "Dipotassium Aspartate",
+      "Aspartate, Dipotassium",
+      "Aspartic Acid, Dipotassium Salt",
+      "Magnesium Aspartate",
+      "Aspartate, Magnesium",
+      "Aspartic Acid, Magnesium (2:1) Salt",
+      "Calcium Aspartate",
+      "Aspartate, Calcium",
+      "Aspartic Acid, Calcium Salt",
+      "Aspartic Acid, Hydrobromide",
+      "Ammonium Aspartate",
+      "Aspartate, Ammonium",
+      "Aspartic Acid, Ammonium Salt",
+      "Monosodium Aspartate",
+      "Aspartate, Monosodium",
+      "Aspartic Acid, Monosodium Salt",
+      "Disodium Aspartate",
+      "Aspartate, Disodium",
+      "Aspartic Acid, Disodium Salt",
+      "Aspartic Acid, Magnesium (1:1) Salt, Hydrochloride, Trihydrate",
+      "(+-)-Aspartic Acid",
+      "(R,S)-Aspartic Acid",
+      "Aspartate Magnesium Hydrochloride"
+    ]
+  },
+  "bcaa": null,
+  "beta": null,
+  "beta-alanine": {
+    "mesh_id": "68015091",
+    "name": "beta-Alanine",
+    "tree_numbers": [
+      "D12.125.042.070"
+    ],
+    "matched_variant": "beta-alanine",
+    "entry_terms": [
+      "beta Alanine",
+      "3-Aminopropionic Acid",
+      "3 Aminopropionic Acid",
+      "beta-Alanine, Monosodium Salt",
+      "beta Alanine, Monosodium Salt",
+      "beta-Alanine, Calcium Salt (2:1)",
+      "beta-Alanine, Monopotassium Salt",
+      "beta Alanine, Monopotassium Salt",
+      "beta-Alanine Hydrochloride",
+      "beta Alanine Hydrochloride",
+      "Hydrochloride, beta-Alanine"
+    ]
+  },
+  "bh4": null,
+  "bile acid": {
+    "mesh_id": "68001647",
+    "name": "Bile Acids and Salts",
+    "tree_numbers": [
+      "D04.210.500.105"
+    ],
+    "matched_variant": "bile acid",
+    "entry_terms": [
+      "Bile Acids",
+      "Acids, Bile",
+      "Bile Acid",
+      "Acid, Bile",
+      "Bile Salts",
+      "Salts, Bile",
+      "Bile Salt",
+      "Salt, Bile"
+    ]
+  },
+  "bilirubin": {
+    "mesh_id": "68001663",
+    "name": "Bilirubin",
+    "tree_numbers": [
+      "D03.383.129.578.840.249.184",
+      "D03.633.400.909.249.184",
+      "D04.345.783.249.184",
+      "D23.767.193.184"
+    ],
+    "matched_variant": "bilirubin",
+    "entry_terms": [
+      "Bilirubin IX alpha",
+      "Bilirubin, Calcium Salt",
+      "Calcium Salt Bilirubin",
+      "Salt Bilirubin, Calcium",
+      "Calcium Bilirubinate",
+      "Bilirubinate, Calcium",
+      "delta-Bilirubin",
+      "delta Bilirubin",
+      "Hematoidin",
+      "Bilirubin, (15E)-Isomer",
+      "Bilirubin, (4E)-Isomer",
+      "Bilirubin, (4E,15E)-Isomer",
+      "Bilirubin, Monosodium Salt",
+      "Monosodium Salt Bilirubin",
+      "Bilirubin, Disodium Salt",
+      "Disodium Salt Bilirubin"
+    ]
+  },
+  "biotin": {
+    "mesh_id": "68001710",
+    "name": "Biotin",
+    "tree_numbers": [
+      "D03.383.129.308.080",
+      "D08.211.096"
+    ],
+    "matched_variant": "biotin",
+    "entry_terms": [
+      "Vitamin H",
+      "Biodermatin",
+      "Biokur",
+      "Biotin Gelfert",
+      "Gelfert, Biotin",
+      "Biotin Hermes",
+      "Hermes, Biotin",
+      "Deacura",
+      "Gabunat",
+      "Medobiotin",
+      "Rombellin",
+      "Medebiotin",
+      "Biotin-Ratiopharm",
+      "Biotin Ratiopharm",
+      "Biotine Roche",
+      "Roche, Biotine"
+    ]
+  },
+  "blood group": {
+    "mesh_id": "68001789",
+    "name": "Blood Group Antigens",
+    "tree_numbers": [
+      "D23.050.301.290",
+      "D23.050.705.230"
+    ],
+    "matched_variant": "blood group",
+    "entry_terms": [
+      "Antigens, Blood Group",
+      "Blood Group Antigen",
+      "Antigen, Blood Group",
+      "Group Antigen, Blood",
+      "Blood Groups",
+      "Groups, Blood",
+      "Blood Group",
+      "Group, Blood"
+    ]
+  },
+  "branched chain amino acid": {
+    "mesh_id": "68000597",
+    "name": "Amino Acids, Branched-Chain",
+    "tree_numbers": [
+      "D12.125.070"
+    ],
+    "matched_variant": "branched chain amino acid",
+    "entry_terms": [
+      "Acids, Branched-Chain Amino",
+      "Branched-Chain Amino Acids",
+      "Branched-Chain Amino Acid",
+      "Acid, Branched-Chain Amino",
+      "Amino Acid, Branched-Chain",
+      "Branched Chain Amino Acid",
+      "Amino Acids, Branched Chain"
+    ]
+  },
+  "branched-chain amino acid": {
+    "mesh_id": "68000597",
+    "name": "Amino Acids, Branched-Chain",
+    "tree_numbers": [
+      "D12.125.070"
+    ],
+    "matched_variant": "branched chain amino acid",
+    "entry_terms": [
+      "Acids, Branched-Chain Amino",
+      "Branched-Chain Amino Acids",
+      "Branched-Chain Amino Acid",
+      "Acid, Branched-Chain Amino",
+      "Amino Acid, Branched-Chain",
+      "Branched Chain Amino Acid",
+      "Amino Acids, Branched Chain"
+    ]
+  },
+  "butanoate": {
+    "mesh_id": "68020148",
+    "name": "Butyric Acid",
+    "tree_numbers": [
+      "D02.241.081.114.750",
+      "D10.251.400.143.500"
+    ],
+    "matched_variant": "butanoic acid",
+    "entry_terms": [
+      "Acid, Butyric",
+      "Butanoic Acid",
+      "Acid, Butanoic",
+      "Sodium Butyrate",
+      "Butyrate, Sodium",
+      "Butyric Acid, Sodium Salt",
+      "Butyric Acid Magnesium Salt",
+      "Magnesium Butyrate",
+      "Butyrate, Magnesium",
+      "Magnesium Dibutyrate",
+      "Dibutyrate, Magnesium"
+    ]
+  },
+  "butyrate": {
+    "mesh_id": "68002087",
+    "name": "Butyrates",
+    "tree_numbers": [
+      "D02.241.081.114",
+      "D10.251.400.143"
+    ],
+    "matched_variant": "butyrate",
+    "entry_terms": [
+      "n-Butyrate",
+      "n Butyrate",
+      "Butyrate",
+      "Butyric Acids",
+      "Acids, Butyric",
+      "Butanoic Acids",
+      "Acids, Butanoic"
+    ]
+  },
+  "c5 branched dibasic acid": null,
+  "c5-branched dibasic acid": null,
+  "calciferol": {
+    "mesh_id": "68004872",
+    "name": "Ergocalciferols",
+    "tree_numbers": [
+      "D04.210.500.247.222.474",
+      "D04.210.500.247.808.412",
+      "D04.210.500.812.768.462",
+      "D10.570.938.439"
+    ],
+    "matched_variant": "calciferols",
+    "entry_terms": [
+      "Calciferols",
+      "Vitamin D 2",
+      "Ergocalciferol",
+      "Vitamin D2",
+      "D2, Vitamin"
+    ]
+  },
+  "ceramide": {
+    "mesh_id": "68002518",
+    "name": "Ceramides",
+    "tree_numbers": [
+      "D02.065.313",
+      "D09.400.410.420.525.200",
+      "D10.390.470.675.200",
+      "D10.570.877.360.612.200"
+    ],
+    "matched_variant": "ceramide",
+    "entry_terms": [
+      "Ceramide"
+    ]
+  },
+  "cholecalciferol": {
+    "mesh_id": "68002762",
+    "name": "Cholecalciferol",
+    "tree_numbers": [
+      "D04.210.500.247.222.159",
+      "D04.210.500.247.808.146",
+      "D04.210.500.812.768.196",
+      "D10.570.938.146"
+    ],
+    "matched_variant": "cholecalciferol",
+    "entry_terms": [
+      "Vitamin D 3",
+      "Vitamin D3",
+      "(3 beta,5Z,7E)-9,10-Secocholesta-5,7,10(19)-trien-3-ol",
+      "Calciol",
+      "Cholecalciferols"
+    ]
+  },
+  "cholesterol": {
+    "mesh_id": "68002784",
+    "name": "Cholesterol",
+    "tree_numbers": [
+      "D04.210.500.247.222.284",
+      "D04.210.500.247.808.197",
+      "D10.570.938.208"
+    ],
+    "matched_variant": "cholesterol",
+    "entry_terms": [
+      "Epicholesterol"
+    ]
+  },
+  "cholesterol biosynthetic": null,
+  "chondroitin": {
+    "mesh_id": "68002807",
+    "name": "Chondroitin",
+    "tree_numbers": [
+      "D09.698.373.200"
+    ],
+    "matched_variant": "chondroitin",
+    "entry_terms": []
+  },
+  "chondroitin sulfate": {
+    "mesh_id": "68002809",
+    "name": "Chondroitin Sulfates",
+    "tree_numbers": [
+      "D09.698.373.200.300"
+    ],
+    "matched_variant": "chondroitin sulfate",
+    "entry_terms": [
+      "Sulfates, Chondroitin",
+      "Chondroitin Sulfate",
+      "Sulfate, Chondroitin",
+      "Blutal",
+      "Translagen",
+      "Chondroitin Sulfate, Potassium Salt",
+      "Chondroitin Sulfate, Zinc Salt",
+      "Chondroitin 6-Sulfate, Sodium Salt",
+      "Chondroitin 6 Sulfate, Sodium Salt",
+      "Chondroitin 4-Sulfate",
+      "Chondroitin 4 Sulfate",
+      "Chondroitin Sulfate A",
+      "Chondroitin 6-Sulfate",
+      "Chondroitin 6 Sulfate",
+      "Chondroitin Sulfate C",
+      "Chondroitin Sulfate 4-Sulfate, Sodium Salt",
+      "Chondroitin Sulfate 4 Sulfate, Sodium Salt",
+      "Chondroitin Sulfate, Iron Salt",
+      "Chondroitin 4-Sulfate, Potassium Salt",
+      "Chondroitin 4 Sulfate, Potassium Salt",
+      "Chondroitin 4-Sulfate, Aluminum Salt",
+      "Chondroitin 4 Sulfate, Aluminum Salt",
+      "Chondroitin 6-Sulfate, Potassium Salt",
+      "Chondroitin 6 Sulfate, Potassium Salt",
+      "Chondroitin Sulfate, Calcium Salt",
+      "Chondroitin Sulfate, Sodium Salt",
+      "Sodium Chondroitin Sulfate",
+      "Chondroitin Sulfate, Sodium",
+      "Sulfate, Sodium Chondroitin",
+      "Chondroitin Sulfate, Iron (+3) Salt",
+      "Chonsurid"
+    ]
+  },
+  "chondroitin sulphate": null,
+  "citrate": {
+    "mesh_id": "68019343",
+    "name": "Citric Acid",
+    "tree_numbers": [
+      "D02.241.081.901.434.249"
+    ],
+    "matched_variant": "citrate",
+    "entry_terms": [
+      "Uralyt U",
+      "Citrate",
+      "Citric Acid, Anhydrous",
+      "Anhydrous Citric Acid",
+      "Citric Acid Monohydrate"
+    ]
+  },
+  "citric acid": {
+    "mesh_id": "68019343",
+    "name": "Citric Acid",
+    "tree_numbers": [
+      "D02.241.081.901.434.249"
+    ],
+    "matched_variant": "citric acid",
+    "entry_terms": [
+      "Uralyt U",
+      "Citrate",
+      "Citric Acid, Anhydrous",
+      "Anhydrous Citric Acid",
+      "Citric Acid Monohydrate"
+    ]
+  },
+  "coa": {
+    "mesh_id": "68003065",
+    "name": "Coenzyme A",
+    "tree_numbers": [
+      "D03.633.100.759.646.138.382",
+      "D08.211.211",
+      "D13.695.667.138.382",
+      "D13.695.827.068.382"
+    ],
+    "matched_variant": "coa",
+    "entry_terms": [
+      "CoA",
+      "CoASH"
+    ]
+  },
+  "cobalamin": {
+    "mesh_id": "68014805",
+    "name": "Vitamin B 12",
+    "tree_numbers": [
+      "D03.383.129.578.840.437.777",
+      "D03.633.400.909.437.777",
+      "D04.345.783.437.777"
+    ],
+    "matched_variant": "cobalamin",
+    "entry_terms": [
+      "B 12, Vitamin",
+      "Cyanocobalamin",
+      "Vitamin B12",
+      "B12, Vitamin",
+      "Cobalamins",
+      "Cobalamin",
+      "Eritron"
+    ]
+  },
+  "coenzyme a": {
+    "mesh_id": "68003065",
+    "name": "Coenzyme A",
+    "tree_numbers": [
+      "D03.633.100.759.646.138.382",
+      "D08.211.211",
+      "D13.695.667.138.382",
+      "D13.695.827.068.382"
+    ],
+    "matched_variant": "coenzyme a",
+    "entry_terms": [
+      "CoA",
+      "CoASH"
+    ]
+  },
+  "coenzyme q": {
+    "mesh_id": "68014451",
+    "name": "Ubiquinone",
+    "tree_numbers": [
+      "D02.806.250.900",
+      "D08.211.935"
+    ],
+    "matched_variant": "coenzyme q",
+    "entry_terms": [
+      "Coenzyme Q"
+    ]
+  },
+  "coenzyme q10": null,
+  "cyp450": null,
+  "cysteine": {
+    "mesh_id": "68003545",
+    "name": "Cysteine",
+    "tree_numbers": [
+      "D02.886.030.230",
+      "D02.886.489.155",
+      "D12.125.154.299",
+      "D12.125.166.230"
+    ],
+    "matched_variant": "cysteine",
+    "entry_terms": [
+      "Half-Cystine",
+      "Half Cystine",
+      "L-Cysteine",
+      "L Cysteine",
+      "Zinc Cysteinate",
+      "Cysteine Hydrochloride"
+    ]
+  },
+  "cysteine and methionine": null,
+  "cytochrome": {
+    "mesh_id": "68003580",
+    "name": "Cytochromes",
+    "tree_numbers": [
+      "D08.244",
+      "D12.776.422.220"
+    ],
+    "matched_variant": "cytochrome",
+    "entry_terms": [
+      "Cytochrome"
+    ]
+  },
+  "cytochrome p450": {
+    "mesh_id": "68003577",
+    "name": "Cytochrome P-450 Enzyme System",
+    "tree_numbers": [
+      "D08.244.453",
+      "D08.811.682.690.708.170",
+      "D12.776.422.220.453"
+    ],
+    "matched_variant": "cytochrome p450",
+    "entry_terms": [
+      "Cytochrome P 450 Enzyme System",
+      "P-450 Enzyme",
+      "Enzyme, P-450",
+      "P 450 Enzyme",
+      "P450 Enzyme",
+      "Enzyme, P450",
+      "Cytochrome P-450",
+      "Cytochrome P 450",
+      "Cytochrome P450",
+      "P-450 Enzymes",
+      "Enzymes, P-450",
+      "P 450 Enzymes",
+      "P450 Enzymes",
+      "Enzymes, P450",
+      "Cytochrome P-450 Enzymes",
+      "Cytochrome P 450 Enzymes",
+      "Enzymes, Cytochrome P-450",
+      "P-450 Enzymes, Cytochrome",
+      "Cytochrome P450 Superfamily",
+      "Superfamily, Cytochrome P450",
+      "Cytochrome P-450 Superfamily",
+      "Cytochrome P 450 Superfamily",
+      "Superfamily, Cytochrome P-450",
+      "Cytochrome p450 Families",
+      "Cytochrome P-450 Families",
+      "Cytochrome P 450 Families",
+      "CYP450 Superfamily",
+      "Superfamily, CYP450",
+      "Cytochrome P-450 Enzyme",
+      "Cytochrome P 450 Enzyme",
+      "Enzyme, Cytochrome P-450",
+      "P-450 Enzyme, Cytochrome",
+      "CYP450 Family",
+      "Cytochrome P-450 Oxygenase",
+      "Cytochrome P 450 Oxygenase",
+      "Cytochrome P-450 Monooxygenase",
+      "Cytochrome P 450 Monooxygenase",
+      "Monooxygenase, Cytochrome P-450",
+      "Cytochrome P-450-Dependent Monooxygenase",
+      "Cytochrome P 450 Dependent Monooxygenase",
+      "Monooxygenase, Cytochrome P-450-Dependent"
+    ]
+  },
+  "d-alanine": null,
+  "de novo fatty acid": null,
+  "de novo purine": null,
+  "de novo pyrimidine": null,
+  "de novo sphingolipid": null,
+  "dicarboxylate": null,
+  "drug": {
+    "mesh_id": "68004364",
+    "name": "Pharmaceutical Preparations",
+    "tree_numbers": [
+      "D26"
+    ],
+    "matched_variant": "drug",
+    "entry_terms": [
+      "Drug",
+      "Pharmaceuticals",
+      "Pharmaceutical Preparation",
+      "Preparation, Pharmaceutical",
+      "Drugs",
+      "Pharmaceutical",
+      "Pharmaceutical Product",
+      "Product, Pharmaceutical",
+      "Pharmaceutic Preparations",
+      "Preparations, Pharmaceutic",
+      "Preparations, Pharmaceutical",
+      "Pharmaceutical Products",
+      "Products, Pharmaceutical"
+    ]
+  },
+  "eicosanoid": {
+    "mesh_id": "68015777",
+    "name": "Eicosanoids",
+    "tree_numbers": [
+      "D10.251.355.255",
+      "D23.469.050.175"
+    ],
+    "matched_variant": "eicosanoid",
+    "entry_terms": [
+      "Icosanoid",
+      "Eicosanoid",
+      "Icosanoids"
+    ]
+  },
+  "embden-meyerhof": null,
+  "embden-meyerhof-parnas": null,
+  "estrogen": {
+    "mesh_id": "68004967",
+    "name": "Estrogens",
+    "tree_numbers": [
+      "D27.505.696.399.472.277"
+    ],
+    "matched_variant": "estrogen",
+    "entry_terms": [
+      "Estrogen",
+      "Estrogen Receptor Agonists",
+      "Agonists, Estrogen Receptor",
+      "Receptor Agonists, Estrogen",
+      "Estrogenic Agents",
+      "Agents, Estrogenic",
+      "Estrogenic Compounds",
+      "Compounds, Estrogenic",
+      "Estrogen Effect",
+      "Estrogen Effects",
+      "Effects, Estrogen",
+      "Estrogenic Effect",
+      "Estrogenic Effects",
+      "Effects, Estrogenic"
+    ]
+  },
+  "fao": null,
+  "fatty acid": {
+    "mesh_id": "68005227",
+    "name": "Fatty Acids",
+    "tree_numbers": [
+      "D10.251"
+    ],
+    "matched_variant": "fatty acid",
+    "entry_terms": [
+      "Fatty Acid",
+      "Aliphatic Acids",
+      "Aliphatic Acid",
+      "Acid, Aliphatic",
+      "Fatty Acids, Esterified",
+      "Esterified Fatty Acids",
+      "Esterified Fatty Acid",
+      "Acid, Esterified Fatty",
+      "Fatty Acid, Esterified",
+      "Fatty Acids, Saturated",
+      "Saturated Fatty Acids",
+      "Saturated Fatty Acid",
+      "Acid, Saturated Fatty",
+      "Fatty Acid, Saturated"
+    ]
+  },
+  "folate": {
+    "mesh_id": "68005492",
+    "name": "Folic Acid",
+    "tree_numbers": [
+      "D03.633.100.733.631.400"
+    ],
+    "matched_variant": "folate",
+    "entry_terms": [
+      "Pteroylglutamic Acid",
+      "Vitamin M",
+      "Vitamin B9",
+      "B9, Vitamin",
+      "Folacin",
+      "Folvite",
+      "Folic Acid, Potassium Salt",
+      "Folic Acid, Monopotassium Salt",
+      "Folic Acid, Sodium Salt",
+      "Folic Acid, Monosodium Salt",
+      "Folic Acid, (D)-Isomer",
+      "Folic Acid, (DL)-Isomer",
+      "Folic Acid, Calcium Salt (1:1)",
+      "Folate"
+    ]
+  },
+  "folic acid": {
+    "mesh_id": "68005492",
+    "name": "Folic Acid",
+    "tree_numbers": [
+      "D03.633.100.733.631.400"
+    ],
+    "matched_variant": "folic acid",
+    "entry_terms": [
+      "Pteroylglutamic Acid",
+      "Vitamin M",
+      "Vitamin B9",
+      "B9, Vitamin",
+      "Folacin",
+      "Folvite",
+      "Folic Acid, Potassium Salt",
+      "Folic Acid, Monopotassium Salt",
+      "Folic Acid, Sodium Salt",
+      "Folic Acid, Monosodium Salt",
+      "Folic Acid, (D)-Isomer",
+      "Folic Acid, (DL)-Isomer",
+      "Folic Acid, Calcium Salt (1:1)",
+      "Folate"
+    ]
+  },
+  "fructose": {
+    "mesh_id": "68005632",
+    "name": "Fructose",
+    "tree_numbers": [
+      "D09.947.875.359.250",
+      "D09.947.875.465.354"
+    ],
+    "matched_variant": "fructose",
+    "entry_terms": [
+      "Levulose",
+      "Apir Levulosa",
+      "Levulosa, Apir",
+      "Levulosa Ibys",
+      "Levulosa Mein",
+      "Plast Apyr Levulosa Mein",
+      "Fleboplast Levulosa",
+      "Levulosa, Fleboplast",
+      "Levulosa Grifols",
+      "Levulosa Baxter",
+      "Levulosa",
+      "Levulosa Braun",
+      "Levulosado Braun",
+      "Levulosa Ife",
+      "Levulosado Bieffe Medit",
+      "Levulosado Vitulia"
+    ]
+  },
+  "fructose and mannose": null,
+  "galactose": {
+    "mesh_id": "68005690",
+    "name": "Galactose",
+    "tree_numbers": [
+      "D09.947.875.359.377"
+    ],
+    "matched_variant": "galactose",
+    "entry_terms": [
+      "D-Galactose",
+      "D Galactose",
+      "Galactopyranose",
+      "Galactopyranoside"
+    ]
+  },
+  "ganglioside": {
+    "mesh_id": "68005732",
+    "name": "Gangliosides",
+    "tree_numbers": [
+      "D09.400.410.420.025.475",
+      "D10.390.470.025.475",
+      "D10.570.877.360.025.475"
+    ],
+    "matched_variant": "ganglioside",
+    "entry_terms": [
+      "Ganglioside",
+      "Sialoglycosphingolipids"
+    ]
+  },
+  "glutamate": {
+    "mesh_id": "68018698",
+    "name": "Glutamic Acid",
+    "tree_numbers": [
+      "D12.125.067.625.349",
+      "D12.125.119.409.349",
+      "D12.125.427.300"
+    ],
+    "matched_variant": "glutamate",
+    "entry_terms": [
+      "L-Glutamic Acid",
+      "L Glutamic Acid",
+      "Potassium Glutamate",
+      "Glutamate, Potassium",
+      "Aluminum L-Glutamate",
+      "Aluminum L Glutamate",
+      "L-Glutamate, Aluminum",
+      "D-Glutamate",
+      "D Glutamate",
+      "Glutamate",
+      "L-Glutamate",
+      "L Glutamate",
+      "Glutamic Acid, (D)-Isomer"
+    ]
+  },
+  "glutamate-glutamine": null,
+  "glutamine": {
+    "mesh_id": "68005973",
+    "name": "Glutamine",
+    "tree_numbers": [
+      "D12.125.068.330",
+      "D12.125.095.461",
+      "D12.125.154.424"
+    ],
+    "matched_variant": "glutamine",
+    "entry_terms": [
+      "L-Glutamine",
+      "L Glutamine",
+      "D-Glutamine",
+      "D Glutamine"
+    ]
+  },
+  "glutathione": {
+    "mesh_id": "68005978",
+    "name": "Glutathione",
+    "tree_numbers": [
+      "D12.644.456.448"
+    ],
+    "matched_variant": "glutathione",
+    "entry_terms": [
+      "gamma-L-Glu-L-Cys-Gly",
+      "gamma L Glu L Cys Gly",
+      "gamma-L-Glutamyl-L-Cysteinylglycine",
+      "gamma L Glutamyl L Cysteinylglycine",
+      "Reduced Glutathione",
+      "Glutathione, Reduced"
+    ]
+  },
+  "glutathione redox": null,
+  "glycan": {
+    "mesh_id": "68011134",
+    "name": "Polysaccharides",
+    "tree_numbers": [
+      "D09.698"
+    ],
+    "matched_variant": "glycan",
+    "entry_terms": [
+      "Glycan",
+      "Polysaccharide",
+      "Glycans"
+    ]
+  },
+  "glycerophospholipid": {
+    "mesh_id": "68020404",
+    "name": "Glycerophospholipids",
+    "tree_numbers": [
+      "D10.570.755.375.760.400"
+    ],
+    "matched_variant": "glycerophospholipid",
+    "entry_terms": [
+      "Glycerophospholipid",
+      "Phosphoglyceride",
+      "Phosphoglycerides"
+    ]
+  },
+  "glycine": {
+    "mesh_id": "68005998",
+    "name": "Glycine",
+    "tree_numbers": [
+      "D12.125.481"
+    ],
+    "matched_variant": "glycine",
+    "entry_terms": [
+      "Aminoacetic Acid",
+      "Acid, Aminoacetic",
+      "Glycine, Monopotassium Salt",
+      "Monopotassium Salt Glycine",
+      "Salt Glycine, Monopotassium",
+      "Glycine, Cobalt Salt",
+      "Cobalt Salt Glycine",
+      "Glycine, Monoammonium Salt",
+      "Monoammonium Salt Glycine",
+      "Salt Glycine, Monoammonium",
+      "Glycine, Copper Salt",
+      "Copper Salt Glycine",
+      "Glycine, Calcium Salt",
+      "Calcium Salt Glycine",
+      "Glycine, Calcium Salt (2:1)",
+      "Glycine Carbonate (2:1), Monosodium Salt",
+      "Glycine Carbonate (2:1), Monopotassium Salt",
+      "Glycine Carbonate (2:1), Monolithium Salt",
+      "Glycine Sulfate (3:1)",
+      "Glycine Hydrochloride",
+      "Hydrochloride, Glycine",
+      "Glycine, Monosodium Salt",
+      "Monosodium Salt Glycine",
+      "Salt Glycine, Monosodium",
+      "Glycine, Sodium Hydrogen Carbonate",
+      "Glycine Carbonate (1:1), Monosodium Salt",
+      "Glycine Phosphate (1:1)",
+      "Glycine Hydrochloride (2:1)",
+      "Glycine Phosphate",
+      "Phosphate, Glycine"
+    ]
+  },
+  "glycine, serine and threonine": null,
+  "glycine, serine, alanine, and threonine": null,
+  "glycogen": {
+    "mesh_id": "68006003",
+    "name": "Glycogen",
+    "tree_numbers": [
+      "D05.750.078.562.388",
+      "D09.698.365.388"
+    ],
+    "matched_variant": "glycogen",
+    "entry_terms": []
+  },
+  "glycolytic": null,
+  "glycosphingolipid": {
+    "mesh_id": "68006028",
+    "name": "Glycosphingolipids",
+    "tree_numbers": [
+      "D09.400.410.420",
+      "D10.390.470",
+      "D10.570.877.360"
+    ],
+    "matched_variant": "glycosphingolipid",
+    "entry_terms": [
+      "Sphingoglycolipid",
+      "Asialoganglioside",
+      "Asialogangliosides",
+      "Sphingoglycolipids",
+      "Glycosphingolipid"
+    ]
+  },
+  "glyoxylate": {
+    "mesh_id": "68006038",
+    "name": "Glyoxylates",
+    "tree_numbers": [
+      "D02.241.152.367"
+    ],
+    "matched_variant": "glyoxylates",
+    "entry_terms": []
+  },
+  "glyoxylate and dicarboxylate": null,
+  "gsh": null,
+  "haem": {
+    "mesh_id": "68006418",
+    "name": "Heme",
+    "tree_numbers": [
+      "D03.383.129.578.840.500.640.587",
+      "D03.633.400.909.500.640.587",
+      "D04.345.783.500.640.587",
+      "D23.767.727.640.587"
+    ],
+    "matched_variant": "haem",
+    "entry_terms": [
+      "Ferroprotoporphyrin",
+      "Heme b",
+      "Protoheme",
+      "Protoheme IX",
+      "Haem"
+    ]
+  },
+  "heme": {
+    "mesh_id": "68006418",
+    "name": "Heme",
+    "tree_numbers": [
+      "D03.383.129.578.840.500.640.587",
+      "D03.633.400.909.500.640.587",
+      "D04.345.783.500.640.587",
+      "D23.767.727.640.587"
+    ],
+    "matched_variant": "heme",
+    "entry_terms": [
+      "Ferroprotoporphyrin",
+      "Heme b",
+      "Protoheme",
+      "Protoheme IX",
+      "Haem"
+    ]
+  },
+  "heparan sulfate": {
+    "mesh_id": "68006497",
+    "name": "Heparan Sulfate",
+    "tree_numbers": [
+      "D09.698.373.425"
+    ],
+    "matched_variant": "heparan sulfate",
+    "entry_terms": [
+      "Sulfate, Heparan",
+      "Heparitin Sulfate",
+      "Sulfate, Heparitin"
+    ]
+  },
+  "heparan sulphate": null,
+  "hexosamine": {
+    "mesh_id": "68006595",
+    "name": "Hexosamines",
+    "tree_numbers": [
+      "D09.067.342"
+    ],
+    "matched_variant": "hexosamine",
+    "entry_terms": [
+      "Hexosamine"
+    ]
+  },
+  "hexosamine biosynthetic": null,
+  "hexose monophosphate": null,
+  "hippurate": {
+    "mesh_id": "68006626",
+    "name": "Hippurates",
+    "tree_numbers": [
+      "D02.065.277.431",
+      "D02.241.223.100.100.400",
+      "D02.241.755.360",
+      "D02.455.426.559.389.127.085.460"
+    ],
+    "matched_variant": "hippurates",
+    "entry_terms": []
+  },
+  "hippuric acid": null,
+  "histidine": {
+    "mesh_id": "68006639",
+    "name": "Histidine",
+    "tree_numbers": [
+      "D12.125.072.329",
+      "D12.125.142.308"
+    ],
+    "matched_variant": "histidine",
+    "entry_terms": [
+      "Histidine, L-isomer",
+      "Histidine, L isomer",
+      "L-isomer Histidine",
+      "L-Histidine"
+    ]
+  },
+  "hyaluronan": {
+    "mesh_id": "68006820",
+    "name": "Hyaluronic Acid",
+    "tree_numbers": [
+      "D09.698.373.475"
+    ],
+    "matched_variant": "hyaluronan",
+    "entry_terms": [
+      "Acid, Hyaluronic",
+      "Amvisc",
+      "Luronit",
+      "Hyvisc",
+      "Hyaluronan",
+      "Sodium Hyaluronate",
+      "Hyaluronate, Sodium",
+      "Hyaluronate Sodium",
+      "Healon",
+      "Etamucine",
+      "Amo Vitrax",
+      "Vitrax, Amo",
+      "Biolon"
+    ]
+  },
+  "hyaluronic acid": {
+    "mesh_id": "68006820",
+    "name": "Hyaluronic Acid",
+    "tree_numbers": [
+      "D09.698.373.475"
+    ],
+    "matched_variant": "hyaluronic acid",
+    "entry_terms": [
+      "Acid, Hyaluronic",
+      "Amvisc",
+      "Luronit",
+      "Hyvisc",
+      "Hyaluronan",
+      "Sodium Hyaluronate",
+      "Hyaluronate, Sodium",
+      "Hyaluronate Sodium",
+      "Healon",
+      "Etamucine",
+      "Amo Vitrax",
+      "Vitrax, Amo",
+      "Biolon"
+    ]
+  },
+  "hypotaurine": null,
+  "inositol": {
+    "mesh_id": "68007294",
+    "name": "Inositol",
+    "tree_numbers": [
+      "D02.033.800.519",
+      "D09.853.519"
+    ],
+    "matched_variant": "inositol",
+    "entry_terms": [
+      "Chiro-Inositol",
+      "Chiro Inositol",
+      "Mesoinositol",
+      "Myoinositol"
+    ]
+  },
+  "inositol phosphate": {
+    "mesh_id": "68007295",
+    "name": "Inositol Phosphates",
+    "tree_numbers": [
+      "D02.033.800.519.400",
+      "D09.853.519.400",
+      "D09.894.480"
+    ],
+    "matched_variant": "inositol phosphate",
+    "entry_terms": [
+      "Phosphates, Inositol",
+      "Inositol Phosphate",
+      "Phosphate, Inositol"
+    ]
+  },
+  "isoleucine": {
+    "mesh_id": "68007532",
+    "name": "Isoleucine",
+    "tree_numbers": [
+      "D12.125.070.577",
+      "D12.125.142.383"
+    ],
+    "matched_variant": "isoleucine",
+    "entry_terms": [
+      "Isoleucine, L-Isomer",
+      "Isoleucine, L Isomer",
+      "L-Isomer Isoleucine",
+      "L-Isoleucine",
+      "Alloisoleucine"
+    ]
+  },
+  "isoprenoid": {
+    "mesh_id": "68013729",
+    "name": "Terpenes",
+    "tree_numbers": [
+      "D02.455.849"
+    ],
+    "matched_variant": "isoprenoid",
+    "entry_terms": [
+      "Terpenoid",
+      "Terpene",
+      "Terpenoids",
+      "Isoprenoids",
+      "Isoprenoid"
+    ]
+  },
+  "keratan sulfate": {
+    "mesh_id": "68007632",
+    "name": "Keratan Sulfate",
+    "tree_numbers": [
+      "D09.698.373.550"
+    ],
+    "matched_variant": "keratan sulfate",
+    "entry_terms": [
+      "Sulfate, Keratan",
+      "Keratosulfate"
+    ]
+  },
+  "keratan sulphate": null,
+  "keratan-sulfate": {
+    "mesh_id": "68007632",
+    "name": "Keratan Sulfate",
+    "tree_numbers": [
+      "D09.698.373.550"
+    ],
+    "matched_variant": "keratan sulfate",
+    "entry_terms": [
+      "Sulfate, Keratan",
+      "Keratosulfate"
+    ]
+  },
+  "krebs": null,
+  "kynurenine": {
+    "mesh_id": "68007737",
+    "name": "Kynurenine",
+    "tree_numbers": [
+      "D12.125.608"
+    ],
+    "matched_variant": "kynurenine",
+    "entry_terms": []
+  },
+  "leloir": null,
+  "leucine": {
+    "mesh_id": "68007930",
+    "name": "Leucine",
+    "tree_numbers": [
+      "D12.125.070.637",
+      "D12.125.142.441"
+    ],
+    "matched_variant": "leucine",
+    "entry_terms": [
+      "Leucine, L-Isomer",
+      "Leucine, L Isomer",
+      "L-Isomer Leucine",
+      "L-Leucine"
+    ]
+  },
+  "leukotriene": {
+    "mesh_id": "68015289",
+    "name": "Leukotrienes",
+    "tree_numbers": [
+      "D10.251.355.255.100.450",
+      "D10.251.355.310.166.887",
+      "D23.469.050.175.450"
+    ],
+    "matched_variant": "leukotriene",
+    "entry_terms": [
+      "Leukotriene"
+    ]
+  },
+  "limonene": {
+    "mesh_id": "2027942",
+    "name": "Limonene",
+    "tree_numbers": [
+      "D02.455.426.392.368.367.211.500",
+      "D02.455.426.392.368.367.379.437",
+      "D02.455.849.575.157.250"
+    ],
+    "matched_variant": "limonene",
+    "entry_terms": [
+      "1-Methyl-4-(1-methylethenyl)cyclohexene",
+      "Dipentene",
+      "4-Mentha-1,8-diene",
+      "4 Mentha 1,8 diene",
+      "Limonene, (+-)-",
+      "(+)-Limonene",
+      "Limonene, (R)-isomer",
+      "(+)-(R)-4-isopropenyl-1-methylcyclohexene",
+      "(R)-4-isopropenyl-1-methylcyclohexene",
+      "(4R)-1-methyl-4-(1-methylethenyl)cyclohexene",
+      "(D)-Limonene",
+      "(R)-(+)-Limonene",
+      "d-Limonene",
+      "d Limonene",
+      "Limonene, (+)-",
+      "Limonene, (+-)-isomer",
+      "Cyclohexene, 1-methyl-4-(1-methylethenyl)-, (4R)-",
+      "Limonene, (S)-isomer",
+      "(-)-Limonene",
+      "(4S)-1-methyl-4-isopropenylcyclohex-1-ene",
+      "AISA 5203-L (+)Limonene"
+    ]
+  },
+  "limonene and pinene": null,
+  "linoleate": {
+    "mesh_id": "68019787",
+    "name": "Linoleic Acid",
+    "tree_numbers": [
+      "D10.251.355.310.515.500",
+      "D10.251.355.343.500.500"
+    ],
+    "matched_variant": "linoleate",
+    "entry_terms": [
+      "9,12-Octadecadienoic Acid",
+      "9,12 Octadecadienoic Acid",
+      "Acid, 9,12-Octadecadienoic",
+      "Linoleate",
+      "Linoleic Acid, Calcium Salt, (Z,Z)-Isomer",
+      "Linoleic Acid, (Z,E)-Isomer",
+      "Linoelaidic Acid, (E,Z)-Isomer",
+      "Linoleic Acid, (Z,Z)-Isomer, 14C-Labeled",
+      "Linoleic Acid, Potassium Salt, (Z,Z)-Isomer",
+      "Linolelaidic Acid",
+      "9-trans,12-trans-Octadecadienoic Acid",
+      "9 trans,12 trans Octadecadienoic Acid",
+      "trans,trans-9,12-Octadecadienoic Acid",
+      "Linoelaidic Acid",
+      "Linoleic Acid, (E,E)-Isomer",
+      "Linoleic Acid, Sodium Salt, (E,E)-Isomer",
+      "Linoleic Acid, (Z,Z)-Isomer",
+      "cis,cis-9,12-Octadecadienoic Acid",
+      "Linoleic Acid, Ammonium Salt, (Z,Z)-Isomer",
+      "Linoleic Acid, Sodium Salt, (Z,Z)-Isomer"
+    ]
+  },
+  "linoleic acid": {
+    "mesh_id": "68019787",
+    "name": "Linoleic Acid",
+    "tree_numbers": [
+      "D10.251.355.310.515.500",
+      "D10.251.355.343.500.500"
+    ],
+    "matched_variant": "linoleic acid",
+    "entry_terms": [
+      "9,12-Octadecadienoic Acid",
+      "9,12 Octadecadienoic Acid",
+      "Acid, 9,12-Octadecadienoic",
+      "Linoleate",
+      "Linoleic Acid, Calcium Salt, (Z,Z)-Isomer",
+      "Linoleic Acid, (Z,E)-Isomer",
+      "Linoelaidic Acid, (E,Z)-Isomer",
+      "Linoleic Acid, (Z,Z)-Isomer, 14C-Labeled",
+      "Linoleic Acid, Potassium Salt, (Z,Z)-Isomer",
+      "Linolelaidic Acid",
+      "9-trans,12-trans-Octadecadienoic Acid",
+      "9 trans,12 trans Octadecadienoic Acid",
+      "trans,trans-9,12-Octadecadienoic Acid",
+      "Linoelaidic Acid",
+      "Linoleic Acid, (E,E)-Isomer",
+      "Linoleic Acid, Sodium Salt, (E,E)-Isomer",
+      "Linoleic Acid, (Z,Z)-Isomer",
+      "cis,cis-9,12-Octadecadienoic Acid",
+      "Linoleic Acid, Ammonium Salt, (Z,Z)-Isomer",
+      "Linoleic Acid, Sodium Salt, (Z,Z)-Isomer"
+    ]
+  },
+  "lipoate": {
+    "mesh_id": "68008063",
+    "name": "Thioctic Acid",
+    "tree_numbers": [
+      "D02.241.803",
+      "D02.886.778.827",
+      "D08.211.906",
+      "D10.251.941"
+    ],
+    "matched_variant": "lipoic acid",
+    "entry_terms": [
+      "alpha-Lipoic Acid",
+      "Acid, alpha-Lipoic",
+      "alpha Lipoic Acid",
+      "Lipoic Acid",
+      "Alpha-Lipon Stada",
+      "Alpha Lipon Stada",
+      "AlphaLipon Stada",
+      "alpha-Liponaure Heumann",
+      "alpha Liponaure Heumann",
+      "alphaLiponaure Heumann",
+      "Alpha-Liponsaure Sofotec",
+      "Alpha Liponsaure Sofotec",
+      "AlphaLiponsaure Sofotec",
+      "alpha-Liponsaure von ct",
+      "alpha Liponsaure von ct",
+      "alphaLiponsaure von ct",
+      "Alpha-Lippon AL",
+      "Alpha Lippon AL",
+      "AlphaLippon AL",
+      "biomo-lipon",
+      "biomolipon",
+      "biomo lipon",
+      "Azulipont",
+      "Alphaflam",
+      "alpha-Vibolex",
+      "alphaVibolex",
+      "alpha Vibolex",
+      "duralipon",
+      "espa-lipon",
+      "espalipon",
+      "espa lipon",
+      "Juthiac",
+      "Fenint",
+      "Liponsaure-ratiopharm",
+      "Liponsaureratiopharm",
+      "Liponsaure ratiopharm",
+      "MTW-Alphaliponsaure",
+      "MTWAlphaliponsaure",
+      "MTW Alphaliponsaure",
+      "Pleomix-Alpha",
+      "PleomixAlpha",
+      "Pleomix Alpha",
+      "Neurium",
+      "Pleomix-Alpha N",
+      "Pleomix Alpha N",
+      "PleomixAlpha N",
+      "Tromlipon",
+      "Thioctacid",
+      "Thioctacide T",
+      "Thiogamma Injekt",
+      "Injekt, Thiogamma",
+      "Alpha-Lipogamma",
+      "AlphaLipogamma",
+      "Alpha Lipogamma",
+      "Thiogamma oral",
+      "Verla-Lipon",
+      "VerlaLipon",
+      "Verla Lipon"
+    ]
+  },
+  "lipoic acid": {
+    "mesh_id": "68008063",
+    "name": "Thioctic Acid",
+    "tree_numbers": [
+      "D02.241.803",
+      "D02.886.778.827",
+      "D08.211.906",
+      "D10.251.941"
+    ],
+    "matched_variant": "lipoic acid",
+    "entry_terms": [
+      "alpha-Lipoic Acid",
+      "Acid, alpha-Lipoic",
+      "alpha Lipoic Acid",
+      "Lipoic Acid",
+      "Alpha-Lipon Stada",
+      "Alpha Lipon Stada",
+      "AlphaLipon Stada",
+      "alpha-Liponaure Heumann",
+      "alpha Liponaure Heumann",
+      "alphaLiponaure Heumann",
+      "Alpha-Liponsaure Sofotec",
+      "Alpha Liponsaure Sofotec",
+      "AlphaLiponsaure Sofotec",
+      "alpha-Liponsaure von ct",
+      "alpha Liponsaure von ct",
+      "alphaLiponsaure von ct",
+      "Alpha-Lippon AL",
+      "Alpha Lippon AL",
+      "AlphaLippon AL",
+      "biomo-lipon",
+      "biomolipon",
+      "biomo lipon",
+      "Azulipont",
+      "Alphaflam",
+      "alpha-Vibolex",
+      "alphaVibolex",
+      "alpha Vibolex",
+      "duralipon",
+      "espa-lipon",
+      "espalipon",
+      "espa lipon",
+      "Juthiac",
+      "Fenint",
+      "Liponsaure-ratiopharm",
+      "Liponsaureratiopharm",
+      "Liponsaure ratiopharm",
+      "MTW-Alphaliponsaure",
+      "MTWAlphaliponsaure",
+      "MTW Alphaliponsaure",
+      "Pleomix-Alpha",
+      "PleomixAlpha",
+      "Pleomix Alpha",
+      "Neurium",
+      "Pleomix-Alpha N",
+      "Pleomix Alpha N",
+      "PleomixAlpha N",
+      "Tromlipon",
+      "Thioctacid",
+      "Thioctacide T",
+      "Thiogamma Injekt",
+      "Injekt, Thiogamma",
+      "Alpha-Lipogamma",
+      "AlphaLipogamma",
+      "Alpha Lipogamma",
+      "Thiogamma oral",
+      "Verla-Lipon",
+      "VerlaLipon",
+      "Verla Lipon"
+    ]
+  },
+  "lipoxygenase": {
+    "mesh_id": "68008084",
+    "name": "Lipoxygenase",
+    "tree_numbers": [
+      "D08.811.682.690.416.583.625",
+      "D12.776.556.579.374.568.750"
+    ],
+    "matched_variant": "lipoxygenase",
+    "entry_terms": [
+      "Linoleate-Oxygen Oxidoreductase",
+      "Linoleate Oxygen Oxidoreductase",
+      "Oxidoreductase, Linoleate-Oxygen",
+      "Lipoxidase",
+      "Lipoxygenase-1",
+      "Lipoxygenase 1",
+      "Lipoxygenase-2",
+      "Lipoxygenase 2"
+    ]
+  },
+  "lysine": {
+    "mesh_id": "68008239",
+    "name": "Lysine",
+    "tree_numbers": [
+      "D12.125.068.555",
+      "D12.125.095.647",
+      "D12.125.142.497"
+    ],
+    "matched_variant": "lysine",
+    "entry_terms": [
+      "L-Lysine",
+      "L Lysine",
+      "Enisyl",
+      "Lysine Acetate",
+      "Acetate, Lysine",
+      "Lysine Hydrochloride"
+    ]
+  },
+  "mannose": {
+    "mesh_id": "68008358",
+    "name": "Mannose",
+    "tree_numbers": [
+      "D09.947.875.359.588"
+    ],
+    "matched_variant": "mannose",
+    "entry_terms": [
+      "D-Mannose",
+      "D Mannose",
+      "Mannopyranose",
+      "Mannopyranoside"
+    ]
+  },
+  "methionine": {
+    "mesh_id": "68008715",
+    "name": "Methionine",
+    "tree_numbers": [
+      "D02.886.030.676",
+      "D12.125.142.557",
+      "D12.125.154.549",
+      "D12.125.166.676"
+    ],
+    "matched_variant": "methionine",
+    "entry_terms": [
+      "L-Methionine",
+      "Methionine, L-Isomer",
+      "L-Isomer Methionine",
+      "Methionine, L Isomer",
+      "Pedameth",
+      "Liquimeth"
+    ]
+  },
+  "methionine and cysteine": null,
+  "mevalonate": {
+    "mesh_id": "68008798",
+    "name": "Mevalonic Acid",
+    "tree_numbers": [
+      "D02.241.511.579"
+    ],
+    "matched_variant": "mevalonate",
+    "entry_terms": [
+      "Acid, Mevalonic",
+      "Mevalonate"
+    ]
+  },
+  "mitochondrial fatty acid": null,
+  "monoterpene": {
+    "mesh_id": "68039821",
+    "name": "Monoterpenes",
+    "tree_numbers": [
+      "D02.455.849.575"
+    ],
+    "matched_variant": "monoterpene",
+    "entry_terms": [
+      "Monoterpenoid",
+      "Monoterpene",
+      "Monoterpenoids"
+    ]
+  },
+  "mucin type o-glycan": null,
+  "myo-inositol": null,
+  "n-glycan": null,
+  "nad": {
+    "mesh_id": "68009243",
+    "name": "NAD",
+    "tree_numbers": [
+      "D03.633.100.759.646.138.694",
+      "D08.211.589",
+      "D13.695.667.138.694",
+      "D13.695.827.068.694"
+    ],
+    "matched_variant": "nad",
+    "entry_terms": [
+      "Coenzyme I",
+      "Dihydronicotinamide Adenine Dinucleotide",
+      "Adenine Dinucleotide, Dihydronicotinamide",
+      "Dinucleotide, Dihydronicotinamide Adenine",
+      "Nadide",
+      "DPN",
+      "Nicotinamide-Adenine Dinucleotide",
+      "Dinucleotide, Nicotinamide-Adenine",
+      "Nicotinamide Adenine Dinucleotide",
+      "Diphosphopyridine Nucleotide",
+      "Nucleotide, Diphosphopyridine",
+      "NADH"
+    ]
+  },
+  "nad salvage": null,
+  "nad+": {
+    "mesh_id": "68009243",
+    "name": "NAD",
+    "tree_numbers": [
+      "D03.633.100.759.646.138.694",
+      "D08.211.589",
+      "D13.695.667.138.694",
+      "D13.695.827.068.694"
+    ],
+    "matched_variant": "nad",
+    "entry_terms": [
+      "Coenzyme I",
+      "Dihydronicotinamide Adenine Dinucleotide",
+      "Adenine Dinucleotide, Dihydronicotinamide",
+      "Dinucleotide, Dihydronicotinamide Adenine",
+      "Nadide",
+      "DPN",
+      "Nicotinamide-Adenine Dinucleotide",
+      "Dinucleotide, Nicotinamide-Adenine",
+      "Nicotinamide Adenine Dinucleotide",
+      "Diphosphopyridine Nucleotide",
+      "Nucleotide, Diphosphopyridine",
+      "NADH"
+    ]
+  },
+  "nadh": {
+    "mesh_id": "68009243",
+    "name": "NAD",
+    "tree_numbers": [
+      "D03.633.100.759.646.138.694",
+      "D08.211.589",
+      "D13.695.667.138.694",
+      "D13.695.827.068.694"
+    ],
+    "matched_variant": "nadh",
+    "entry_terms": [
+      "Coenzyme I",
+      "Dihydronicotinamide Adenine Dinucleotide",
+      "Adenine Dinucleotide, Dihydronicotinamide",
+      "Dinucleotide, Dihydronicotinamide Adenine",
+      "Nadide",
+      "DPN",
+      "Nicotinamide-Adenine Dinucleotide",
+      "Dinucleotide, Nicotinamide-Adenine",
+      "Nicotinamide Adenine Dinucleotide",
+      "Diphosphopyridine Nucleotide",
+      "Nucleotide, Diphosphopyridine",
+      "NADH"
+    ]
+  },
+  "nicotinamide": {
+    "mesh_id": "68009536",
+    "name": "Niacinamide",
+    "tree_numbers": [
+      "D03.066.515.530",
+      "D03.383.725.547.530"
+    ],
+    "matched_variant": "nicotinamide",
+    "entry_terms": [
+      "3-Pyridinecarboxamide",
+      "3 Pyridinecarboxamide",
+      "Vitamin B3",
+      "B3, Vitamin",
+      "Vitamin B 3",
+      "B 3, Vitamin",
+      "Nicotinamide",
+      "Vitamin PP",
+      "Enduramide",
+      "Nicobion",
+      "Nicotinsäureamid Jenapharm",
+      "Jenapharm, Nicotinsäureamid",
+      "Papulex"
+    ]
+  },
+  "nicotinate": {
+    "mesh_id": "68009525",
+    "name": "Niacin",
+    "tree_numbers": [
+      "D03.066.515.475",
+      "D03.383.725.547.475"
+    ],
+    "matched_variant": "nicotinate",
+    "entry_terms": [
+      "3-Pyridinecarboxylic Acid",
+      "3 Pyridinecarboxylic Acid",
+      "Nicotinic Acid",
+      "Nicotinate",
+      "Enduracin",
+      "Induracin",
+      "Nicobid",
+      "Nicamin",
+      "Nico-400",
+      "Nico400",
+      "Nico 400",
+      "Nicocap",
+      "Nicolar",
+      "Wampocap",
+      "Niacin Iron (2+) Salt",
+      "Niacin Lithium Salt, Hemihydrate",
+      "Niacin Potassium Salt",
+      "Potassium Salt, Niacin",
+      "Niacin Aluminum Salt",
+      "Aluminum Salt, Niacin",
+      "Niacin Cobalt (2+) Salt",
+      "Niacin Manganese (2+) Salt",
+      "Niacin Copper (2+) Salt",
+      "Niacin Ammonium Salt",
+      "Niacin Tartrate",
+      "Tartrate, Niacin",
+      "Niacin Zinc Salt",
+      "Niacin Lithium Salt",
+      "Niacin Sodium Salt",
+      "Sodium Salt, Niacin",
+      "Niacin Hydrochloride",
+      "Hydrochloride, Niacin",
+      "Niacin Magnesium Salt",
+      "Niacin Calcium Salt",
+      "Lithium Nicotinate",
+      "Nicotinate, Lithium",
+      "Niacin Tosylate",
+      "Tosylate, Niacin"
+    ]
+  },
+  "nicotinate and nicotinamide": null,
+  "nucleoside": {
+    "mesh_id": "68009705",
+    "name": "Nucleosides",
+    "tree_numbers": [
+      "D09.408.595",
+      "D13.570"
+    ],
+    "matched_variant": "nucleoside",
+    "entry_terms": [
+      "Nucleoside",
+      "Nucleoside Analogs",
+      "Analogs, Nucleoside",
+      "Nucleoside Analog",
+      "Analog, Nucleoside"
+    ]
+  },
+  "nucleotide": {
+    "mesh_id": "68009711",
+    "name": "Nucleotides",
+    "tree_numbers": [
+      "D09.408.620",
+      "D13.695"
+    ],
+    "matched_variant": "nucleotide",
+    "entry_terms": [
+      "Nucleotide"
+    ]
+  },
+  "nucleotide salvage": null,
+  "nucleotide sugar": null,
+  "o-glycan": null,
+  "one-carbon": null,
+  "ornithine": {
+    "mesh_id": "68009952",
+    "name": "Ornithine",
+    "tree_numbers": [
+      "D12.125.068.665",
+      "D12.125.095.765"
+    ],
+    "matched_variant": "ornithine",
+    "entry_terms": [
+      "Ornithine Hydrochloride, (D)-Isomer",
+      "Ornithine Sulfate (1:1), (L)-Isomer",
+      "Ornithine Monohydrochloride, (DL)-Isomer",
+      "Ornithine Monohydrochloride, (D)-Isomer",
+      "Ornithine Hydrochloride, (L)-Isomer",
+      "Ornithine Hydrochloride, (DL)-Isomer",
+      "Ornithine, (D)-Isomer",
+      "Ornithine Monohydrobromide, (L)-Isomer",
+      "Ornithine Monoacetate, (L)-Isomer",
+      "Ornithine, (DL)-Isomer",
+      "Ornithine Dihydrochloride, (L)-Isomer",
+      "Ornithine Phosphate (1:1), (L)-Isomer",
+      "Ornithine, (L)-Isomer",
+      "2,5-Diaminopentanoic Acid",
+      "2,5 Diaminopentanoic Acid"
+    ]
+  },
+  "other terpenoid-quinone": null,
+  "pantothenate": {
+    "mesh_id": "68010205",
+    "name": "Pantothenic Acid",
+    "tree_numbers": [
+      "D02.478.520",
+      "D12.125.042.070.500"
+    ],
+    "matched_variant": "pantothenic acid",
+    "entry_terms": [
+      "Vitamin B 5",
+      "B 5, Vitamin",
+      "Vitamin B5",
+      "B5, Vitamin",
+      "Calcium Pantothenate",
+      "Pantothenate, Calcium",
+      "Dexol",
+      "Zinc Pantothenate",
+      "Pantothenate, Zinc"
+    ]
+  },
+  "pantothenate and coa": null,
+  "pentose phosphate": null,
+  "peptide": {
+    "mesh_id": "68010455",
+    "name": "Peptides",
+    "tree_numbers": [
+      "D12.644"
+    ],
+    "matched_variant": "peptide",
+    "entry_terms": [
+      "Peptide",
+      "Polypeptides",
+      "Polypeptide"
+    ]
+  },
+  "phenylalanine": {
+    "mesh_id": "68010649",
+    "name": "Phenylalanine",
+    "tree_numbers": [
+      "D12.125.072.050.685",
+      "D12.125.142.666"
+    ],
+    "matched_variant": "phenylalanine",
+    "entry_terms": [
+      "L-Phenylalanine",
+      "Phenylalanine, L-Isomer",
+      "L-Isomer Phenylalanine",
+      "Phenylalanine, L Isomer",
+      "Endorphenyl"
+    ]
+  },
+  "phosphatidylinositol phosphate": {
+    "mesh_id": "68018129",
+    "name": "Phosphatidylinositol Phosphates",
+    "tree_numbers": [
+      "D10.570.755.375.760.400.942.625"
+    ],
+    "matched_variant": "phosphatidylinositol phosphates",
+    "entry_terms": [
+      "Phosphates, Phosphatidylinositol",
+      "Phosphatidyl Inositol Phosphates",
+      "Inositol Phosphates, Phosphatidyl",
+      "Phosphates, Phosphatidyl Inositol",
+      "Polyphosphoinositide",
+      "Polyphosphoinositides"
+    ]
+  },
+  "phosphogluconate": null,
+  "phosphoinositide": {
+    "mesh_id": "68010716",
+    "name": "Phosphatidylinositols",
+    "tree_numbers": [
+      "D10.570.755.375.760.400.942"
+    ],
+    "matched_variant": "phosphoinositide",
+    "entry_terms": [
+      "Inositol Phosphoglycerides",
+      "Phosphoglycerides, Inositol",
+      "Inositol Phospholipids",
+      "Phospholipids, Inositol",
+      "Phosphatidylinositol",
+      "Phosphoinositides",
+      "PtdIns",
+      "Inositide Phospholipids",
+      "Phospholipids, Inositide",
+      "Inositol Phospholipid",
+      "Phospholipid, Inositol",
+      "Inositide Phospholipid",
+      "Phospholipid, Inositide",
+      "Inositol Phosphoglyceride",
+      "Phosphoglyceride, Inositol",
+      "Phosphoinositide",
+      "Phosphatidyl Inositol",
+      "Inositol, Phosphatidyl"
+    ]
+  },
+  "phospholipid": {
+    "mesh_id": "68010743",
+    "name": "Phospholipids",
+    "tree_numbers": [
+      "D10.570.755"
+    ],
+    "matched_variant": "phospholipid",
+    "entry_terms": [
+      "Phosphatides",
+      "Phospholipid"
+    ]
+  },
+  "pinene": null,
+  "pip2": null,
+  "porphyrin": {
+    "mesh_id": "68011166",
+    "name": "Porphyrins",
+    "tree_numbers": [
+      "D03.383.129.578.840.500",
+      "D03.633.400.909.500",
+      "D04.345.783.500",
+      "D23.767.727"
+    ],
+    "matched_variant": "porphyrin",
+    "entry_terms": [
+      "Porphyrin"
+    ]
+  },
+  "primary bile acid": null,
+  "proline": {
+    "mesh_id": "68011392",
+    "name": "Proline",
+    "tree_numbers": [
+      "D12.125.072.401.623"
+    ],
+    "matched_variant": "proline",
+    "entry_terms": [
+      "L-Proline",
+      "L Proline"
+    ]
+  },
+  "propanoate": {
+    "mesh_id": "68011422",
+    "name": "Propionates",
+    "tree_numbers": [
+      "D02.241.081.751",
+      "D10.251.400.706"
+    ],
+    "matched_variant": "propanoate",
+    "entry_terms": [
+      "Propionate",
+      "Propanoate",
+      "Propanoates",
+      "Propionic Acids",
+      "Acids, Propionic",
+      "Propionic Acid Derivatives",
+      "Derivatives, Propionic Acid",
+      "Propanoic Acid Derivatives",
+      "Derivatives, Propanoic Acid",
+      "Propanoic Acids",
+      "Acids, Propanoic"
+    ]
+  },
+  "propionate": {
+    "mesh_id": "68011422",
+    "name": "Propionates",
+    "tree_numbers": [
+      "D02.241.081.751",
+      "D10.251.400.706"
+    ],
+    "matched_variant": "propionate",
+    "entry_terms": [
+      "Propionate",
+      "Propanoate",
+      "Propanoates",
+      "Propionic Acids",
+      "Acids, Propionic",
+      "Propionic Acid Derivatives",
+      "Derivatives, Propionic Acid",
+      "Propanoic Acid Derivatives",
+      "Derivatives, Propanoic Acid",
+      "Propanoic Acids",
+      "Acids, Propanoic"
+    ]
+  },
+  "propionyl-coa": null,
+  "prostaglandin": {
+    "mesh_id": "68011453",
+    "name": "Prostaglandins",
+    "tree_numbers": [
+      "D10.251.355.255.550",
+      "D23.469.050.175.725"
+    ],
+    "matched_variant": "prostaglandin",
+    "entry_terms": [
+      "Prostanoids",
+      "Prostanoid",
+      "Prostaglandin"
+    ]
+  },
+  "prostanoid": {
+    "mesh_id": "68011453",
+    "name": "Prostaglandins",
+    "tree_numbers": [
+      "D10.251.355.255.550",
+      "D23.469.050.175.725"
+    ],
+    "matched_variant": "prostanoid",
+    "entry_terms": [
+      "Prostanoids",
+      "Prostanoid",
+      "Prostaglandin"
+    ]
+  },
+  "purine": {
+    "mesh_id": "68011687",
+    "name": "Purines",
+    "tree_numbers": [
+      "D03.633.100.759"
+    ],
+    "matched_variant": "purines",
+    "entry_terms": []
+  },
+  "purine salvage": null,
+  "pyridoxal phosphate": {
+    "mesh_id": "68011732",
+    "name": "Pyridoxal Phosphate",
+    "tree_numbers": [
+      "D03.383.725.676.925.500.500",
+      "D08.211.740"
+    ],
+    "matched_variant": "pyridoxal phosphate",
+    "entry_terms": [
+      "Phosphate, Pyridoxal",
+      "Pyridoxal 5-Phosphate",
+      "Pyridoxal 5 Phosphate",
+      "Pyridoxal-P",
+      "Pyridoxal P"
+    ]
+  },
+  "pyridoxine": {
+    "mesh_id": "68011736",
+    "name": "Pyridoxine",
+    "tree_numbers": [
+      "D03.383.725.676.925.875"
+    ],
+    "matched_variant": "pyridoxine",
+    "entry_terms": [
+      "Pyridoxol",
+      "Pyridoxin",
+      "Rodex",
+      "Pyridoxine Hydrochloride",
+      "Pyridoxol Hydrochloride"
+    ]
+  },
+  "pyrimidine": {
+    "mesh_id": "68011743",
+    "name": "Pyrimidines",
+    "tree_numbers": [
+      "D03.383.742"
+    ],
+    "matched_variant": "pyrimidines",
+    "entry_terms": []
+  },
+  "pyrimidine salvage": null,
+  "pyruvate": {
+    "mesh_id": "68019289",
+    "name": "Pyruvic Acid",
+    "tree_numbers": [
+      "D02.241.755.812.800"
+    ],
+    "matched_variant": "pyruvate",
+    "entry_terms": [
+      "Acid, Pyruvic",
+      "Pyruvate"
+    ]
+  },
+  "pyruvate dehydrogenase": null,
+  "retinoic acid": {
+    "mesh_id": "68014212",
+    "name": "Tretinoin",
+    "tree_numbers": [
+      "D02.455.326.271.665.202.495.818.500",
+      "D02.455.426.392.368.367.379.249.700.860.500",
+      "D02.455.849.131.495.818.800",
+      "D02.455.849.291.925.500",
+      "D23.767.261.700.780"
+    ],
+    "matched_variant": "retinoic acid",
+    "entry_terms": [
+      "all-trans-Retinoic Acid",
+      "Acid, all-trans-Retinoic",
+      "all trans Retinoic Acid",
+      "Retinoic Acid",
+      "Acid, Retinoic",
+      "trans-Retinoic Acid",
+      "Acid, trans-Retinoic",
+      "trans Retinoic Acid",
+      "Vitamin A Acid",
+      "Acid, Vitamin A",
+      "beta-all-trans-Retinoic Acid",
+      "Acid, beta-all-trans-Retinoic",
+      "beta all trans Retinoic Acid",
+      "Retin-A",
+      "Retin A",
+      "Vesanoid",
+      "Tretinoin Sodium Salt",
+      "Salt, Tretinoin Sodium",
+      "Sodium Salt, Tretinoin",
+      "Tretinoin Potassium Salt",
+      "Potassium Salt, Tretinoin",
+      "Salt, Tretinoin Potassium",
+      "Tretinoin Zinc Salt",
+      "Salt, Tretinoin Zinc",
+      "Zinc Salt, Tretinoin"
+    ]
+  },
+  "retinoid": {
+    "mesh_id": "68012176",
+    "name": "Retinoids",
+    "tree_numbers": [
+      "D02.455.326.271.665.202.495",
+      "D02.455.426.392.368.367.379.249.700",
+      "D02.455.849.131.495",
+      "D23.767.261.700"
+    ],
+    "matched_variant": "retinoid",
+    "entry_terms": [
+      "Retinoid"
+    ]
+  },
+  "retinol": {
+    "mesh_id": "68014801",
+    "name": "Vitamin A",
+    "tree_numbers": [
+      "D02.455.326.271.665.202.495.818",
+      "D02.455.426.392.368.367.379.249.700.860",
+      "D02.455.849.131.495.818",
+      "D02.455.849.291.925",
+      "D23.767.261.700.860"
+    ],
+    "matched_variant": "retinol",
+    "entry_terms": [
+      "Aquasol A",
+      "Retinol",
+      "Vitamin A1",
+      "3,7-dimethyl-9-(2,6,6-trimethyl-1-cyclohexen-1-yl)-2,4,6,8-nonatetraen-1-ol, (all-E)-Isomer",
+      "All-Trans-Retinol",
+      "All Trans Retinol",
+      "11-cis-Retinol"
+    ]
+  },
+  "riboflavin": {
+    "mesh_id": "68012256",
+    "name": "Riboflavin",
+    "tree_numbers": [
+      "D03.633.100.733.315.650",
+      "D03.633.300.507.650",
+      "D08.211.474.650",
+      "D23.767.405.650"
+    ],
+    "matched_variant": "riboflavin",
+    "entry_terms": [
+      "Vitamin B 2",
+      "Vitamin G",
+      "Vitamin B2"
+    ]
+  },
+  "saccharopine": null,
+  "serine": {
+    "mesh_id": "68012694",
+    "name": "Serine",
+    "tree_numbers": [
+      "D12.125.154.800"
+    ],
+    "matched_variant": "serine",
+    "entry_terms": [
+      "L-Serine",
+      "L Serine"
+    ]
+  },
+  "sex steroid": null,
+  "sphingolipid": {
+    "mesh_id": "68013107",
+    "name": "Sphingolipids",
+    "tree_numbers": [
+      "D10.570.877"
+    ],
+    "matched_variant": "sphingolipid",
+    "entry_terms": [
+      "Sphingolipid",
+      "Lysosphingolipids"
+    ]
+  },
+  "squalene": {
+    "mesh_id": "68013185",
+    "name": "Squalene",
+    "tree_numbers": [
+      "D02.455.326.271.665.806",
+      "D02.455.849.919.681"
+    ],
+    "matched_variant": "squalene",
+    "entry_terms": []
+  },
+  "squalene and cholesterol": null,
+  "starch": {
+    "mesh_id": "68013213",
+    "name": "Starch",
+    "tree_numbers": [
+      "D05.750.078.562.855",
+      "D09.301.915",
+      "D09.698.365.855"
+    ],
+    "matched_variant": "starch",
+    "entry_terms": [
+      "Amylomaize Starch",
+      "Starch, Amylomaize",
+      "Cornstarch",
+      "Amylum",
+      "Keoflo"
+    ]
+  },
+  "starch and sucrose": null,
+  "steroid": {
+    "mesh_id": "68013256",
+    "name": "Steroids",
+    "tree_numbers": [
+      "D04.210.500"
+    ],
+    "matched_variant": "steroid",
+    "entry_terms": [
+      "Steroid",
+      "Catatoxic Steroids",
+      "Steroids, Catatoxic"
+    ]
+  },
+  "steroid hormone": null,
+  "sterol": {
+    "mesh_id": "68013261",
+    "name": "Sterols",
+    "tree_numbers": [
+      "D04.210.500.247.808",
+      "D10.570.938"
+    ],
+    "matched_variant": "sterol",
+    "entry_terms": [
+      "Sterol"
+    ]
+  },
+  "sucrose": {
+    "mesh_id": "68013395",
+    "name": "Sucrose",
+    "tree_numbers": [
+      "D09.698.629.305.770",
+      "D09.947.750.770"
+    ],
+    "matched_variant": "sucrose",
+    "entry_terms": [
+      "Saccharose"
+    ]
+  },
+  "taurine": {
+    "mesh_id": "68013654",
+    "name": "Taurine",
+    "tree_numbers": [
+      "D02.455.326.146.100.850",
+      "D02.886.645.600.055.850"
+    ],
+    "matched_variant": "taurine",
+    "entry_terms": [
+      "Taufon",
+      "Tauphon",
+      "Taurine, Monopotassium Salt",
+      "Taurine Zinc Salt (2:1)",
+      "Taurine Hydrochloride"
+    ]
+  },
+  "taurine and hypotaurine": null,
+  "tca": null,
+  "terpenoid backbone": null,
+  "tetrahydrobiopterin": null,
+  "thiamin": {
+    "mesh_id": "68013831",
+    "name": "Thiamine",
+    "tree_numbers": [
+      "D02.886.675.900",
+      "D03.383.129.708.900",
+      "D03.383.742.795"
+    ],
+    "matched_variant": "thiamin",
+    "entry_terms": [
+      "Aneurin",
+      "Vitamin B 1",
+      "Vitamin B1",
+      "Thiamin",
+      "Thiamine Mononitrate",
+      "Mononitrate, Thiamine"
+    ]
+  },
+  "thiamine": {
+    "mesh_id": "68013831",
+    "name": "Thiamine",
+    "tree_numbers": [
+      "D02.886.675.900",
+      "D03.383.129.708.900",
+      "D03.383.742.795"
+    ],
+    "matched_variant": "thiamine",
+    "entry_terms": [
+      "Aneurin",
+      "Vitamin B 1",
+      "Vitamin B1",
+      "Thiamin",
+      "Thiamine Mononitrate",
+      "Mononitrate, Thiamine"
+    ]
+  },
+  "threonine": {
+    "mesh_id": "68013912",
+    "name": "Threonine",
+    "tree_numbers": [
+      "D12.125.142.815",
+      "D12.125.154.900"
+    ],
+    "matched_variant": "threonine",
+    "entry_terms": [
+      "L-Threonine",
+      "L Threonine"
+    ]
+  },
+  "tocopherol": {
+    "mesh_id": "68024505",
+    "name": "Tocopherols",
+    "tree_numbers": [
+      "D03.383.663.283.909.750",
+      "D03.633.100.150.909.750"
+    ],
+    "matched_variant": "tocopherol",
+    "entry_terms": [
+      "Tocopherol",
+      "E-ferol",
+      "Dal-E",
+      "Dal E",
+      "Vitamin-E Dragees",
+      "Vitamin E Dragees",
+      "Abortosan",
+      "Elex Verla",
+      "Mowivit Vitamin E",
+      "Vitamin E, Mowivit",
+      "Sanavitan S",
+      "Bio E",
+      "Biopto-E",
+      "Bioweyxin",
+      "Ecoro",
+      "Eplonat",
+      "Equivit E",
+      "Eusovit",
+      "Hydrovit E",
+      "Micorvit E",
+      "Malton E",
+      "Auxina E",
+      "Biosan",
+      "Lasar",
+      "Davitamon",
+      "Aquasol E",
+      "Dermorelle",
+      "Detulin",
+      "E-Mulsin",
+      "E Mulsin",
+      "E-Vicotrat",
+      "E Vicotrat",
+      "E Vitamin E",
+      "Vitamin E-mp",
+      "Vitamin Emp",
+      "Vitamin E mp",
+      "E-Vitamin-Ratiopharm",
+      "Embial",
+      "Evion",
+      "Ephynal",
+      "Spondyvit",
+      "Puncto E",
+      "EUNOVA Vitamin E",
+      "Antioxidans E-Hevert",
+      "Richtavit E",
+      "Tocolion",
+      "Tocovital",
+      "Tocopa",
+      "Snow-E Muscle, Energy  and  Feritility",
+      "Tocopherol Bayer",
+      "Tocopharm",
+      "Unique E",
+      "Uno-Vit",
+      "UnoVit",
+      "Uno Vit",
+      "Vita-E",
+      "VitaE",
+      "Vita E",
+      "Vibolex",
+      "Vita-Plus E",
+      "Vita Plus E",
+      "VitaPlus E",
+      "Vit E hydrosol",
+      "Vit. E Stada",
+      "Togasan Vitamin E",
+      "Vitamin E, Togasan",
+      "Vitagutt Vitamin E",
+      "Vitamin E, Vitagutt",
+      "Vitamin E AL",
+      "Vitamin E Natur",
+      "Vitamin E Sanum",
+      "Vitamin E Suspension",
+      "Vitazell",
+      "Vitamine E GNR",
+      "Vitamin-E EVI-MIRALE",
+      "Vitamin E EVI MIRALE",
+      "VitaminE EVIMIRALE"
+    ]
+  },
+  "trans-sulfuration": null,
+  "transsulfuration": null,
+  "triacylglycerol": {
+    "mesh_id": "68014280",
+    "name": "Triglycerides",
+    "tree_numbers": [
+      "D10.351.801"
+    ],
+    "matched_variant": "triacylglycerol",
+    "entry_terms": [
+      "Triglyceride",
+      "Triacylglycerols",
+      "Triacylglycerol"
+    ]
+  },
+  "tricarboxylic acid": {
+    "mesh_id": "68014233",
+    "name": "Tricarboxylic Acids",
+    "tree_numbers": [
+      "D02.241.081.901"
+    ],
+    "matched_variant": "tricarboxylic acid",
+    "entry_terms": [
+      "Acids, Tricarboxylic",
+      "Tricarboxylic Acid",
+      "Acid, Tricarboxylic"
+    ]
+  },
+  "triglyceride": {
+    "mesh_id": "68014280",
+    "name": "Triglycerides",
+    "tree_numbers": [
+      "D10.351.801"
+    ],
+    "matched_variant": "triglyceride",
+    "entry_terms": [
+      "Triglyceride",
+      "Triacylglycerols",
+      "Triacylglycerol"
+    ]
+  },
+  "trp": null,
+  "tryptophan": {
+    "mesh_id": "68014364",
+    "name": "Tryptophan",
+    "tree_numbers": [
+      "D12.125.072.050.850",
+      "D12.125.142.875"
+    ],
+    "matched_variant": "tryptophan",
+    "entry_terms": [
+      "Levotryptophan",
+      "L-Tryptophan",
+      "L Tryptophan",
+      "Tryptophan Metabolism Alterations",
+      "Tryptan",
+      "Tryptacin",
+      "Trofan",
+      "Ardeydorm",
+      "Ardeytropin",
+      "L-Tryptophan-ratiopharm",
+      "L Tryptophan ratiopharm",
+      "ratio-Tryptophan",
+      "ratio Tryptophan",
+      "Lyphan",
+      "Naturruhe",
+      "PMS-Tryptophan",
+      "PMS Tryptophan",
+      "Optimax"
+    ]
+  },
+  "tryptophan-kynurenine": null,
+  "tyrosine": {
+    "mesh_id": "68014443",
+    "name": "Tyrosine",
+    "tree_numbers": [
+      "D12.125.072.050.875"
+    ],
+    "matched_variant": "tyrosine",
+    "entry_terms": [
+      "L-Tyrosine",
+      "L Tyrosine",
+      "para-Tyrosine",
+      "para Tyrosine",
+      "Tyrosine, L-isomer",
+      "Tyrosine, L isomer"
+    ]
+  },
+  "ubiquinone": {
+    "mesh_id": "68014451",
+    "name": "Ubiquinone",
+    "tree_numbers": [
+      "D02.806.250.900",
+      "D08.211.935"
+    ],
+    "matched_variant": "ubiquinone",
+    "entry_terms": [
+      "Coenzyme Q"
+    ]
+  },
+  "ubiquinone and other terpenoid-quinone": null,
+  "urea": {
+    "mesh_id": "68014508",
+    "name": "Urea",
+    "tree_numbers": [
+      "D02.065.950"
+    ],
+    "matched_variant": "urea",
+    "entry_terms": [
+      "Carbamide",
+      "Carmol",
+      "Basodexan"
+    ]
+  },
+  "valine": {
+    "mesh_id": "68014633",
+    "name": "Valine",
+    "tree_numbers": [
+      "D12.125.070.950",
+      "D12.125.142.930"
+    ],
+    "matched_variant": "valine",
+    "entry_terms": [
+      "L-Valine",
+      "L Valine"
+    ]
+  },
+  "valine, leucine and isoleucine": null,
+  "valine, leucine, and isoleucine": null,
+  "vitamin a": {
+    "mesh_id": "68014801",
+    "name": "Vitamin A",
+    "tree_numbers": [
+      "D02.455.326.271.665.202.495.818",
+      "D02.455.426.392.368.367.379.249.700.860",
+      "D02.455.849.131.495.818",
+      "D02.455.849.291.925",
+      "D23.767.261.700.860"
+    ],
+    "matched_variant": "vitamin a",
+    "entry_terms": [
+      "Aquasol A",
+      "Retinol",
+      "Vitamin A1",
+      "3,7-dimethyl-9-(2,6,6-trimethyl-1-cyclohexen-1-yl)-2,4,6,8-nonatetraen-1-ol, (all-E)-Isomer",
+      "All-Trans-Retinol",
+      "All Trans Retinol",
+      "11-cis-Retinol"
+    ]
+  },
+  "vitamin b1": {
+    "mesh_id": "68013831",
+    "name": "Thiamine",
+    "tree_numbers": [
+      "D02.886.675.900",
+      "D03.383.129.708.900",
+      "D03.383.742.795"
+    ],
+    "matched_variant": "vitamin b1",
+    "entry_terms": [
+      "Aneurin",
+      "Vitamin B 1",
+      "Vitamin B1",
+      "Thiamin",
+      "Thiamine Mononitrate",
+      "Mononitrate, Thiamine"
+    ]
+  },
+  "vitamin b12": {
+    "mesh_id": "68014805",
+    "name": "Vitamin B 12",
+    "tree_numbers": [
+      "D03.383.129.578.840.437.777",
+      "D03.633.400.909.437.777",
+      "D04.345.783.437.777"
+    ],
+    "matched_variant": "vitamin b12",
+    "entry_terms": [
+      "B 12, Vitamin",
+      "Cyanocobalamin",
+      "Vitamin B12",
+      "B12, Vitamin",
+      "Cobalamins",
+      "Cobalamin",
+      "Eritron"
+    ]
+  },
+  "vitamin b2": {
+    "mesh_id": "68012256",
+    "name": "Riboflavin",
+    "tree_numbers": [
+      "D03.633.100.733.315.650",
+      "D03.633.300.507.650",
+      "D08.211.474.650",
+      "D23.767.405.650"
+    ],
+    "matched_variant": "vitamin b2",
+    "entry_terms": [
+      "Vitamin B 2",
+      "Vitamin G",
+      "Vitamin B2"
+    ]
+  },
+  "vitamin b6": {
+    "mesh_id": "68025101",
+    "name": "Vitamin B 6",
+    "tree_numbers": [
+      "D03.383.725.676.925"
+    ],
+    "matched_variant": "vitamin b6",
+    "entry_terms": [
+      "Vitamin B6"
+    ]
+  },
+  "vitamin b7": null,
+  "vitamin c": {
+    "mesh_id": "68001205",
+    "name": "Ascorbic Acid",
+    "tree_numbers": [
+      "D02.241.081.844.107",
+      "D02.241.511.902.107",
+      "D09.811.100"
+    ],
+    "matched_variant": "vitamin c",
+    "entry_terms": [
+      "Acid, Ascorbic",
+      "L-Ascorbic Acid",
+      "Acid, L-Ascorbic",
+      "L Ascorbic Acid",
+      "Vitamin C",
+      "Ferrous Ascorbate",
+      "Ascorbate, Ferrous",
+      "Magnesium Ascorbate",
+      "Ascorbate, Magnesium",
+      "Magnesium Ascorbicum",
+      "Magnesium di-L-Ascorbate",
+      "di-L-Ascorbate, Magnesium",
+      "Magnesium di L Ascorbate",
+      "Magnorbin",
+      "Hybrin",
+      "Sodium Ascorbate",
+      "Ascorbate, Sodium",
+      "Ascorbic Acid, Monosodium Salt"
+    ]
+  },
+  "vitamin d": {
+    "mesh_id": "68014807",
+    "name": "Vitamin D",
+    "tree_numbers": [
+      "D04.210.500.812.768"
+    ],
+    "matched_variant": "vitamin d",
+    "entry_terms": []
+  },
+  "vitamin e": {
+    "mesh_id": "68014810",
+    "name": "Vitamin E",
+    "tree_numbers": [
+      "D03.383.663.283.909",
+      "D03.633.100.150.909"
+    ],
+    "matched_variant": "vitamin e",
+    "entry_terms": []
+  },
+  "xenobiotic": {
+    "mesh_id": "68015262",
+    "name": "Xenobiotics",
+    "tree_numbers": [
+      "D26.969"
+    ],
+    "matched_variant": "xenobiotic",
+    "entry_terms": [
+      "Xenobiotic"
+    ]
+  },
+  "α-lipoic acid": {
+    "mesh_id": "68008063",
+    "name": "Thioctic Acid",
+    "tree_numbers": [
+      "D02.241.803",
+      "D02.886.778.827",
+      "D08.211.906",
+      "D10.251.941"
+    ],
+    "matched_variant": "lipoic acid",
+    "entry_terms": [
+      "alpha-Lipoic Acid",
+      "Acid, alpha-Lipoic",
+      "alpha Lipoic Acid",
+      "Lipoic Acid",
+      "Alpha-Lipon Stada",
+      "Alpha Lipon Stada",
+      "AlphaLipon Stada",
+      "alpha-Liponaure Heumann",
+      "alpha Liponaure Heumann",
+      "alphaLiponaure Heumann",
+      "Alpha-Liponsaure Sofotec",
+      "Alpha Liponsaure Sofotec",
+      "AlphaLiponsaure Sofotec",
+      "alpha-Liponsaure von ct",
+      "alpha Liponsaure von ct",
+      "alphaLiponsaure von ct",
+      "Alpha-Lippon AL",
+      "Alpha Lippon AL",
+      "AlphaLippon AL",
+      "biomo-lipon",
+      "biomolipon",
+      "biomo lipon",
+      "Azulipont",
+      "Alphaflam",
+      "alpha-Vibolex",
+      "alphaVibolex",
+      "alpha Vibolex",
+      "duralipon",
+      "espa-lipon",
+      "espalipon",
+      "espa lipon",
+      "Juthiac",
+      "Fenint",
+      "Liponsaure-ratiopharm",
+      "Liponsaureratiopharm",
+      "Liponsaure ratiopharm",
+      "MTW-Alphaliponsaure",
+      "MTWAlphaliponsaure",
+      "MTW Alphaliponsaure",
+      "Pleomix-Alpha",
+      "PleomixAlpha",
+      "Pleomix Alpha",
+      "Neurium",
+      "Pleomix-Alpha N",
+      "Pleomix Alpha N",
+      "PleomixAlpha N",
+      "Tromlipon",
+      "Thioctacid",
+      "Thioctacide T",
+      "Thiogamma Injekt",
+      "Injekt, Thiogamma",
+      "Alpha-Lipogamma",
+      "AlphaLipogamma",
+      "Alpha Lipogamma",
+      "Thiogamma oral",
+      "Verla-Lipon",
+      "VerlaLipon",
+      "Verla Lipon"
+    ]
+  },
+  "α-tocopherol": {
+    "mesh_id": "68024505",
+    "name": "Tocopherols",
+    "tree_numbers": [
+      "D03.383.663.283.909.750",
+      "D03.633.100.150.909.750"
+    ],
+    "matched_variant": "tocopherol",
+    "entry_terms": [
+      "Tocopherol",
+      "E-ferol",
+      "Dal-E",
+      "Dal E",
+      "Vitamin-E Dragees",
+      "Vitamin E Dragees",
+      "Abortosan",
+      "Elex Verla",
+      "Mowivit Vitamin E",
+      "Vitamin E, Mowivit",
+      "Sanavitan S",
+      "Bio E",
+      "Biopto-E",
+      "Bioweyxin",
+      "Ecoro",
+      "Eplonat",
+      "Equivit E",
+      "Eusovit",
+      "Hydrovit E",
+      "Micorvit E",
+      "Malton E",
+      "Auxina E",
+      "Biosan",
+      "Lasar",
+      "Davitamon",
+      "Aquasol E",
+      "Dermorelle",
+      "Detulin",
+      "E-Mulsin",
+      "E Mulsin",
+      "E-Vicotrat",
+      "E Vicotrat",
+      "E Vitamin E",
+      "Vitamin E-mp",
+      "Vitamin Emp",
+      "Vitamin E mp",
+      "E-Vitamin-Ratiopharm",
+      "Embial",
+      "Evion",
+      "Ephynal",
+      "Spondyvit",
+      "Puncto E",
+      "EUNOVA Vitamin E",
+      "Antioxidans E-Hevert",
+      "Richtavit E",
+      "Tocolion",
+      "Tocovital",
+      "Tocopa",
+      "Snow-E Muscle, Energy  and  Feritility",
+      "Tocopherol Bayer",
+      "Tocopharm",
+      "Unique E",
+      "Uno-Vit",
+      "UnoVit",
+      "Uno Vit",
+      "Vita-E",
+      "VitaE",
+      "Vita E",
+      "Vibolex",
+      "Vita-Plus E",
+      "Vita Plus E",
+      "VitaPlus E",
+      "Vit E hydrosol",
+      "Vit. E Stada",
+      "Togasan Vitamin E",
+      "Vitamin E, Togasan",
+      "Vitagutt Vitamin E",
+      "Vitamin E, Vitagutt",
+      "Vitamin E AL",
+      "Vitamin E Natur",
+      "Vitamin E Sanum",
+      "Vitamin E Suspension",
+      "Vitazell",
+      "Vitamine E GNR",
+      "Vitamin-E EVI-MIRALE",
+      "Vitamin E EVI MIRALE",
+      "VitaminE EVIMIRALE"
+    ]
+  },
+  "β": null,
+  "β-alanine": {
+    "mesh_id": "68000409",
+    "name": "Alanine",
+    "tree_numbers": [
+      "D12.125.042"
+    ],
+    "matched_variant": "alanine",
+    "entry_terms": [
+      "L-Alanine",
+      "L Alanine",
+      "Alanine, L-Isomer",
+      "Alanine, L Isomer",
+      "L-Isomer Alanine",
+      "Abufène"
+    ]
+  }
+}
