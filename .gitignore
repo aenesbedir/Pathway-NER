@@ -188,6 +188,7 @@ data/processed/pathway-10k-missing/*
 # per-run directories hold logs and prediction dumps and are regenerable.
 runs/*/
 !runs/summary.jsonl
+runs-truba*/
 
 # Synthetic-data feasibility probe (reports/synthetic_data_probe_2026-08-31.md).
 # Seeds, generated abstracts and their re-labelling all regenerate from the
@@ -217,13 +218,6 @@ data/processed/relation/silver_2k_full/*
 !data/processed/relation/silver_2k_full/relations_llm_opus48_same_sentence.summary.json
 !data/processed/relation/silver_2k_full/candidates_same_sentence.jsonl
 !data/processed/relation/silver_2k_full/candidates.manifest.json
-
-# Symlinks into the main checkout, where the real files live and are tracked.
-# No trailing slash: git sees a symlink as a file, and "dir/" only matches a
-# directory, so a slashed pattern would silently fail to ignore these.
-data/doccano
-data/processed/pathway-10k
-runs-truba*/
 
 # remaining_6125 disease/pathway review batch. Only the PMID list that defines
 # the corpus slice and the review summary are tracked; every other artefact in
