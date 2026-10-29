@@ -7,7 +7,23 @@ abstracts. The default is the config chosen in Faz 0 (P3-0c/d):
     qwen2.5:14b, no-vocab + lenient + synonyms, plus the deterministic booster.
 
 Flow per abstract:
-    annotator + boost()  ->  merge()  ->  canonicalize()  ->  spans
+    annotator + boost_surface() + boost()  ->  merge()  ->  canonicalize()  ->  spans
+
+Three independent sources produce raw spans for the same abstract, merged
+longest-wins with ties going to the earlier source:
+
+    1. boost_surface()  the curated surface-form dictionary
+                        (preprocessing/pathway_surface_forms.py)
+    2. the annotator    the LLM or the NER checkpoint (see below)
+    3. boost()          the <content> <process> pattern scan
+
+The dictionary goes first because it is the only source that knows which canonical
+a phrase belongs to. Over the 10,125 cached qwen2.5:14b records it produces spans
+byte-identical to the LLM's 13,414 times; in 1,013 of those the LLM span
+canonicalizes to None ("de novo purine synthesis", "steroidogenesis", "GSH
+metabolism") while the dictionary carries the canonical. In the 110 remaining
+disagreements the dictionary is the better answer as well ("cholesterol synthesis"
+belongs to "squalene and cholesterol synthesis", not "cholesterol metabolism").
 
 **The annotator is a parameter.** `--model` takes either an ollama tag (the LLM
 path, unchanged) or the path of a fine-tuned NER checkpoint directory, e.g.
@@ -102,7 +118,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "llm"))
 
 from annotators import resolve_annotator  # noqa: E402
-from booster import boost, merge  # noqa: E402
+from booster import boost, boost_surface, merge  # noqa: E402
 from canonicalize import canonicalize, match_type_for  # noqa: E402
 from extract_guided import LLMCallError  # noqa: E402
 from models import DEFAULT  # noqa: E402
@@ -386,10 +402,12 @@ def _annotate(spans: list[dict], text: str, pmid: str, model: str, qps: list[str
     """
     out = []
     for s in spans:
-        if s.get("source") == "booster":
-            canonical = s["canonical"]          # the booster knows what it searched for
+        if s.get("source") in ("booster", "dict"):
+            # Both deterministic sources know what they searched for; the annotator
+            # does not, so only its spans go through canonicalize().
+            canonical = s["canonical"]
             mtype = match_type_for(s["surface"], canonical)
-            span_source = "booster"
+            span_source = s["source"]
         else:
             canonical, mtype = canonicalize(s["surface"])
             span_source = source
@@ -404,15 +422,17 @@ def _annotate(spans: list[dict], text: str, pmid: str, model: str, qps: list[str
 def _rebuild_from_cached(rec: dict, text: str, booster: bool = True) -> list[dict]:
     """Rebuild raw spans from cache without calling the annotator again.
 
-    Only the annotator's own spans are recovered from cache — the booster is re-run
-    from scratch (pure regex, free) because its own canonical assignment is baked
-    into the cached record and must not survive a booster change. merge() is
-    re-applied too. The test is "not booster" rather than a specific source string,
-    so it holds for every annotator.
+    Only the annotator's own spans are recovered from cache — the dictionary and the
+    pattern scan are re-run from scratch (pure regex, free) because their canonical
+    assignment is baked into the cached record and must not survive a dictionary or
+    booster change. merge() is re-applied too, in the same precedence order as a
+    fresh run. The test excludes the two deterministic sources rather than naming
+    the annotator's source string, so it holds for every annotator.
     """
     model_spans = [{"surface": s["text"], "start": s["start"], "end": s["end"]}
-                   for s in rec["spans"] if s["source"] != "booster"]
-    return merge(model_spans, boost(text)) if booster else model_spans
+                   for s in rec["spans"] if s["source"] not in ("booster", "dict")]
+    return (merge(boost_surface(text), model_spans, boost(text)) if booster
+            else model_spans)
 
 
 def cache_dir_for(annotator) -> Path:
@@ -554,7 +574,7 @@ def process_batch(items: list[tuple[str, str, list[str]]], annotator,
 
     for i, spans in zip(pending, produced):
         pmid, text, qps = items[i]
-        merged = merge(spans, boost(text)) if booster else spans
+        merged = merge(boost_surface(text), spans, boost(text)) if booster else spans
         rec = _annotate(merged, text, pmid, annotator.tag, qps, source=annotator.source)
         cache_file_for(annotator, pmid, text).write_text(
             json.dumps(rec, ensure_ascii=False), encoding="utf-8")
@@ -611,9 +631,10 @@ def main() -> None:
                     help="override the annotator's batch size (NER only; the LLM "
                          "annotator is one request per abstract by construction)")
     ap.add_argument("--no-booster", dest="booster", action="store_false",
-                    help="skip the deterministic recall booster (llm/booster.py). It "
-                         "was tuned to patch LLM recall gaps; a NER checkpoint may "
-                         "not need it — measure before assuming either way")
+                    help="skip the deterministic sources in llm/booster.py (the "
+                         "surface-form dictionary and the pattern scan). They "
+                         "were tuned to patch LLM recall gaps; a NER checkpoint may "
+                         "not need them — measure before assuming either way")
     ap.add_argument("--recanonicalize", action="store_true",
                     help="re-derive canonical/match_type over the cache, no model "
                          "calls (use after changing llm/canonicalize.py)")

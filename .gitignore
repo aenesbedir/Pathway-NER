@@ -201,6 +201,15 @@ runs-truba*/
 data/doccano/*
 data/evaluation/
 
+# Final data products are the exception: the curated remaining_6125 export, the
+# combined 10,125-document corpus built on it, and the dictionary-matched 10k
+# that feeds pathway_10k_plus_missing. They are tracked because the silver
+# behind them cannot be regenerated exactly.
+!data/doccano/disease_pathway_remaining_6125_doccano_curated_v1.jsonl
+!data/doccano/disease_pathway_remaining_6125_doccano_curated_v1.manifest.json
+!data/doccano/disease_pathway_10125_doccano_combined_v1.jsonl
+!data/doccano/10k_dict_match.jsonl
+
 # Final data product: the 10k + missing-pathway doccano export and its manifest.
 !data/doccano/pathway_10k_plus_missing.jsonl
 !data/doccano/pathway_10k_plus_missing.manifest.json

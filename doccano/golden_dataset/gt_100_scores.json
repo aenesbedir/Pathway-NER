@@ -240,6 +240,23 @@
         "recall": 0.8674
       },
       "observation": "The booster (llm/booster.py) adds exactly one span over these 100 abstracts and it is a true positive: exact F1 0.8364 -> 0.8386. It was built to patch LLM recall gaps and has almost nothing left to add on top of a NER checkpoint, which already finds the Recon vocabulary itself. Keeping it on is free and costs no precision here; it is not what makes this source strong. Scored with scripts/compare_vs_gt100.py, so these are character-offset set matches, comparable to the other span_sources rows and NOT to the seqeval numbers under `models` — though for this checkpoint they agree to 0.002, which is itself evidence the word-level offset decoding is right."
+    },
+    {
+      "source": "10k + dictionary match (overlap=keep)",
+      "predictions": "data/silver/10k_dict_match_gt100.jsonl",
+      "pipeline": "data/doccano/10k_dict_match.jsonl produced by scripts/apply_dict_match_10k.py: the pathway surface-form dictionary (preprocessing/pathway_surface_forms.py, scanned by llm/booster.py::boost_surface) applied on top of data/doccano/disease_pathway_10125_doccano_combined_v1.jsonl. overlap=keep adds only spans that overlap no existing span; no existing annotation is modified. The gt_100 PMIDs were extracted from it into the pmid+spans shape compare_vs_gt100.py reads.",
+      "n_pmids": 100,
+      "n_pmids_with_predictions": 92,
+      "n_pred_spans": 265,
+      "exact_span": {"f1": 0.8824, "precision": 0.9057, "recall": 0.8602},
+      "partial": {"threshold": 0.5, "f1": 0.9265, "precision": 0.9509, "recall": 0.9032},
+      "baseline_before_dictionary": {
+        "note": "same 100 PMIDs extracted from the input corpus data/doccano/disease_pathway_10125_doccano_combined_v1.jsonl into data/silver/10k_combined_v1_gt100.jsonl; reproduces the '10k dataset' entry above exactly, which cross-checks the extraction",
+        "n_pred_spans": 261,
+        "exact_span": {"f1": 0.8815, "precision": 0.9119, "recall": 0.853},
+        "partial": {"threshold": 0.5, "f1": 0.9259, "precision": 0.9579, "recall": 0.8961}
+      },
+      "observation": "The dictionary adds 4 spans on these 100 abstracts, so the effect is at the edge of what a 279-span gold set resolves: exact F1 +0.0009, recall +0.0072, precision -0.0062. Of the 4, two are exact gold matches ('ROS detoxification' twice) and two fall outside gold: a second bare 'PPP' in PMID 41577073 where gold tags only the first mention 'pentose phosphate pathway (PPP)', and 'electron transport chain' in PMID 41810983, which gold does not tag at all. Both look like annotation gaps rather than dictionary errors, but they are scored as false positives here and no gt_100 re-review has been done. gt_100 is the wrong instrument for this change: the dictionary targets naming variants (FAO, Warburg effect, cholesterol homeostasis) whose bulk sits in the other 10,025 documents, where the same run added 845 spans across 608 documents."
     }
   ]
 }
