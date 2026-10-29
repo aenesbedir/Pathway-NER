@@ -1,0 +1,51 @@
+{
+  "teacher": "llm:claude-opus-4-8",
+  "mode": "single",
+  "prompt_fingerprint": "9fe05ec15831",
+  "raw_flags": [
+    "--safe-mode",
+    "--system-prompt",
+    "",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "{\"mcpServers\":{}}",
+    "--tools",
+    "",
+    "--no-session-persistence"
+  ],
+  "residual_context": "claude-agent-sdk identity line + system-reminder (userEmail, currentDate)",
+  "schema": "pathway_disease_v4:upregulation|downregulation|association|no_association_stated|none",
+  "backend": "claude",
+  "candidates": "../data/processed/relation/silver_2k_full/candidates_same_sentence.jsonl",
+  "n_abstracts": 1063,
+  "n_pairs_asked": 3102,
+  "n_requests": 3102,
+  "n_rows_kept": 3073,
+  "labels": {
+    "association": 1183,
+    "none": 645,
+    "downregulation": 636,
+    "upregulation": 580,
+    "no_association_stated": 29
+  },
+  "confidence": {
+    "medium": 1534,
+    "high": 1364,
+    "low": 175
+  },
+  "by_stratum": {
+    "same_sentence": 3073
+  },
+  "rejected": {
+    "evidence_not_verbatim": 20,
+    "unparsable_response": 9,
+    "unanswered_pair": 0
+  },
+  "request_status": {
+    "cached": 989,
+    "fetched": 70,
+    "unparsable": 4
+  },
+  "wall_s": 321.1,
+  "output": "../data/processed/relation/silver_2k_full/relations_llm_opus48_same_sentence.jsonl"
+}

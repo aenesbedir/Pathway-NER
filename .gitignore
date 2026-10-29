@@ -174,8 +174,19 @@ data/raw/primekg/
 # Relation extraction outputs (reports/synthetic_data_probe_2026-08-31.md and
 # later probes). Candidates, teacher labels, manifests and doccano/review exports
 # all regenerate from the tracked scripts in relation_extraction/.
-data/processed/relation/
+data/processed/relation/*
 data/processed/gt_100/
+
+# Final data product: the Opus-labelled same_sentence silver of silver_2k_full,
+# with the candidate pool it was labelled from. Teacher output is not
+# bit-reproducible, so the labels themselves are tracked.
+!data/processed/relation/silver_2k_full/
+data/processed/relation/silver_2k_full/*
+!data/processed/relation/silver_2k_full/relations_llm_opus48_same_sentence.jsonl
+!data/processed/relation/silver_2k_full/relations_llm_opus48_same_sentence.manifest.json
+!data/processed/relation/silver_2k_full/relations_llm_opus48_same_sentence.summary.json
+!data/processed/relation/silver_2k_full/candidates_same_sentence.jsonl
+!data/processed/relation/silver_2k_full/candidates.manifest.json
 
 # Symlinks into the main checkout, where the real files live and are tracked.
 # No trailing slash: git sees a symlink as a file, and "dir/" only matches a
