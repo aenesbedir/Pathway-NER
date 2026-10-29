@@ -1,0 +1,10 @@
+{
+ "version": "v4",
+ "output": "doccano/golden_dataset/gt_125/gt_125.jsonl",
+ "output_sha256": "5b5e39042294b24ca3bece259920199e5914d6668bfa7976fc14d115fd960252",
+ "curated_export_sha256": "7719aabc55e5a7f982bc8f8e7cee4f108d74a80f95329872d20bfa62ed9eb839",
+ "gt_100": "doccano/golden_dataset/gt_100_v2.jsonl",
+ "documents": 125,
+ "curated_documents": 25,
+ "curated_spans": 70
+}

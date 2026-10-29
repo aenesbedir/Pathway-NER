@@ -15,7 +15,35 @@ from pathlib import Path
 
 RECON_FILE = Path(__file__).resolve().parents[1] / "unique_pathways_from_recon.json"
 
-# Recon3D subsystem labels that are not meaningful pathway names in literature
+# Recon3D subsystem labels that name a modelling construct rather than a metabolic
+# pathway. Not a judgement call: each is selected by a structural test over the
+# Recon3D reaction set, and the six tests together pick exactly these eight out of
+# 98 subsystems with no false positive. Re-check with
+# `scripts/audit_recon_subsystems.py`; the reason per name is:
+#
+#   miscellaneous                      non-specific label — 139 real enzymes
+#                                      (catalase, pyrophosphatases) sharing no
+#                                      biochemistry, 118 of them with a GPR
+#   protein formation                  one gene-less reaction, PROTEIN_BS, 21
+#                                      metabolites — a biomass-style summary
+#   intracellular demand               151 reactions, all DM_/SK_, all a single
+#                                      metabolite, no GPR
+#   intracellular source/sink          95 reactions, same shape
+#   r group synthesis                  6 reactions named "R group artificial flux"
+#                                      and "R group to palmitate conversion"
+#   biomass and maintenance functions  BIOMASS_reaction, two maintenance variants
+#                                      and ATPM — the FBA objective
+#   exchange/demand reaction           label/content mismatch: 3 reactions, none of
+#                                      them EX_/DM_/SK_ (two are ceramidases with
+#                                      genes, one a transporter). The real EX_
+#                                      reactions live in Extracellular exchange
+#   dietary fiber binding              12 gene-less reactions, every name "Binding
+#                                      of <fiber> with <bile acid>" — adsorption,
+#                                      not enzymatic conversion
+#
+# Corroborated downstream: across 777 abstracts retrieved for these names the 10k
+# NER checkpoint predicts none of them as a pathway, and gt_100's 279 human spans
+# contain none either.
 RECON_BLOCKLIST: set[str] = {
     "miscellaneous",
     "protein formation",

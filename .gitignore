@@ -173,6 +173,16 @@ data/processed/gold-pilot1k/*.jsonl
 # TRUBA separately because they are generated from the local Doccano export.
 data/processed/pathway-10k/*.jsonl
 data/processed/pathway-10k-*/
+# The merged 10k + missing-pathway corpus follows the same rule as pathway-10k:
+# its frozen split is the contract between runs, so it is tracked while the
+# generated corpus and tokenizer-specific datasets are not.
+!data/processed/pathway-10k-missing/
+data/processed/pathway-10k-missing/*
+!data/processed/pathway-10k-missing/splits.json
+# Final data product: the merged corpus itself is tracked as well, because its
+# missing-pathway half is LLM-reviewed silver that cannot be regenerated exactly.
+!data/processed/pathway-10k-missing/articles.jsonl
+!data/processed/pathway-10k-missing/matches.jsonl
 
 # Sweep outputs. summary.jsonl is the aggregated result and is kept; the
 # per-run directories hold logs and prediction dumps and are regenerable.
@@ -238,6 +248,10 @@ data/evaluation/
 !data/doccano/disease_pathway_remaining_6125_doccano_curated_v1.manifest.json
 !data/doccano/disease_pathway_10125_doccano_combined_v1.jsonl
 !data/doccano/10k_dict_match.jsonl
+
+# Final data product: the 10k + missing-pathway doccano export and its manifest.
+!data/doccano/pathway_10k_plus_missing.jsonl
+!data/doccano/pathway_10k_plus_missing.manifest.json
 data/processed/disease-ner/
 data/processed/pathway-ner/
 data/silver/pathway_remaining_6125.jsonl
@@ -246,3 +260,19 @@ data/silver/pathway_remaining_6125.jsonl
 # the provenance record and stays tracked.
 data/reviews/*
 !data/reviews/*.summary.json
+
+# KEGG–Recon3D corpus: fetched abstracts. Regenerates from the tracked CSV via
+# pubmed_api/fetch_kegg_abstracts.py (shared article_cache makes a re-fetch cheap).
+# The CSV, the derived query_pathways.jsonl and pmids.txt stay tracked — they are
+# the inputs that define the corpus.
+data/raw/kegg_recon3d/articles.json
+data/raw/kegg_recon3d/fulltext_50/
+# Shared with the main checkout rather than re-fetched per worktree.
+data/raw/llm_cache_silver
+
+# Missing-pathway recovery run (scripts/fetch_missing_pathways.py and friends):
+# a PubMed search cache, the fetched abstracts and the NER output all regenerate
+# from unique_pathways_from_recon.json + preprocessing/pathway_surface_forms.py.
+# Only the report under reports/ is tracked.
+data/raw/missing_pathways/
+data/processed/missing_pathways/

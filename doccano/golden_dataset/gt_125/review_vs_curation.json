@@ -1,0 +1,261 @@
+{
+ "basis": {
+  "curated_docs": 25,
+  "curated_spans": 70,
+  "docs_reviewed_by_audit": 23,
+  "judge_model": {
+   "claude-opus-5[1m]": 23
+  },
+  "silver_spans": 53
+ },
+ "verdicts": {
+  "correct -> curator_kept": 45,
+  "boundary -> curator_moved_boundary": 3,
+  "boundary -> curator_kept": 4,
+  "correct -> curator_moved_boundary": 1
+ },
+ "discovery": {
+  "proposals": 21,
+  "outcomes": {
+   "restates_existing_span": 2,
+   "in_text_not_gold": 7,
+   "matches_curator_addition": 8,
+   "not_verbatim_in_text": 4
+  },
+  "curator_additions": 21,
+  "curator_additions_by_reason": {
+   "unreviewed_doc": 3,
+   "proposed_by_audit": 7,
+   "boundary_of_existing": 4,
+   "not_proposed": 7
+  },
+  "detail": [
+   {
+    "pmid": "17005180",
+    "proposal": "estrogen synthesis",
+    "outcome": "restates_existing_span"
+   },
+   {
+    "pmid": "17912153",
+    "proposal": "androgen secretion",
+    "outcome": "in_text_not_gold"
+   },
+   {
+    "pmid": "19012251",
+    "proposal": "de novo synthesis from acetyl-CoA",
+    "outcome": "matches_curator_addition"
+   },
+   {
+    "pmid": "23585733",
+    "proposal": "cholesterol synthetic genes",
+    "outcome": "in_text_not_gold"
+   },
+   {
+    "pmid": "28655332",
+    "proposal": "lipoic acid metabolism machinery",
+    "outcome": "in_text_not_gold"
+   },
+   {
+    "pmid": "28729418",
+    "proposal": "Mevalonate Metabolism",
+    "outcome": "restates_existing_span"
+   },
+   {
+    "pmid": "31917509",
+    "proposal": "Glycolysis",
+    "outcome": "not_verbatim_in_text"
+   },
+   {
+    "pmid": "31917509",
+    "proposal": "glucose utilization",
+    "outcome": "matches_curator_addition"
+   },
+   {
+    "pmid": "31917509",
+    "proposal": "glucose and glutamine metabolism",
+    "outcome": "matches_curator_addition"
+   },
+   {
+    "pmid": "35321818",
+    "proposal": "enzymatic pathways",
+    "outcome": "in_text_not_gold"
+   },
+   {
+    "pmid": "37100627",
+    "proposal": "cholesterol absorption",
+    "outcome": "matches_curator_addition"
+   },
+   {
+    "pmid": "42076685",
+    "proposal": "lipoprotein metabolic process",
+    "outcome": "matches_curator_addition"
+   },
+   {
+    "pmid": "6305831",
+    "proposal": "turnover of polyphosphoinositides",
+    "outcome": "not_verbatim_in_text"
+   },
+   {
+    "pmid": "6305831",
+    "proposal": "conversion of phosphatidylinositol into DPI and TPI",
+    "outcome": "in_text_not_gold"
+   },
+   {
+    "pmid": "8603034",
+    "proposal": "RA metabolism",
+    "outcome": "matches_curator_addition"
+   },
+   {
+    "pmid": "7859242",
+    "proposal": "vitamin D metabolites",
+    "outcome": "in_text_not_gold"
+   },
+   {
+    "pmid": "31746143",
+    "proposal": "mevalonate pathway",
+    "outcome": "not_verbatim_in_text"
+   },
+   {
+    "pmid": "31746143",
+    "proposal": "MVA metabolism",
+    "outcome": "matches_curator_addition"
+   },
+   {
+    "pmid": "31746143",
+    "proposal": "glioma cell metabolism",
+    "outcome": "in_text_not_gold"
+   },
+   {
+    "pmid": "16165297",
+    "proposal": "Estrogen synthesis",
+    "outcome": "not_verbatim_in_text"
+   },
+   {
+    "pmid": "16165297",
+    "proposal": "aromatization from testosterone",
+    "outcome": "matches_curator_addition"
+   }
+  ]
+ },
+ "unreviewed": [
+  {
+   "pmid": "1317042",
+   "curator_spans": [
+    "polyphosphoinositide hydrolysis",
+    "inositol polyphosphate formation",
+    "calcium homeostasis"
+   ]
+  },
+  {
+   "pmid": "25804762",
+   "curator_spans": []
+  }
+ ],
+ "curator_added": [
+  {
+   "pmid": "1317042",
+   "span": "polyphosphoinositide hydrolysis",
+   "reason": "unreviewed_doc"
+  },
+  {
+   "pmid": "1317042",
+   "span": "inositol polyphosphate formation",
+   "reason": "unreviewed_doc"
+  },
+  {
+   "pmid": "1317042",
+   "span": "calcium homeostasis",
+   "reason": "unreviewed_doc"
+  },
+  {
+   "pmid": "16165297",
+   "span": "aromatization from testosterone",
+   "reason": "proposed_by_audit"
+  },
+  {
+   "pmid": "19012251",
+   "span": "de novo synthesis from acetyl-CoA",
+   "reason": "proposed_by_audit"
+  },
+  {
+   "pmid": "19012251",
+   "span": "de novo cholesterol synthesis",
+   "reason": "boundary_of_existing"
+  },
+  {
+   "pmid": "19012251",
+   "span": "formation of steroid hormones",
+   "reason": "boundary_of_existing"
+  },
+  {
+   "pmid": "25315431",
+   "span": "androgen signaling/metabolism",
+   "reason": "not_proposed"
+  },
+  {
+   "pmid": "31746143",
+   "span": "MVA metabolism",
+   "reason": "proposed_by_audit"
+  },
+  {
+   "pmid": "31917509",
+   "span": "synthesis of the mitochondrial electron carrier coenzyme Q10 (CoQ10)",
+   "reason": "not_proposed"
+  },
+  {
+   "pmid": "31917509",
+   "span": "glucose utilization",
+   "reason": "proposed_by_audit"
+  },
+  {
+   "pmid": "31917509",
+   "span": "glucose uptake",
+   "reason": "not_proposed"
+  },
+  {
+   "pmid": "31917509",
+   "span": "glucose and glutamine metabolism",
+   "reason": "boundary_of_existing"
+  },
+  {
+   "pmid": "37100627",
+   "span": "cholesterol absorption and synthesis",
+   "reason": "not_proposed"
+  },
+  {
+   "pmid": "37100627",
+   "span": "cholesterol absorption",
+   "reason": "proposed_by_audit"
+  },
+  {
+   "pmid": "40663606",
+   "span": "lysosomal pathways",
+   "reason": "not_proposed"
+  },
+  {
+   "pmid": "40663606",
+   "span": "lipoylation of E2 subunits of alpha-ketoglutarate dehydrogenase (α-KGDH E2)",
+   "reason": "not_proposed"
+  },
+  {
+   "pmid": "40663606",
+   "span": "protein lipoylation",
+   "reason": "not_proposed"
+  },
+  {
+   "pmid": "42076685",
+   "span": "lipoprotein metabolic process",
+   "reason": "proposed_by_audit"
+  },
+  {
+   "pmid": "8603034",
+   "span": "catabolism of retinoic acid (RA).",
+   "reason": "boundary_of_existing"
+  },
+  {
+   "pmid": "8603034",
+   "span": "RA metabolism",
+   "reason": "proposed_by_audit"
+  }
+ ]
+}

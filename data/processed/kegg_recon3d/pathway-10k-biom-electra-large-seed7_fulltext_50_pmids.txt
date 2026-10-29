@@ -1,0 +1,56 @@
+# Frozen PMID list for pathway_spans_fulltext_50.jsonl.
+# Frozen input: run from an explicit --pmids list.
+# Model: /home/enes/NER-pipeline/runs-truba-checkpoints/pathway-10k/biom-electra-large/lr3e-05/seed7. Written in output order — this is the *effective*
+# sample: golden pmids, pmids without an abstract and failed LLM calls are
+# already excluded, so re-running to retry failures can grow this list.
+# Feed to run_silver.py --pmids to reproduce this run.
+3201231
+1634041
+17027861
+11949931
+11949932
+11949934
+11949935
+8655128
+11949937
+18676167
+19267410
+18782459
+17980020
+20524213
+22516612
+18067674
+16722536
+17916236
+17054399
+19079066
+22927827
+17167479
+26005867
+21532572
+23857908
+24482476
+20613862
+25751282
+27217339
+28052917
+31637422
+34415322
+31636353
+34489854
+35718349
+37119330
+35150594
+36256512
+25855803
+26385305
+19667227
+23313956
+27693233
+39233737
+26561570
+30157269
+28973171
+29517768
+39230499
+18614015
