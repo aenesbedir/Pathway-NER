@@ -16,9 +16,15 @@ simply disappear rather than merge.
 
 The information needed is in the text, not in a vocabulary: the article defines
 its own abbreviation. Schwartz and Hearst (2003) is the standard reader for that
-pattern and scispacy ships it as `AbbreviationDetector`. This module prefers it
-and falls back to a parenthesis pattern when scispacy is unavailable, so the
-pipeline still runs without the optional dependency.
+pattern and scispacy ships it as `AbbreviationDetector`. This module requires it.
+
+An earlier version fell back to a parenthesis pattern when scispacy could not be
+imported. The fallback was silent and far weaker: it cannot read "oxidative
+phosphorylation (OXPHOS)", whose short form is not the initials of the long one.
+Rebuilding the silver_2k_full candidates in an environment without scispacy gave
+473 of 3,102 same-sentence pairs different ids, with nothing in the output to
+say why. A missing detector is now an import error, and `detector_version()`
+names the detector for the manifest.
 
 What it deliberately does not do
 --------------------------------
@@ -34,15 +40,6 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-
-#: "long form (SHORT)" with the short form in parentheses immediately after.
-#: Kept deliberately tight - a loose pattern here merges unrelated entities.
-_PAREN = re.compile(
-    r"(?P<long>[A-Za-z][\w\-'/,\s]{2,80}?)\s*\(\s*(?P<short>[A-Za-z][A-Za-z0-9\-'/]{0,9})\s*\)"
-)
-
-_STOP = {"of", "the", "and", "in", "a", "an", "with", "to", "for", "or", "by", "on"}
-
 
 @dataclass(frozen=True)
 class Definition:
@@ -67,36 +64,17 @@ def _norm(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip().lower()
 
 
-def _is_plausible(short: str, long: str) -> bool:
-    """Accept only a short form whose letters can be read out of the long form.
+def detector_version() -> str:
+    """Name and version of the detector, for the manifest. Raises if missing."""
+    from importlib.metadata import version
 
-    Schwartz-Hearst proper matches characters right to left; this is the cheap
-    version used by the fallback. It rejects "(see Methods)" and similar noise,
-    """
-    letters = [c for c in short.lower() if c.isalnum()]
-    if not letters or len(letters) > 10:
-        return False
-    words = [w for w in re.split(r"[\s\-/]+", long.lower()) if w and w not in _STOP]
-    if len(words) < len(letters):
-        return False
-    initials = "".join(w[0] for w in words)
-    if initials == "".join(letters):
-        return True
-    # Fall back to subsequence: the short form's letters appear in order in the
-    # long form. Covers "HHcy" for "hyperhomocysteinemia".
-    it = iter(long.lower())
-    return all(any(c == ch for ch in it) for c in letters)
+    import scispacy.abbreviation  # noqa: F401 - fail here, not mid-corpus
+
+    return f"scispacy {version('scispacy')}"
 
 
 def find_definitions(text: str) -> list[Definition]:
-    """Return every abbreviation defined in `text`, best detector first."""
-    try:
-        return _scispacy(text)
-    except Exception:  # noqa: BLE001 - optional dependency or model issue
-        return _fallback(text)
-
-
-def _scispacy(text: str) -> list[Definition]:
+    """Return every abbreviation defined in `text`."""
     import spacy
     from scispacy.abbreviation import AbbreviationDetector  # noqa: F401
 
@@ -126,21 +104,6 @@ def _scispacy(text: str) -> list[Definition]:
         seen.add(d.short_key)
         uniq.append(d)
     return uniq
-
-
-def _fallback(text: str) -> list[Definition]:
-    out, seen = [], set()
-    for m in _PAREN.finditer(text):
-        short, long = m.group("short").strip(), m.group("long").strip()
-        if not _is_plausible(short, long):
-            continue
-        if _norm(short) in seen:
-            continue
-        seen.add(_norm(short))
-        out.append(
-            Definition(short, long, m.start("short"), m.end("short"), "regex")
-        )
-    return out
 
 
 def merge_map(text: str, keys: set[str]) -> dict[str, str]:
