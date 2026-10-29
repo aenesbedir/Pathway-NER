@@ -1,0 +1,30 @@
+{
+  "old": "/home/enes/NER-pipeline/data/processed/relation/silver_2k_full",
+  "new": "/home/enes/NER-pipeline/data/processed/relation/silver_2k_10kplusmissing",
+  "old_corpus": "/home/enes/NER-pipeline/data/doccano/disease_pathway_10125_doccano_combined_v1.jsonl",
+  "n_old_same_sentence": 3102,
+  "n_new_same_sentence": 3189,
+  "status": {
+    "unchanged": 3073,
+    "new": 81,
+    "mentions_changed": 29,
+    "stratum_changed": 6
+  },
+  "new_labels_present": true,
+  "unchanged_label_disagreements": 3,
+  "label_transitions_outside_unchanged": {
+    "None -> association": 28,
+    "None -> downregulation": 24,
+    "None -> upregulation": 23,
+    "upregulation -> upregulation": 18,
+    "None -> none": 10,
+    "downregulation -> downregulation": 5,
+    "association -> association": 2,
+    "none -> none": 2,
+    "None -> None": 1,
+    "None -> no_association_stated": 1,
+    "association -> upregulation": 1,
+    "upregulation -> association": 1
+  },
+  "output": "/home/enes/NER-pipeline/data/processed/relation/silver_2k_10kplusmissing/changes.jsonl"
+}

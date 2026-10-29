@@ -229,6 +229,19 @@ data/processed/relation/silver_2k_full/*
 !data/processed/relation/silver_2k_full/candidates_same_sentence.jsonl
 !data/processed/relation/silver_2k_full/candidates.manifest.json
 
+# Final data product: the same sample relabelled over the pathway spans of
+# pathway_10k_plus_missing, with the pair-by-pair record of what changed.
+!data/processed/relation/silver_2k_10kplusmissing/
+data/processed/relation/silver_2k_10kplusmissing/*
+!data/processed/relation/silver_2k_10kplusmissing/relations_llm_opus48_same_sentence.jsonl
+!data/processed/relation/silver_2k_10kplusmissing/relations_llm_opus48_same_sentence.manifest.json
+!data/processed/relation/silver_2k_10kplusmissing/relations_llm_opus48_same_sentence.summary.json
+!data/processed/relation/silver_2k_10kplusmissing/candidates_same_sentence.jsonl
+!data/processed/relation/silver_2k_10kplusmissing/candidates.manifest.json
+!data/processed/relation/silver_2k_10kplusmissing/sample_pmids.txt
+!data/processed/relation/silver_2k_10kplusmissing/changes.jsonl
+!data/processed/relation/silver_2k_10kplusmissing/changes.summary.json
+
 # remaining_6125 disease/pathway review batch. Only the PMID list that defines
 # the corpus slice and the review summary are tracked; every other artefact in
 # the chain below is a machine output kept locally.

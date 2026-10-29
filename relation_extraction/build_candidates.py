@@ -219,6 +219,10 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=42)
     args = ap.parse_args()
 
+    # Resolved before any work: a missing detector must stop the run, not change
+    # which surfaces merge (see abbreviations.py).
+    detector = abbreviations.detector_version() if args.merge_abbreviations else None
+
     if args.pmids:
         sample = {l.strip() for l in args.pmids.read_text().splitlines() if l.strip()}
         selection = f"explicit list: {args.pmids}"
@@ -232,7 +236,9 @@ def main() -> None:
     #: PMID -> PATHWAY spans, when a separate reviewed pathway layer is supplied.
     pathway_override: dict[str, list] = {}
     if args.pathway_source:
-        for line in args.pathway_source.read_text().splitlines():
+        # Iterate the file, not str.splitlines(): abstracts can contain U+2029,
+        # which splitlines() treats as a line break and which cuts a record.
+        for line in open(args.pathway_source, encoding="utf-8"):
             if not line.strip():
                 continue
             rec = json.loads(line)
@@ -284,6 +290,14 @@ def main() -> None:
     args.outdir.mkdir(parents=True, exist_ok=True)
     out_path = args.outdir / "candidates.jsonl"
     n = write_jsonl(out_path, [*same, *kept_doc_level])
+    # The teacher labels one stratum at a time, so each also gets its own file.
+    same_path = args.outdir / "candidates_same_sentence.jsonl"
+    doc_path = args.outdir / "candidates_doc_level.jsonl"
+    write_jsonl(same_path, same)
+    write_jsonl(doc_path, kept_doc_level)
+    # The sample is otherwise only reproducible by re-running this exact code.
+    pmids_path = args.outdir / "sample_pmids.txt"
+    pmids_path.write_text("".join(f"{p}\n" for p in sorted(sample)))
 
     manifest = {
         "schema_version": SCHEMA_VERSION,
@@ -299,6 +313,11 @@ def main() -> None:
         "split_used": "train" if not args.pmids else "explicit",
         "selection": selection,
         "pathway_source": str(args.pathway_source) if args.pathway_source else None,
+        "pathway_source_sha256": (
+            sha256_file(args.pathway_source) if args.pathway_source else None
+        ),
+        "sample_pmids": str(pmids_path),
+        "sample_pmids_sha256": sha256_file(pmids_path),
         "seed": args.seed,
         "n_docs_requested": args.n_docs,
         "n_docs_found": docs_seen,
@@ -308,12 +327,17 @@ def main() -> None:
         "n_doc_level_kept": len(kept_doc_level),
         "n_candidates": n,
         "merge_abbreviations": args.merge_abbreviations,
+        "abbreviation_detector": detector,
         "n_merged_pathway_surfaces": sum(len(c.pathway_variants) for c in same + kept_doc_level),
         "n_merged_disease_surfaces": sum(len(c.disease_variants) for c in same + kept_doc_level),
         "spacy_version": spacy.__version__,
         "segmentation": "spacy.blank('en') + sentencizer",
         "output": str(out_path),
         "output_sha256": sha256_file(out_path),
+        "output_same_sentence": str(same_path),
+        "output_same_sentence_sha256": sha256_file(same_path),
+        "output_doc_level": str(doc_path),
+        "output_doc_level_sha256": sha256_file(doc_path),
     }
     (args.outdir / "candidates.manifest.json").write_text(
         json.dumps(manifest, indent=2) + "\n"
