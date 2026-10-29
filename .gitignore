@@ -183,6 +183,10 @@ data/processed/pathway-10k-missing/*
 # missing-pathway half is LLM-reviewed silver that cannot be regenerated exactly.
 !data/processed/pathway-10k-missing/articles.jsonl
 !data/processed/pathway-10k-missing/matches.jsonl
+# Sentence-shuffle augmentation of that corpus. Deterministic from the tracked
+# corpus, split and seed, so only the manifest is kept.
+data/processed/10k-missing-shuffle/*/*
+!data/processed/10k-missing-shuffle/*/sentence_shuffle.manifest.json
 
 # Sweep outputs. summary.jsonl is the aggregated result and is kept; the
 # per-run directories hold logs and prediction dumps and are regenerable.
