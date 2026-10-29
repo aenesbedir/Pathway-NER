@@ -187,6 +187,11 @@ data/processed/pathway-10k-missing/*
 # corpus, split and seed, so only the manifest is kept.
 data/processed/10k-missing-shuffle/*/*
 !data/processed/10k-missing-shuffle/*/sentence_shuffle.manifest.json
+# The corpus that adds those copies to train: its split is the contract between
+# runs and is tracked; the corpus and tokenizer-specific datasets regenerate.
+!data/processed/pathway-10k-missing-shuffle/
+data/processed/pathway-10k-missing-shuffle/*
+!data/processed/pathway-10k-missing-shuffle/splits.json
 
 # Sweep outputs. summary.jsonl is the aggregated result and is kept; the
 # per-run directories hold logs and prediction dumps and are regenerable.
