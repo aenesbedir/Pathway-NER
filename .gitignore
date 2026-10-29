@@ -206,7 +206,17 @@ data/raw/primekg/
 # later probes). Candidates, teacher labels, manifests and doccano/review exports
 # all regenerate from the tracked scripts in relation_extraction/.
 data/processed/relation/*
-data/processed/gt_100/
+data/processed/gt_100/*
+
+# Final data product: the relation test set, 180 pathway-disease pairs over 79
+# gt_100 abstracts, labelled by Fable (schema v4, single mode) and not human
+# reviewed. Its pathway spans are gt_100 v1, not gt_100_v2 or gt_125, which the
+# NER side uses. train_relation_evidence.py reads these two files by default.
+!data/processed/gt_100/gt_100_disease_pathway_bent-pubmedbert-ner-disease_relation_fable_v4d_single.jsonl
+!data/processed/gt_100/gt_100_disease_pathway_bent-pubmedbert-ner-disease_relation_fable_v4d_single.manifest.json
+!data/processed/gt_100/gt_100_disease_pathway_bent-pubmedbert-ner-disease_relation_fable_v4d_single.summary.json
+!data/processed/gt_100/candidates_v4.jsonl
+!data/processed/gt_100/candidates_v4.summary.json
 
 # Final data product: the Opus-labelled same_sentence silver of silver_2k_full,
 # with the candidate pool it was labelled from. Teacher output is not

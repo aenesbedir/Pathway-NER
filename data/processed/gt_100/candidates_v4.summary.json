@@ -1,0 +1,20 @@
+{
+  "labels": "/home/enes/NER-pipeline/.claude/worktrees/relation-model/data/processed/gt_100/gt_100_disease_pathway_bent-pubmedbert-ner-disease_relation_fable.jsonl",
+  "pool": "/home/enes/NER-pipeline/.claude/worktrees/relation-model/data/processed/relation/gt_100/candidates.jsonl",
+  "n_pairs_named": 180,
+  "n_candidates": 180,
+  "n_pmids": 79,
+  "n_missing_from_pool": 0,
+  "missing": [],
+  "strata": {
+    "doc_level": 118,
+    "same_sentence": 62
+  },
+  "mentions_per_candidate": {
+    "min": 2,
+    "median": 4,
+    "max": 22
+  },
+  "rejected": {},
+  "out": "/home/enes/NER-pipeline/.claude/worktrees/relation-model/data/processed/gt_100/candidates_v4.jsonl"
+}
