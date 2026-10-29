@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "artifact_type": "doccano_sequence_labeling_import",
+  "version": "10k-plus-missing-v1",
+  "label_set": [
+    "PATHWAY"
+  ],
+  "output": {
+    "path": "data/doccano/pathway_10k_plus_missing.jsonl",
+    "sha256": "120acf572d2ca7e6d9e19fe48aa36f197673b68340a528f937e57598bbf2405f",
+    "documents": 10900,
+    "labels": {
+      "PATHWAY": 27189
+    }
+  },
+  "inputs": {
+    "ten_k": {
+      "path": "/home/enes/NER-pipeline/data/doccano/10k_dict_match.jsonl",
+      "sha256": "845ef29f3705e33059f3923fb77e44bd40e39f8285ada9eac3b47ef8eb15f57a",
+      "documents": 10125,
+      "dropped_disease_spans": 96629
+    },
+    "missing": {
+      "path": "data/processed/missing_pathways/missing_llm_review.jsonl",
+      "sha256": "bccf813b278e47b5e474e570b2a00a757b4153f89b8842fa8a5fa7604ae2ace3",
+      "documents_added": 775,
+      "spans_added": 1708,
+      "spans_by_stage": {
+        "ner": 589,
+        "dict": 1106,
+        "booster": 13
+      },
+      "skipped_already_in_10k": 56,
+      "skipped_no_abstract": 0,
+      "spans_dropped_offset_mismatch": 0,
+      "annotation_status": "llm_reviewed_silver"
+    }
+  }
+}

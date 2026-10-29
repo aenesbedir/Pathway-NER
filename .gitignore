@@ -175,6 +175,10 @@ data/processed/pathway-10k-*/
 !data/processed/pathway-10k-missing/
 data/processed/pathway-10k-missing/*
 !data/processed/pathway-10k-missing/splits.json
+# Final data product: the merged corpus itself is tracked as well, because its
+# missing-pathway half is LLM-reviewed silver that cannot be regenerated exactly.
+!data/processed/pathway-10k-missing/articles.jsonl
+!data/processed/pathway-10k-missing/matches.jsonl
 
 # Sweep outputs. summary.jsonl is the aggregated result and is kept; the
 # per-run directories hold logs and prediction dumps and are regenerable.
@@ -194,8 +198,12 @@ runs-truba*/
 # Caveat recorded deliberately: the qwen2.5:14b silver is LLM sampling output
 # and is not bit-reproducible from the tracked inputs. Losing it means the
 # PATHWAY side of this batch cannot be rebuilt exactly. Keep local backups.
-data/doccano/
+data/doccano/*
 data/evaluation/
+
+# Final data product: the 10k + missing-pathway doccano export and its manifest.
+!data/doccano/pathway_10k_plus_missing.jsonl
+!data/doccano/pathway_10k_plus_missing.manifest.json
 data/processed/disease-ner/
 data/processed/pathway-ner/
 data/silver/pathway_remaining_6125.jsonl
