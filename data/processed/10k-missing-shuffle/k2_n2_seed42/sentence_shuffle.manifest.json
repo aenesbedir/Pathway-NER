@@ -1,0 +1,29 @@
+{
+  "method": "sentence_shuffle",
+  "script": "preprocessing/shuffle_sentence/shuffle_sentence.py",
+  "git_sha": "777d9abb7855350fb6212c1e673fa14dafb51117",
+  "git_dirty": false,
+  "corpus": "/home/enes/NER-pipeline/data/doccano/pathway_10k_plus_missing.jsonl",
+  "corpus_sha256": "120acf572d2ca7e6d9e19fe48aa36f197673b68340a528f937e57598bbf2405f",
+  "splits": "/home/enes/NER-pipeline/data/processed/pathway-10k-missing/splits.json",
+  "splits_sha256": "30c683a9341757da2fb68ffe638272738fc4e96e3f67985d823d766852511a19",
+  "split_used": "train",
+  "k": 2,
+  "n_copies": 2,
+  "seed": 42,
+  "limit": 0,
+  "spacy_version": "3.7.5",
+  "segmentation": "spacy.blank('en') + sentencizer",
+  "n_train_docs": 8725,
+  "n_excluded_crossing_span": 0,
+  "n_donors": 7964,
+  "n_recipients": 8725,
+  "counts": {
+    "written": 17450,
+    "donor_spans_added": 37057,
+    "recipient_spans_dropped": 6065,
+    "recipients_without_pathway": 1522
+  },
+  "output": "/home/enes/NER-pipeline/data/processed/10k-missing-shuffle/k2_n2_seed42/sentence_shuffle.jsonl",
+  "output_sha256": "037350a26d23e3ee229d377b79a13bf0063ab55d5e28f20e79c6d2c394c62d3c"
+}
