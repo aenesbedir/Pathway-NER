@@ -17,6 +17,7 @@ import json
 import time
 
 import torch
+from kev.checkpoint import LoadOptions
 from kev.data import load_records
 from kev.model import training_context
 from kev.predictors import LocalPredictor
@@ -28,9 +29,13 @@ def main() -> None:
     ap.add_argument("--data", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--max-state", type=int, default=3000)
+    ap.add_argument("--dtype", choices=["fp32", "bf16"], default=None,
+                    help="default: fp32, or bf16 for a checkpoint trained on a bf16 backbone")
     args = ap.parse_args()
 
-    predictor = LocalPredictor(args.run, "cuda", context=training_context(args.max_state))
+    dtype = {"fp32": torch.float32, "bf16": torch.bfloat16, None: None}[args.dtype]
+    predictor = LocalPredictor(args.run, "cuda", opts=LoadOptions(dtype=dtype),
+                               context=training_context(args.max_state))
     records = load_records(args.data)
     labels = list(records[0]["questions"]["relation"]["criteria"])
 

@@ -9,7 +9,9 @@
 #
 #   relation_extraction/decision_models/train_kev.sh
 #
-# Set MAX_STEPS to stop early, for a smoke test.
+# Set MAX_STEPS to stop early, for a smoke test. Set BASELINE=1 to score INIT
+# before training. An existing $DATA/train.jsonl is used as it is, and SKIP_SYNC=1
+# trusts the prepared environment; both are for compute nodes without network.
 
 set -euo pipefail
 
@@ -25,6 +27,11 @@ EPOCHS=${EPOCHS:-2}
 LR=${LR:-2e-5}
 MAX_STATE=${MAX_STATE:-2200}
 MAX_STEPS=${MAX_STEPS:-0}
+WEIGHTS_DTYPE=${WEIGHTS_DTYPE:-fp32}
+EVAL_DTYPE=${EVAL_DTYPE:-}
+BASELINE=${BASELINE:-0}
+SKIP_SYNC=${SKIP_SYNC:-0}
+EVAL=(.venv/bin/python "$ROOT/relation_extraction/decision_models/eval_kev.py")
 
 if [ ! -d "$KEV_DIR/.git" ]; then
     git clone https://github.com/jaredpalmer/kev.git "$KEV_DIR"
@@ -35,10 +42,23 @@ if [ "$(git -C "$KEV_DIR" rev-parse HEAD)" != "$KEV_COMMIT" ] || [ -n "$(git -C 
     exit 1
 fi
 
-python3 "$ROOT/relation_extraction/decision_models/build_kev_data.py" --outdir "$DATA"
+if [ ! -s "$DATA/train.jsonl" ]; then
+    python3 "$ROOT/relation_extraction/decision_models/build_kev_data.py" --outdir "$DATA"
+fi
+sha256sum "$DATA/train.jsonl" "$DATA/dev.jsonl"
 
 cd "$KEV_DIR"
-uv sync -q --frozen --extra serve
+if [ "$SKIP_SYNC" != 1 ]; then
+    uv sync -q --frozen --extra serve
+fi
+mkdir -p "$(dirname "$OUT")"
+if [ -n "$EVAL_DTYPE" ]; then
+    EVAL+=(--dtype "$EVAL_DTYPE")
+fi
+
+if [ "$BASELINE" = 1 ]; then
+    "${EVAL[@]}" --run "$INIT" --data "$DATA/dev.jsonl" --out "${OUT}_baseline_dev_predictions.json"
+fi
 
 .venv/bin/python -m kev.train \
     --data "$DATA/train.jsonl" \
@@ -46,10 +66,9 @@ uv sync -q --frozen --extra serve
     --base_revision "$BASE_REVISION" \
     --init_from "$INIT" \
     --epochs "$EPOCHS" --lr "$LR" --batch 1 --accum 8 \
-    --dtype bf16 --checkpointing 1 --device cuda \
+    --dtype bf16 --weights_dtype "$WEIGHTS_DTYPE" --checkpointing 1 --device cuda \
     --max_state "$MAX_STATE" \
     --max_steps "$MAX_STEPS" \
     --out "$OUT"
 
-.venv/bin/python "$ROOT/relation_extraction/decision_models/eval_kev.py" \
-    --run "$OUT" --data "$DATA/dev.jsonl" --out "$OUT/dev_predictions.json"
+"${EVAL[@]}" --run "$OUT" --data "$DATA/dev.jsonl" --out "$OUT/dev_predictions.json"
