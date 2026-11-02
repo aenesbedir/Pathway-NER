@@ -61,8 +61,10 @@ PYTHON = os.environ.get("NER_PYTHON", str(ROOT / "venv310" / "bin" / "python3"))
 
 # The gold-004+ recipe. Changing these changes what the sweep measures, so they
 # are explicit rather than inherited from train.py's defaults.
+# --epochs overrides only the epoch cap; the default reproduces earlier sweeps.
 RECIPE = ["--class-weights", "0.5", "1.5", "1.0",
-          "--epochs", "40", "--patience", "8", "--frozen-layers", "0"]
+          "--patience", "8", "--frozen-layers", "0"]
+DEFAULT_EPOCHS = 40
 
 
 def git_sha() -> str:
@@ -91,6 +93,10 @@ def main() -> None:
                          "`pathway-10k` is the grouped 80/10/10 mixed-curation set. "
                          "Each model reads <dataset>-<slug>/ and every model in one "
                          "sweep reads the same split file.")
+    ap.add_argument("--epochs", type=int, default=DEFAULT_EPOCHS,
+                    help=f"Epoch cap (default {DEFAULT_EPOCHS}). It also sets the "
+                         "length of the linear learning-rate decay, so runs with "
+                         "different caps are different recipes, not truncations.")
     ap.add_argument("--runs-dir", default="runs")
     ap.add_argument("--summary", default=None,
                     help="Default: <runs-dir>/summary.jsonl")
@@ -130,7 +136,8 @@ def main() -> None:
 
         cmd = [PYTHON, "train.py", "--model", model, "--output-dir", str(out),
                "--data-dir", str(data_dir), "--splits", str(splits),
-               "--lr", f"{lr:g}", "--seed", str(seed), *RECIPE]
+               "--lr", f"{lr:g}", "--seed", str(seed), *RECIPE,
+               "--epochs", str(args.epochs)]
         if fraction < 1.0:
             cmd += ["--train-fraction", f"{fraction:g}"]
         if not args.keep_checkpoints:
