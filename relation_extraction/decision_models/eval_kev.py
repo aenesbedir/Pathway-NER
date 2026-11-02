@@ -3,7 +3,12 @@
 
 kev.benchmark rejects states over 384 tokens for the released checkpoints, which
 drops most abstracts, so this script scores every record with the limit raised.
-Scores measure agreement with the silver labels, not accuracy.
+On the silver slices scores measure agreement with the silver labels, not accuracy.
+
+macroF1_4 averages the four labels other than no_association_stated.
+macroF1_present averages every label the reference uses, the way
+train_relation_evidence.py computes its macro_f1. Records carrying a stratum in
+_meta (gt_100) are also scored per stratum.
 
 Usage (from the Kev checkout that train_kev.sh prepares, with its environment):
     .venv/bin/python <repo>/relation_extraction/decision_models/eval_kev.py \
@@ -45,6 +50,7 @@ def main() -> None:
         probs = predictor(rec)["probabilities"]["relation"]
         rows.append({
             "rid": rec["_meta"]["rid"],
+            "stratum": rec["_meta"].get("stratum"),
             "opus": rec["questions"]["relation"]["label"],
             "pred": max(probs, key=probs.get),
             "probs": probs,
@@ -53,6 +59,15 @@ def main() -> None:
     with open(args.out, "w") as fh:
         json.dump(rows, fh)
 
+    report(rows, labels)
+    for stratum in sorted({r["stratum"] for r in rows} - {None}):
+        print(f"-- stratum {stratum}")
+        report([r for r in rows if r["stratum"] == stratum], labels)
+    print("s_per_pair", round(secs / len(rows), 3),
+          "peak_gib", round(torch.cuda.max_memory_reserved() / 2**30, 2))
+
+
+def report(rows: list, labels: list) -> None:
     f1 = {}
     for label in labels:
         tp = sum(r["pred"] == label == r["opus"] for r in rows)
@@ -61,11 +76,12 @@ def main() -> None:
         f1[label] = round(2 * tp / (2 * tp + fp + fn), 3) if tp else 0.0
     accuracy = sum(r["pred"] == r["opus"] for r in rows) / len(rows)
     macro = sum(v for k, v in f1.items() if k != "no_association_stated") / 4
-    print("n", len(rows), "acc", round(accuracy, 3), "macroF1_4", round(macro, 3))
+    present = [f1[label] for label in labels if any(r["opus"] == label for r in rows)]
+    print("n", len(rows), "acc", round(accuracy, 3), "macroF1_4", round(macro, 3),
+          "macroF1_present", round(sum(present) / len(present), 3))
     print("F", f1)
-    print("pred", dict(collections.Counter(r["pred"] for r in rows)),
-          "s_per_pair", round(secs / len(rows), 3),
-          "peak_gib", round(torch.cuda.max_memory_reserved() / 2**30, 2))
+    print("gold", dict(collections.Counter(r["opus"] for r in rows)))
+    print("pred", dict(collections.Counter(r["pred"] for r in rows)))
 
 
 if __name__ == "__main__":

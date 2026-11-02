@@ -7,9 +7,15 @@ and the silver label. The criteria condense the label definitions and the
 intervention rule of relation_extraction/prompts.py; the full guide is about
 5,000 tokens and does not fit the lengths Kev trains on.
 
+With --gt100 the input is instead the gt_100 relation test set: its labels joined
+to candidates_v4.jsonl, which holds the abstract and every mention of the pair,
+the same two files train_relation_evidence.py tests on.
+
 Usage (from the repository root, any Python 3):
     python relation_extraction/decision_models/build_kev_data.py \
         --outdir data/processed/relation/kev_silver
+    python relation_extraction/decision_models/build_kev_data.py --gt100 \
+        --outdir data/processed/relation/kev_gt_100
 """
 from __future__ import annotations
 
@@ -21,6 +27,9 @@ from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_GOLD = Path("/home/enes/pathway-re-synth/data/gold")
+GT100 = ROOT / "data/processed/gt_100"
+GT100_RELATIONS = GT100 / "gt_100_disease_pathway_bent-pubmedbert-ner-disease_relation_fable_v4d_single.jsonl"
+GT100_CANDIDATES = GT100 / "candidates_v4.jsonl"
 
 CRITERIA = {
     "upregulation": "The abstract states the pathway's activity, expression or flux is increased, activated or overexpressed in the disease. Also when inhibiting, blocking or depleting the pathway treats the disease.",
@@ -44,46 +53,82 @@ def load_prompts():
     return module
 
 
-def to_request(rec: dict, prompts) -> dict:
+def request(abstract: str, pathway: tuple, disease: tuple, label: str, meta: dict, prompts) -> dict:
+    """pathway and disease are (canonical name, mentions with start/end offsets)."""
     mentions = [
-        SimpleNamespace(label=label, start=m["start"], end=m["end"])
-        for key, label in (("pathway", "PATHWAY"), ("disease", "DISEASE"))
-        for m in rec[key]["mentions"]
+        SimpleNamespace(label=tag, start=m["start"], end=m["end"])
+        for tag, (_, spans) in (("PATHWAY", pathway), ("DISEASE", disease))
+        for m in spans
     ]
     return {
         "state": {
-            "abstract": prompts.mark_abstract(rec["paragraph"], mentions),
-            "pathway": rec["pathway"]["canonical"],
-            "disease": rec["disease"]["canonical"],
+            "abstract": prompts.mark_abstract(abstract, mentions),
+            "pathway": pathway[0],
+            "disease": disease[0],
         },
         "questions": {
             "relation": {
                 "type": "choice",
                 "instructions": INSTRUCTIONS,
                 "criteria": CRITERIA,
-                "label": rec["class"],
+                "label": label,
             }
         },
-        "_meta": {"rid": rec["id"]},
+        "_meta": meta,
     }
+
+
+def to_request(rec: dict, prompts) -> dict:
+    return request(
+        rec["paragraph"],
+        (rec["pathway"]["canonical"], rec["pathway"]["mentions"]),
+        (rec["disease"]["canonical"], rec["disease"]["mentions"]),
+        rec["class"], {"rid": rec["id"]}, prompts,
+    )
+
+
+def gt100_requests(prompts):
+    cands = {}
+    for line in open(GT100_CANDIDATES):
+        c = json.loads(line)
+        cands[c["candidate_id"]] = c
+    for line in open(GT100_RELATIONS):
+        rel = json.loads(line)
+        c = cands[rel["candidate_id"]]
+        yield request(
+            c["abstract"],
+            (c["pathway_key"], c["pathway_mentions"]),
+            (c["disease_key"], c["disease_mentions"]),
+            rel["label"], {"rid": rel["candidate_id"], "stratum": rel["stratum"]}, prompts,
+        )
+
+
+def write(path: Path, requests) -> None:
+    n = 0
+    with open(path, "w") as out:
+        for req in requests:
+            out.write(json.dumps(req, ensure_ascii=False) + "\n")
+            n += 1
+    print(path.name, n)
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--gold-dir", type=Path, default=DEFAULT_GOLD,
                     help="directory holding silver_train.jsonl and silver_dev.jsonl")
+    ap.add_argument("--gt100", action="store_true",
+                    help="write gt_100.jsonl from the gt_100 relation test set instead")
     ap.add_argument("--outdir", type=Path, required=True)
     args = ap.parse_args()
 
     prompts = load_prompts()
     args.outdir.mkdir(parents=True, exist_ok=True)
+    if args.gt100:
+        write(args.outdir / "gt_100.jsonl", gt100_requests(prompts))
+        return
     for split in ("train", "dev"):
-        n = 0
-        with open(args.outdir / f"{split}.jsonl", "w") as out:
-            for line in open(args.gold_dir / f"silver_{split}.jsonl"):
-                out.write(json.dumps(to_request(json.loads(line), prompts), ensure_ascii=False) + "\n")
-                n += 1
-        print(split, n)
+        recs = (json.loads(line) for line in open(args.gold_dir / f"silver_{split}.jsonl"))
+        write(args.outdir / f"{split}.jsonl", (to_request(rec, prompts) for rec in recs))
 
 
 if __name__ == "__main__":
