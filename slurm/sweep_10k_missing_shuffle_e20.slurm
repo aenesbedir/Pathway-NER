@@ -12,7 +12,11 @@
 # estimated at about 16 minutes from bioelectra-base on pathway-10k-missing
 # (5.2 min per epoch) scaled by the threefold train set; not measured.
 #
+# DATASET picks the shuffle version; the default is version 1. A later version
+# writes to its own runs directory:
+#
 #   sbatch slurm/sweep_10k_missing_shuffle_e20.slurm
+#   sbatch --export=ALL,DATASET=pathway-10k-missing-shuffle-v2 slurm/sweep_10k_missing_shuffle_e20.slurm
 
 #SBATCH --partition=akya-cuda
 #SBATCH --account=abedir
@@ -30,8 +34,8 @@ set -euo pipefail
 
 REPO=/arf/scratch/$USER/NER-pipeline
 SIF=/arf/home/$USER/container-user/nerenv.sif
-RUNS_DIR=runs-truba-10k-missing-shuffle-e20
-DATASET=pathway-10k-missing-shuffle
+DATASET=${DATASET:-pathway-10k-missing-shuffle}
+RUNS_DIR=runs-truba-${DATASET#pathway-}-e20
 
 MODEL=biomedbert-base
 LR=3e-5
@@ -49,6 +53,7 @@ fi
 
 for required in \
     "data/processed/$DATASET/splits.json" \
+    "data/processed/$DATASET/manifest.json" \
     "data/processed/$DATASET-$MODEL/meta.json" \
     "data/processed/$DATASET-$MODEL/train.jsonl" \
     "data/processed/$DATASET-$MODEL/val.jsonl" \

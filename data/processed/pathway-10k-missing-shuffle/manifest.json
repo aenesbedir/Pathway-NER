@@ -1,0 +1,18 @@
+{
+  "corpus": "data/processed/pathway-10k-missing-shuffle",
+  "shuffle_version": 1,
+  "shuffle": "data/processed/10k-missing-shuffle/k2_n2_seed42/sentence_shuffle.jsonl",
+  "shuffle_sha256": "037350a26d23e3ee229d377b79a13bf0063ab55d5e28f20e79c6d2c394c62d3c",
+  "shuffle_manifest": "data/processed/10k-missing-shuffle/k2_n2_seed42/sentence_shuffle.manifest.json",
+  "shuffle_manifest_sha256": "5d6f70962ce475a26ff414c9df6d9e5c6d82a4f18301629a25b7e06889fec65b",
+  "base_source": "data/doccano/pathway_10k_plus_missing.jsonl",
+  "base_source_sha256": "120acf572d2ca7e6d9e19fe48aa36f197673b68340a528f937e57598bbf2405f",
+  "files": {
+    "articles.jsonl": "83d2376fe6f61857b3852cc1ccad829a71f29b7519efcd9fc6e785061e7c8e6b",
+    "matches.jsonl": "712d2e34e406821d29d9ea783f07ff31ee621016c3e94aa524ad58a14be49b3a",
+    "splits.json": "9aa3558905bf698609225df3cf52d6d4048042de400a59e0b26566c1ce833695"
+  },
+  "git_sha": "3c79a39976fceebc4d2f1a9e1a448357b248cb68",
+  "written_on": "2026-11-05",
+  "note": "Written on 2026-11-05 for the corpus built on 2026-10-31 from version 1 (k2_n2_seed42/), before numbered versions existed. git_sha is the commit this manifest was written at; the split was recorded at 5f3d407."
+}

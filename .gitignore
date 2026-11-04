@@ -192,6 +192,15 @@ data/processed/10k-missing-shuffle/*/*
 !data/processed/pathway-10k-missing-shuffle/
 data/processed/pathway-10k-missing-shuffle/*
 !data/processed/pathway-10k-missing-shuffle/splits.json
+!data/processed/pathway-10k-missing-shuffle/manifest.json
+# Numbered versions (shuffle v<N> builds pathway-10k-missing-shuffle-v<N>) follow
+# the same rule; manifest.json names the shuffle version the corpus holds. The
+# pattern also matches the tokenizer-specific directories, whose contents stay
+# ignored because they hold no splits.json or manifest.json.
+!data/processed/pathway-10k-missing-shuffle-v[0-9]*/
+data/processed/pathway-10k-missing-shuffle-v[0-9]*/*
+!data/processed/pathway-10k-missing-shuffle-v[0-9]*/splits.json
+!data/processed/pathway-10k-missing-shuffle-v[0-9]*/manifest.json
 
 # Sweep outputs. summary.jsonl is the aggregated result and is kept; the
 # per-run directories hold logs and prediction dumps and are regenerable.

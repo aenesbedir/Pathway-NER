@@ -42,9 +42,22 @@ whole. Their count is in the manifest.
 
 Outputs
 -------
-    data/processed/10k-missing-shuffle/k<K>_n<N>_seed<S>/
+    data/processed/10k-missing-shuffle/v<V>/
         sentence_shuffle.jsonl          doccano format: text, label, meta
         sentence_shuffle.manifest.json  inputs with sha256, parameters, counts
+
+Versions
+--------
+Every output is a numbered version and is never overwritten: any change to the
+code, the inputs or the parameters that changes the output gets the next
+number. The parameters live in the manifest, not in the directory name, because
+a code fix with the same parameters is still different data. The corpus built
+from v<V> is pathway-10k-missing-shuffle-v<V>
+(scripts/prepare_pathway_10k_missing_shuffle.sh), so the version reaches every
+run directory trained on it.
+
+The first output, k2_n2_seed42/, predates the scheme. It is version 1, stays
+where it is, and its corpus keeps the unversioned name pathway-10k-missing-shuffle.
 
 Each record's `meta.pmid` is `<recipient pmid>-shuf<copy>` so it never collides
 with a real PMID, and `meta.augmentation` names the method, recipient, donor,
@@ -52,7 +65,8 @@ the donor sentence indices that moved and the recipient spans that were dropped.
 
 Run from the repository root:
 
-    venv310/bin/python3 preprocessing/shuffle_sentence/shuffle_sentence.py --k 2 --n-copies 2 --seed 42
+    venv310/bin/python3 preprocessing/shuffle_sentence/shuffle_sentence.py \
+        --version 2 --k 2 --n-copies 2 --seed 42
 """
 
 from __future__ import annotations
@@ -157,10 +171,17 @@ def main() -> None:
     ap.add_argument("--n-copies", type=int, default=2, help="synthetic copies per recipient")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--limit", type=int, default=0, help="recipients to process, for a smoke test")
-    ap.add_argument("--outdir", type=Path, default=None)
+    ap.add_argument("--version", type=int, required=True,
+                    help="output version; writes data/processed/10k-missing-shuffle/v<VERSION>/. "
+                         "Version 1 is the legacy k2_n2_seed42/ output, so new data starts at 2")
     args = ap.parse_args()
 
-    outdir = args.outdir or OUT_ROOT / f"k{args.k}_n{args.n_copies}_seed{args.seed}"
+    if args.version < 2:
+        ap.error("version 1 is the legacy k2_n2_seed42/ output; new versions start at 2")
+    outdir = OUT_ROOT / f"v{args.version}"
+    out_path = outdir / "sentence_shuffle.jsonl"
+    if outdir.exists():
+        raise SystemExit(f"{outdir} already exists: versions are never overwritten, use the next number")
     train = set(map(str, json.loads(args.splits.read_text())["train"]))
 
     nlp = spacy.blank("en")
@@ -180,8 +201,7 @@ def main() -> None:
     recipients = usable[: args.limit] if args.limit else usable
 
     counts: Counter = Counter()
-    outdir.mkdir(parents=True, exist_ok=True)
-    out_path = outdir / "sentence_shuffle.jsonl"
+    outdir.mkdir(parents=True)
     with open(out_path, "w", encoding="utf-8") as out:
         for rec_doc in recipients:
             rng = random.Random(f"{args.seed}:{rec_doc.pmid}")
@@ -233,6 +253,7 @@ def main() -> None:
     sha, dirty = git_state()
     manifest = {
         "method": METHOD,
+        "version": args.version,
         "script": str(Path(__file__).relative_to(REPO)),
         "git_sha": sha,
         "git_dirty": dirty,

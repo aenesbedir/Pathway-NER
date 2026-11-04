@@ -16,6 +16,12 @@ gt_100 gold spans using the same exact and partial metrics as score_gt_100.py.
 A PMID absent from the predictions counts as zero predictions rather than being
 dropped, matching score_gt_100.py.
 
+Each row also carries `training`: the training data as the run recorded it in
+test_results.json (paths and sha256 of the split and the dataset files, sizes,
+epochs) with git_sha from the run's summary row, plus the corpus manifest.json where the corpus has one, which
+names the sentence-shuffle version. The scores can then be traced to the exact
+data without the run directory.
+
 Usage:
     python scripts/score_gt_100_from_predictions.py \
         --runs-dir runs-truba-10k-missing --output analysis/gt_100_10k_missing.json
@@ -24,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -104,7 +111,41 @@ def load_gold(path: Path):
     return gold
 
 
-def score_run(run_dir: Path, gold: dict, cache: dict) -> dict | None:
+def run_key(run_dir: Path) -> str:
+    return str(run_dir if run_dir.is_absolute() and ROOT not in run_dir.parents
+               else run_dir.relative_to(ROOT))
+
+
+TRAINING_FIELDS = (
+    "data_dir", "splits", "splits_sha256", "dataset_meta_sha256",
+    "dataset_articles_sha256", "dataset_matches_sha256", "n_train", "n_val",
+    "n_test_effective", "epochs", "patience", "best_epoch", "epochs_run",
+    "precision_mode", "gpu",
+)
+
+
+def summary_shas(runs_dir: Path) -> dict:
+    """run_dir -> git_sha from the summary rows run_matrix.py wrote; test_results.json lacks it."""
+    shas = {}
+    for path in runs_dir.rglob("summary*.jsonl"):
+        for line in path.open(encoding="utf-8"):
+            row = json.loads(line)
+            shas[Path(row["run_dir"]).as_posix()] = row.get("git_sha")
+    return shas
+
+
+def training_record(results: dict, git_sha: str | None) -> dict:
+    """The run's training data and recipe, with the corpus manifest if there is one."""
+    record = {k: results.get(k) for k in TRAINING_FIELDS}
+    record["git_sha"] = git_sha
+    manifest = ROOT / Path(results["splits"]).parent / "manifest.json"
+    if manifest.exists():
+        record["corpus_manifest"] = str(manifest.relative_to(ROOT))
+        record["corpus"] = json.loads(manifest.read_text())
+    return record
+
+
+def score_run(run_dir: Path, gold: dict, cache: dict, shas: dict) -> dict | None:
     results = json.loads((run_dir / "test_results.json").read_text())
     model_key = results["model_key"]
     dataset = Path(results["data_dir"]).name
@@ -174,8 +215,7 @@ def score_run(run_dir: Path, gold: dict, cache: dict) -> dict | None:
     pp, pr, pf = prf(ptp, pfp, pfn)
     lp, lr_, lf = prf(ltp, lfp, lfn)
     return {
-        "run_dir": str(run_dir if run_dir.is_absolute() and ROOT not in run_dir.parents
-                       else run_dir.relative_to(ROOT)),
+        "run_dir": run_key(run_dir),
         "model_key": model_key,
         "lr": results["lr"],
         "seed": results["seed"],
@@ -192,6 +232,7 @@ def score_run(run_dir: Path, gold: dict, cache: dict) -> dict | None:
         "gt100_lenient_r": lr_,
         "pred_spans": n_pred_spans,
         "pmids_without_predictions": missing_pmids,
+        "training": training_record(results, shas.get(run_key(run_dir))),
     }
 
 
@@ -208,14 +249,17 @@ def main() -> None:
     n_gold = sum(len(g["spans"]) for g in gold.values())
 
     cache: dict = {}
+    shas = summary_shas(ROOT / args.runs_dir)
     rows = []
     for res in sorted((ROOT / args.runs_dir).rglob("test_results.json")):
-        rows.append(score_run(res.parent, gold, cache))
+        rows.append(score_run(res.parent, gold, cache, shas))
 
     rows.sort(key=lambda r: -r["gt100_exact_f1"])
     out = {
         "gold": {"file": str(gt_path), "pmids": len(gold),
                  "spans": n_gold},
+        "scored_at_git_sha": subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"],
+                                            capture_output=True, text=True).stdout.strip(),
         "runs": rows,
     }
     (ROOT / args.output).write_text(json.dumps(out, indent=1) + "\n")
