@@ -46,9 +46,11 @@ from transformers import (
     DataCollatorForTokenClassification,
     EarlyStoppingCallback,
     Trainer,
+    TrainerCallback,
     TrainingArguments,
     set_seed,
 )
+from transformers.trainer_utils import get_last_checkpoint
 
 from encoders import resolve, vocab_fingerprint
 
@@ -124,7 +126,41 @@ def parse_args():
                              "which is all a sweep needs — a checkpoint is ~0.5-1.6 "
                              "GB and a full model x lr x seed matrix would not fit "
                              "on disk")
+    parser.add_argument("--stop-after-epoch", type=int, default=None,
+                        help="Stop once the checkpoint of this epoch is saved, "
+                             "without testing, and write partial.json. The run "
+                             "keeps its --epochs schedule and continues with "
+                             "--resume, so a run too long for one job can be split "
+                             "across jobs")
+    parser.add_argument("--resume", action="store_true",
+                        help="Continue the run stopped by --stop-after-epoch in "
+                             "--output-dir from its last checkpoint: weights, "
+                             "optimizer, scheduler, RNG and early-stopping state")
     return parser.parse_args()
+
+
+PARTIAL = "partial.json"
+
+
+class StopAfterEpoch(TrainerCallback):
+    """Stop training after the checkpoint of epoch `epoch` has been written.
+
+    It acts in on_save, which runs after the epoch's evaluation and checkpoint,
+    so the saved trainer state does not carry the stop flag and a resumed run
+    does not stop at once. If early stopping already ended the run at this
+    epoch, the run is complete and `triggered` stays False.
+    """
+
+    def __init__(self, epoch: int):
+        self.epoch = epoch
+        self.triggered = False
+
+    def on_save(self, args, state, control, **kwargs):
+        if state.epoch is not None and state.epoch >= self.epoch - 1e-6 \
+                and not control.should_training_stop:
+            control.should_training_stop = True
+            self.triggered = True
+        return control
 
 logging.basicConfig(
     level=logging.INFO,
@@ -364,6 +400,9 @@ def main() -> None:
         greater_is_better=True,
         logging_steps=20,
         save_total_limit=2,
+        # Without this a resumed run starts early stopping with a fresh patience
+        # counter. No effect on a run that does not resume.
+        restore_callback_states_from_checkpoint=True,
         bf16=use_bf16,
         fp16=use_fp16,
         report_to="none",
@@ -378,11 +417,54 @@ def main() -> None:
         compute_metrics=compute_metrics,
         callbacks=[EarlyStoppingCallback(early_stopping_patience=args.patience)],
     )
+    stopper = None
+    if args.stop_after_epoch is not None:
+        if not 0 < args.stop_after_epoch < args.epochs:
+            raise SystemExit(f"--stop-after-epoch {args.stop_after_epoch} must be "
+                             f"between 0 and --epochs {args.epochs}")
+        stopper = StopAfterEpoch(args.stop_after_epoch)
+        trainer.add_callback(stopper)
+
+    partial_path = output_dir / PARTIAL
+    resume_from, earlier_parts = None, []
+    if args.resume:
+        resume_from = get_last_checkpoint(str(output_dir))
+        if resume_from is None or not partial_path.exists():
+            raise SystemExit(f"--resume: no stopped run in {output_dir} "
+                             f"(needs {PARTIAL} and a checkpoint-* directory)")
+        partial = json.loads(partial_path.read_text(encoding="utf-8"))
+        if partial["epochs"] != args.epochs:
+            raise SystemExit(f"--resume: the stopped run has --epochs {partial['epochs']}, "
+                             f"not {args.epochs}; the learning-rate schedule would change")
+        earlier_parts = partial["parts"]
+        log.info("Resuming from %s (stopped after epoch %s)",
+                 resume_from, partial["stopped_after_epoch"])
+    elif partial_path.exists():
+        raise SystemExit(f"{output_dir} holds a stopped run ({PARTIAL}); "
+                         f"pass --resume to continue it")
 
     log.info("Starting training …")
     started = time.time()
-    trainer.train()
+    trainer.train(resume_from_checkpoint=resume_from)
     runtime_s = time.time() - started
+    parts = earlier_parts + [{
+        "resumed_from": Path(resume_from).name if resume_from else None,
+        "until_epoch": trainer.state.epoch,
+        "runtime_s": round(runtime_s, 1),
+        "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
+    }]
+
+    if stopper is not None and stopper.triggered:
+        # Not finished: keep the checkpoints for --resume and do not test.
+        partial_path.write_text(json.dumps({
+            "stopped_after_epoch": args.stop_after_epoch,
+            "epochs": args.epochs,
+            "last_checkpoint": Path(get_last_checkpoint(str(output_dir))).name,
+            "parts": parts,
+        }, indent=2), encoding="utf-8")
+        log.info("Stopped after epoch %d; continue with --resume. State in %s",
+                 args.stop_after_epoch, partial_path)
+        return
 
     log.info("Evaluating on test set …")
     prediction = trainer.predict(test_dataset)
@@ -453,8 +535,11 @@ def main() -> None:
         "subset_seed": args.subset_seed,
         "n_val": len(val_dataset),
         "n_test_effective": len({r["pmid"] for r in test_records}),
-        "runtime_s": round(runtime_s, 1),
+        "runtime_s": round(sum(p["runtime_s"] for p in parts), 1),
     })
+    if len(parts) > 1:
+        # The run was split across jobs; each part's GPU and runtime.
+        test_results["parts"] = parts
     results_path = output_dir / "test_results.json"
     results_path.write_text(json.dumps(test_results, indent=2), encoding="utf-8")
     log.info("Test results saved to %s", results_path)
@@ -465,6 +550,7 @@ def main() -> None:
     # weight on disk.
     for checkpoint in output_dir.glob("checkpoint-*"):
         shutil.rmtree(checkpoint, ignore_errors=True)
+    partial_path.unlink(missing_ok=True)
 
 
 if __name__ == "__main__":

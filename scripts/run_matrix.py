@@ -24,6 +24,12 @@ Runs are sequential — a 4060 fits one job — and resumable: a cell whose
 `test_results.json` already exists is skipped, so an interrupted sweep continues
 where it stopped, and a grid can be widened later without recomputing it.
 
+A cell too long for one batch job can be split: run with --stop-after-epoch N,
+which saves the epoch-N checkpoint and leaves partial.json instead of results,
+then run the same command with --resume instead. The resumed part keeps the
+--epochs learning-rate schedule and the early-stopping counter, must run on the
+same commit, and writes the one summary row, its wall_s summed over the parts.
+
 Examples:
     # what would run, without running it
     venv310/bin/python3 scripts/run_matrix.py --models biomedbert-base --dry-run
@@ -102,6 +108,14 @@ def main() -> None:
                     help="Default: <runs-dir>/summary.jsonl")
     ap.add_argument("--keep-checkpoints", action="store_true",
                     help="Keep fine-tuned weights (~0.5-1.6 GB per run)")
+    ap.add_argument("--stop-after-epoch", type=int, default=None,
+                    help="Split each cell across jobs: stop after this epoch's "
+                         "checkpoint without testing (train.py --stop-after-epoch). "
+                         "The cell is not done and has no summary row yet")
+    ap.add_argument("--resume", action="store_true",
+                    help="Continue cells stopped by --stop-after-epoch from their "
+                         "last checkpoint. Refused unless the stopped part ran on "
+                         "this commit")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
@@ -120,7 +134,7 @@ def main() -> None:
     print(f"{len(cells)} cells: {len(args.models)} models x lrs x "
           f"{len(args.train_fractions)} fractions x {len(args.seeds)} seeds")
 
-    done = failed = skipped = 0
+    done = failed = skipped = stopped = 0
     for i, (model, spec, lr, seed, fraction) in enumerate(cells, 1):
         # Full-data runs keep the original path so earlier sweeps stay resumable.
         frac_dir = "" if fraction >= 1.0 else f"frac{fraction:g}/"
@@ -142,6 +156,10 @@ def main() -> None:
             cmd += ["--train-fraction", f"{fraction:g}"]
         if not args.keep_checkpoints:
             cmd.append("--no-save-model")
+        if args.stop_after_epoch is not None:
+            cmd += ["--stop-after-epoch", str(args.stop_after_epoch)]
+        if args.resume:
+            cmd.append("--resume")
 
         if args.dry_run:
             print(f"[{i}/{len(cells)}] {' '.join(cmd)}")
@@ -156,16 +174,49 @@ def main() -> None:
         print(f"[{i}/{len(cells)}] {label} …", flush=True)
         out.mkdir(parents=True, exist_ok=True)
 
-        # An interrupted cell leaves the epoch checkpoints `load_best_model_at_end`
-        # needs — 1.3 GB each, two of them, and worthless because this cell is
-        # about to restart from scratch. train.py clears them on a clean finish;
-        # this clears them after a kill.
-        for stale in out.glob("checkpoint-*"):
-            shutil.rmtree(stale, ignore_errors=True)
+        # A stopped part (train.py --stop-after-epoch) leaves partial.json next to
+        # the checkpoints it continues from. Every part of a cell must run on one
+        # commit, or the cell is two code versions under one git_sha.
+        partial_path = out / "partial.json"
+        earlier_wall = 0.0
+        if args.resume:
+            if not partial_path.exists():
+                print(f"    FAILED — --resume but no stopped run in {out}")
+                failed += 1
+                continue
+            partial = json.loads(partial_path.read_text(encoding="utf-8"))
+            if partial.get("git_sha") != sha:
+                print(f"    FAILED — stopped part ran on {partial.get('git_sha')}, "
+                      f"this is {sha}; resume on the same commit")
+                failed += 1
+                continue
+            earlier_wall = partial.get("wall_s", 0.0)
+        elif partial_path.exists():
+            print(f"    FAILED — {out} holds a stopped run; pass --resume")
+            failed += 1
+            continue
+        else:
+            # An interrupted cell leaves the epoch checkpoints
+            # `load_best_model_at_end` needs — 1.3 GB each, two of them, and
+            # worthless because this cell is about to restart from scratch.
+            # train.py clears them on a clean finish; this clears them after a kill.
+            for stale in out.glob("checkpoint-*"):
+                shutil.rmtree(stale, ignore_errors=True)
         started = time.time()
-        with (out / "train.log").open("w", encoding="utf-8") as logfile:
+        # A resumed part appends to the log of the parts before it.
+        with (out / "train.log").open("a" if args.resume else "w", encoding="utf-8") as logfile:
             proc = subprocess.run(cmd, cwd=ROOT, stdout=logfile,
                                   stderr=subprocess.STDOUT)
+        wall_s = earlier_wall + time.time() - started
+
+        if proc.returncode == 0 and not results_path.exists() and partial_path.exists():
+            partial = json.loads(partial_path.read_text(encoding="utf-8"))
+            partial.update({"git_sha": sha, "wall_s": round(wall_s, 1)})
+            partial_path.write_text(json.dumps(partial, indent=2), encoding="utf-8")
+            print(f"    stopped after epoch {partial['stopped_after_epoch']} "
+                  f"({wall_s:.0f}s); continue with --resume")
+            stopped += 1
+            continue
 
         if proc.returncode != 0 or not results_path.exists():
             print(f"    FAILED (exit {proc.returncode}) — see {out}/train.log")
@@ -174,7 +225,7 @@ def main() -> None:
 
         results = json.loads(results_path.read_text(encoding="utf-8"))
         results["git_sha"] = sha
-        results["wall_s"] = round(time.time() - started, 1)
+        results["wall_s"] = round(wall_s, 1)
         results["run_dir"] = str(out)
         summary_path.parent.mkdir(parents=True, exist_ok=True)
         with summary_path.open("a", encoding="utf-8") as f:
@@ -186,7 +237,7 @@ def main() -> None:
         done += 1
 
     if not args.dry_run:
-        print(f"\ndone {done}   skipped {skipped}   failed {failed}")
+        print(f"\ndone {done}   stopped {stopped}   skipped {skipped}   failed {failed}")
         print(f"summary: {summary_path}")
         if failed:
             raise SystemExit(1)
