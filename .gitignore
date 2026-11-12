@@ -241,6 +241,10 @@ data/processed/relation/silver_2k_10kplusmissing/*
 !data/processed/relation/silver_2k_10kplusmissing/sample_pmids.txt
 !data/processed/relation/silver_2k_10kplusmissing/changes.jsonl
 !data/processed/relation/silver_2k_10kplusmissing/changes.summary.json
+# The unlabelled doc_level pool of the same build (1,800 pairs, seed 43). It
+# regenerates from tracked inputs, but is kept so that a later doc_level
+# labelling pass or a none-class study reads the exact pairs this silver drew.
+!data/processed/relation/silver_2k_10kplusmissing/candidates_doc_level.jsonl
 
 # remaining_6125 disease/pathway review batch. Only the PMID list that defines
 # the corpus slice and the review summary are tracked; every other artefact in
