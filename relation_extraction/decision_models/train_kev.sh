@@ -9,7 +9,9 @@
 #
 #   relation_extraction/decision_models/train_kev.sh
 #
-# Set MAX_STEPS to stop early, for a smoke test. Set BASELINE=1 to score INIT
+# Set MAX_STEPS to stop early, for a smoke test. SEED (default 0) is passed to
+# kev.train, where it fixes the shuffle and augmentation order; replicates differ
+# only in it. Set BASELINE=1 to score INIT
 # before training. An existing $DATA/train.jsonl is used as it is, and SKIP_SYNC=1
 # trusts the prepared environment; both are for compute nodes without network.
 
@@ -27,6 +29,7 @@ EPOCHS=${EPOCHS:-2}
 LR=${LR:-2e-5}
 MAX_STATE=${MAX_STATE:-2200}
 MAX_STEPS=${MAX_STEPS:-0}
+SEED=${SEED:-0}
 WEIGHTS_DTYPE=${WEIGHTS_DTYPE:-fp32}
 EVAL_DTYPE=${EVAL_DTYPE:-}
 BASELINE=${BASELINE:-0}
@@ -69,6 +72,7 @@ fi
     --dtype bf16 --weights_dtype "$WEIGHTS_DTYPE" --checkpointing 1 --device cuda \
     --max_state "$MAX_STATE" \
     --max_steps "$MAX_STEPS" \
+    --seed "$SEED" \
     --out "$OUT"
 
 "${EVAL[@]}" --run "$OUT" --data "$DATA/dev.jsonl" --out "$OUT/dev_predictions.json"

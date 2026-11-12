@@ -241,6 +241,8 @@ data/processed/relation/silver_2k_10kplusmissing/*
 !data/processed/relation/silver_2k_10kplusmissing/sample_pmids.txt
 !data/processed/relation/silver_2k_10kplusmissing/changes.jsonl
 !data/processed/relation/silver_2k_10kplusmissing/changes.summary.json
+# pmid split for Kev fine-tuning, frozen by build_kev_data.py --freeze-split.
+!data/processed/relation/silver_2k_10kplusmissing/split_pmids.json
 
 # remaining_6125 disease/pathway review batch. Only the PMID list that defines
 # the corpus slice and the review summary are tracked; every other artefact in
