@@ -11,6 +11,8 @@ it gives:
 - the shape of every tensor that is passed on, and what it means;
 - where the code is.
 
+Turkish version: [kev_architecture_tr.md](kev_architecture_tr.md).
+
 ![Kev-4B forward pass for one gt_100 pair](kev_architecture.svg)
 
 The editable source of the figure is
@@ -29,17 +31,17 @@ test set (gt_100 candidate `c20f1d81558adc64`, stratum `same_sentence`):
 
 Recurring numbers:
 
-| Number | Meaning |
-|---|---|
-| 444 | Length of this example's token row: state + question + 5 options + `<decide>`. |
-| 2560 | Hidden size of Qwen3.5-4B: every token becomes a vector of 2560 numbers. |
-| 248,320 | Vocabulary size, i.e. the number of rows of the embedding table. |
-| 32 | Decoder layers: 24 Gated DeltaNet + 8 Gated full attention. |
-| 9216 | Inner width of every MLP. |
-| 256 | Width of the pointer head's matching space (`--head_dim`). |
-| 16 | LoRA rank on every projection. |
-| 5 | Relation labels: upregulation, downregulation, association, no_association_stated, none. |
-| `[a x b]` | a rows of b numbers each. One record is processed at a time, so there is no batch axis. |
+| Number    | Meaning                                                                                  |
+| --------- | ---------------------------------------------------------------------------------------- |
+| 444       | Length of this example's token row: state + question + 5 options + `<decide>`.           |
+| 2560      | Hidden size of Qwen3.5-4B: every token becomes a vector of 2560 numbers.                 |
+| 248,320   | Vocabulary size, i.e. the number of rows of the embedding table.                         |
+| 32        | Decoder layers: 24 Gated DeltaNet + 8 Gated full attention.                              |
+| 9216      | Inner width of every MLP.                                                                |
+| 256       | Width of the pointer head's matching space (`--head_dim`).                               |
+| 16        | LoRA rank on every projection.                                                           |
+| 5         | Relation labels: upregulation, downregulation, association, no_association_stated, none. |
+| `[a x b]` | a rows of b numbers each. One record is processed at a time, so there is no batch axis.  |
 
 ---
 
