@@ -102,15 +102,11 @@ Recurring numbers:
   - `<decide>` at the very end.
 - The five delimiters reuse rarely used Qwen tokens, so no embedding rows are
   added:
-
-  | Delimiter | Qwen token | id |
-  |---|---|---|
-  | `<state>` | `<\|fim_prefix\|>` | 248060 |
-  | `<q>` | `<\|fim_middle\|>` | 248061 |
-  | `<opt>` | `<\|box_start\|>` | 248049 |
-  | `</opt>` | `<\|box_end\|>` | 248050 |
-  | `<decide>` | `<\|fim_suffix\|>` | 248062 |
-
+  - `<state>` is `<|fim_prefix|>`, id 248060;
+  - `<q>` is `<|fim_middle|>`, id 248061;
+  - `<opt>` is `<|box_start|>`, id 248049;
+  - `</opt>` is `<|box_end|>`, id 248050;
+  - `<decide>` is `<|fim_suffix|>`, id 248062.
 - Text supplied by the user can never produce a delimiter: any `<|name|>`
   in it is rewritten to `<¦name¦>` before tokenizing.
 - **One row per question.** Qwen3.5 is a hybrid model.
@@ -122,18 +118,18 @@ Recurring numbers:
 
 **Numbers**
 
-- `ids [444]`:
+`ids [444]`, one id per token:
 
-  | Segment | Tokens | Positions |
-  |---|---|---|
-  | `<state>` + state | 1 + 223 = 224 | 0–223 |
-  | `<q>` + instruction | 1 + 27 = 28 | 224–251 |
-  | option 1 `upregulation: …` | `<opt>` + 43 + `</opt>` = 45 | 252–296 |
-  | option 2 `downregulation: …` | 46 | 297–342 |
-  | option 3 `association: …` | 37 | 343–379 |
-  | option 4 `no_association_stated: …` | 21 | 380–400 |
-  | option 5 `none: …` | 42 | 401–442 |
-  | `<decide>` | 1 | 443 |
+| Segment | Tokens | Positions |
+|---|---|---|
+| `<state>` + state | 1 + 223 = 224 | 0–223 |
+| `<q>` + instruction | 1 + 27 = 28 | 224–251 |
+| option 1 `upregulation: …` | `<opt>` + 43 + `</opt>` = 45 | 252–296 |
+| option 2 `downregulation: …` | 46 | 297–342 |
+| option 3 `association: …` | 37 | 343–379 |
+| option 4 `no_association_stated: …` | 21 | 380–400 |
+| option 5 `none: …` | 42 | 401–442 |
+| `<decide>` | 1 | 443 |
 
 - State limit in our runs: 2,200 tokens (`--max_state 2200`).
   - Over gt_100 the state has a median of 392 tokens and a maximum of 790, so
