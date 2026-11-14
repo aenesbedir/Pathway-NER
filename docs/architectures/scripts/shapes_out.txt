@@ -1,0 +1,205 @@
+candidates 1 [('105e2c23665d4a24', 3, 6)]
+{
+ "abstract_chars": 1149,
+ "n_pathway_mentions": 3,
+ "n_disease_mentions": 6,
+ "a1": {
+  "L": 284,
+  "hidden": [
+   1,
+   284,
+   768
+  ],
+  "vocab": 30522
+ },
+ "a2": {
+  "L": 203,
+  "hidden": [
+   1,
+   203,
+   768
+  ],
+  "vocab": 30526,
+  "markers_added": 4,
+  "evidence_tags_shape": [
+   203,
+   2
+  ],
+  "heads": {
+   "label_head.weight": [
+    5,
+    768
+   ],
+   "label_head.bias": [
+    5
+   ],
+   "evidence_head.weight": [
+    2,
+    768
+   ],
+   "evidence_head.bias": [
+    2
+   ]
+  },
+  "embeddings": [
+   [
+    30526,
+    768
+   ]
+  ],
+  "logits": [
+   1,
+   5
+  ],
+  "ev_logits": [
+   1,
+   203,
+   2
+  ],
+  "pred": "upregulation",
+  "pred_ev_tokens": 66,
+  "pred_ev_text": "[CLS] inhibiting [[pathway]] gtp synthesis [[/pathway]] radiosensitizes [[disease]] gbm and patient - derived neurospheres by impairing dna repair. fda - approved inhibitor of [[pathway]] gtp synthesis [[/pathway]] the patient models of [[disease]] gbm [[/disease]]. high expression of the rate - limiting enzyme of de novo [[pathway]] gtp synthesis [[/pathway]] is associated with shorter survival in [[disease]] gbm [[/disease]] patients. [SEP]"
+ },
+ "a3": {
+  "L": 203,
+  "states": [
+   1,
+   203,
+   768
+  ],
+  "pair": [
+   1,
+   1536
+  ],
+  "classifier_in": [
+   1,
+   1536
+  ],
+  "classifier_W": [
+   5,
+   1536
+  ],
+  "logits": [
+   1,
+   5
+  ],
+  "pred": "upregulation",
+  "n_P_markers": 3,
+  "n_D_markers": 6,
+  "n_sentences": 9,
+  "sentence_features": [
+   9,
+   2304
+  ],
+  "evidence_W1": [
+   256,
+   2304
+  ],
+  "evidence_W2": [
+   1,
+   256
+  ],
+  "evidence_p": [
+   0.09,
+   0.0,
+   0.25,
+   0.98,
+   0.59,
+   0.07,
+   0.98,
+   0.99,
+   0.63
+  ],
+  "sentences": [
+   "Intratumoral genomic heterogeneity in glioblastoma (GBM) is a barrier to overcoming therapy resistance.",
+   "Treatments that are effective independent of genotype are urgently needed.",
+   "By correlating intracellular metabolite levels with radiation resistance across dozens of genomically-distinct models of GBM, we find that purine metabolites, especially guanylates, strongly correlate with radiation resistance.",
+   "Inhibiting GTP synthesis radiosensitizes GBM cells and patient-derived neurospheres by impairing DNA repair.",
+   "Likewise, administration of exogenous purine nucleosides protects sensitive GBM models from radiation by promoting DNA repair.",
+   "Neither modulating pyrimidine metabolism nor purine salvage has similar effects.",
+   "An FDA-approved inhibitor of GTP synthesis potentiates the effects of radiation in flank and orthotopic patient-derived xenograft models of GBM.",
+   "High expression of the rate-limiting enzyme of de novo GTP synthesis is associated with shorter survival in GBM patients.",
+   "These findings indicate that inhibiting purine synthesis may be a promising strategy to overcome therapy resistance in this genomically heterogeneous disease."
+  ],
+  "vocab": 30526,
+  "gold_evidence": [
+   3,
+   7
+  ],
+  "gold_class": "upregulation"
+ },
+ "a4": {
+  "L": 203,
+  "states": [
+   1,
+   203,
+   768
+  ],
+  "pair": [
+   1,
+   1536
+  ],
+  "classifier_in": [
+   1,
+   2304
+  ],
+  "classifier_W": [
+   5,
+   2304
+  ],
+  "logits": [
+   1,
+   5
+  ],
+  "pred": "upregulation",
+  "n_P_markers": 3,
+  "n_D_markers": 6,
+  "n_sentences": 9,
+  "sentence_features": [
+   9,
+   2304
+  ],
+  "evidence_W1": [
+   256,
+   2304
+  ],
+  "evidence_W2": [
+   1,
+   256
+  ],
+  "evidence_p": [
+   0.04,
+   0.0,
+   0.21,
+   0.69,
+   0.13,
+   0.01,
+   0.77,
+   0.78,
+   0.2
+  ],
+  "sentences": [
+   "Intratumoral genomic heterogeneity in glioblastoma (GBM) is a barrier to overcoming therapy resistance.",
+   "Treatments that are effective independent of genotype are urgently needed.",
+   "By correlating intracellular metabolite levels with radiation resistance across dozens of genomically-distinct models of GBM, we find that purine metabolites, especially guanylates, strongly correlate with radiation resistance.",
+   "Inhibiting GTP synthesis radiosensitizes GBM cells and patient-derived neurospheres by impairing DNA repair.",
+   "Likewise, administration of exogenous purine nucleosides protects sensitive GBM models from radiation by promoting DNA repair.",
+   "Neither modulating pyrimidine metabolism nor purine salvage has similar effects.",
+   "An FDA-approved inhibitor of GTP synthesis potentiates the effects of radiation in flank and orthotopic patient-derived xenograft models of GBM.",
+   "High expression of the rate-limiting enzyme of de novo GTP synthesis is associated with shorter survival in GBM patients.",
+   "These findings indicate that inhibiting purine synthesis may be a promising strategy to overcome therapy resistance in this genomically heterogeneous disease."
+  ],
+  "vocab": 30526,
+  "gold_evidence": [
+   3,
+   7
+  ],
+  "gold_class": "upregulation",
+  "attention_last_layer": [
+   1,
+   12,
+   203,
+   203
+  ]
+ }
+}

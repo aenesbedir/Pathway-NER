@@ -31,6 +31,8 @@ data/cache/
 *.png
 *.jpg
 *.jpeg
+# Documentation figures are source, not generated output
+!docs/**/*.png
 
 # OS
 .DS_Store
