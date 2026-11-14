@@ -1,0 +1,111 @@
+found 1 ['id', 'text', 'meta', 'entities', 'relations', 'Comments'] {'pmid': '10079102', 'source': 'doccano_gold_10125_combined_v1', 'split': 'test', 'spans': [{'text': 'glycosphingolipid metabolism', 'start': 58, 'end': 86, 'label': 'PATHWAY'}]}
+{
+ "chars": 1149,
+ "L": 185,
+ "n_words": 174,
+ "vocab": 28895,
+ "vocab_len": 28895,
+ "hidden_last": [
+  1,
+  185,
+  1024
+ ],
+ "n_hidden_states": 25,
+ "attention_one_layer": [
+  1,
+  16,
+  185,
+  185
+ ],
+ "n_layers": 24,
+ "ffn": 4096,
+ "heads": 16,
+ "classifier": [
+  [
+   "classifier.weight",
+   [
+    3,
+    1024
+   ]
+  ],
+  [
+   "classifier.bias",
+   [
+    3
+   ]
+  ]
+ ],
+ "embeddings": [
+  [
+   "electra.embeddings.word_embeddings.weight",
+   [
+    28895,
+    1024
+   ]
+  ],
+  [
+   "electra.embeddings.position_embeddings.weight",
+   [
+    512,
+    1024
+   ]
+  ],
+  [
+   "electra.embeddings.token_type_embeddings.weight",
+   [
+    2,
+    1024
+   ]
+  ],
+  [
+   "electra.embeddings.LayerNorm.weight",
+   [
+    1024
+   ]
+  ]
+ ],
+ "logits": [
+  1,
+  185,
+  3
+ ],
+ "pred_tag_counts": {
+  "O": 162,
+  "B-Pathway": 6,
+  "I-Pathway": 6
+ },
+ "pred_spans": [
+  [
+   418,
+   431,
+   "GTP synthesis"
+  ],
+  [
+   662,
+   683,
+   "pyrimidine metabolism"
+  ],
+  [
+   688,
+   702,
+   "purine salvage"
+  ],
+  [
+   753,
+   766,
+   "GTP synthesis"
+  ],
+  [
+   924,
+   937,
+   "GTP synthesis"
+  ],
+  [
+   1031,
+   1047,
+   "purine synthesis"
+  ]
+ ],
+ "gold_spans": [],
+ "n_params": 332429315
+}
