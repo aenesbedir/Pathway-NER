@@ -244,6 +244,13 @@ data/processed/relation/silver_2k_10kplusmissing/*
 # pmid split for Kev fine-tuning, frozen by build_kev_data.py --freeze-split.
 !data/processed/relation/silver_2k_10kplusmissing/split_pmids.json
 
+# pmid split of the relation_silver_v1_2026-11-17 snapshot for Kev arms A and B,
+# frozen by build_kev_data.py --freeze-snapshot-split. The snapshot itself lives
+# outside git; the split records the sha256 of every file it reads.
+!data/processed/relation/kev_silver_v1/
+data/processed/relation/kev_silver_v1/*
+!data/processed/relation/kev_silver_v1/split_pmids.json
+
 # remaining_6125 disease/pathway review batch. Only the PMID list that defines
 # the corpus slice and the review summary are tracked; every other artefact in
 # the chain below is a machine output kept locally.

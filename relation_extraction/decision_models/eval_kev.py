@@ -8,7 +8,7 @@ On the silver slices scores measure agreement with the silver labels, not accura
 macroF1_4 averages the four labels other than no_association_stated.
 macroF1_present averages every label the reference uses, the way
 train_relation_evidence.py computes its macro_f1. Records carrying a stratum in
-_meta (gt_100) are also scored per stratum.
+_meta (gt_100, and the relation_silver_v1 dev) are also scored per stratum.
 
 Usage (from the Kev checkout that train_kev.sh prepares, with its environment):
     .venv/bin/python <repo>/relation_extraction/decision_models/eval_kev.py \
